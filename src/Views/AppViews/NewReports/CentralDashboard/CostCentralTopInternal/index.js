@@ -42,7 +42,8 @@ let dummyTableData = [
     avgDailySpend: "$1,205",
     actionUrl:
       "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
-  },{
+  },
+  {
     name: "IT SECURITY",
     id: "160079380622",
     orgUnit: "Central Operations",
@@ -52,7 +53,8 @@ let dummyTableData = [
     avgDailySpend: "$1,205",
     actionUrl:
       "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
-  },{
+  },
+  {
     name: "PRODUCTION",
     id: "160079380622",
     orgUnit: "Central Operations",
@@ -62,7 +64,8 @@ let dummyTableData = [
     avgDailySpend: "$1,205",
     actionUrl:
       "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
-  },{
+  },
+  {
     name: "DEV OPS",
     id: "160079380622",
     orgUnit: "Central Operations",
@@ -72,7 +75,8 @@ let dummyTableData = [
     avgDailySpend: "$1,205",
     actionUrl:
       "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
-  },{
+  },
+  {
     name: "IT TESTING",
     id: "160079380622",
     orgUnit: "Central Operations",
@@ -111,7 +115,7 @@ class CostCentralTopInternal extends Component {
   //  Serach
   handleSearchChange = (e) => {
     let value = e.target.value;
-    let { accounts, searchedKey } = this.state;
+    let { accounts } = this.state;
     let data = dummyTableData || [];
     if (data?.length) {
       if (value) {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Grid, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
@@ -19,11 +19,8 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 class ChartWrapper extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    let { style, ChartComponent, data } = this.props;
+    let { ChartComponent, data } = this.props;
     let { title, labelOfBtn, link } = data;
     return (
       <Box className="reports-chart-box">

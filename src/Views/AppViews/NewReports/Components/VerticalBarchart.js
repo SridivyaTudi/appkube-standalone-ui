@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Box} from "@mui/material";
+import { Box } from "@mui/material";
 import * as d3 from "d3";
 
 let data = [
@@ -32,6 +32,14 @@ class VerticalBarchart extends Component {
 
   renderChart = () => {
     // let { data,styleProp } = this.props;
+    var tooltip = d3
+      .select("#root")
+      .data(data)
+      .append("div")
+      .attr("class", "chart-tooltip")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
 
     const svg = d3.select(this.ref.current);
     const xScale = d3
@@ -85,7 +93,21 @@ class VerticalBarchart extends Component {
       .attr("width", xScale.bandwidth())
       .attr("height", (d) => height - yScale(d.value))
       .attr("fill", this.props?.color ? this.props?.color : "#FA6298")
-      .attr("rx", 5);
+      .attr("rx", 5)
+      .on("mouseover", function (d, data) {
+        tooltip.html(
+          `<div class="chart-tooltip-contents"><div class="value">$${data.value}</div><div class="previous-month-data"><span>+16.67%</span> vs previous month</div><div class="name">'${data.name}'</div></div>`
+        );
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (d) {
+        return tooltip
+          .style("top", d.pageY - 10 + "px")
+          .style("left", d.pageX + 10 + "px");
+      })
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
   };
   render() {
     return (

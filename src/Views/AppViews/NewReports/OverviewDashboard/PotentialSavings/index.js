@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button, IconButton, List, ListItem } from "@mui/material";
+import { Box, Button, List, ListItem } from "@mui/material";
 import Compute from "./Compute";
 import Storage from "./Storage";
 import Network from "./Network";

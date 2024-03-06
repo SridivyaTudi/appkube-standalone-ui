@@ -8,7 +8,6 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
     return value;
   });
   var arcData = pieGenerator(Object.entries(data));
-  const areaWidth = (width - 30) / 2;
   useEffect(() => {
     const svg = d3.select(svgRef.current);
 
@@ -119,6 +118,7 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
         return tooltip.style("visibility", "hidden");
       })
       .append("title");
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, height, width]);
 
   function getTotalValues() {

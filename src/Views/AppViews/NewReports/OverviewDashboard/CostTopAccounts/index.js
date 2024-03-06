@@ -8,20 +8,9 @@ import {
   TableRow,
   TableBody,
   TableCell,
-  IconButton,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import ServiceIcon7 from "assets/img/report/service-icon7.png";
-import ServiceIcon8 from "assets/img/report/service-icon8.png";
-import ServiceIcon9 from "assets/img/report/service-icon9.png";
-import ServiceIcon10 from "assets/img/report/service-icon10.png";
-import ServiceIcon11 from "assets/img/report/service-icon11.png";
-import ServiceIcon12 from "assets/img/report/service-icon12.png";
-import ServiceIcon13 from "assets/img/report/service-icon13.png";
-import ServiceIcon14 from "assets/img/report/service-icon14.png";
-import ServiceIcon15 from "assets/img/report/service-icon15.png";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import { v4 } from "uuid";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
