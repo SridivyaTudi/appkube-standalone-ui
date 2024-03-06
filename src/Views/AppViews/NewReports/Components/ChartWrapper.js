@@ -1,6 +1,23 @@
 import React, { Component } from "react";
 import { Box, Grid, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 class ChartWrapper extends Component {
   constructor(props) {
     super(props);
@@ -12,9 +29,20 @@ class ChartWrapper extends Component {
       <Box className="reports-chart-box">
         <Box className="heading m-b-10">
           <Box className="chart-title">
-            <h4 className="title">{title}</h4>
+            <h4 className="title">
+              <HtmlTooltip className="table-tooltip" title={title}>
+                {title}
+              </HtmlTooltip>
+            </h4>
             {data?.description ? (
-              <span className="description">{data?.description}</span>
+              <span className="description">
+                <HtmlTooltip
+                  className="table-tooltip"
+                  title={data?.description}
+                >
+                  {data?.description}
+                </HtmlTooltip>
+              </span>
             ) : (
               <></>
             )}

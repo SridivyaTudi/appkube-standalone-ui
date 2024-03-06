@@ -16,7 +16,11 @@
     align-items: center;
     justify-content: space-between;
     .chart-title {
-     display: inline-block;
+     display: block;
+     width: 60%;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
       .title {
         margin: 0;
         font-size: 16px;
@@ -216,7 +220,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 300px;
+        height: 285px;
       }
     }
   }
