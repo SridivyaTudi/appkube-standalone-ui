@@ -11,13 +11,14 @@ class ChartWrapper extends Component {
     return (
       <Box className="reports-chart-box">
         <Box className="heading m-b-10">
-          <h4>{title}
-          </h4>
-          <p></p>
-          {data?.description ?
-            <h6>{data?.description}</h6>
-            : <></>}
-
+          <Box className="chart-title">
+            <h4 className="title">{title}</h4>
+            {data?.description ? (
+              <span className="description">{data?.description}</span>
+            ) : (
+              <></>
+            )}
+          </Box>
           <Link to={`${link ? link : "#"} `}>
             <Button
               className="primary-outline-btn min-width"

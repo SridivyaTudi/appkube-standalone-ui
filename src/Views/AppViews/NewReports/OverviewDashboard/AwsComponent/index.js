@@ -187,6 +187,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Top Used Service ",
                   labelOfBtn: " View Details",
+                  description: "Total Cost Incurred",
                   link: "/app/new-reports/over-view-dashboard/top-use-services",
                 }}
                 ChartComponent={
@@ -194,7 +195,6 @@ class AwsComponent extends Component {
                     data={totalUsedServiceData}
                     chardBeforeRenderHTML={
                       <Box className="total-cost-incurred">
-                        <label>Total Cost Incurred</label>
                         <p>
                           {" "}
                           90,579{" "}

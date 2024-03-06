@@ -15,13 +15,31 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    h4 {
-      margin: 0;
-      font-size: 16px;
-      line-height: 20px;
-      font-weight: 600;
-      color: #383874;
+    .chart-title {
+     display: inline-block;
+      .title {
+        margin: 0;
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 600;
+        color: #383874;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .description {
+        width: 100%;
+        margin: 0;
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 400;
+        color: #383874;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
+
     button.primary-outline-btn {
       font-weight: 600;
       font-size: 12px;
@@ -43,6 +61,7 @@
       width: 100%;
       display: block;
       .total-cost-incurred {
+       display: block;
         label {
           font-size: 16px;
           font-weight: 400;
@@ -195,9 +214,9 @@
     .chart-content {
       .vertical-bar-chart {
         display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 300px;
+        align-items: center;
+        justify-content: center;
+        height: 300px;
       }
     }
   }

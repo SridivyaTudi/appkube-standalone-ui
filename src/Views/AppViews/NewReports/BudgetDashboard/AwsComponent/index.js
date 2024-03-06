@@ -197,9 +197,7 @@ class AwsComponent extends Component {
       <>
         <TimeSpendComponent data={timeSpendData} />
         <Box className="reports-charts">
-          <Grid
-           container spacing={2}
-          >
+          <Grid container spacing={2}>
             <Grid item xs={12} md={6} lg={7}>
               <ChartWrapper
                 data={{
@@ -236,21 +234,13 @@ class AwsComponent extends Component {
               <ChartWrapper
                 data={{
                   title: "Top Products with High Spending",
+                  description:
+                    " See how your products is spending this Month vs last month",
                   labelOfBtn: " View Details",
                   link: "/app/new-reports/budget-dashboard/budget-products",
                 }}
                 ChartComponent={
-                  <GroupedBarplotChart
-                    data={verticalBarChartData}
-                    chardBeforeRenderHTML={
-                      <Box className="spending-present">
-                        <label>
-                          See how your products is spending this Month vs last
-                          month
-                        </label>
-                      </Box>
-                    }
-                  />
+                  <GroupedBarplotChart data={verticalBarChartData} />
                 }
               />
             </Grid>
@@ -258,6 +248,8 @@ class AwsComponent extends Component {
               <ChartWrapper
                 data={{
                   title: "Top Department Exceeding Budget",
+                  description:
+                    " See how your products is spending this Month vs last month",
                   labelOfBtn: "View Details",
                   link: "/app/new-reports/budget-dashboard/budget-depanrtments",
                 }}
@@ -271,27 +263,17 @@ class AwsComponent extends Component {
                       { name: "Data and Analytics", value: 700 },
                     ]}
                     color={"#FAA24B"}
-                    chardBeforeRenderHTML={
-                      <Box className="spending-present">
-                        <label>
-                          See how your products is spending this Month vs last
-                          month
-                        </label>
-                      </Box>
-                    }
                   />
                 }
               />
             </Grid>
           </Grid>
-          <Grid
-            className="m-t-1"
-            container spacing={2}
-          >
+          <Grid className="m-t-1" container spacing={2}>
             <Grid item xs={12}>
               <ChartWrapper
                 data={{
                   title: "Available  Budgets",
+                  description: "All Budgets within your organization",
                   labelOfBtn: "View Details",
                   link: "",
                 }}

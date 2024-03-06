@@ -82,23 +82,15 @@ class SpendingTrend extends Component {
             >
               <Grid item xs={12}>
                 <ChartWrapper
-                  ChartComponent={
-                    <GroupedBarplotChart
-                      data={verticalBarChartData}
-                      chardBeforeRenderHTML={
-                        <Box className="spending-present">
-                          <label>
-                            See how much you have spent previous year vs present
-                            year
-                          </label>
-                        </Box>
-                      }
-                    />
-                  }
                   data={{
                     title: "Previous Year Spending VS Present Year Spending",
+                    description:
+                      " See how much you have spent previous year vs present year",
                     labelOfBtn: " View Details",
                   }}
+                  ChartComponent={
+                    <GroupedBarplotChart data={verticalBarChartData} />
+                  }
                   // style={{ height: '450px', width: '840px' }}
                 />
               </Grid>
