@@ -22,6 +22,9 @@
     .steper-button {
       //   padding: 0;
       width: 150px;
+      .css-vnkopk-MuiStepLabel-iconContainer{
+        margin-right: 0;
+      }
       .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root{
         width: 1.3em;
         height: 1.3em;
@@ -46,8 +49,8 @@
         border-color: #bdbdbd;
         border-top-style: solid;
         border-top-width: 3px;
-        margin-right: -64px;
-        margin-left: -79px;
+        margin-right: -68px;
+        margin-left: -75px;
       }
 
       &.Mui-completed {
