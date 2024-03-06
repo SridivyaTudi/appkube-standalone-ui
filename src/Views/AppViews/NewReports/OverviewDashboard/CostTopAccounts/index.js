@@ -24,6 +24,9 @@ import ServiceIcon14 from "assets/img/report/service-icon14.png";
 import ServiceIcon15 from "assets/img/report/service-icon15.png";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import { v4 } from "uuid";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 let timeSpendData = [
   {
     name: "Last Month Spend",
@@ -142,7 +145,11 @@ class CostTopAccounts extends Component {
             return (
               <TableRow key={v4()}>
                 <TableCell>
-                  <Link to={``}>{details.accountId}</Link>
+                  <Link
+                    to={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services`}
+                  >
+                    {details.accountId}
+                  </Link>
                 </TableCell>
                 <TableCell>{details.deparment}</TableCell>
                 <TableCell>{details.vpc}</TableCell>
@@ -181,7 +188,13 @@ class CostTopAccounts extends Component {
           <h3> Cost Of Top Accounts</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>Overview Dashboard</li>
+              <li
+                onClick={() =>
+                  this.props.navigate("/app/new-reports/over-view-dashboard")
+                }
+              >
+                Overview Dashboard
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
@@ -211,214 +224,6 @@ class CostTopAccounts extends Component {
               </Table>
             </TableContainer>
           </Box>
-          <h3 className="m-t-3">Spendings Of Top Used Services</h3>
-          <Box className="new-reports-table">
-            <TableContainer className="table">
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">Service name</TableCell>
-                    <TableCell align="center">Current month spend</TableCell>
-                    <TableCell align="center">last month spend </TableCell>
-                    <TableCell align="center">variance</TableCell>
-                    <TableCell align="center"> Avg daily spend</TableCell>
-                    <TableCell align="center">Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon7} alt="" />
-                      </Box>
-                      EC2
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon8} alt="" />
-                      </Box>
-                      Lambda
-                    </TableCell>
-                    <TableCell align="center">$1,500</TableCell>
-                    <TableCell align="center">$2,500</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red">
-                        20% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon9} alt="" />
-                      </Box>
-                      Light Sail
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon10} alt="" />
-                      </Box>
-                      ECS
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon11} alt="" />
-                      </Box>
-                      EKS
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon12} alt="" />
-                      </Box>
-                      Fargate
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon13} alt="" />
-                      </Box>
-                      Fargate
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon14} alt="" />
-                      </Box>
-                      Fargate
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">
-                      <Box className="service-image d-inline-block">
-                        <img src={ServiceIcon15} alt="" />
-                      </Box>
-                      Fargate
-                    </TableCell>
-                    <TableCell align="center">$2,000</TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count">
-                        15% <i class="fas fa-sort-down p-l-5"></i>
-                      </Box>
-                    </TableCell>
-                    <TableCell align="center">$1,800</TableCell>
-                    <TableCell align="center">
-                      <Button className="light-btn p-l-15 p-r-15 ">
-                        view more <OpenInNewIcon className="p-l-5" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
         </Box>
         {showSelectFilterModal ? (
           <SelectFilterModal
@@ -433,4 +238,4 @@ class CostTopAccounts extends Component {
   }
 }
 
-export default CostTopAccounts;
+export default navigateRouter(CostTopAccounts);

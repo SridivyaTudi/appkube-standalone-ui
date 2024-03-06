@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Box, Button, IconButton, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import ChartWrapper from "../../Components/ChartWrapper";
 import GroupedBarplotChart from "../../Components/GroupedBarplotChart";
-import { Link } from "react-router-dom";
 import SelectFilterModal from "../../Components/SelectFilterModal";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 let verticalBarChartData = [
   {
@@ -48,7 +48,13 @@ class SpendingTrend extends Component {
           <h3>Spending Trend</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>Overview Dashboard</li>
+              <li
+                onClick={() =>
+                  this.props.navigate("/app/new-reports/over-view-dashboard")
+                }
+              >
+                Overview Dashboard
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
@@ -112,4 +118,4 @@ class SpendingTrend extends Component {
   }
 }
 
-export default SpendingTrend;
+export default navigateRouter(SpendingTrend);
