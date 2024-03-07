@@ -5,7 +5,8 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import ServiceIcon1 from "assets/img/report/service-icon1.png";
-import AccountTable from "../Components/AccountTable";
+import AccountTable from "Views/AppViews/NewReports/CentralDashboard/Components/AccountTable";
+
 let timeSpendData = [
   {
     name: "Month to date spend",
@@ -42,111 +43,60 @@ let tableHeader = [
 ];
 let dummyTableData = [
   {
-    id:"EC2",
-    name: "EC2",
-    vpc: "$20,000",
-    lastMonthSpend: "$20,000",
+    name: "IT INFRA",
+    id: "160079380622",
+    orgUnit: "Central Operations",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$30,000",
     varience: "10%",
     avgDailySpend: "$1,205",
-    nameImageShow: (
-      <Box className="service-image d-inline-block">
-        <img src={ServiceIcon1} alt="" />
-      </Box>
-    ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
   },
   {
-    id:"SNS",
-    name: "EC2",
-    vpc: "$20,000",
-    lastMonthSpend: "$20,000",
+    name: "IT SECURITY",
+    id: "160079380622",
+    orgUnit: "Central Operations",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$30,000",
     varience: "10%",
     avgDailySpend: "$1,205",
-    nameImageShow: (
-      <Box className="service-image d-inline-block">
-        <img src={ServiceIcon1} alt="" />
-      </Box>
-    ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
   },
   {
-    id: "DynamoDB",
-    name: "DynamoDB",
-    vpc: "$20,000",
-    lastMonthSpend: "$20,000",
+    name: "PRODUCTION",
+    id: "160079380622",
+    orgUnit: "Central Operations",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$30,000",
     varience: "10%",
     avgDailySpend: "$1,205",
-    nameImageShow: (
-      <Box className="service-image d-inline-block">
-        <img src={ServiceIcon1} alt="" />
-      </Box>
-    ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
   },
   {
-    id: "Redshit",
-    name: "Redshit",
-    vpc: "$20,000",
-    lastMonthSpend: "$20,000",
+    name: "DEV OPS",
+    id: "160079380622",
+    orgUnit: "Central Operations",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$30,000",
     varience: "10%",
     avgDailySpend: "$1,205",
-    nameImageShow: (
-      <Box className="service-image d-inline-block">
-        <img src={ServiceIcon1} alt="" />
-      </Box>
-    ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
   },
   {
-    id:'RDS',
-    name: "RDS",
-    vpc: "$20,000",
-    lastMonthSpend: "$20,000",
+    name: "IT TESTING",
+    id: "160079380622",
+    orgUnit: "Central Operations",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$30,000",
     varience: "10%",
     avgDailySpend: "$1,205",
-    nameImageShow: (
-      <Box className="service-image d-inline-block">
-        <img src={ServiceIcon1} alt="" />
-      </Box>
-    ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
   },
-  {
-    id: "Cloud Front",
-    name: "Cloud Front",
-    vpc: "$20,000",
-    lastMonthSpend: "$20,000",
-    varience: "10%",
-    avgDailySpend: "$1,205",
-    nameImageShow: (
-      <Box className="service-image d-inline-block">
-        <img src={ServiceIcon1} alt="" />
-      </Box>
-    ),
-    actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
-  },
-  {
-    id: "Route 53",
-    name: "Route 53",
-    vpc: "$20,000",
-    lastMonthSpend: "$20,000",
-    varience: "10%",
-    avgDailySpend: "$1,205",
-    nameImageShow: (
-      <Box className="service-image d-inline-block">
-        <img src={ServiceIcon1} alt="" />
-      </Box>
-    ),
-    actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
-  },
- 
 ];
 class BudgetServicesAccount extends Component {
   constructor(props) {
