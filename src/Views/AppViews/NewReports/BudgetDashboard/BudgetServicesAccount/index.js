@@ -5,8 +5,7 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import ServiceIcon1 from "assets/img/report/service-icon1.png";
-import AccountTable from "Views/AppViews/NewReports/CentralDashboard/Components/AccountTable";
-
+import AccountTable from "../../CentralDashboard/Components/AccountTable";
 let timeSpendData = [
   {
     name: "Month to date spend",
@@ -34,68 +33,125 @@ let timeSpendData = [
   },
 ];
 let tableHeader = [
-  "Service name	",
+  "Service name",
+  "Total instances",
   "Current month spend",
-  "Last month Spend	",
+  "Last month Spend",
   "Variance",
-  "Avg daily spend	",
-  "Actions",
+  
 ];
 let dummyTableData = [
   {
-    name: "IT INFRA",
-    id: "160079380622",
-    orgUnit: "Central Operations",
+    name: "EC2",
     currentMonthSpend: "$20,000",
-    lastMonthSpend: "$30,000",
+    lastMonthSpend: "$20,000",
     varience: "10%",
     avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
   },
   {
-    name: "IT SECURITY",
-    id: "160079380622",
-    orgUnit: "Central Operations",
+    name: "EC2",
     currentMonthSpend: "$20,000",
-    lastMonthSpend: "$30,000",
+    lastMonthSpend: "$20,000",
     varience: "10%",
     avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
   },
   {
-    name: "PRODUCTION",
-    id: "160079380622",
-    orgUnit: "Central Operations",
+    name: "EC2",
     currentMonthSpend: "$20,000",
-    lastMonthSpend: "$30,000",
+    lastMonthSpend: "$20,000",
     varience: "10%",
     avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
   },
   {
-    name: "DEV OPS",
-    id: "160079380622",
-    orgUnit: "Central Operations",
+    name: "EC2",
     currentMonthSpend: "$20,000",
-    lastMonthSpend: "$30,000",
+    lastMonthSpend: "$20,000",
     varience: "10%",
     avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
   },
   {
-    name: "IT TESTING",
-    id: "160079380622",
-    orgUnit: "Central Operations",
+    name: "EC2",
     currentMonthSpend: "$20,000",
-    lastMonthSpend: "$30,000",
+    lastMonthSpend: "$20,000",
     varience: "10%",
     avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+  },
+  {
+    name: "EC2",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$20,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+  },
+  {
+    name: "EC2",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$20,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+  },
+  {
+    name: "EC2",
+    currentMonthSpend: "$20,000",
+    lastMonthSpend: "$20,000",
+    varience: "10%",
+    avgDailySpend: "$1,205",
+    nameImageShow: (
+      <Box className="service-image d-inline-block">
+        <img src={ServiceIcon1} alt="" />
+      </Box>
+    ),
+    actionUrl:
+      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
   },
 ];
 class BudgetServicesAccount extends Component {
