@@ -38,6 +38,7 @@ let tableHeader = [
   "Current month spend",
   "Last month Spend",
   "Variance",
+  "Action"
   
 ];
 let dummyTableData = [
