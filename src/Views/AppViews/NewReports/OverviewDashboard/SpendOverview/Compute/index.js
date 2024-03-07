@@ -1,14 +1,4 @@
 import React, { Component } from "react";
-import {
-  Box,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Button,
-} from "@mui/material";
 import TimeSpendComponent from "../../../Components/TimeSpendComponent";
 import ServiceIcon1 from "assets/img/report/service-icon1.png";
 import ServiceIcon2 from "assets/img/report/service-icon2.png";
@@ -18,7 +8,6 @@ import ServiceIcon5 from "assets/img/report/service-icon5.png";
 import ServiceIcon6 from "assets/img/report/service-icon6.png";
 import SpendingTable from "Views/AppViews/NewReports/OverviewDashboard/Components/SpendingTable";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import JavascriptTable from "Components/JavascriptTable";
 import { Link } from "react-router-dom";
 let timeSpendData = [
   {
@@ -132,66 +121,6 @@ let computeSpendingTable = [
     ),
   },
 ];
-const columns = [
-  {
-    label: "Service name",
-    key: "name",
-  },
-  {
-    label: "Last month spend",
-    key: "last_month_spend",
-  },
-  {
-    label: "This month spend",
-    key: "month_spend",
-  },
-  {
-    label: "Variance",
-    key: "variance",
-  },
-  {
-    label: "Actions",
-    key: "actions",
-  },
-];
-
-const data = [
-  {
-    index: "#27",
-    requesterName: "Rodney Artichoke",
-    subject: "I need help with aading a New Contact....",
-  },
-  {
-    index: "#39",
-    requesterName: "Chaplain Mondover",
-    subject: "I need help with aading a New Contact data to be pre...",
-  },
-  {
-    index: "#47",
-    requesterName: "Rodney Artichoke",
-    subject: "Mobile Campaign",
-  },
-  {
-    index: "#52",
-    requesterName: "Inverness McKenzie",
-    subject: "Service related announcements",
-  },
-  {
-    index: "#87",
-    requesterName: "Douglas Lyphe",
-    subject: "I need help with aading a New Contact....",
-  },
-  {
-    index: "#92",
-    requesterName: "Theodore Handle",
-    subject: "Adding a payment methods",
-  },
-  {
-    index: "#27",
-    requesterName: "Rodney Artichoke",
-    subject: "I need help with aading a New Contact....",
-  },
-];
 
 class Compute extends Component {
   render() {
@@ -200,11 +129,7 @@ class Compute extends Component {
         <TimeSpendComponent data={timeSpendData} />
         <h3>COMPUTE SPENDINGS</h3>
         <h4>Overview of the compute Services</h4>
-        <JavascriptTable
-          data={computeSpendingTable}
-          columns={columns}
-          id="spendOverView"
-        />
+        <SpendingTable data={computeSpendingTable} />
       </>
     );
   }
