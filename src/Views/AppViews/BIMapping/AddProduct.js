@@ -41,6 +41,7 @@ class AddProduct extends Component {
     }
   };
 
+  /** Click event for next button. */
   handleNext = (e) => {
     e.preventDefault();
     let { developmentStatus, formData } = this.state;
@@ -80,10 +81,7 @@ class AddProduct extends Component {
     );
   };
 
-  onClickLandingZone() {
-    this.setState({ selectedLandingZone: "AWS" });
-  }
-
+  /** View the buttons. */
   renderBtns = () => {
     return (
       <Box
@@ -110,10 +108,12 @@ class AddProduct extends Component {
     );
   };
 
+  /** Manage the previous button click event. */
   handlePrevious = () => {
     this.props.navigate(`${APP_PREFIX_PATH}/bim`);
   };
 
+  /** Form input changes. */
   handleInputChange = (e) => {
     const { name, value } = e.target;
     let { formData } = this.state;
@@ -122,6 +122,7 @@ class AddProduct extends Component {
     this.setState({ formData });
   };
 
+  /** Render environments. */
   renderEnvironments = () => {
     let { formData } = this.state;
     return environments.map((environment) => {
@@ -149,6 +150,7 @@ class AddProduct extends Component {
     });
   };
 
+  /** Validate form for data. */
   validateForm = () => {
     let { formData, isSubmit, developmentStatus } = this.state;
     let isValid = true;
@@ -199,6 +201,7 @@ class AddProduct extends Component {
     name = name?.replaceAll("-", " ");
     return { name };
   }
+
   render() {
     const { formData, isSubmit } = this.state;
     let { errors } = this.validateForm();

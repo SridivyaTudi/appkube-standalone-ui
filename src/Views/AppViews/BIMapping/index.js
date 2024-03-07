@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
 import {
   getCurrentOrgId,
-  getCloudWiseLandingZoneCount as getLandingZoneCount,LOCAL_STORAGE_CONSTANTS,
+  getCloudWiseLandingZoneCount as getLandingZoneCount,
+  LOCAL_STORAGE_CONSTANTS,
   setCloudWiseLandingZoneCount,
 } from "Utils";
 import status from "Redux/Constants/CommonDS";
@@ -172,6 +173,7 @@ class BIMapping extends Component {
     });
   };
 
+  // Manipulation of new API data
   manipulateChildrenData = (data, type, exptraIds, isArrOfObj = 0) => {
     let isTypeDepartment = type === this.TYPE.DEPARTMENT;
     return data.map((dataDetails, index) => {
@@ -244,6 +246,7 @@ class BIMapping extends Component {
       });
     }
   };
+
   // Manipulation of Product data
   manipulateProductData = (products) => {
     if (products) {
@@ -357,6 +360,7 @@ class BIMapping extends Component {
     }
   };
 
+  // Manipulation of Element type data
   manipulateElementInstancesOfGivenTypeData = (elemntInstanceTypes) => {
     if (elemntInstanceTypes?.length) {
       let { organizationTableData, clickTableData } = this.state;
@@ -408,6 +412,7 @@ class BIMapping extends Component {
       });
     }
   };
+
   // Render Loder
   renderLoder(widthClass) {
     return (
@@ -417,6 +422,7 @@ class BIMapping extends Component {
     );
   }
 
+  // Click on organization element types
   onClickNode(data) {
     let { type, departmentId, productId, productEnvId, id, name } = data;
 
@@ -437,10 +443,12 @@ class BIMapping extends Component {
     this.setState({ clickTableData: data });
   }
 
+  // Redirect to Add product
   onLinkClick = (data) => {
     this.props.setProductIntoDepartment({ departmentName: data.name });
   };
 
+  // Render html when data is no available
   renderNoDataHtml = (text) => {
     return (
       <Box className="group-loader  h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
@@ -448,6 +456,7 @@ class BIMapping extends Component {
       </Box>
     );
   };
+
   render() {
     const { isSelectDepartmentOpen, organizationTableData } = this.state;
     const {

@@ -71,6 +71,7 @@ class ConfigInfo extends Component {
     });
   };
 
+  // Render table of head.
   renderTableHead = () => {
     return (
       <TableHead>
@@ -91,13 +92,14 @@ class ConfigInfo extends Component {
       </TableHead>
     );
   };
-
+  // Click on close icon
   onClickCloseIcon = (index) => {
     let { tableData } = this.state;
     delete tableData[index];
     this.setState({ tableData });
   };
 
+  // Render table of body.
   renderTableBody = () => {
     let { tableData } = this.state;
     return (
@@ -230,6 +232,7 @@ class ConfigInfo extends Component {
     );
   };
 
+  // Custom input changes
   handleCustomInputChange = (event, Id) => {
     let { name, value } = event.target;
     let { tableData } = this.state;
@@ -243,6 +246,7 @@ class ConfigInfo extends Component {
     this.setState({ tableData });
   };
 
+  // Click on add entry button 
   onClickAddEntry = () => {
     let { tableData } = this.state;
     tableData.push({
@@ -254,6 +258,7 @@ class ConfigInfo extends Component {
     });
     this.setState({ tableData });
   };
+
   render() {
     let { style } = this.props;
     return (

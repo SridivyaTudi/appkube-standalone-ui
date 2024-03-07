@@ -31,7 +31,6 @@ import LoadBalancerIcon from "assets/img/bimapping/load-balancer-icon.png";
 import IngressIcon from "assets/img/bimapping/ingress-icon.png";
 import ServiceIcon from "assets/img/bimapping/service-icon.png";
 import StarIcon from "assets/img/bimapping/star-icon.png";
-import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 import VerticalTitleAndIconOfCard from "Components/VerticalTitleAndIconOfCard";
 import {
   getBiServicesFromProductCategory,
@@ -192,6 +191,7 @@ class Tier extends Component {
     this.previousDataView();
   };
 
+  // Redux data view
   previousDataView = () => {
     let { createProductFormData } = this.props;
 
@@ -214,6 +214,7 @@ class Tier extends Component {
     window.removeEventListener("load", this.redirectPage);
   }
 
+  // Redirect of the page
   redirectPage = () => {
     let { name } = this.getUrlDetails();
     this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${name}`);
@@ -250,6 +251,7 @@ class Tier extends Component {
     }
   }
 
+  // Manipulate layers data.
   manipulateLayersData = (data) => {
     let {
       dropDownLayersData: { webLayer, appLayer, auxLayer, dataLayer },
@@ -276,6 +278,7 @@ class Tier extends Component {
     });
   };
 
+  // Toggle web layer  dropdown.
   toggleWebLayer = () => {
     let { savedLayer } = this.state;
     if (!savedLayer.web) {
@@ -285,6 +288,7 @@ class Tier extends Component {
     }
   };
 
+  // Toggle app layer dropdown.
   toggleAppLayer = () => {
     let { savedLayer } = this.state;
 
@@ -295,6 +299,7 @@ class Tier extends Component {
     }
   };
 
+  // Toggle data layer dropdown.
   toggleDataLayer = () => {
     let { savedLayer } = this.state;
 
@@ -305,6 +310,7 @@ class Tier extends Component {
     }
   };
 
+  // Toggle aux layer dropdown.
   toggleAuxLayer = () => {
     let { savedLayer } = this.state;
     if (savedLayer.data && !savedLayer.aux) {
@@ -314,6 +320,7 @@ class Tier extends Component {
     }
   };
 
+  // Render Deployed cards
   renderDeployedInstances = () => {
     let { cloudServices, selectedDeployedInstance } = this.state;
     let cloudStatus = this.props.cloudServices?.status;
@@ -346,6 +353,7 @@ class Tier extends Component {
     }
   };
 
+  // Click on deployed card
   onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
     this.props.getInstancesServices({ cloudName, elementType });
     this.setState({
@@ -357,6 +365,7 @@ class Tier extends Component {
     });
   };
 
+  // Render Instance list
   renderSelectedInstance = () => {
     let { selectedInstance, instancesServices } = this.state;
     let instanceStatus = this.props.instancesServices?.status;
@@ -411,8 +420,9 @@ class Tier extends Component {
     }
   };
 
+  // Render Selected Instance section
   renderSelectedInstanceWrapper = () => {
-    let { selectedDeployedInstance, instancesServices } = this.state;
+    let { selectedDeployedInstance } = this.state;
 
     return selectedDeployedInstance ? (
       <Box className="deployed-section m-t-4">
@@ -430,6 +440,7 @@ class Tier extends Component {
     );
   };
 
+  // Render Deployed section
   renderDeployedInstanceWrapper = () => {
     let { isShowDepolyedSection } = this.state;
     if (isShowDepolyedSection) {
@@ -448,6 +459,7 @@ class Tier extends Component {
     }
   };
 
+  // Click on layer drop down
   onClickLayerDropDown = (key, value) => {
     let { selectedLayer } = this.state;
     selectedLayer[key] = value;
@@ -480,6 +492,7 @@ class Tier extends Component {
     this.setState({ selectedService });
   };
 
+  // Render table of the head
   renderTableHead = () => {
     return (
       <TableHead>
@@ -494,6 +507,7 @@ class Tier extends Component {
     );
   };
 
+  // Render table of the body
   renderTableBody = () => {
     let { selectedService } = this.state;
     return (
@@ -531,6 +545,7 @@ class Tier extends Component {
     );
   };
 
+  // Click on save btn
   onClickSave = () => {
     let {
       savedLayer,
@@ -593,6 +608,7 @@ class Tier extends Component {
     this.props.setProductIntoDepartment(passData);
   };
 
+  // set active tab
   setActiveTab = (id, isECS = 0) => {
     let { activeTabEcs, activeTabEks } = this.state;
     if (isECS) {
@@ -603,6 +619,7 @@ class Tier extends Component {
     this.setState({ activeTabEcs, activeTabEks });
   };
 
+  // On click instance
   onClickInstance = (selectedInstance) => {
     this.setState({ selectedInstance, selectedService: [] });
   };
@@ -616,6 +633,7 @@ class Tier extends Component {
     );
   };
 
+  // when data is no found , then render the this html
   renderNoDataHtml = (text) => {
     return (
       <Box className="group-loader  h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
@@ -630,8 +648,9 @@ class Tier extends Component {
     return { name };
   }
 
+  // Click on edit btn.
   onClickEditBtn = (layerName) => {
-    let { savedData, savedLayer, isShowDepolyedSection } = this.state;
+    let { savedData, savedLayer } = this.state;
 
     let findSaveData = savedData.find((data) => data.layerName === layerName);
 

@@ -10,10 +10,8 @@ import {
   FormControl,
   MenuItem,
   Select,
-  Button,
   IconButton,
 } from "@mui/material";
-import { v4 } from "uuid";
 import { ADD_PRODUCT_ENUMS } from "Utils";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -175,7 +173,7 @@ class ManagementInfo extends Component {
         `Hosted on_0`
       );
     }
-    this.setState({tableData: data})
+    this.setState({ tableData: data });
   };
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -184,10 +182,12 @@ class ManagementInfo extends Component {
     }
   };
 
+  // Set active tab
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
 
+  // Set the dropdown changes.
   handleChange = (event, key, isSubkey = 0) => {
     let { value } = event.target;
     let { selectedInfo, selectedSubkeys } = this.state;
@@ -202,6 +202,8 @@ class ManagementInfo extends Component {
       selectedSubkeys,
     });
   };
+
+  // Render table of head.
   renderTableHead = () => {
     return (
       <TableHead>
@@ -222,6 +224,8 @@ class ManagementInfo extends Component {
       </TableHead>
     );
   };
+
+  // Custom input changes
   handleCustomInputChange = (event, Id) => {
     let { name, value } = event.target;
     let { tableData } = this.state;
@@ -234,6 +238,8 @@ class ManagementInfo extends Component {
     });
     this.setState({ tableData });
   };
+
+  // Render table of body.
   renderTableBody = () => {
     let { tableData, selectedInfo, selectedSubkeys } = this.state;
     return (
@@ -386,6 +392,7 @@ class ManagementInfo extends Component {
     );
   };
 
+  // Click on add entry button
   onClickAddEntry = () => {
     let { tableData } = this.state;
     tableData.push({
@@ -398,11 +405,13 @@ class ManagementInfo extends Component {
     this.setState({ tableData });
   };
 
+  // Click on close icon
   onClickCloseIcon = (index) => {
     let { tableData } = this.state;
     delete tableData[index];
     this.setState({ tableData });
   };
+
   render() {
     let { style } = this.props;
     return (

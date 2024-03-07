@@ -31,7 +31,6 @@ import StarIcon from "../../../../assets/img/bimapping/star-icon.png";
 import { v4 } from "uuid";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 import VerticalTitleAndIconOfCard from "Components/VerticalTitleAndIconOfCard";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
@@ -187,6 +186,7 @@ class Soa extends Component {
     window.removeEventListener("load", this.redirectPage);
   }
 
+  // Redirect page
   redirectPage = () => {
     let { name } = this.getUrlDetails();
     this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${name}`);
@@ -222,7 +222,7 @@ class Soa extends Component {
       this.setState({ instancesServices });
     }
   }
-
+  // Manipulate service data
   manipulateServiceData = (data) => {
     let {
       dropDownServiceData: { appService, dataService, otherService },
@@ -244,6 +244,7 @@ class Soa extends Component {
     });
   };
 
+  // Set active tab
   setActiveTab = (id, isECS = 0) => {
     let { activeTabEcs, activeTabEks } = this.state;
     if (isECS) {
@@ -254,6 +255,7 @@ class Soa extends Component {
     this.setState({ activeTabEcs, activeTabEks });
   };
 
+  // Toggle app service dropdown.
   toggleAppService = () => {
     let { savedService } = this.state;
     if (!savedService.app) {
@@ -262,6 +264,8 @@ class Soa extends Component {
       });
     }
   };
+
+  // Toggle data service dropdown.
   toggleDataLayer = () => {
     let { savedService } = this.state;
     if (savedService.app && !savedService.data) {
@@ -270,6 +274,8 @@ class Soa extends Component {
       });
     }
   };
+
+  // Toggle other service dropdown.
   toggleOtherServices = () => {
     let { savedService } = this.state;
     if (savedService.data && !savedService.other) {
@@ -279,6 +285,7 @@ class Soa extends Component {
     }
   };
 
+  // Render Deployed cards
   renderDeployedInstances = () => {
     let { deployedInstances, selectedDeployedInstance } = this.state;
     let cloudStatus = this.props.cloudServices?.status;
@@ -311,6 +318,7 @@ class Soa extends Component {
     }
   };
 
+  // Render Deployed section
   renderDeployedInstanceWrapper = () => {
     let { isShowDepolyedSection } = this.state;
     if (isShowDepolyedSection) {
@@ -329,6 +337,7 @@ class Soa extends Component {
     }
   };
 
+  // Render Instance list
   renderSelectedInstance = () => {
     let { selectedInstance, instancesServices } = this.state;
     let instanceStatus = this.props.instancesServices?.status;
@@ -378,6 +387,7 @@ class Soa extends Component {
     }
   };
 
+  // Render Selected Instance section
   renderSelectedInstanceWrapper = () => {
     let { selectedDeployedInstance } = this.state;
     return selectedDeployedInstance ? (
@@ -396,6 +406,7 @@ class Soa extends Component {
     );
   };
 
+  // Click on service dropdown.
   onClickServiceDropDown = (key, value) => {
     let { selectedServiceData } = this.state;
     selectedServiceData[key] = value;
@@ -409,6 +420,7 @@ class Soa extends Component {
     });
   };
 
+  // Render table of head.
   renderTableHead = () => {
     return (
       <TableHead>
@@ -423,6 +435,7 @@ class Soa extends Component {
     );
   };
 
+  // Render table of body.
   renderTableBody = () => {
     let { selectedService } = this.state;
     return (
@@ -475,9 +488,9 @@ class Soa extends Component {
     this.setState({ selectedService });
   };
 
+  // Redux data view
   previousDataView = () => {
     let { createProductFormData } = this.props;
-    console.log(createProductFormData);
     if (createProductFormData["soaData"]) {
       try {
         let { savedService, savedData, selectedService, selectedServiceData } =
@@ -494,6 +507,7 @@ class Soa extends Component {
     }
   };
 
+  // Click on save btn
   onClickSave = () => {
     let {
       savedService,
@@ -528,7 +542,6 @@ class Soa extends Component {
       selectedService,
       cloudElementType,
       cloudName,
-      serviceName,
     });
 
     selectedInstance = -1;
@@ -559,10 +572,12 @@ class Soa extends Component {
     this.props.setProductIntoDepartment(passData);
   };
 
+  // On click instance
   onClickInstance = (selectedInstance) => {
     this.setState({ selectedInstance, selectedService: [] });
   };
 
+  // Click on deployed card
   onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
     this.props.getInstancesServices({ cloudName, elementType });
     this.setState({
@@ -574,6 +589,7 @@ class Soa extends Component {
     });
   };
 
+  // Click on edit btn.
   onClickEditBtn = (serviceName) => {
     let { savedData, savedService, isShowDepolyedSection } = this.state;
     console.log(serviceName, this.state);
@@ -626,6 +642,7 @@ class Soa extends Component {
     );
   };
 
+  // when data is no found , then render the this html
   renderNoDataHtml = (text) => {
     return (
       <Box className="group-loader  h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
