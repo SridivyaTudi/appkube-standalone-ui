@@ -115,8 +115,8 @@ class VerticalBarchart extends Component {
   render() {
     return (
       <Box className="vertical-bar-chart">
-        <svg
-          // style={{ width: "100%", height: "290" }}
+        <svg className="vertical-bar-chart-inner-section"
+          style={{ width: "100%" }}
           ref={this.ref}
           viewBox={`-15 0 ${width} ${height + margin.top + margin.bottom}`}
         />

@@ -108,15 +108,9 @@
     .vertical-bar-chart {
       width: 100%;
       display: block;
-      .spending-present {
-        display: inline-block;
-        label {
-          font-size: 12px;
-          font-weight: 500;
-          line-height: 16px;
-          color: #383874;
-        }
-      }
+     .vertical-bar-chart-inner-section{
+      height: 290px;
+     }
     }
     .gauge-chart {
       display: flex;
@@ -221,6 +215,9 @@
         align-items: center;
         justify-content: center;
         height: 285px;
+        .vertical-bar-chart-inner-section{
+          height: 100%;
+         }
       }
     }
   }

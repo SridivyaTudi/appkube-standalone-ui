@@ -158,7 +158,7 @@ class Compute extends Component {
             <Table style={{ width: 2300 }}>
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">resource type</TableCell>
+                  <TableCell align="left">resource type</TableCell>
                   <TableCell align="center">Instance ID </TableCell>
                   <TableCell align="center">Recommendation</TableCell>
                   <TableCell align="center">current instance </TableCell>
@@ -173,7 +173,7 @@ class Compute extends Component {
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell align="center">EC2</TableCell>
+                  <TableCell align="left">EC2</TableCell>
                   <TableCell align="center">i-0c1234dc</TableCell>
                   <TableCell align="center">RI </TableCell>
                   <TableCell align="center">t4g.2xlarge</TableCell>
@@ -186,7 +186,7 @@ class Compute extends Component {
                   <TableCell align="center">$196.22</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center">EC2</TableCell>
+                  <TableCell align="left">EC2</TableCell>
                   <TableCell align="center">i-0c1234dc</TableCell>
                   <TableCell align="center">RI </TableCell>
                   <TableCell align="center">t4g.2xlarge</TableCell>
@@ -199,7 +199,7 @@ class Compute extends Component {
                   <TableCell align="center">$196.22</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center">EC2</TableCell>
+                  <TableCell align="left">EC2</TableCell>
                   <TableCell align="center">i-0c1234dc</TableCell>
                   <TableCell align="center">RI </TableCell>
                   <TableCell align="center">t4g.2xlarge</TableCell>
@@ -212,7 +212,7 @@ class Compute extends Component {
                   <TableCell align="center">$196.22</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center">EC2</TableCell>
+                  <TableCell align="left">EC2</TableCell>
                   <TableCell align="center">i-0c1234dc</TableCell>
                   <TableCell align="center">RI </TableCell>
                   <TableCell align="center">t4g.2xlarge</TableCell>
@@ -225,7 +225,7 @@ class Compute extends Component {
                   <TableCell align="center">$196.22</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center">EC2</TableCell>
+                  <TableCell align="left">EC2</TableCell>
                   <TableCell align="center">i-0c1234dc</TableCell>
                   <TableCell align="center">RI </TableCell>
                   <TableCell align="center">t4g.2xlarge</TableCell>
@@ -238,7 +238,7 @@ class Compute extends Component {
                   <TableCell align="center">$196.22</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center">EC2</TableCell>
+                  <TableCell align="left">EC2</TableCell>
                   <TableCell align="center">i-0c1234dc</TableCell>
                   <TableCell align="center">RI </TableCell>
                   <TableCell align="center">t4g.2xlarge</TableCell>
@@ -251,7 +251,7 @@ class Compute extends Component {
                   <TableCell align="center">$196.22</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center">EC2</TableCell>
+                  <TableCell align="left">EC2</TableCell>
                   <TableCell align="center">i-0c1234dc</TableCell>
                   <TableCell align="center">RI </TableCell>
                   <TableCell align="center">t4g.2xlarge</TableCell>
@@ -264,7 +264,7 @@ class Compute extends Component {
                   <TableCell align="center">$196.22</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center">EC2</TableCell>
+                  <TableCell align="left">EC2</TableCell>
                   <TableCell align="center">i-0c1234dc</TableCell>
                   <TableCell align="center">RI </TableCell>
                   <TableCell align="center">t4g.2xlarge</TableCell>
@@ -277,7 +277,7 @@ class Compute extends Component {
                   <TableCell align="center">$196.22</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center">EC2</TableCell>
+                  <TableCell align="left">EC2</TableCell>
                   <TableCell align="center">i-0c1234dc</TableCell>
                   <TableCell align="center">RI </TableCell>
                   <TableCell align="center">t4g.2xlarge</TableCell>
@@ -290,7 +290,7 @@ class Compute extends Component {
                   <TableCell align="center">$196.22</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center">EC2</TableCell>
+                  <TableCell align="left">EC2</TableCell>
                   <TableCell align="center">i-0c1234dc</TableCell>
                   <TableCell align="center">RI </TableCell>
                   <TableCell align="center">t4g.2xlarge</TableCell>
@@ -303,7 +303,7 @@ class Compute extends Component {
                   <TableCell align="center">$196.22</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center">EC2</TableCell>
+                  <TableCell align="left">EC2</TableCell>
                   <TableCell align="center">i-0c1234dc</TableCell>
                   <TableCell align="center">RI </TableCell>
                   <TableCell align="center">t4g.2xlarge</TableCell>
