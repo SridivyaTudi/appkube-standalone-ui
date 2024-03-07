@@ -42,13 +42,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$1,800",
     variance: "15% ",
-    actions: (
-      <Link
-        to={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`}
-      >
-        View More
-      </Link>
-    ),
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
   },
   {
     name: "Lambda",
@@ -56,13 +50,7 @@ let computeSpendingTable = [
     last_month_spend: "$1,500",
     month_spend: "$2,500",
     variance: "20%",
-    actions: (
-      <Link
-        to={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`}
-      >
-        View More
-      </Link>
-    ),
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
   },
   {
     name: "Light Sail",
@@ -70,13 +58,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: (
-      <Link
-        to={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`}
-      >
-        View More
-      </Link>
-    ),
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
   },
   {
     name: "ECS",
@@ -84,13 +66,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: (
-      <Link
-        to={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`}
-      >
-        View More
-      </Link>
-    ),
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
   },
   {
     name: "EKS",
@@ -98,13 +74,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: (
-      <Link
-        to={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`}
-      >
-        View More
-      </Link>
-    ),
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
   },
   {
     name: "Fargate",
@@ -112,13 +82,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: (
-      <Link
-        to={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`}
-      >
-        View More
-      </Link>
-    ),
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
   },
 ];
 
