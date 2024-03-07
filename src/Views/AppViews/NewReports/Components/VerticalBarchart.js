@@ -96,7 +96,10 @@ class VerticalBarchart extends Component {
       .attr("rx", 5)
       .on("mouseover", function (d, data) {
         tooltip.html(
-          `<div class="chart-tooltip-contents"><div class="value">$${data.value}</div><div class="previous-month-data"><span>+16.67%</span> vs previous month</div><div class="name">'${data.name}'</div></div>`
+          `<div class="chart-tooltip-contents p-5"><div class="value">R&D budget </div>
+          <div class="previous-month-data"><span>Budgeted amount</span> <label>$2000</label></div>
+          <div class="previous-month-data"><span>Overspend amount</span> <label>$3000</label></div>
+          <div class="check-details">Check Details <i class="fas fa-chevron-right"></i></div></div>`
         );
         return tooltip.style("visibility", "visible");
       })

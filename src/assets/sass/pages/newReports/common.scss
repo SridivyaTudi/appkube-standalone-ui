@@ -28,6 +28,7 @@
   width: auto;
   background-color: #1e2129;
   border-radius: 5px;
+  
   .value {
     display: block;
     padding: 5px 10px 5px 10px;
@@ -36,23 +37,49 @@
     line-height: 14px;
     font-weight: 400;
   }
+  .previous-month-data {
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0px 5px 15px;
+    span {
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 500;
+      margin-right: 10px;
+    }
+    label {
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 500;
+      margin-right: 10px;
+    }
+   
+  }
+  .check-details{
+    font-size: 12px;
+    font-weight: 500;
+    color: #8676FF;
+    padding-left: 15px;
+    padding-bottom: 5px;
+  }
 }
-.table-head{
+.table-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .subheading{
+  .subheading {
     font-size: 12px;
     line-height: 16px;
     font-weight: 400;
     color: #383874;
   }
-  .check-box-group{
+  .check-box-group {
     display: flex;
-    .check-box{
+    .check-box {
       padding: 5px;
     }
-    label{
+    label {
       font-size: 14px;
       line-height: 18px;
       font-weight: 500;
