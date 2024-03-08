@@ -78,15 +78,7 @@
       background-color: #eef0fa;
       border-radius: 8px;
     }
-    // ::placeholder {
-    //   color: #8676ff;
-    //   opacity: 1; /* Firefox */
-    // }
 
-    // ::-ms-input-placeholder {
-    //   /* Edge 12-18 */
-    //   color: #8676ff;
-    // }
     button {
       position: absolute;
       top: 8px;
@@ -182,7 +174,6 @@
             border-radius: 4px;
             margin-left: 10px;
             color: #ffffff;
-            
           }
         }
       }
@@ -191,7 +182,7 @@
 }
 
 .check-box {
-  color: #3247e5!important;
+  color: #3247e5 !important;
 }
 
 .table-tooltip-dark {

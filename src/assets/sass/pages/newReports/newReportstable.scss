@@ -6,10 +6,10 @@
   border-radius: 10px;
   box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.04);
   overflow: hidden;
-  &.history-department-table{
-      background: transparent;
-      box-shadow: none;
-      border-radius: 0;
+  &.history-department-table {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
   }
   table {
     display: block;
@@ -82,19 +82,14 @@
             line-height: 25px;
             margin-right: 10px;
           }
-          strong{
+          strong {
             font-weight: 600;
           }
           .variance-count {
             color: #00b929;
-            // display: inline-flex;
-            // display: flex;
-            // align-items: flex-start;
-            // justify-content: center;
-           
             .red {
               color: red;
-              vertical-align: text-bottom!important;
+              vertical-align: text-bottom !important;
             }
           }
           .list-icon {
@@ -193,24 +188,24 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: #1B4DFF;
+            background: #1b4dff;
             display: inline-block;
             margin-right: 5px;
-            &.pending{
-              background: #F5C853;
+            &.pending {
+              background: #f5c853;
             }
-            &.production{
+            &.production {
               background: #00b929;
-            } 
-            &.testing{
-              background: #FAA24B;
-            } 
-            &.staging{
-              background: #FA6290;
-            } 
-            &.development{
-              background: #A145FF;
-            } 
+            }
+            &.testing {
+              background: #faa24b;
+            }
+            &.staging {
+              background: #fa6290;
+            }
+            &.development {
+              background: #a145ff;
+            }
           }
         }
       }
@@ -218,12 +213,12 @@
   }
 }
 
-.table-tooltip{
-  .report-tooltip-list{
-    ul{
+.table-tooltip {
+  .report-tooltip-list {
+    ul {
       display: block;
       padding: 0;
-      li{
+      li {
         padding: 4px 8px;
         font-size: 12px;
         line-height: 16px;
@@ -233,24 +228,24 @@
           width: 10px;
           height: 10px;
           border-radius: 50%;
-          background: #1B4DFF;
+          background: #1b4dff;
           display: inline-block;
           margin-right: 5px;
-          &.pending{
-            background: #F5C853;
+          &.pending {
+            background: #f5c853;
           }
-          &.production{
+          &.production {
             background: #00b929;
-          } 
-          &.testing{
-            background: #FAA24B;
-          } 
-          &.staging{
-            background: #FA6290;
-          } 
-          &.development{
-            background: #A145FF;
-          } 
+          }
+          &.testing {
+            background: #faa24b;
+          }
+          &.staging {
+            background: #fa6290;
+          }
+          &.development {
+            background: #a145ff;
+          }
         }
       }
     }

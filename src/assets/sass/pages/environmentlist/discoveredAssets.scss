@@ -235,19 +235,6 @@
               }
             }
 
-            // &::after {
-            //   opacity: 0;
-            //   position: absolute;
-            //   top: 8px;
-            //   right: -16px;
-            //   font-size: 20px;
-            //   line-height: 20px;
-            //   font-weight: 900;
-            //   color: #a5a5d7;
-            //   content: "\f0da";
-            //   font-family: "Font Awesome 5 Pro";
-            // }
-
             span {
               display: inline-flex;
               width: 12px;
@@ -324,30 +311,7 @@
                   }
                 }
 
-                // .done {
-                //   display: inline-block;
-                //   vertical-align: middle;
-                //   color: #00b929;
-                //   border-radius: 25px;
-                //   padding: 3px 10px;
-                //   background-color: #cfffda;
-                // }
-                // .error {
-                //   display: inline-block;
-                //   vertical-align: middle;
-                //   color: #ffba69;
-                //   border-radius: 25px;
-                //   padding: 3px 10px;
-                //   background-color: #ffba6947;
-                // }
-                // .inprogress {
-                //   display: inline-block;
-                //   vertical-align: middle;
-                //   color: #8676ff;
-                //   border-radius: 25px;
-                //   padding: 3px 10px;
-                //   background-color: #e5e1ff;
-                // }
+                
               }
             }
           }
