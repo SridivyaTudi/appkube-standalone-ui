@@ -170,7 +170,6 @@ class BudgetAccountDetails extends Component {
 
   //  Render table head
   renderTableHead = () => {
-    let headers = this.props.headers || [];
     return (
       <TableHead>
         <TableRow>
@@ -257,7 +256,7 @@ class BudgetAccountDetails extends Component {
     }
   };
   render() {
-    let { accounts, searchedKey, showSelectFilterModal } = this.state;
+    let { searchedKey, showSelectFilterModal } = this.state;
     return (
       <>
         <Box className="new-reports-container">

@@ -5,8 +5,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 import AssetsMainFilterModal from "../Components/AssetsMainFilterModal";
 import FilterPopup from "Views/AppViews/DiscoveredAssets/Components/FilterPopup";
-import { count } from "d3";
-
 class AssetsFilterSection extends Component {
   constructor(props) {
     super(props);

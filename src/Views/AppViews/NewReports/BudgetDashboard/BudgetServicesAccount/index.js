@@ -67,7 +67,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-    "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -171,7 +171,7 @@ class BudgetServicesAccount extends Component {
   //  Serach
   handleSearchChange = (e) => {
     let value = e.target.value;
-    let { services, searchedKey } = this.state;
+    let { services } = this.state;
     let data = dummyTableData || [];
     if (data?.length) {
       if (value) {

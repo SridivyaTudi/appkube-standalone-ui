@@ -9,7 +9,6 @@ import {
 } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import status from "Redux/Constants/CommonDS";
 import CloseIcon from "@mui/icons-material/Close";
 import { getCurrentUser } from "Utils";
 import { v4 } from "uuid";

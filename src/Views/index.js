@@ -114,6 +114,7 @@ export const Views = (props) => {
     if (user && !isExistLandingZoneCounts) {
       disptch(getCloudWiseLandingZoneCount());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -125,6 +126,7 @@ export const Views = (props) => {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cloudWiseLandingZoneCount]);
 
   const setTitle = () => {
