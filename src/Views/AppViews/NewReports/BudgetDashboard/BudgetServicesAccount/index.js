@@ -38,8 +38,7 @@ let tableHeader = [
   "Current month spend",
   "Last month Spend",
   "Variance",
-  "Action"
-  
+  "Action",
 ];
 let dummyTableData = [
   {
@@ -54,7 +53,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -68,7 +67,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+    "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -82,7 +81,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -96,7 +95,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -110,7 +109,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -124,7 +123,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -138,7 +137,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -152,7 +151,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
 ];
 class BudgetServicesAccount extends Component {

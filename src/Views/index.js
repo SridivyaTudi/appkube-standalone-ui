@@ -321,7 +321,7 @@ export const Views = (props) => {
             element={<BudgetServicesAccount />}
           />
            <Route
-            path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-account-details`}
+            path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-services-account/budget-account-details`}
             element={<BudgetAccountDetails />}
           />
            <Route
