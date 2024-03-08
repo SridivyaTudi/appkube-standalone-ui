@@ -68,7 +68,7 @@ class DiscoveredAssets extends Component {
               tabs={this.tabMapping}
               setActiveTab={this.setActiveTab}
               activeTab={activeTab}
-              breakWidth={992}
+              breakWidth={767}
               key={v4()}
             />
           </Box>
