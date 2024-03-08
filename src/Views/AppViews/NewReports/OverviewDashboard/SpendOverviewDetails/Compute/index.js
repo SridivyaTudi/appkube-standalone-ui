@@ -240,7 +240,7 @@ class Compute extends Component {
     const name = this.props.params.name;
     return { name };
   }
-  //  Serach 
+  //  Serach
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { costConsumptionData, searchedKey } = this.state;
@@ -260,7 +260,7 @@ class Compute extends Component {
       this.setState({ costConsumptionData, searchedKey: value });
     }
   };
-  
+
   render() {
     const { name } = this.getUrlDetails();
     let { searchedKey, costConsumptionData } = this.state;
@@ -268,9 +268,11 @@ class Compute extends Component {
       <>
         <TimeSpendComponent data={timeSpendData} />
 
-        <h3 className="m-t-3">{name} SPENDINGS</h3>
-        <Box className="table-head">
-          <h4 className="m-t-0 m-b-0">Cost consumption of {name}</h4>
+        <Box className="table-head" alignItems={"end"}>
+          <Box className="d-block">
+            <h3 className="">{name} SPENDINGS</h3>
+            <h4 className="m-t-3 m-b-0">Cost consumption of {name}</h4>
+          </Box>
           <Box className="search m-r-0">
             <input
               type="text"

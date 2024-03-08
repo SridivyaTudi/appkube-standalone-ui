@@ -13,6 +13,7 @@ import ServiceIcon15 from "assets/img/report/service-icon15.png";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import SpendingTable from "../Components/SpendingTable";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 let timeSpendData = [
   {
@@ -152,10 +153,28 @@ class TopUsedServices extends Component {
           </Button>
         </Box>
 
-        <Box className="reports-tab-section m-t-3">
+        <Box className="reports-tab-section m-t-4">
           <TimeSpendComponent data={timeSpendData} />
-          <h3>Spendings Of Top Used Services</h3>
-          <h4>Overview of Top 10 Services</h4>
+          <Box className="table-head" alignItems={"end"}>
+            <Box className="d-block">
+              <h3>Spendings Of Top Used Services</h3>
+              <h4 className="m-t-3 m-b-0">Overview of Top 10 Services</h4>
+            </Box>
+            <Box className="search m-r-0">
+              <input
+                type="text"
+                className="input"
+                placeholder="Search Insatnce "
+                //value={searchedKey}
+                onChange={this.handleSearchChange}
+                autoFocus="autoFocus"
+              />
+              <button className="button">
+                <SearchOutlinedIcon />
+              </button>
+            </Box>
+          </Box>
+
           <SpendingTable data={computeSpendingTable} />
         </Box>
       </Box>

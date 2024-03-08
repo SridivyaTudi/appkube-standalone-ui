@@ -8,6 +8,8 @@ import ServiceIcon5 from "assets/img/report/service-icon5.png";
 import ServiceIcon6 from "assets/img/report/service-icon6.png";
 import SpendingTable from "Views/AppViews/NewReports/OverviewDashboard/Components/SpendingTable";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { Box } from "@mui/material";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 let timeSpendData = [
   {
@@ -91,8 +93,26 @@ class Compute extends Component {
     return (
       <>
         <TimeSpendComponent data={timeSpendData} />
-        <h3>COMPUTE SPENDINGS</h3>
-        <h4>Overview of the compute Services</h4>
+        <Box className="table-head" alignItems={"end"}>
+          <Box className="d-block">
+            <h3 className="m-t-0 m-b-0">COMPUTE SPENDINGS</h3>
+            <h4 className="m-t-3 m-b-0">Overview of the compute Services</h4>
+          </Box>
+          <Box className="search m-r-0">
+            <input
+              type="text"
+              className="input"
+              placeholder="Search Insatnce "
+              //value={searchedKey}
+              onChange={this.handleSearchChange}
+              autoFocus="autoFocus"
+            />
+            <button className="button">
+              <SearchOutlinedIcon />
+            </button>
+          </Box>
+        </Box>
+
         <SpendingTable data={computeSpendingTable} />
       </>
     );

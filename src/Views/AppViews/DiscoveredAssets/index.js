@@ -52,7 +52,7 @@ class DiscoveredAssets extends Component {
   render() {
     const { activeTab } = this.state;
     return (
-      <Box className="discovered-assets-container">
+      <Box className="discovered-assets-container environment-container">
         <Box className="assets-heading">
           <h3 className="m-b-0">ASSETS MANAGEMENT</h3>
           <Button className="primary-btn min-width-inherit" variant="contained">
