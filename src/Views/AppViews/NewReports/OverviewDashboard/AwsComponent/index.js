@@ -140,7 +140,7 @@ class AwsComponent extends Component {
     return (
       <>
         <Box className="reports-charts">
-          <Grid container spacing={2}>
+          <Grid container spacing={3}>
             <Grid item xs={12} md={5} lg={3}>
               <ChartWrapper
                 data={{

@@ -113,7 +113,7 @@ class Compute extends Component {
         <Box className="reports-charts">
           <Grid
             container
-           spacing={2}
+           spacing={3}
           >
             <Grid item xs={12} md={6} lg={4}>
               <ChartWrapper

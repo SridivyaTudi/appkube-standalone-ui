@@ -197,7 +197,7 @@ class AwsComponent extends Component {
       <>
         <TimeSpendComponent data={timeSpendData} />
         <Box className="reports-charts">
-          <Grid container spacing={2}>
+          <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={7}>
               <ChartWrapper
                 data={{
@@ -268,7 +268,7 @@ class AwsComponent extends Component {
               />
             </Grid>
           </Grid>
-          <Grid className="m-t-1" container spacing={2}>
+          <Grid className="m-t-1" container spacing={3}>
             <Grid item xs={12}>
               <ChartWrapper
                 data={{
