@@ -26,12 +26,6 @@ class ProductCategory extends Component {
 
   componentDidMount = () => {
     window.addEventListener("load", this.redirectPage);
-    window.addEventListener("beforeunload", () => {
-      setSingleValueInLocalStorage(
-        "departmentName",
-        this.props?.createProductFormData?.departmentName
-      );
-    });
   };
 
   componentWillUnmount() {
@@ -39,12 +33,10 @@ class ProductCategory extends Component {
   }
 
   redirectPage = () => {
-    let departMentName = getSingleValueFromLocalStorage("departmentName");
-    removeSingleValueFromLocalStorage("departmentName");
+    let { name: departMentName, id } = this.getUrlDetails();
+
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${departMentName
-        ?.toLowerCase()
-        ?.replace(" ", "-")}`
+      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}`
     );
   };
 
@@ -56,12 +48,21 @@ class ProductCategory extends Component {
   /** Get url details. */
   getUrlDetails() {
     let name = this.props.params.name;
-    return { name };
+    let id = this.props.params.id;
+    return { name, id };
   }
+  // Move to next page
+  moveToNextPage = (serviceType) => {
+    let { createProductFormData } = this.props;
+    this.props.setProductIntoDepartment({
+      ...createProductFormData,
+      serviceType,
+    });
+  };
   render() {
     const { showServiceModal } = this.state;
     let { createProductFormData } = this.props;
-    let { name: departMentName } = this.getUrlDetails();
+    let { name: departMentName, id } = this.getUrlDetails();
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -76,7 +77,9 @@ class ProductCategory extends Component {
               </li>
               <li
                 onClick={() =>
-                  this.props.navigate(`/app/bim/add-product/${departMentName}`)
+                  this.props.navigate(
+                    `/app/bim/add-product/${departMentName}/${id}`
+                  )
                 }
               >
                 Add Product
@@ -95,33 +98,29 @@ class ProductCategory extends Component {
               <Box className="d-flex justify-content-between align-items-center">
                 <h3>Business Services</h3>
                 <Link
-                  to={`/app/bim/add-product/${departMentName}/product-category/${createProductFormData?.category
+                  to={`/app/bim/add-product/${departMentName}/${id}/product-category/${createProductFormData?.category
                     ?.toLowerCase()
                     ?.replace(" ", "-")}`}
+                  onClick={() => this.moveToNextPage("business")}
                 >
                   <Button className="primary-btn">Add</Button>
                 </Link>
               </Box>
             </Box>
-            <Box className="product-category-cards">
-              {/* <Box className="product-category-card">
-                <Box
-                  className="product-category-details"
-                  onClick={() => this.handleServiceModal()}
-                >
-                  <Box className="product-image">
-                    <img src={admissionIcon} alt="" />
-                  </Box>
-                  <span className="d-block name">Admission</span>
-                </Box>
-              </Box> */}
-            </Box>
+            <Box className="product-category-cards"></Box>
           </Box>
           <Box className="d-block">
             <Box className="product-title-card">
               <Box className="d-flex justify-content-between align-items-center">
                 <h3>Common Services</h3>
-                <Button className="primary-btn">Add</Button>
+                <Link
+                  to={`/app/bim/add-product/${departMentName}/${id}/product-category/${createProductFormData?.category
+                    ?.toLowerCase()
+                    ?.replace(" ", "-")}`}
+                  onClick={() => this.moveToNextPage("common")}
+                >
+                  <Button className="primary-btn">Add</Button>
+                </Link>
               </Box>
             </Box>
             <Box className="product-category-cards">

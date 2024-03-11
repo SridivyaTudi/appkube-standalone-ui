@@ -28,7 +28,6 @@ export class InstanceListCards extends Component {
   }
   onClickCard = (details) => {
     try {
-      console.log(details);
       this.props.onClickCard(details);
     } catch (error) {
       console.error(error);

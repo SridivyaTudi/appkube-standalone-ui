@@ -48,6 +48,7 @@ class ConfigInfo extends Component {
     this.state = {
       activeTab: 0,
       selectedInfo: {},
+      selectCustomInfo: [],
       tableData: data,
     };
   }
@@ -65,9 +66,24 @@ class ConfigInfo extends Component {
     let { selectedInfo } = this.state;
 
     selectedInfo[`${key}`] = value;
-
     this.setState({
       selectedInfo,
+    });
+    try {
+      let makeArrData = this.manipulateInputData(selectedInfo);
+      this.props.setConfigInfo(makeArrData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  manipulateInputData = (selectedInfo) => {
+    return Object.keys(selectedInfo).map((infoKey) => {
+      let key = infoKey.split("_");
+      key.pop();
+      key = key.join("");
+      let value = selectedInfo[infoKey];
+      return { key, value };
     });
   };
 
@@ -92,6 +108,7 @@ class ConfigInfo extends Component {
       </TableHead>
     );
   };
+  
   // Click on close icon
   onClickCloseIcon = (index) => {
     let { tableData } = this.state;
@@ -147,11 +164,15 @@ class ConfigInfo extends Component {
                         <Select
                           className="fliter-toggel"
                           value={`${
-                            this.state.selectedInfo[`${info.key}_${index}`] ||
-                            ""
+                            this.state.selectedInfo[
+                              `${info.key?.split(" ")?.join("_")}_${index}`
+                            ] || ""
                           }`}
                           onChange={(e) =>
-                            this.handleChange(e, `${info.key}_${index}`)
+                            this.handleChange(
+                              e,
+                              `${info.key?.split(" ")?.join("_")}_${index}`
+                            )
                           }
                           displayEmpty
                           inputProps={{ "aria-label": "Without label" }}
@@ -170,8 +191,17 @@ class ConfigInfo extends Component {
                           className="form-control"
                           name="organizationName"
                           placeholder="User input"
-                          // value={formData.organizationName}
-                          // onChange={this.handleInputChange}
+                          value={
+                            this.state.selectedInfo[
+                              `${info.key?.split(" ")?.join("_")}_${index}`
+                            ]
+                          }
+                          onChange={(e) =>
+                            this.handleChange(
+                              e,
+                              `${info.key?.split(" ")?.join("_")}_${index}`
+                            )
+                          }
                         />
                       </Box>
                     )}
@@ -236,7 +266,8 @@ class ConfigInfo extends Component {
   handleCustomInputChange = (event, Id) => {
     let { name, value } = event.target;
     let { tableData } = this.state;
-
+    let collectKeyValue = [];
+    
     tableData = tableData.map((info, index) => {
       if (Id === index) {
         info[name] = value;
@@ -246,7 +277,7 @@ class ConfigInfo extends Component {
     this.setState({ tableData });
   };
 
-  // Click on add entry button 
+  // Click on add entry button
   onClickAddEntry = () => {
     let { tableData } = this.state;
     tableData.push({

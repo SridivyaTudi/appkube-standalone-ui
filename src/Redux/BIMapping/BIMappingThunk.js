@@ -87,3 +87,16 @@ export const getInstancesServices = createAsyncThunk(
     }
   }
 );
+
+export const createBiMapping = createAsyncThunk(
+  "BIMapping/createBiMapping",
+  async (params) => {
+    try {
+      let url = config.ADD_BI_MAPPING;
+      const response = await postLoginService.post(url, params);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

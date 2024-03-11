@@ -314,19 +314,19 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard`}
             element={<BudgetDashboard />}
           />
-           <Route
+          <Route
             path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-account`}
             element={<BudgetAccount />}
           />
-           <Route
+          <Route
             path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-services-account`}
             element={<BudgetServicesAccount />}
           />
-           <Route
+          <Route
             path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-services-account/budget-account-details`}
             element={<BudgetAccountDetails />}
           />
-           <Route
+          <Route
             path={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
             element={<BudgetProducts />}
           />
@@ -342,7 +342,7 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/department`}
             element={<ItDepartment />}
           />
-           <Route
+          <Route
             path={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/department/department-details`}
             element={<ItDepartmentDetails />}
           />
@@ -363,25 +363,25 @@ export const Views = (props) => {
             element={<CostCentralTopInternal />}
           />
           <Route
-             path={`${APP_PREFIX_PATH}/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal`}
+            path={`${APP_PREFIX_PATH}/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal`}
             element={<CostCentralServicesInternal />}
           />
-           <Route
+          <Route
             path={`${APP_PREFIX_PATH}/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details`}
             element={<CostCentralServicesInternalDetails />}
           />
-          
+
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/product-category`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/product-category`}
             element={<ProductCategory />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/product-category/3-Tier`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/product-category/3-Tier`}
             element={<Tier />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/product-category/soa`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/product-category/soa`}
             element={<Soa />}
           />
           <Route
@@ -389,7 +389,7 @@ export const Views = (props) => {
             element={<AddDepartment />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id`}
             element={<AddProduct />}
           />
           <Route

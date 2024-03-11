@@ -80,33 +80,7 @@ const LOG_LOCATION_SUBKEY_DROP_DOWN = [
 
 let data = [
   {
-    key: "Hosted on",
-    dropDownValues: HOSTED_ON_DROP_DOWN,
-    subKeyValue: {
-      EC2: {
-        subKey: "Instance ID",
-        subValue: ADD_PRODUCT_ENUMS.USER_INPUT,
-      },
-      EKS: {
-        subKey: "Cluster id",
-        subValue: ADD_PRODUCT_ENUMS.USER_INPUT,
-      },
-      ECS: {
-        subKey: "Cluster id",
-        subValue: ADD_PRODUCT_ENUMS.USER_INPUT,
-      },
-      LAMBDA: {
-        subKey: "Function name",
-        subValue: ADD_PRODUCT_ENUMS.USER_INPUT,
-      },
-      S3: {
-        subKey: "Bucket name",
-        subValue: ADD_PRODUCT_ENUMS.USER_INPUT,
-      },
-    },
-  },
-  {
-    key: "Management Endpoint	",
+    key: "Management Endpoint",
     dropDownValues: MANAGEMENT_ENDPOINT__DROP_DOWN,
     subKeyValue: {
       IP_PORT: {
@@ -162,17 +136,6 @@ class ManagementInfo extends Component {
   }
 
   componentDidMount = () => {
-    let value = this.props.selectedCloudElement;
-    if (value) {
-      this.handleChange(
-        {
-          target: {
-            value,
-          },
-        },
-        `Hosted on_0`
-      );
-    }
     this.setState({ tableData: data });
   };
 
@@ -201,6 +164,18 @@ class ManagementInfo extends Component {
       selectedInfo,
       selectedSubkeys,
     });
+    try {
+      let makeArrData = Object.keys(selectedInfo).map((infoKey) => {
+        let key = infoKey.split("_");
+        key.pop();
+        key = key.join("");
+        let value = selectedInfo[infoKey];
+        return { key, value };
+      });
+      this.props.setManagentInfo(makeArrData);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Render table of head.
@@ -285,16 +260,23 @@ class ManagementInfo extends Component {
                     >
                       <Select
                         className="fliter-toggel"
-                        value={`${selectedInfo[`${info.key}_${index}`] || ""}`}
+                        value={`${
+                          selectedInfo[
+                            `${info.key?.split(" ")?.join("_")}_${index}`
+                          ] || ""
+                        }`}
                         onChange={(e) =>
-                          this.handleChange(e, `${info.key}_${index}`)
+                          this.handleChange(
+                            e,
+                            `${info.key?.split(" ")?.join("_")}_${index}`
+                          )
                         }
                         displayEmpty
                         inputProps={{ "aria-label": "Without label" }}
                       >
                         <MenuItem value="">Select </MenuItem>
                         {info.dropDownValues.map((val) => (
-                          <MenuItem value={val.key}>{val.value}</MenuItem>
+                          <MenuItem value={val.value}>{val.value}</MenuItem>
                         ))}
                       </Select>
                     </FormControl>

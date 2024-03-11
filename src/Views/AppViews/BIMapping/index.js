@@ -188,7 +188,7 @@ class BIMapping extends Component {
         url: isTypeDepartment
           ? `/app/bim/add-product/${dataDetails?.name
               ?.toLowerCase()
-              ?.replaceAll(" ", "-")}`
+              ?.replaceAll(" ", "-")}/${dataDetails?.id}`
           : "",
         chlidren: [],
         type,
@@ -445,7 +445,10 @@ class BIMapping extends Component {
 
   // Redirect to Add product
   onLinkClick = (data) => {
-    this.props.setProductIntoDepartment({ departmentName: data.name });
+    this.props.setProductIntoDepartment({
+      departmentName: data.name,
+      departmentId: data.id,
+    });
   };
 
   // Render html when data is no available
@@ -502,11 +505,6 @@ class BIMapping extends Component {
                       Department
                     </ListItem>
                   </Link>
-                  {/* <Link to={`/app/bim/add-product`}>
-                    <ListItem>
-                      <i className="fa-solid fa-circle-dot"></i>Add Products
-                    </ListItem>
-                  </Link> */}
                 </List>
               </div>
             )}

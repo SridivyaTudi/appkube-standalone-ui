@@ -20,7 +20,7 @@ import DataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png
 import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import RightArrow from "assets/img/assetmanager/right-arrow.png";
 import deployed1 from "assets/img/bimapping/deployed1.png";
-
+import LoadingButton from "@mui/lab/LoadingButton";
 import Aws from "assets/img/aws.png";
 import { v4 } from "uuid";
 import LoadBalancer from "../Soa/components/LoadBalancer";
@@ -36,11 +36,13 @@ import {
   getBiServicesFromProductCategory,
   getCloudServices,
   getInstancesServices,
+  createBiMapping,
 } from "Redux/BIMapping/BIMappingThunk";
 import {
   PRODUCT_CATEGORY_ENUM,
   SERVICES_CATEGORY_OF_THREE_TIER_ENUM,
   ADD_PRODUCT_ENUMS,
+  getCurrentOrgId,
 } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { connect } from "react-redux";
@@ -53,6 +55,7 @@ import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import InstanceListCards from "Views/AppViews/BIMapping/Components/InstanceListCards";
+import { ToastMessage } from "Toast/ToastMessage";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -91,7 +94,7 @@ let serviceTableData = [
     port: 53,
   },
 ];
-
+const orgId = getCurrentOrgId();
 class Tier extends Component {
   tabMapping = [
     {
@@ -179,6 +182,8 @@ class Tier extends Component {
       clickManInfoIdAddEntry: "",
       cloudName: "",
       editStatus: false,
+      managementInfo: [],
+      configInfo: [],
     };
   }
 
@@ -216,8 +221,8 @@ class Tier extends Component {
 
   // Redirect of the page
   redirectPage = () => {
-    let { name } = this.getUrlDetails();
-    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${name}`);
+    let { name, id } = this.getUrlDetails();
+    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${name}/${id}`);
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -248,6 +253,16 @@ class Tier extends Component {
     ) {
       let instancesServices = this.props.instancesServices?.data || [];
       this.setState({ instancesServices });
+    }
+
+    if (
+      prevProps.creationBiMapping.status !==
+        this.props.creationBiMapping.status &&
+      this.props.creationBiMapping.status === status.SUCCESS &&
+      this.props.creationBiMapping?.data
+    ) {
+      ToastMessage.success("Created Product of BI-Mapping.");
+      this.props.navigate(`${APP_PREFIX_PATH}/bim`);
     }
   }
 
@@ -477,74 +492,6 @@ class Tier extends Component {
     });
   };
 
-  // Handle check box
-  handleCheckBox = (event) => {
-    let { selectedService } = this.state;
-
-    let { id, checked } = event.target;
-
-    if (checked) {
-      selectedService.push(+id);
-    } else {
-      selectedService = selectedService.filter((value) => value !== +id);
-    }
-
-    this.setState({ selectedService });
-  };
-
-  // Render table of the head
-  renderTableHead = () => {
-    return (
-      <TableHead>
-        <TableRow>
-          <TableCell align="center" component="th" scope="row">
-            Servicename
-          </TableCell>
-          <TableCell align="center">Port Details</TableCell>
-          <TableCell align="center">Department URL</TableCell>
-        </TableRow>
-      </TableHead>
-    );
-  };
-
-  // Render table of the body
-  renderTableBody = () => {
-    let { selectedService } = this.state;
-    return (
-      <TableBody>
-        {serviceTableData.map((service, index) => {
-          return (
-            <TableRow>
-              <TableCell align="left">
-                <Checkbox
-                  className="check-box"
-                  size="small"
-                  id={index}
-                  onChange={this.handleCheckBox}
-                  checked={selectedService.includes(index)}
-                />
-                <span
-                  onClick={() =>
-                    this.handleCheckBox({
-                      target: {
-                        id: index,
-                        checked: !selectedService.includes(index),
-                      },
-                    })
-                  }
-                >
-                  {service.name}
-                </span>
-              </TableCell>
-              <TableCell align="center">{service.port}</TableCell>
-              <TableCell align="center"></TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    );
-  };
-
   // Click on save btn
   onClickSave = () => {
     let {
@@ -557,6 +504,8 @@ class Tier extends Component {
       cloudElementType,
       cloudName,
       selectedLayer,
+      configInfo,
+      managementInfo,
     } = this.state;
     let { createProductFormData } = this.props;
     let layerName = "";
@@ -573,7 +522,6 @@ class Tier extends Component {
     } else if (!savedLayer.aux) {
       savedLayer.aux = true;
       layerName = "aux";
-      this.props.navigate(`${APP_PREFIX_PATH}/bim`);
     }
 
     savedData.push({
@@ -583,13 +531,18 @@ class Tier extends Component {
       selectedService,
       cloudElementType,
       cloudName,
+      configInfo,
+      managementInfo,
     });
-
+    if (savedLayer.aux) {
+      this.addBiMappingAPICall(savedData);
+    }
     selectedInstance = -1;
     selectedDeployedInstance = "";
     selectedService = [];
     isShowDepolyedSection = false;
-
+    configInfo = [];
+    managementInfo = [];
     this.setState({
       savedLayer,
       savedData,
@@ -597,6 +550,8 @@ class Tier extends Component {
       selectedDeployedInstance,
       selectedService,
       isShowDepolyedSection,
+      configInfo,
+      managementInfo,
     });
     let passData = JSON.parse(
       JSON.stringify({
@@ -645,7 +600,8 @@ class Tier extends Component {
   /** Get url details. */
   getUrlDetails() {
     let name = this.props.params.name;
-    return { name };
+    let id = this.props.params.id;
+    return { name, id };
   }
 
   // Click on edit btn.
@@ -688,6 +644,43 @@ class Tier extends Component {
     }
   };
 
+  // Add BI-mapping API call
+  addBiMappingAPICall = (savedData) => {
+    let { id } = this.getUrlDetails();
+    let { selectedLayer } = this.state;
+    let {
+      createProductFormData: { productName, environment },
+    } = this.props;
+    let params = {
+      org: {
+        id: orgId,
+        dep: {
+          id,
+          product: {
+            name: productName,
+            type: "3 tier",
+            productEnv: {
+              name: environment,
+              service: savedData.map((service) => {
+                return {
+                  name: selectedLayer[service.layerName],
+                  type: service.layerName?.toUpperCase(),
+                  cloudElementMapping: {
+                    id: service.selectedInstance,
+                    managementInfo: service.managementInfo,
+                    configInfo: service.configInfo,
+                  },
+                };
+              }),
+            },
+          },
+        },
+      },
+    };
+
+    this.props.createBiMapping(params);
+  };
+
   render() {
     let {
       isSelectNginxOpen,
@@ -706,8 +699,12 @@ class Tier extends Component {
       clickManInfoIdAddEntry,
       cloudElementType,
     } = this.state;
-    let { biServicesFromProductCategory, createProductFormData } = this.props;
-    let { name } = this.getUrlDetails();
+    let {
+      biServicesFromProductCategory,
+      createProductFormData,
+      creationBiMapping,
+    } = this.props;
+    let { name, id } = this.getUrlDetails();
     let isShowManagementInfoTab = this.showManagementInfoTab.includes(
       cloudElementType?.toUpperCase()
     );
@@ -728,7 +725,7 @@ class Tier extends Component {
               </li>
               <li
                 onClick={() =>
-                  this.props.navigate(`/app/bim/add-product/${name}`)
+                  this.props.navigate(`/app/bim/add-product/${name}/${id}`)
                 }
               >
                 Add Product
@@ -749,10 +746,10 @@ class Tier extends Component {
             <Grid item xs={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
-                  <h4 className="m-t-0 m-b-0">
+                  {/* <h4 className="m-t-0 m-b-0">
                     {" "}
                     MODULE : {createProductFormData.moduleName}
-                  </h4>
+                  </h4> */}
                   {biServicesFromProductCategory.status ===
                   status.IN_PROGRESS ? (
                     this.renderLoder()
@@ -1172,54 +1169,9 @@ class Tier extends Component {
               )}
             </Grid>
           </Grid>
+
           {selectedInstance >= 0 ? (
-            cloudElementType?.toUpperCase() === ADD_PRODUCT_ENUMS.CDN ? (
-              <Box className="nginx-section">
-                <Box className="tabs">
-                  <List className="tabs-menu">
-                    {this.tabMapping.map((tabData, index) => {
-                      return (
-                        <ListItem
-                          key={`ops-tab-${index}`}
-                          className={index === activeTabEks ? "active" : ""}
-                          onClick={() => this.setActiveTab(index)}
-                        >
-                          <Box className="m-r-2">
-                            <img src={tabData.image} alt="" />
-                          </Box>
-                          {tabData.name}
-                        </ListItem>
-                      );
-                    })}
-                  </List>
-                  <Box className="tabs-content">
-                    {activeTabEks === 0 ? (
-                      <LoadBalancer
-                        setNextTab={(activeTabEks) => {
-                          this.setState({ activeTabEks });
-                        }}
-                      />
-                    ) : activeTabEks === 1 ? (
-                      <Ingress
-                        setNextTab={(activeTabEks) => {
-                          this.setState({ activeTabEks });
-                        }}
-                      />
-                    ) : activeTabEks === 2 ? (
-                      <Service
-                        setNextTab={(activeTabEks) => {
-                          this.setState({ activeTabEks });
-                        }}
-                      />
-                    ) : activeTabEks === 3 ? (
-                      <AppTopology />
-                    ) : (
-                      <></>
-                    )}
-                  </Box>
-                </Box>
-              </Box>
-            ) : isShowManagementInfoTab ? (
+            <>
               <Box className="nginx-section">
                 <Box className="tabs">
                   <List className="tabs-menu">
@@ -1244,8 +1196,10 @@ class Tier extends Component {
                         this.setState({ activeTabEcs });
                       }}
                       onClickAddEntryBtn={clickManInfoIdAddEntry}
-                      selectedCloudElement={cloudElementType?.toUpperCase()}
                       style={{ display: activeTabEcs === 0 ? "block" : "none" }}
+                      setManagentInfo={(managementInfo) => {
+                        this.setState({ managementInfo });
+                      }}
                     />
 
                     <ConfigInfo
@@ -1254,35 +1208,20 @@ class Tier extends Component {
                       }}
                       onClickAddEntryBtn={clickConfigInfoIdAddEntry}
                       style={{ display: activeTabEcs === 1 ? "block" : "none" }}
+                      setConfigInfo={(configInfo) => {
+                        this.setState({ configInfo });
+                      }}
                     />
                   </Box>
                 </Box>
               </Box>
-            ) : (
-              <>
-                <Box className="tier-table-section m-t-4">
-                  <TableContainer className="table">
-                    <Table className="overview">
-                      {this.renderTableHead()}
-                      {this.renderTableBody()}
-                    </Table>
-                  </TableContainer>
-                </Box>
-              </>
-            )
-          ) : (
-            <></>
-          )}
-
-          {selectedInstance >= 0 ? (
-            <Box className="width-100 m-t-3">
-              <Grid
-                container
-                rowSpacing={1}
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              >
-                <Grid item xs={4} alignItems={"flex-start"}>
-                  {isShowManagementInfoTab ? (
+              <Box className="width-100 m-t-3">
+                <Grid
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                >
+                  <Grid item xs={4} alignItems={"flex-start"}>
                     <Button
                       className={` primary-btn min-width-inherit`}
                       variant="contained"
@@ -1306,28 +1245,34 @@ class Tier extends Component {
                       <i className="fa-sharp fa-solid fa-plus m-r-1"></i>
                       Add Entry
                     </Button>
-                  ) : (
-                    <></>
-                  )}
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Box className="d-block text-center">
+                      <LoadingButton
+                        // className={` ${
+                        //   isSaveEnable ? "" : "info-btn"
+                        // } primary-btn min-width-inherit`}
+                        className={`primary-btn min-width-inherit`}
+                        variant="contained"
+                        disabled={
+                          creationBiMapping.status === status.IN_PROGRESS
+                        }
+                        loading={
+                          creationBiMapping.status === status.IN_PROGRESS
+                        }
+                        // onClick={() =>
+                        //   isSaveEnable ? this.onClickSave() : <></>
+                        // }
+                        onClick={this.onClickSave}
+                      >
+                        Save
+                      </LoadingButton>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={4}></Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  <Box className="d-block text-center">
-                    <Button
-                      className={` ${
-                        isSaveEnable ? "" : "info-btn"
-                      } primary-btn min-width-inherit`}
-                      variant="contained"
-                      onClick={() =>
-                        isSaveEnable ? this.onClickSave() : <></>
-                      }
-                    >
-                      Save
-                    </Button>
-                  </Box>
-                </Grid>
-                <Grid item xs={4}></Grid>
-              </Grid>
-            </Box>
+              </Box>
+            </>
           ) : (
             <></>
           )}
@@ -1342,12 +1287,14 @@ function mapStateToProps(state) {
     createProductFormData,
     cloudServices,
     instancesServices,
+    creationBiMapping,
   } = state.biMapping;
   return {
     biServicesFromProductCategory,
     createProductFormData,
     cloudServices,
     instancesServices,
+    creationBiMapping,
   };
 }
 
@@ -1356,6 +1303,7 @@ const mapDispatchToProps = {
   getCloudServices,
   getInstancesServices,
   setProductIntoDepartment,
+  createBiMapping,
 };
 
 export default connect(
