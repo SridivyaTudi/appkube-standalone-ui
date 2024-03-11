@@ -160,9 +160,7 @@ class BudgetAccount extends Component {
               </ul>
             </Box>
           </Box>
-          <Box className="list-heading m-t-2 ">
-            <h4 className="m-t-0 m-b-0">Cost of Top Accounts</h4>
-            <Box className="d-flex ">
+          <Box className="d-flex align-items-center justify-content-end m-t-2">
               <Button
                 className="light-btn p-l-15 p-r-15 m-r-3"
                 onClick={this.handleSelectFilterModal}
@@ -173,8 +171,7 @@ class BudgetAccount extends Component {
                 <i className="fas fa-calendar-minus m-r-2"></i> Last Month
               </Button>
             </Box>
-          </Box>
-          <Box className="m-t-2">
+          <Box className="m-t-4">
             <TimeSpendComponent data={timeSpendData} />
           </Box>
           <Box className="table-head">

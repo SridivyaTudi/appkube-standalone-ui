@@ -233,7 +233,7 @@ class BudgetDepartments extends Component {
               <i className="fas fa-calendar-minus m-r-2"></i> Last Month
             </Button>
           </Box>
-          <Box className="table-head m-t-3">
+          <Box className="table-head">
             <h4 className="m-t-0 m-b-0">Top Department Exceeding Budget</h4>
             <Box className="search">
               <input
