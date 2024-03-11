@@ -15,6 +15,7 @@ import SelectFilterModal from "../../Components/SelectFilterModal";
 import { v4 } from "uuid";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 let timeSpendData = [
   {
@@ -202,9 +203,26 @@ class CostTopAccounts extends Component {
             <i className="fas fa-calendar-minus m-r-2"></i> Last Month
           </Button>
         </Box>
-        <Box className="reports-tab-section m-t-3">
+        <Box className="reports-tab-section m-t-4">
           <TimeSpendComponent data={timeSpendData} />
-          <h4>Overview of Top 5 Accounts</h4>
+          <Box className="table-head">
+            <Box className="d-block">
+              <h4 className="m-t-0 m-b-0">Overview of Top 5 Accounts</h4>
+            </Box>
+            <Box className="search m-r-0">
+              <input
+                type="text"
+                className="input"
+                placeholder="Search Insatnce "
+                //value={searchedKey}
+                onChange={this.handleSearchChange}
+                autoFocus="autoFocus"
+              />
+              <button className="button">
+                <SearchOutlinedIcon />
+              </button>
+            </Box>
+          </Box>
           <Box className="new-reports-table">
             <TableContainer className="table">
               <Table style={{ width: 1500 }}>

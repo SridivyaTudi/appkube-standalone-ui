@@ -13,6 +13,7 @@ import ChartWrapper from "../../../Components/ChartWrapper";
 import DonutChart from "../../../Components/DonutChart";
 import TimeSpendComponent from "../../../Components/TimeSpendComponent";
 import VerticalBarchart from "../../../Components/VerticalBarchart";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 let donutData = [
   {
@@ -111,10 +112,7 @@ class Compute extends Component {
       <>
         <TimeSpendComponent data={timeSpendData} />
         <Box className="reports-charts">
-          <Grid
-            container
-           spacing={3}
-          >
+          <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
               <ChartWrapper
                 data={{
@@ -152,7 +150,24 @@ class Compute extends Component {
             </Grid>
           </Grid>
         </Box>
-        <h4>Top RI Recommendations</h4>
+        <Box className="table-head" >
+          <Box className="d-block">
+            <h4 className="m-t-0 m-b-0">Top RI Recommendations</h4>
+          </Box>
+          <Box className="search m-r-0">
+            <input
+              type="text"
+              className="input"
+              placeholder="Search Insatnce "
+              //value={searchedKey}
+              onChange={this.handleSearchChange}
+              autoFocus="autoFocus"
+            />
+            <button className="button">
+              <SearchOutlinedIcon />
+            </button>
+          </Box>
+        </Box>
         <Box className="new-reports-table">
           <TableContainer className="table">
             <Table style={{ width: 2300 }}>

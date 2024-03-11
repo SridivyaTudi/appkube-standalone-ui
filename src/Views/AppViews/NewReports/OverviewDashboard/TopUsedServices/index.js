@@ -174,7 +174,6 @@ class TopUsedServices extends Component {
               </button>
             </Box>
           </Box>
-
           <SpendingTable data={computeSpendingTable} />
         </Box>
       </Box>

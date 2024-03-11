@@ -112,7 +112,6 @@ class Compute extends Component {
             </button>
           </Box>
         </Box>
-
         <SpendingTable data={computeSpendingTable} />
       </>
     );
