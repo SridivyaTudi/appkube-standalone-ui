@@ -49,14 +49,50 @@ class ConfigInfo extends Component {
       activeTab: 0,
       selectedInfo: {},
       selectCustomInfo: [],
-      tableData: data,
+      tableData: JSON.parse(JSON.stringify(data)),
     };
   }
+
+  componentDidMount = () => {
+    this.setPreviousData();
+  };
+
   componentDidUpdate = (prevProps, prevState) => {
     if (prevProps.onClickAddEntryBtn !== this.props.onClickAddEntryBtn) {
       this.onClickAddEntry();
     }
+    if (prevProps.currentActiveData !== this.props.currentActiveData) {
+      this.setPreviousData();
+    }
   };
+
+  setPreviousData = () => {
+    let { tableData, selectedInfo } = this.state;
+    tableData = [];
+
+    tableData = JSON.parse(JSON.stringify(data));
+    let currentActiveData = this.props.currentActiveData;
+
+    if (currentActiveData?.length) {
+      currentActiveData.forEach((activeData) => {
+        if (activeData.isCustomField) {
+          tableData.push(activeData);
+        } else {
+          tableData.forEach((prev, index) => {
+            if (
+              prev.key?.split(" ")?.join("")?.toLowerCase() === activeData.key
+            ) {
+              selectedInfo[`${prev.key?.split(" ")?.join("_")}_${index}`] =
+                activeData.value;
+            }
+          });
+        }
+      });
+    }
+
+    this.setState({ tableData, selectedInfo });
+  };
+
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
@@ -66,25 +102,57 @@ class ConfigInfo extends Component {
     let { selectedInfo } = this.state;
 
     selectedInfo[`${key}`] = value;
+
     this.setState({
       selectedInfo,
     });
+    this.setConfigInfo();
+  };
+
+  setConfigInfo = () => {
+    let { selectedInfo } = this.state;
     try {
-      let makeArrData = this.manipulateInputData(selectedInfo);
-      this.props.setConfigInfo(makeArrData);
+      let inputData = this.manipulateInputData(selectedInfo);
+
+      let customInputData = this.manipulateCustomInputData();
+      this.props.setConfigInfo(inputData.concat(customInputData));
     } catch (error) {
       console.log(error);
     }
   };
 
   manipulateInputData = (selectedInfo) => {
-    return Object.keys(selectedInfo).map((infoKey) => {
-      let key = infoKey.split("_");
-      key.pop();
-      key = key.join("");
-      let value = selectedInfo[infoKey];
-      return { key, value };
+    let keyValues = [];
+    Object.keys(selectedInfo).forEach((infoKey) => {
+      if (selectedInfo[infoKey]) {
+        let key = infoKey.split("_");
+        key.pop();
+        key = key.join("").toLowerCase();
+        let value = selectedInfo[infoKey];
+        keyValues.push({ key, value });
+      }
     });
+    return keyValues;
+  };
+
+  manipulateCustomInputData = () => {
+    let { tableData } = this.state;
+    let customKeyValues = [];
+
+    tableData.forEach((infoKey) => {
+      let { key, value, isCustomField, subKey, subValue } = infoKey;
+      if (isCustomField && infoKey?.key && infoKey.value) {
+        customKeyValues.push({
+          key,
+          value,
+          subKey,
+          subValue,
+          isCustomField: true,
+        });
+      }
+    });
+
+    return customKeyValues;
   };
 
   // Render table of head.
@@ -108,7 +176,7 @@ class ConfigInfo extends Component {
       </TableHead>
     );
   };
-  
+
   // Click on close icon
   onClickCloseIcon = (index) => {
     let { tableData } = this.state;
@@ -267,14 +335,19 @@ class ConfigInfo extends Component {
     let { name, value } = event.target;
     let { tableData } = this.state;
     let collectKeyValue = [];
-    
+    let currentData;
     tableData = tableData.map((info, index) => {
       if (Id === index) {
         info[name] = value;
+        currentData = info;
       }
       return info;
     });
-    this.setState({ tableData });
+    this.setState({ tableData }, () => {
+      if (currentData.key && currentData?.value) {
+        this.setConfigInfo();
+      }
+    });
   };
 
   // Click on add entry button

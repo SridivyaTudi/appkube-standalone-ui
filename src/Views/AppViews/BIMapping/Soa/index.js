@@ -233,14 +233,17 @@ class Soa extends Component {
     if (
       prevProps.creationBiMapping.status !==
         this.props.creationBiMapping.status &&
-      this.props.creationBiMapping.status === status.SUCCESS &&
-      this.props.creationBiMapping?.data
+      this.props.creationBiMapping.status === status.SUCCESS
     ) {
-      ToastMessage.success("Created Product of BI-Mapping.");
-      let { name, id } = this.getUrlDetails();
-      this.props.navigate(
-        `/app/bim/add-product/${name}/${id}/product-category`
-      );
+      if (this.props.creationBiMapping?.data) {
+        ToastMessage.success("Created Product of BI-Mapping.");
+        let { name, id } = this.getUrlDetails();
+        this.props.navigate(
+          `/app/bim/add-product/${name}/${id}/product-category`
+        );
+      } else {
+        ToastMessage.error("Creation Of Add BI-mapping Failed.");
+      }
     }
   }
   // Manipulate service data
@@ -542,6 +545,7 @@ class Soa extends Component {
       selectedServiceData,
       configInfo,
       managementInfo,
+      editStatus,
     } = this.state;
     let { createProductFormData } = this.props;
     let serviceName = "";
@@ -556,8 +560,7 @@ class Soa extends Component {
       savedService.other = true;
       serviceName = "other";
     }
-
-    savedData.push({
+    let currentData = {
       serviceName,
       selectedInstance,
       selectedDeployedInstance,
@@ -566,7 +569,18 @@ class Soa extends Component {
       cloudName,
       configInfo,
       managementInfo,
-    });
+    };
+    if (editStatus) {
+      savedData = savedData.map((previousData) => {
+        if (previousData.serviceName === serviceName) {
+          return currentData;
+        }
+        return previousData;
+      });
+    } else {
+      savedData.push(currentData);
+    }
+console.log(savedData)
     if (savedService.other) {
       this.addBiMappingAPICall(savedData);
     }
@@ -603,7 +617,7 @@ class Soa extends Component {
 
   // On click instance
   onClickInstance = (selectedInstance) => {
-    this.setState({ selectedInstance, selectedService: [] });
+    this.setState({ selectedInstance, configInfo: [], managementInfo: [] });
   };
 
   // Click on deployed card
@@ -621,11 +635,11 @@ class Soa extends Component {
   // Click on edit btn.
   onClickEditBtn = (serviceName) => {
     let { savedData, savedService, isShowDepolyedSection } = this.state;
-
+    console.log(serviceName);
     let findSaveData = savedData.find(
       (data) => data.serviceName === serviceName
     );
-
+      console.log(findSaveData,savedData)
     if (findSaveData) {
       let {
         selectedInstance,
@@ -633,6 +647,8 @@ class Soa extends Component {
         selectedService,
         cloudElementType: elementType,
         cloudName,
+        managementInfo,
+        configInfo,
       } = findSaveData;
       this.props.getInstancesServices({ cloudName, elementType });
 
@@ -649,15 +665,16 @@ class Soa extends Component {
         }
       });
 
-      isShowDepolyedSection = true;
-
+      console.log(isShowDepolyedSection);
       this.setState({
         selectedInstance,
         selectedDeployedInstance,
         selectedService,
         savedService,
         cloudElementType: elementType,
-        isShowDepolyedSection,
+        isShowDepolyedSection: true,
+        managementInfo,
+        configInfo,
       });
     }
   };
@@ -705,8 +722,27 @@ class Soa extends Component {
         type: service.serviceName?.toUpperCase(),
         cloudElementMapping: {
           id: service.selectedInstance,
-          managementInfo: service.managementInfo,
-          configInfo: service.configInfo,
+          managementInfo: service.managementInfo
+            .map((management) => {
+              let { isSubValue, key, value } = management;
+              if (!isSubValue) {
+                let formatData = {
+                  key,
+                  value,
+                };
+                return formatData;
+              }
+            })
+            .filter((obj) => obj),
+          configInfo: service.configInfo.map((config) => {
+            let { key, value } = config;
+
+            let formatData = {
+              key,
+              value,
+            };
+            return formatData;
+          }),
         },
       };
     });
@@ -750,6 +786,9 @@ class Soa extends Component {
       clickConfigInfoIdAddEntry,
       clickManInfoIdAddEntry,
       isShowDepolyedSection,
+      configInfo,
+      managementInfo,
+      editStatus,
     } = this.state;
     let {
       biServicesFromProductCategory,
@@ -1212,6 +1251,7 @@ class Soa extends Component {
                       setManagentInfo={(managementInfo) => {
                         this.setState({ managementInfo });
                       }}
+                      currentActiveData={editStatus ? managementInfo : null}
                     />
 
                     <ConfigInfo
@@ -1224,6 +1264,7 @@ class Soa extends Component {
                       setConfigInfo={(configInfo) => {
                         this.setState({ configInfo });
                       }}
+                      currentActiveData={editStatus ? configInfo : null}
                     />
                   </Box>
                 </Box>
@@ -1235,33 +1276,29 @@ class Soa extends Component {
                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 >
                   <Grid item xs={4} alignItems={"flex-start"}>
-                    {isShowManagementInfoTab ? (
-                      <Button
-                        className={` primary-btn min-width-inherit`}
-                        variant="contained"
-                        onClick={() => {
-                          let {
-                            clickConfigInfoIdAddEntry,
-                            clickManInfoIdAddEntry,
-                          } = this.state;
+                    <Button
+                      className={` primary-btn min-width-inherit`}
+                      variant="contained"
+                      onClick={() => {
+                        let {
+                          clickConfigInfoIdAddEntry,
+                          clickManInfoIdAddEntry,
+                        } = this.state;
 
-                          if (activeTabEcs === 0) {
-                            clickManInfoIdAddEntry = v4();
-                          } else {
-                            clickConfigInfoIdAddEntry = v4();
-                          }
-                          this.setState({
-                            clickConfigInfoIdAddEntry,
-                            clickManInfoIdAddEntry,
-                          });
-                        }}
-                      >
-                        <i className="fa-sharp fa-solid fa-plus m-r-1"></i>
-                        Add Entry
-                      </Button>
-                    ) : (
-                      <></>
-                    )}
+                        if (activeTabEcs === 0) {
+                          clickManInfoIdAddEntry = v4();
+                        } else {
+                          clickConfigInfoIdAddEntry = v4();
+                        }
+                        this.setState({
+                          clickConfigInfoIdAddEntry,
+                          clickManInfoIdAddEntry,
+                        });
+                      }}
+                    >
+                      <i className="fa-sharp fa-solid fa-plus m-r-1"></i>
+                      Add Entry
+                    </Button>
                   </Grid>
                   <Grid item xs={4}>
                     <Box className="d-block text-center">

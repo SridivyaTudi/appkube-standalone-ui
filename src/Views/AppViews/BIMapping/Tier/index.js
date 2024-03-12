@@ -258,11 +258,18 @@ class Tier extends Component {
     if (
       prevProps.creationBiMapping.status !==
         this.props.creationBiMapping.status &&
-      this.props.creationBiMapping.status === status.SUCCESS &&
-      this.props.creationBiMapping?.data
+      this.props.creationBiMapping.status === status.SUCCESS
     ) {
-      ToastMessage.success("Created Product of BI-Mapping.");
-      this.props.navigate(`${APP_PREFIX_PATH}/bim`);
+      if (this.props.creationBiMapping?.data) {
+        console.log("sucee");
+        let response = this.props.creationBiMapping?.data;
+        if (response) {
+          ToastMessage.success("Product added in department.");
+          this.props.navigate(`${APP_PREFIX_PATH}/bim`);
+        }
+      } else {
+        ToastMessage.error("Creation Of Add BI-mapping Failed.");
+      }
     }
   }
 
@@ -506,6 +513,7 @@ class Tier extends Component {
       selectedLayer,
       configInfo,
       managementInfo,
+      editStatus,
     } = this.state;
     let { createProductFormData } = this.props;
     let layerName = "";
@@ -523,8 +531,7 @@ class Tier extends Component {
       savedLayer.aux = true;
       layerName = "aux";
     }
-
-    savedData.push({
+    let currentSaveData = {
       layerName,
       selectedInstance,
       selectedDeployedInstance,
@@ -533,7 +540,18 @@ class Tier extends Component {
       cloudName,
       configInfo,
       managementInfo,
-    });
+    };
+    if (editStatus) {
+      savedData = savedData.map((previousData) => {
+        if (previousData.layerName === layerName) {
+          return currentSaveData;
+        }
+        return previousData;
+      });
+    } else {
+      savedData.push(currentSaveData);
+    }
+
     if (savedLayer.aux) {
       this.addBiMappingAPICall(savedData);
     }
@@ -552,6 +570,8 @@ class Tier extends Component {
       isShowDepolyedSection,
       configInfo,
       managementInfo,
+      editStatus: false,
+      activeTabEcs: 0,
     });
     let passData = JSON.parse(
       JSON.stringify({
@@ -560,6 +580,7 @@ class Tier extends Component {
         soaData: null,
       })
     );
+
     this.props.setProductIntoDepartment(passData);
   };
 
@@ -576,7 +597,7 @@ class Tier extends Component {
 
   // On click instance
   onClickInstance = (selectedInstance) => {
-    this.setState({ selectedInstance, selectedService: [] });
+    this.setState({ selectedInstance, configInfo: [], managementInfo: [] });
   };
 
   // Render loder
@@ -617,6 +638,8 @@ class Tier extends Component {
         selectedService,
         cloudElementType: elementType,
         cloudName,
+        managementInfo,
+        configInfo,
       } = findSaveData;
       this.props.getInstancesServices({ cloudName, elementType });
 
@@ -640,6 +663,8 @@ class Tier extends Component {
         savedLayer,
         cloudElementType: elementType,
         isShowDepolyedSection: true,
+        managementInfo,
+        configInfo,
       });
     }
   };
@@ -667,8 +692,27 @@ class Tier extends Component {
                   type: service.layerName?.toUpperCase(),
                   cloudElementMapping: {
                     id: service.selectedInstance,
-                    managementInfo: service.managementInfo,
-                    configInfo: service.configInfo,
+                    managementInfo: service.managementInfo
+                      .map((management) => {
+                        let { isSubValue, key, value } = management;
+                        if (!isSubValue) {
+                          let formatData = {
+                            key,
+                            value,
+                          };
+                          return formatData;
+                        }
+                      })
+                      .filter((obj) => obj),
+                    configInfo: service.configInfo.map((config) => {
+                      let { key, value } = config;
+
+                      let formatData = {
+                        key,
+                        value,
+                      };
+                      return formatData;
+                    }),
                   },
                 };
               }),
@@ -698,6 +742,9 @@ class Tier extends Component {
       clickConfigInfoIdAddEntry,
       clickManInfoIdAddEntry,
       cloudElementType,
+      editStatus,
+      configInfo,
+      managementInfo,
     } = this.state;
     let {
       biServicesFromProductCategory,
@@ -1200,6 +1247,7 @@ class Tier extends Component {
                       setManagentInfo={(managementInfo) => {
                         this.setState({ managementInfo });
                       }}
+                      currentActiveData={editStatus ? managementInfo : null}
                     />
 
                     <ConfigInfo
@@ -1211,6 +1259,7 @@ class Tier extends Component {
                       setConfigInfo={(configInfo) => {
                         this.setState({ configInfo });
                       }}
+                      currentActiveData={editStatus ? configInfo : null}
                     />
                   </Box>
                 </Box>
