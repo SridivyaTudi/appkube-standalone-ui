@@ -206,9 +206,7 @@ class CostTopAccounts extends Component {
         <Box className="reports-tab-section m-t-4">
           <TimeSpendComponent data={timeSpendData} />
           <Box className="table-head">
-            <Box className="d-block">
-              <h4 className="m-t-0 m-b-0">Overview of Top 5 Accounts</h4>
-            </Box>
+            <h4 className="m-t-0 m-b-0">Overview of Top 5 Accounts</h4>
             <Box className="search m-r-0">
               <input
                 type="text"

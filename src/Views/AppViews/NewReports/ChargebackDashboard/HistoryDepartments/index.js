@@ -90,7 +90,7 @@ class HistoryDepartments extends Component {
           </Box>
           <Box className="table-head">
             <h4 className="m-t-0 m-b-0">History of Departments</h4>
-            <Box className="d-flex align-items-center">
+            <Box className=" d-flex align-items-center">
               <Box className="search">
                 <input
                   type="text"
@@ -114,7 +114,7 @@ class HistoryDepartments extends Component {
           </Box>
           <Box className="new-reports-table history-department-table">
             <TableContainer className="table">
-              <Table style={{width: 1200}}>
+              <Table style={{ width: 1200 }}>
                 <TableHead>
                   <TableRow>
                     <TableCell align="left">Month</TableCell>
@@ -129,8 +129,12 @@ class HistoryDepartments extends Component {
                   <TableRow>
                     <TableCell align="left">January, 2023</TableCell>
                     <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center"><strong>$10,000</strong></TableCell>
-                    <TableCell align="center"><strong>$12,800</strong></TableCell>
+                    <TableCell align="center">
+                      <strong>$10,000</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>$12,800</strong>
+                    </TableCell>
                     <TableCell align="center">
                       <Box className="variance-count d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
@@ -144,8 +148,12 @@ class HistoryDepartments extends Component {
                   <TableRow>
                     <TableCell align="left">January, 2023</TableCell>
                     <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center"><strong>$10,000</strong></TableCell>
-                    <TableCell align="center"><strong>$12,800</strong></TableCell>
+                    <TableCell align="center">
+                      <strong>$10,000</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>$12,800</strong>
+                    </TableCell>
                     <TableCell align="center">
                       <Box className="variance-count d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
@@ -159,8 +167,12 @@ class HistoryDepartments extends Component {
                   <TableRow>
                     <TableCell align="left">January, 2023</TableCell>
                     <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center"><strong>$10,000</strong></TableCell>
-                    <TableCell align="center"><strong>$12,800</strong></TableCell>
+                    <TableCell align="center">
+                      <strong>$10,000</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>$12,800</strong>
+                    </TableCell>
                     <TableCell align="center">
                       <Box className="variance-count d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
@@ -174,8 +186,12 @@ class HistoryDepartments extends Component {
                   <TableRow>
                     <TableCell align="left">January, 2023</TableCell>
                     <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center"><strong>$10,000</strong></TableCell>
-                    <TableCell align="center"><strong>$12,800</strong></TableCell>
+                    <TableCell align="center">
+                      <strong>$10,000</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>$12,800</strong>
+                    </TableCell>
                     <TableCell align="center">
                       <Box className="variance-count d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
@@ -189,8 +205,12 @@ class HistoryDepartments extends Component {
                   <TableRow>
                     <TableCell align="left">January, 2023</TableCell>
                     <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center"><strong>$10,000</strong></TableCell>
-                    <TableCell align="center"><strong>$12,800</strong></TableCell>
+                    <TableCell align="center">
+                      <strong>$10,000</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>$12,800</strong>
+                    </TableCell>
                     <TableCell align="center">
                       <Box className="variance-count d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
@@ -198,14 +218,18 @@ class HistoryDepartments extends Component {
                       <strong> $2,800</strong>
                     </TableCell>
                     <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending 
+                      <Box className="payment-status pending"></Box>Pending
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">January, 2023</TableCell>
                     <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center"><strong>$10,000</strong></TableCell>
-                    <TableCell align="center"><strong>$12,800</strong></TableCell>
+                    <TableCell align="center">
+                      <strong>$10,000</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>$12,800</strong>
+                    </TableCell>
                     <TableCell align="center">
                       <Box className="variance-count d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
@@ -213,14 +237,18 @@ class HistoryDepartments extends Component {
                       <strong> $2,800</strong>
                     </TableCell>
                     <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending 
+                      <Box className="payment-status pending"></Box>Pending
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">January, 2023</TableCell>
                     <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center"><strong>$10,000</strong></TableCell>
-                    <TableCell align="center"><strong>$12,800</strong></TableCell>
+                    <TableCell align="center">
+                      <strong>$10,000</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>$12,800</strong>
+                    </TableCell>
                     <TableCell align="center">
                       <Box className="variance-count d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
@@ -228,14 +256,18 @@ class HistoryDepartments extends Component {
                       <strong> $2,800</strong>
                     </TableCell>
                     <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending 
+                      <Box className="payment-status pending"></Box>Pending
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">January, 2023</TableCell>
                     <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center"><strong>$10,000</strong></TableCell>
-                    <TableCell align="center"><strong>$12,800</strong></TableCell>
+                    <TableCell align="center">
+                      <strong>$10,000</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>$12,800</strong>
+                    </TableCell>
                     <TableCell align="center">
                       <Box className="variance-count d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
@@ -243,14 +275,18 @@ class HistoryDepartments extends Component {
                       <strong> $2,800</strong>
                     </TableCell>
                     <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending 
+                      <Box className="payment-status pending"></Box>Pending
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">January, 2023</TableCell>
                     <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center"><strong>$10,000</strong></TableCell>
-                    <TableCell align="center"><strong>$12,800</strong></TableCell>
+                    <TableCell align="center">
+                      <strong>$10,000</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>$12,800</strong>
+                    </TableCell>
                     <TableCell align="center">
                       <Box className="variance-count d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
@@ -258,14 +294,18 @@ class HistoryDepartments extends Component {
                       <strong> $2,800</strong>
                     </TableCell>
                     <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending 
+                      <Box className="payment-status pending"></Box>Pending
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">January, 2023</TableCell>
                     <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center"><strong>$10,000</strong></TableCell>
-                    <TableCell align="center"><strong>$12,800</strong></TableCell>
+                    <TableCell align="center">
+                      <strong>$10,000</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>$12,800</strong>
+                    </TableCell>
                     <TableCell align="center">
                       <Box className="variance-count d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
@@ -273,7 +313,7 @@ class HistoryDepartments extends Component {
                       <strong> $2,800</strong>
                     </TableCell>
                     <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending 
+                      <Box className="payment-status pending"></Box>Pending
                     </TableCell>
                   </TableRow>
                 </TableBody>

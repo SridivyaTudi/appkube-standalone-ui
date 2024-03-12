@@ -28,7 +28,7 @@
   width: auto;
   background-color: #1e2129;
   border-radius: 5px;
-  
+
   .value {
     display: block;
     padding: 5px 10px 5px 10px;
@@ -38,7 +38,7 @@
     font-weight: 400;
   }
   .previous-month-data {
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 0px 5px 15px;
@@ -54,12 +54,11 @@
       font-weight: 500;
       margin-right: 10px;
     }
-   
   }
-  .check-details{
+  .check-details {
     font-size: 12px;
     font-weight: 500;
-    color: #8676FF;
+    color: #8676ff;
     padding-left: 15px;
     padding-bottom: 5px;
   }
@@ -209,5 +208,18 @@
         }
       }
     }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .table-head {
+    flex-wrap: wrap;
+    .search {
+      margin-top: 20px;
+    }
+    .light-btn{
+      margin-top: 20px;
+    }
+    
   }
 }
