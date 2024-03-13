@@ -366,7 +366,7 @@ class Soa extends Component {
     let { selectedInstance, instancesServices } = this.state;
     let instanceStatus = this.props.instancesServices?.status;
     if (instanceStatus === status.IN_PROGRESS) {
-      return this.renderLoder();
+      return this.renderLoder("instance-cards-loder");
     } else {
       if (instancesServices?.length) {
         let preparedData = instancesServices.map((instance, index) => {
@@ -682,13 +682,7 @@ class Soa extends Component {
   // Render loder
   renderLoder = (customClass) => {
     return (
-      <Box
-        className={`d-blck text-center w-100 h-100 m-r-auto m-l-auto ${customClass}`}
-        style={{
-          height: "175px",
-          lineHeight: "175px",
-        }}
-      >
+      <Box className={`d-blck text-center ${customClass}`}>
         <Loader className="align-item-center justify-center w-100 h-100" />
       </Box>
     );
@@ -697,13 +691,7 @@ class Soa extends Component {
   // when data is no found , then render the this html
   renderNoDataHtml = (text) => {
     return (
-      <Box
-        className="group-loader text-center"
-        style={{
-          height: "175px",
-          lineHeight: "175px",
-        }}
-      >
+      <Box className="group-loader instance-cards-loder text-center">
         <h5 className="m-t-0 m-b-0 d-inline-block">{text}</h5>
       </Box>
     );
