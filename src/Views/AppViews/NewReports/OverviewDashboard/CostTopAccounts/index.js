@@ -21,25 +21,25 @@ let timeSpendData = [
   {
     name: "Last Month Spend",
     value: "$90,000",
-    percentage: " 5 %",
+    percentage: "5",
     subName: " vs Last Month",
   },
   {
     name: "Month to date spend ",
     value: "$70,000",
-    percentage: " 5 % ",
+    percentage: "5",
     subName: " vs Last Month",
   },
   {
     name: "Forecasted Spend ",
     value: "$90,000",
-    percentage: " 5 % ",
+    percentage: "5",
     subName: " vs Last Month",
   },
   {
     name: "Avg Daily Spend",
     value: "$90,000",
-    percentage: " 5 % ",
+    percentage: "5",
     subName: " vs Last Month",
   },
 ];

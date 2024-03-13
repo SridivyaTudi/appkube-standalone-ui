@@ -382,19 +382,19 @@ class Soa extends Component {
           const data = [
             {
               backgroundColor: "#FFBA69",
-              label: "ID",
+              label: "ID :",
               value: instance.instanceId,
               style: { borderBottom: "none" },
             },
             {
               backgroundColor: "#8676FF",
-              label: "Name : ",
+              label: "Name :",
               value: instance.instanceName,
               style: { borderBottom: "none" },
             },
             {
               backgroundColor: "#FF2D2E",
-              label: "VPC Id: ",
+              label: "VPC Id :",
               value: instance.productEnclaveInstanceId,
               style: { borderBottom: "none" },
             },

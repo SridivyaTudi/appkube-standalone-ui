@@ -26,6 +26,10 @@
     }
     .time-spend-content {
       margin-left: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
       label {
         font-size: 14px;
         line-height: 18px;
@@ -33,6 +37,9 @@
         font-weight: 500;
         color: #383874;
         margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       strong {
         font-size: 16px;
@@ -40,8 +47,11 @@
         display: block;
         color: #383874;
         margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
-      span {
+      .parsent {
         font-size: 12px;
         line-height: 16px;
         font-weight: 500;
@@ -53,6 +63,10 @@
         line-height: 16px;
         font-weight: 400;
         color: #a2a2a2;
+        width: 55%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
