@@ -1,19 +1,5 @@
 import React, { Component } from "react";
-import {
-  Box,
-  Button,
-  Grid,
-  List,
-  ListItem,
-  TableContainer,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Checkbox,
-  IconButton,
-} from "@mui/material";
+import { Box, Button, Grid, List, ListItem, IconButton } from "@mui/material";
 import ChartWebLayerIcon from "assets/img/assetmanager/chart-web-layer-icon.png";
 import ChartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png";
 import DataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png";
@@ -23,10 +9,6 @@ import deployed1 from "assets/img/bimapping/deployed1.png";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Aws from "assets/img/aws.png";
 import { v4 } from "uuid";
-import LoadBalancer from "../Soa/components/LoadBalancer";
-import Ingress from "../Soa/components/Ingress";
-import Service from "../Soa/components/Service";
-import AppTopology from "../Soa/components/AppTopology";
 import LoadBalancerIcon from "assets/img/bimapping/load-balancer-icon.png";
 import IngressIcon from "assets/img/bimapping/ingress-icon.png";
 import ServiceIcon from "assets/img/bimapping/service-icon.png";
@@ -72,28 +54,25 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-let serviceTableData = [
+const LAYERS = [
   {
-    name: "MockDB",
-    port: 80,
+    name: "Web Layer",
+    icon: ChartWebLayerIcon,
   },
   {
-    name: "DummyWebServer",
-    port: 443,
+    name: "App Layer",
+    icon: ChartAppLayerIcon,
   },
   {
-    name: "SimulatedQueue",
-    port: 443,
+    name: "Data Layer",
+    icon: DataServiceSvgrepo,
   },
   {
-    name: "PseudoAnalytics",
-    port: 21,
-  },
-  {
-    name: "PhantomCache",
-    port: 53,
+    name: "AUX Layer",
+    icon: DataServiceSvgrepo,
   },
 ];
+
 const orgId = getCurrentOrgId();
 class Tier extends Component {
   tabMapping = [
@@ -724,6 +703,34 @@ class Tier extends Component {
 
     this.props.createBiMapping(params);
   };
+  // Render heading
+  renderHeading = () => {
+    let { name, id } = this.getUrlDetails();
+    return (
+      <Box className="list-heading">
+        <h3>3 Tier</h3>
+        <Box className="breadcrumbs">
+          <ul>
+            <li onClick={() => this.props.navigate("/app/bim")}>BI-Mapping</li>
+            <li>
+              <i className="fa-solid fa-chevron-right"></i>
+            </li>
+            <li
+              onClick={() =>
+                this.props.navigate(`/app/bim/add-product/${name}/${id}`)
+              }
+            >
+              Add Product
+            </li>
+            <li>
+              <i className="fa-solid fa-chevron-right"></i>
+            </li>
+            <li className="active">Product Category</li>
+          </ul>
+        </Box>
+      </Box>
+    );
+  };
 
   render() {
     let {
@@ -733,57 +740,20 @@ class Tier extends Component {
       isSelectRedisOpen,
       selectedLayer,
       selectedInstance,
-      selectedService,
-      activeTabEks,
       dropDownLayersData,
       savedLayer,
       activeTabEcs,
       isShowDepolyedSection,
       clickConfigInfoIdAddEntry,
       clickManInfoIdAddEntry,
-      cloudElementType,
       editStatus,
       configInfo,
       managementInfo,
     } = this.state;
-    let {
-      biServicesFromProductCategory,
-      createProductFormData,
-      creationBiMapping,
-    } = this.props;
-    let { name, id } = this.getUrlDetails();
-    let isShowManagementInfoTab = this.showManagementInfoTab.includes(
-      cloudElementType?.toUpperCase()
-    );
-    let isSaveEnable =
-      selectedService.length || activeTabEks === 3 || isShowManagementInfoTab;
-
+    let { biServicesFromProductCategory, creationBiMapping } = this.props;
     return (
       <Box className="bimapping-container">
-        <Box className="list-heading">
-          <h3>3 Tier</h3>
-          <Box className="breadcrumbs">
-            <ul>
-              <li onClick={() => this.props.navigate("/app/bim")}>
-                BI-Mapping
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li
-                onClick={() =>
-                  this.props.navigate(`/app/bim/add-product/${name}/${id}`)
-                }
-              >
-                Add Product
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li className="active">Product Category</li>
-            </ul>
-          </Box>
-        </Box>
+        {this.renderHeading()}
         <Box className="tier-container">
           <Grid
             container
@@ -793,10 +763,6 @@ class Tier extends Component {
             <Grid item xs={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
-                  {/* <h4 className="m-t-0 m-b-0">
-                    {" "}
-                    MODULE : {createProductFormData.moduleName}
-                  </h4> */}
                   {biServicesFromProductCategory.status ===
                   status.IN_PROGRESS ? (
                     this.renderLoder("topology-loder")
@@ -804,50 +770,21 @@ class Tier extends Component {
                     <Box className="topology-inner-content">
                       <Box className="content-left">
                         <List>
-                          <ListItem>
-                            <Box className="button-box">
-                              <span>
-                                <img src={ChartWebLayerIcon} alt="" />
-                              </span>
-                              <p>Web Layer</p>
-                            </Box>
-                            <span>
-                              <img src={RightArrow} alt="" />
-                            </span>
-                          </ListItem>
-                          <ListItem>
-                            <Box className="button-box">
-                              <span>
-                                <img src={ChartAppLayerIcon} alt="" />
-                              </span>
-                              <p>App Layer</p>
-                            </Box>
-                            <span>
-                              <img src={RightArrow} alt="" />
-                            </span>
-                          </ListItem>
-                          <ListItem>
-                            <Box className="button-box">
-                              <span>
-                                <img src={DataServiceSvgrepo} alt="" />
-                              </span>
-                              <p>Data Layer</p>
-                            </Box>
-                            <span>
-                              <img src={RightArrow} alt="" />
-                            </span>
-                          </ListItem>
-                          <ListItem>
-                            <Box className="button-box">
-                              <span>
-                                <img src={DataServiceSvgrepo} alt="" />
-                              </span>
-                              <p>AUX Layer</p>
-                            </Box>
-                            <span>
-                              <img src={RightArrow} alt="" />
-                            </span>
-                          </ListItem>
+                          {LAYERS.map((layer) => {
+                            return (
+                              <ListItem key={v4()}>
+                                <Box className="button-box">
+                                  <span>
+                                    <img src={layer.icon} alt="" />
+                                  </span>
+                                  <p>{layer.name}</p>
+                                </Box>
+                                <span>
+                                  <img src={RightArrow} alt="" />
+                                </span>
+                              </ListItem>
+                            );
+                          })}
                         </List>
                       </Box>
                       <Box className="content-middle">
@@ -1163,7 +1100,7 @@ class Tier extends Component {
                           <List>
                             {Object.keys(selectedLayer).map((key) => {
                               return (
-                                <ListItem>
+                                <ListItem key={v4()}>
                                   <Box
                                     className={`d-flex align-items-center edit-icons  ${
                                       this.state.editStatus
