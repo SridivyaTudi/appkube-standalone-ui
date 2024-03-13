@@ -682,7 +682,10 @@ console.log(savedData)
   // Render loder
   renderLoder = () => {
     return (
-      <Box className="d-blck text-center w-100 h-100 m-r-auto m-l-auto ">
+      <Box className="d-blck text-center w-100 h-100 m-r-auto m-l-auto " style={{
+        height: "175px",
+        lineHeight: "175px"
+      }}>
         <Loader className="align-item-center justify-center w-100 h-100" />
       </Box>
     );
@@ -691,8 +694,11 @@ console.log(savedData)
   // when data is no found , then render the this html
   renderNoDataHtml = (text) => {
     return (
-      <Box className="group-loader  h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
-        <h5 className="m-t-0 m-b-0">{text}</h5>
+      <Box className="group-loader text-center" style={{
+        height: "175px",
+        lineHeight: "175px"
+      }}>
+        <h5 className="m-t-0 m-b-0 d-inline-block">{text}</h5>
       </Box>
     );
   };

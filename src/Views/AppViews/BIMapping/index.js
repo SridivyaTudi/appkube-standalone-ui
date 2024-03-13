@@ -454,7 +454,7 @@ class BIMapping extends Component {
   // Render html when data is no available
   renderNoDataHtml = (text) => {
     return (
-      <Box className="group-loader  h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
+      <Box className="group-loader text-center  h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
         <h5 className="m-t-0 m-b-0">{text}</h5>
       </Box>
     );
