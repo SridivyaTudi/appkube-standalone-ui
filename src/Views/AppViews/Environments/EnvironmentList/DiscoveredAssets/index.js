@@ -696,8 +696,8 @@ class DiscoveredAssets extends Component {
                   <Box className="fliter-tabs global-service-penal">
                     {isClusterShow ? (
                       <ClusterDetails
-                        eksData={eksMetaData}
-                        ecsData={ecsMetaData}
+                        eksData={eksMetaData || {}}
+                        ecsData={ecsMetaData || {} }
                         setCategory={this.setCurrentTopologyCategory}
                       />
                     ) : (
