@@ -5,8 +5,6 @@ import {
   Grid,
   List,
   ListItem,
-  TableContainer,
-  Table,
   TableBody,
   TableCell,
   TableHead,
@@ -20,10 +18,6 @@ import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import RightArrow from "assets/img/assetmanager/right-arrow.png";
 import deployed1 from "../../../../assets/img/bimapping/deployed1.png";
 import Aws from "../../../../assets/img/aws.png";
-import LoadBalancer from "./components/LoadBalancer";
-import Ingress from "./components/Ingress";
-import Service from "./components/Service";
-import AppTopology from "./components/AppTopology";
 import LoadBalancerIcon from "../../../../assets/img/bimapping/load-balancer-icon.png";
 import IngressIcon from "../../../../assets/img/bimapping/ingress-icon.png";
 import ServiceIcon from "../../../../assets/img/bimapping/service-icon.png";
@@ -90,6 +84,21 @@ let serviceTableData = [
   {
     name: "PhantomCache",
     port: 53,
+  },
+];
+
+const SERVICES = [
+  {
+    name: "App Service",
+    icon: ChartAppLayerIcon,
+  },
+  {
+    name: "Data Service",
+    icon: DataServiceSvgrepo,
+  },
+  {
+    name: "Other Service",
+    icon: DataServiceSvgrepo,
   },
 ];
 
@@ -634,12 +643,11 @@ class Soa extends Component {
 
   // Click on edit btn.
   onClickEditBtn = (serviceName) => {
-    let { savedData, savedService, isShowDepolyedSection } = this.state;
-    console.log(serviceName);
+    let { savedData, savedService } = this.state;
     let findSaveData = savedData.find(
       (data) => data.serviceName === serviceName
     );
-    console.log(findSaveData, savedData);
+
     if (findSaveData) {
       let {
         selectedInstance,
@@ -665,7 +673,6 @@ class Soa extends Component {
         }
       });
 
-      console.log(isShowDepolyedSection);
       this.setState({
         selectedInstance,
         selectedDeployedInstance,
@@ -770,17 +777,370 @@ class Soa extends Component {
     };
     this.props.createBiMapping(params);
   };
-  render() {
+
+  // Render heading
+  renderHeading = () => {
+    let { name, id } = this.getUrlDetails();
+    return (
+      <Box className="list-heading">
+        <h3>Soa</h3>
+        <Box className="breadcrumbs">
+          <ul>
+            <li onClick={() => this.props.navigate("/app/bim")}>BI-Mapping</li>
+            <li>
+              <i className="fa-solid fa-chevron-right"></i>
+            </li>
+            <li
+              onClick={() =>
+                this.props.navigate(`/app/bim/add-product/${name}/${id}`)
+              }
+            >
+              Add Product
+            </li>
+            <li>
+              <i className="fa-solid fa-chevron-right"></i>
+            </li>
+            <li
+              onClick={() =>
+                this.props.navigate(
+                  `/app/bim/add-product/${name}/${id}/product-category`
+                )
+              }
+            >
+              Product Category
+            </li>
+            <li>
+              <i className="fa-solid fa-chevron-right"></i>
+            </li>
+            <li className="active">Service-Mapping</li>
+          </ul>
+        </Box>
+      </Box>
+    );
+  };
+
+  // Render all services
+  renderAllServices = () => {
+    return (
+      <Box className="content-left">
+        <List>
+          {SERVICES.map((service) => {
+            return (
+              <ListItem key={v4()}>
+                <Box className="button-box">
+                  <span>
+                    <img src={service.icon} alt="" />
+                  </span>
+                  <p>{service.name}</p>
+                </Box>
+                <span>
+                  <img src={RightArrow} alt="" />
+                </span>
+              </ListItem>
+            );
+          })}
+        </List>
+      </Box>
+    );
+  };
+
+  // Render all services of dropDowns
+  renderAllServicesOfDropDowns = () => {
     let {
       isSelectSpringBootOpen,
       isSelectMySQLOpen,
       isSelectRedisOpen,
       selectedServiceData,
-      activeTabEks,
-      selectedInstance,
-      selectedService,
       dropDownServiceData,
       savedService,
+    } = this.state;
+    return (
+      <Box className="content-middle">
+        <List>
+          <ListItem>
+            <Box className="application-balancer">
+              <Button className="secondary-btn min-width" variant="contained">
+                SSL
+              </Button>
+              <Box className="balancer-boxs">
+                <Box className="balancer-box">
+                  <span>
+                    <img src={bottomArrow} alt="" />
+                  </span>
+                </Box>
+              </Box>
+            </Box>
+          </ListItem>
+          <ListItem className={`active`}>
+            <Box className="application-balancer">
+              <Button className="secondary-btn min-width" variant="contained">
+                API Gateway
+              </Button>
+              <Box className="balancer-boxs">
+                <Box className="balancer-box">
+                  <span>
+                    <img src={bottomArrow} alt="" />
+                  </span>
+                </Box>
+              </Box>
+            </Box>
+          </ListItem>
+          <ListItem
+            className={`  ${
+              dropDownServiceData.appService.includes(selectedServiceData.app)
+                ? "active"
+                : ""
+            }`}
+          >
+            <Box className="application-balancer">
+              <Box className="mapping-fliter">
+                <Box
+                  className="fliter-toggel"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.toggleAppService();
+                  }}
+                >
+                  {selectedServiceData.app || "Select"}
+                  <i className="fa-solid fa-caret-down arrow-icon"></i>
+                </Box>
+                <Box
+                  className={
+                    isSelectSpringBootOpen
+                      ? "fliter-collapse active"
+                      : "fliter-collapse"
+                  }
+                >
+                  <List>
+                    {dropDownServiceData.appService.map((service) => (
+                      <ListItem
+                        className={`${
+                          selectedServiceData.app === service.name
+                            ? "active"
+                            : ""
+                        }`}
+                        key={v4()}
+                        onClick={() =>
+                          this.onClickServiceDropDown("app", service.name)
+                        }
+                      >
+                        <i className="fa-solid fa-circle-dot"></i>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={service.name}
+                        >
+                          <p>{service.name}</p>
+                        </HtmlTooltip>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+                <div
+                  className={
+                    isSelectSpringBootOpen
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.toggleAppService();
+                  }}
+                />
+              </Box>
+              <Box className="balancer-boxs">
+                <Box className="balancer-box">
+                  <span>
+                    <img src={bottomArrow} alt="" />
+                  </span>
+                </Box>
+              </Box>
+            </Box>
+          </ListItem>
+          <ListItem
+            className={`${
+              dropDownServiceData.dataService.includes(selectedServiceData.data)
+                ? "active"
+                : ""
+            }`}
+          >
+            <Box className="application-balancer">
+              <Box className="mapping-fliter">
+                <Box
+                  className="fliter-toggel"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.toggleDataLayer();
+                  }}
+                >
+                  {selectedServiceData.data || "Select"}
+                  <i className="fa-solid fa-caret-down arrow-icon"></i>
+                </Box>
+                <Box
+                  className={
+                    isSelectMySQLOpen
+                      ? "fliter-collapse active"
+                      : "fliter-collapse"
+                  }
+                >
+                  <List>
+                    {dropDownServiceData.dataService.map((service) => (
+                      <ListItem
+                        className={`${
+                          selectedServiceData.data === service.name
+                            ? "active"
+                            : ""
+                        }`}
+                        key={v4()}
+                        onClick={() =>
+                          this.onClickServiceDropDown("data", service.name)
+                        }
+                      >
+                        <i className="fa-solid fa-circle-dot"></i>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={service.name}
+                        >
+                          <p>{service.name}</p>
+                        </HtmlTooltip>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+                <div
+                  className={
+                    isSelectMySQLOpen
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
+                  onClick={this.toggleDataLayer}
+                />
+              </Box>
+              <Box className="balancer-boxs">
+                <Box className="balancer-box">
+                  <span>
+                    <img src={bottomArrow} alt="" />
+                  </span>
+                </Box>
+              </Box>
+            </Box>
+          </ListItem>
+          <ListItem
+            className={`  ${
+              dropDownServiceData.otherService.includes(
+                selectedServiceData.other
+              )
+                ? "active"
+                : ""
+            }
+      }`}
+          >
+            <Box className="mapping-fliter">
+              <Box
+                className="fliter-toggel"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  this.toggleOtherServices();
+                }}
+              >
+                {selectedServiceData.other || "Select"}
+                <i className="fa-solid fa-caret-down arrow-icon"></i>
+              </Box>
+              <Box
+                className={
+                  isSelectRedisOpen
+                    ? "fliter-collapse active"
+                    : "fliter-collapse"
+                }
+              >
+                <List>
+                  {dropDownServiceData.otherService.map((service) => (
+                    <ListItem
+                      className={`${
+                        selectedServiceData.other === service.name
+                          ? "active"
+                          : ""
+                      }`}
+                      key={v4()}
+                      onClick={() =>
+                        this.onClickServiceDropDown("other", service.name)
+                      }
+                    >
+                      <i className="fa-solid fa-circle-dot"></i>
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={service.name}
+                      >
+                        <p>{service.name}</p>
+                      </HtmlTooltip>
+                    </ListItem>
+                  ))}
+                </List>
+              </Box>
+              <div
+                className={
+                  isSelectRedisOpen
+                    ? "fliters-collapse-bg active"
+                    : "fliters-collapse-bg"
+                }
+                onClick={this.toggleOtherServices}
+              />
+            </Box>
+          </ListItem>
+        </List>
+        <Box className="check-icons-box">
+          <List>
+            <ListItem>
+              <Box className="d-flex align-items-center">
+                <IconButton className="check-icon">
+                  <i class="fas fa-check"></i>
+                </IconButton>
+                <IconButton className="edit-icon">
+                  <i class="fas fa-edit"></i>
+                </IconButton>
+              </Box>
+            </ListItem>
+
+            {Object.keys(selectedServiceData).map((key) => {
+              return (
+                <ListItem>
+                  <Box
+                    className={`d-flex align-items-center   ${
+                      this.state.editStatus ? "delete-icons" : ""
+                    }`}
+                  >
+                    {selectedServiceData[key] !== "" && savedService[key] ? (
+                      <>
+                        <IconButton className="check-icon">
+                          <i class="fas fa-check"></i>
+                        </IconButton>
+                        <IconButton
+                          className="edit-icon"
+                          onClick={() => {
+                            this.onClickEditBtn(key);
+                            this.setState({
+                              editStatus: true,
+                            });
+                          }}
+                        >
+                          <i class="fas fa-edit"></i>
+                        </IconButton>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </Box>
+                </ListItem>
+              );
+            })}
+          </List>
+        </Box>
+      </Box>
+    );
+  };
+
+  render() {
+    let {
+      selectedInstance,
       cloudElementType,
       activeTabEcs,
       clickConfigInfoIdAddEntry,
@@ -795,50 +1155,9 @@ class Soa extends Component {
       createProductFormData,
       creationBiMapping,
     } = this.props;
-    let { name, id } = this.getUrlDetails();
-    let isShowManagementInfoTab = this.showManagementInfoTab.includes(
-      cloudElementType?.toUpperCase()
-    );
-    let isSaveEnable =
-      selectedService.length || activeTabEks === 3 || isShowManagementInfoTab;
     return (
       <Box className="bimapping-container">
-        <Box className="list-heading">
-          <h3>Soa</h3>
-          <Box className="breadcrumbs">
-            <ul>
-              <li onClick={() => this.props.navigate("/app/bim")}>
-                BI-Mapping
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li
-                onClick={() =>
-                  this.props.navigate(`/app/bim/add-product/${name}/${id}`)
-                }
-              >
-                Add Product
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li
-                onClick={() =>
-                  this.props.navigate(
-                    `/app/bim/add-product/${name}/${id}/product-category`
-                  )
-                }
-              >
-                Product Category
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li className="active">Service-Mapping</li>
-            </ul>
-          </Box>
-        </Box>
+        {this.renderHeading()}
         <Box className="tier-container">
           <Grid
             container
@@ -856,354 +1175,8 @@ class Soa extends Component {
                     this.renderLoder("topology-loder")
                   ) : (
                     <Box className="topology-inner-content">
-                      <Box className="content-left">
-                        <List>
-                          <ListItem>
-                            <Box className="button-box">
-                              <span>
-                                <img src={ChartAppLayerIcon} alt="" />
-                              </span>
-                              <p>App Service</p>
-                            </Box>
-                            <span>
-                              <img src={RightArrow} alt="" />
-                            </span>
-                          </ListItem>
-                          <ListItem>
-                            <Box className="button-box">
-                              <span>
-                                <img src={DataServiceSvgrepo} alt="" />
-                              </span>
-                              <p>Data Service</p>
-                            </Box>
-                            <span>
-                              <img src={RightArrow} alt="" />
-                            </span>
-                          </ListItem>
-                          <ListItem>
-                            <Box className="button-box">
-                              <span>
-                                <img src={DataServiceSvgrepo} alt="" />
-                              </span>
-                              <p>Other Service</p>
-                            </Box>
-                            <span>
-                              <img src={RightArrow} alt="" />
-                            </span>
-                          </ListItem>
-                        </List>
-                      </Box>
-                      <Box className="content-middle">
-                        <List>
-                          <ListItem>
-                            <Box className="application-balancer">
-                              <Button
-                                className="secondary-btn min-width"
-                                variant="contained"
-                              >
-                                SSL
-                              </Button>
-                              <Box className="balancer-boxs">
-                                <Box className="balancer-box">
-                                  <span>
-                                    <img src={bottomArrow} alt="" />
-                                  </span>
-                                </Box>
-                              </Box>
-                            </Box>
-                          </ListItem>
-                          <ListItem className={`active`}>
-                            <Box className="application-balancer">
-                              <Button
-                                className="secondary-btn min-width"
-                                variant="contained"
-                              >
-                                API Gateway
-                              </Button>
-                              <Box className="balancer-boxs">
-                                <Box className="balancer-box">
-                                  <span>
-                                    <img src={bottomArrow} alt="" />
-                                  </span>
-                                </Box>
-                              </Box>
-                            </Box>
-                          </ListItem>
-                          <ListItem
-                            className={`  ${
-                              dropDownServiceData.appService.includes(
-                                selectedServiceData.app
-                              )
-                                ? "active"
-                                : ""
-                            }`}
-                          >
-                            <Box className="application-balancer">
-                              <Box className="mapping-fliter">
-                                <Box
-                                  className="fliter-toggel"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    this.toggleAppService();
-                                  }}
-                                >
-                                  {selectedServiceData.app || "Select"}
-                                  <i className="fa-solid fa-caret-down arrow-icon"></i>
-                                </Box>
-                                <Box
-                                  className={
-                                    isSelectSpringBootOpen
-                                      ? "fliter-collapse active"
-                                      : "fliter-collapse"
-                                  }
-                                >
-                                  <List>
-                                    {dropDownServiceData.appService.map(
-                                      (service) => (
-                                        <ListItem
-                                          className={`${
-                                            selectedServiceData.app ===
-                                            service.name
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          key={v4()}
-                                          onClick={() =>
-                                            this.onClickServiceDropDown(
-                                              "app",
-                                              service.name
-                                            )
-                                          }
-                                        >
-                                          <i className="fa-solid fa-circle-dot"></i>
-                                          <HtmlTooltip
-                                            className="table-tooltip"
-                                            title={service.name}
-                                          >
-                                            <p>{service.name}</p>
-                                          </HtmlTooltip>
-                                        </ListItem>
-                                      )
-                                    )}
-                                  </List>
-                                </Box>
-                                <div
-                                  className={
-                                    isSelectSpringBootOpen
-                                      ? "fliters-collapse-bg active"
-                                      : "fliters-collapse-bg"
-                                  }
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    this.toggleAppService();
-                                  }}
-                                />
-                              </Box>
-                              <Box className="balancer-boxs">
-                                <Box className="balancer-box">
-                                  <span>
-                                    <img src={bottomArrow} alt="" />
-                                  </span>
-                                </Box>
-                              </Box>
-                            </Box>
-                          </ListItem>
-                          <ListItem
-                            className={`${
-                              dropDownServiceData.dataService.includes(
-                                selectedServiceData.data
-                              )
-                                ? "active"
-                                : ""
-                            }`}
-                          >
-                            <Box className="application-balancer">
-                              <Box className="mapping-fliter">
-                                <Box
-                                  className="fliter-toggel"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    this.toggleDataLayer();
-                                  }}
-                                >
-                                  {selectedServiceData.data || "Select"}
-                                  <i className="fa-solid fa-caret-down arrow-icon"></i>
-                                </Box>
-                                <Box
-                                  className={
-                                    isSelectMySQLOpen
-                                      ? "fliter-collapse active"
-                                      : "fliter-collapse"
-                                  }
-                                >
-                                  <List>
-                                    {dropDownServiceData.dataService.map(
-                                      (service) => (
-                                        <ListItem
-                                          className={`${
-                                            selectedServiceData.data ===
-                                            service.name
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          key={v4()}
-                                          onClick={() =>
-                                            this.onClickServiceDropDown(
-                                              "data",
-                                              service.name
-                                            )
-                                          }
-                                        >
-                                          <i className="fa-solid fa-circle-dot"></i>
-                                          <HtmlTooltip
-                                            className="table-tooltip"
-                                            title={service.name}
-                                          >
-                                            <p>{service.name}</p>
-                                          </HtmlTooltip>
-                                        </ListItem>
-                                      )
-                                    )}
-                                  </List>
-                                </Box>
-                                <div
-                                  className={
-                                    isSelectMySQLOpen
-                                      ? "fliters-collapse-bg active"
-                                      : "fliters-collapse-bg"
-                                  }
-                                  onClick={this.toggleDataLayer}
-                                />
-                              </Box>
-                              <Box className="balancer-boxs">
-                                <Box className="balancer-box">
-                                  <span>
-                                    <img src={bottomArrow} alt="" />
-                                  </span>
-                                </Box>
-                              </Box>
-                            </Box>
-                          </ListItem>
-                          <ListItem
-                            className={`  ${
-                              dropDownServiceData.otherService.includes(
-                                selectedServiceData.other
-                              )
-                                ? "active"
-                                : ""
-                            }
-                          }`}
-                          >
-                            <Box className="mapping-fliter">
-                              <Box
-                                className="fliter-toggel"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  this.toggleOtherServices();
-                                }}
-                              >
-                                {selectedServiceData.other || "Select"}
-                                <i className="fa-solid fa-caret-down arrow-icon"></i>
-                              </Box>
-                              <Box
-                                className={
-                                  isSelectRedisOpen
-                                    ? "fliter-collapse active"
-                                    : "fliter-collapse"
-                                }
-                              >
-                                <List>
-                                  {dropDownServiceData.otherService.map(
-                                    (service) => (
-                                      <ListItem
-                                        className={`${
-                                          selectedServiceData.other ===
-                                          service.name
-                                            ? "active"
-                                            : ""
-                                        }`}
-                                        key={v4()}
-                                        onClick={() =>
-                                          this.onClickServiceDropDown(
-                                            "other",
-                                            service.name
-                                          )
-                                        }
-                                      >
-                                        <i className="fa-solid fa-circle-dot"></i>
-                                        <HtmlTooltip
-                                          className="table-tooltip"
-                                          title={service.name}
-                                        >
-                                          <p>{service.name}</p>
-                                        </HtmlTooltip>
-                                      </ListItem>
-                                    )
-                                  )}
-                                </List>
-                              </Box>
-                              <div
-                                className={
-                                  isSelectRedisOpen
-                                    ? "fliters-collapse-bg active"
-                                    : "fliters-collapse-bg"
-                                }
-                                onClick={this.toggleOtherServices}
-                              />
-                            </Box>
-                          </ListItem>
-                        </List>
-                        <Box className="check-icons-box">
-                          <List>
-                            <ListItem>
-                              <Box className="d-flex align-items-center">
-                                <IconButton className="check-icon">
-                                  <i class="fas fa-check"></i>
-                                </IconButton>
-                                <IconButton className="edit-icon">
-                                  <i class="fas fa-edit"></i>
-                                </IconButton>
-                              </Box>
-                            </ListItem>
-
-                            {Object.keys(selectedServiceData).map((key) => {
-                              return (
-                                <ListItem>
-                                  <Box
-                                    className={`d-flex align-items-center   ${
-                                      this.state.editStatus
-                                        ? "delete-icons"
-                                        : ""
-                                    }`}
-                                  >
-                                    {selectedServiceData[key] !== "" &&
-                                    savedService[key] ? (
-                                      <>
-                                        <IconButton className="check-icon">
-                                          <i class="fas fa-check"></i>
-                                        </IconButton>
-                                        <IconButton
-                                          className="edit-icon"
-                                          onClick={() => {
-                                            this.onClickEditBtn(key);
-                                            this.setState({
-                                              editStatus: true,
-                                            });
-                                          }}
-                                        >
-                                          <i class="fas fa-edit"></i>
-                                        </IconButton>
-                                      </>
-                                    ) : (
-                                      <></>
-                                    )}
-                                  </Box>
-                                </ListItem>
-                              );
-                            })}
-                          </List>
-                        </Box>
-                      </Box>
+                      {this.renderAllServices()}
+                      {this.renderAllServicesOfDropDowns()}
                     </Box>
                   )}
                 </Box>
