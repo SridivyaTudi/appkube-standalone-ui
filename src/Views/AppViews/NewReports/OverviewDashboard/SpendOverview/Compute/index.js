@@ -89,7 +89,35 @@ let computeSpendingTable = [
 ];
 
 class Compute extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchedKey: "",
+      accounts: computeSpendingTable,
+    };
+  }
+  //  Serach
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { accounts } = this.state;
+    let data = computeSpendingTable || [];
+    if (data?.length) {
+      if (value) {
+        accounts = data.filter((tableData) => {
+          if (tableData?.name.toLowerCase().includes(value.toLowerCase())) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        accounts = data;
+      }
+      this.setState({ accounts, searchedKey: value });
+    }
+  };
   render() {
+    let { accounts, searchedKey } = this.state;
     return (
       <>
         <TimeSpendComponent data={timeSpendData} />
@@ -103,7 +131,7 @@ class Compute extends Component {
               type="text"
               className="input"
               placeholder="Search Insatnce "
-              //value={searchedKey}
+              value={searchedKey}
               onChange={this.handleSearchChange}
               autoFocus="autoFocus"
             />
@@ -112,7 +140,7 @@ class Compute extends Component {
             </button>
           </Box>
         </Box>
-        <SpendingTable data={computeSpendingTable} />
+        <SpendingTable data={accounts} />
       </>
     );
   }

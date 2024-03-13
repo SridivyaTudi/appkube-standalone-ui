@@ -106,8 +106,151 @@ let timeSpendData = [
     subName: " vs Last Month",
   },
 ];
+
+let riData = [
+  {
+    resourceType: "EC2",
+    InstanceId: "i-0c1234dc",
+    recommendation: "RI",
+    currentInstance: "t4g.2xlarge",
+    recommendedInstance: "t2.2xlarge",
+    terms: "1yr RI",
+    paymentMode: "No Upfront",
+    UpfrontCost: "$0",
+    hrCost: "$0.2300",
+    estimatedSavings: "~$530",
+    totalSpend: "$196.22",
+  },
+  {
+    resourceType: "ECS",
+    InstanceId: "i-0c1234dc",
+    recommendation: "RI",
+    currentInstance: "t4g.2xlarge",
+    recommendedInstance: "t2.2xlarge",
+    terms: "1yr RI",
+    paymentMode: "No Upfront",
+    UpfrontCost: "$0",
+    hrCost: "$0.2300",
+    estimatedSavings: "~$530",
+    totalSpend: "$196.22",
+  },
+  {
+    resourceType: "LAMBDA",
+    InstanceId: "i-0c1234dc",
+    recommendation: "RI",
+    currentInstance: "t4g.2xlarge",
+    recommendedInstance: "t2.2xlarge",
+    terms: "1yr RI",
+    paymentMode: "No Upfront",
+    UpfrontCost: "$0",
+    hrCost: "$0.2300",
+    estimatedSavings: "~$530",
+    totalSpend: "$196.22",
+  },
+  {
+    resourceType: "EC2",
+    InstanceId: "i-0c1234dc",
+    recommendation: "RI",
+    currentInstance: "t4g.2xlarge",
+    recommendedInstance: "t2.2xlarge",
+    terms: "1yr RI",
+    paymentMode: "No Upfront",
+    UpfrontCost: "$0",
+    hrCost: "$0.2300",
+    estimatedSavings: "~$530",
+    totalSpend: "$196.22",
+  },
+];
 class Compute extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeTab: 0,
+      accounts: riData,
+      showSelectFilterModal: false,
+    };
+  }
+  //  Render table head
+  renderTableHead = () => {
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell align="left">resource type</TableCell>
+          <TableCell align="center">Instance ID </TableCell>
+          <TableCell align="center">Recommendation</TableCell>
+          <TableCell align="center">current instance </TableCell>
+          <TableCell align="center">recommended Instance</TableCell>
+          <TableCell align="center">terms</TableCell>
+          <TableCell align="center">payment mode </TableCell>
+          <TableCell align="center">Upfront cost </TableCell>
+          <TableCell align="center">per hour cost </TableCell>
+          <TableCell align="center">estimated Savings</TableCell>
+          <TableCell align="center">Total spend</TableCell>
+        </TableRow>
+      </TableHead>
+    );
+  };
+
+  //  Render table body
+  renderTableBody = () => {
+    let { accounts } = this.state;
+    return (
+      <TableBody>
+        {accounts?.length ? (
+          accounts.map((details) => {
+            return (
+              <TableRow>
+                <TableCell align="left">{details.resourceType}</TableCell>
+                <TableCell align="center">{details.InstanceId}</TableCell>
+                <TableCell align="center">{details.recommendation} </TableCell>
+                <TableCell align="center">{details.currentInstance}</TableCell>
+                <TableCell align="center">
+                  {details.recommendedInstance}
+                </TableCell>
+                <TableCell align="center">{details.terms} </TableCell>
+                <TableCell align="center">{details.paymentMode}</TableCell>
+                <TableCell align="center">{details.UpfrontCost}</TableCell>
+                <TableCell align="center">{details.hrCost}</TableCell>
+                <TableCell align="center">{details.estimatedSavings}</TableCell>
+                <TableCell align="center">{details.totalSpend}</TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <Box className="d-blck text-center w-100 h-100 ">
+            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+            </Box>
+          </Box>
+        )}
+      </TableBody>
+    );
+  };
+
+  //  Serach
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { accounts } = this.state;
+    let data = riData || [];
+    if (data?.length) {
+      if (value) {
+        accounts = data.filter((tableData) => {
+          if (
+            tableData?.resourceType.toLowerCase().includes(value.toLowerCase())
+          ) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        accounts = data;
+      }
+      this.setState({ accounts, searchedKey: value });
+    }
+  };
   render() {
+    let { searchedKey } = this.state;
     return (
       <>
         <TimeSpendComponent data={timeSpendData} />
@@ -150,7 +293,7 @@ class Compute extends Component {
             </Grid>
           </Grid>
         </Box>
-        <Box className="table-head" >
+        <Box className="table-head">
           <Box className="d-block">
             <h4 className="m-t-0 m-b-0">Top RI Recommendations</h4>
           </Box>
@@ -159,7 +302,7 @@ class Compute extends Component {
               type="text"
               className="input"
               placeholder="Search Insatnce "
-              //value={searchedKey}
+              value={searchedKey}
               onChange={this.handleSearchChange}
               autoFocus="autoFocus"
             />
@@ -171,166 +314,8 @@ class Compute extends Component {
         <Box className="new-reports-table">
           <TableContainer className="table">
             <Table style={{ width: 2300 }}>
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left">resource type</TableCell>
-                  <TableCell align="center">Instance ID </TableCell>
-                  <TableCell align="center">Recommendation</TableCell>
-                  <TableCell align="center">current instance </TableCell>
-                  <TableCell align="center">recommended Instance</TableCell>
-                  <TableCell align="center">terms</TableCell>
-                  <TableCell align="center">payment mode </TableCell>
-                  <TableCell align="center">Upfront cost </TableCell>
-                  <TableCell align="center">per hour cost </TableCell>
-                  <TableCell align="center">estimated Savings</TableCell>
-                  <TableCell align="center">Total spend</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell align="left">EC2</TableCell>
-                  <TableCell align="center">i-0c1234dc</TableCell>
-                  <TableCell align="center">RI </TableCell>
-                  <TableCell align="center">t4g.2xlarge</TableCell>
-                  <TableCell align="center">t2.2xlarge </TableCell>
-                  <TableCell align="center">1yr RI </TableCell>
-                  <TableCell align="center">No Upfront</TableCell>
-                  <TableCell align="center">$0</TableCell>
-                  <TableCell align="center">$0.2300</TableCell>
-                  <TableCell align="center">~$530</TableCell>
-                  <TableCell align="center">$196.22</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">EC2</TableCell>
-                  <TableCell align="center">i-0c1234dc</TableCell>
-                  <TableCell align="center">RI </TableCell>
-                  <TableCell align="center">t4g.2xlarge</TableCell>
-                  <TableCell align="center">t2.2xlarge </TableCell>
-                  <TableCell align="center">1yr RI </TableCell>
-                  <TableCell align="center">No Upfront</TableCell>
-                  <TableCell align="center">$0</TableCell>
-                  <TableCell align="center">$0.2300</TableCell>
-                  <TableCell align="center">~$530</TableCell>
-                  <TableCell align="center">$196.22</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">EC2</TableCell>
-                  <TableCell align="center">i-0c1234dc</TableCell>
-                  <TableCell align="center">RI </TableCell>
-                  <TableCell align="center">t4g.2xlarge</TableCell>
-                  <TableCell align="center">t2.2xlarge </TableCell>
-                  <TableCell align="center">1yr RI </TableCell>
-                  <TableCell align="center">No Upfront</TableCell>
-                  <TableCell align="center">$0</TableCell>
-                  <TableCell align="center">$0.2300</TableCell>
-                  <TableCell align="center">~$530</TableCell>
-                  <TableCell align="center">$196.22</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">EC2</TableCell>
-                  <TableCell align="center">i-0c1234dc</TableCell>
-                  <TableCell align="center">RI </TableCell>
-                  <TableCell align="center">t4g.2xlarge</TableCell>
-                  <TableCell align="center">t2.2xlarge </TableCell>
-                  <TableCell align="center">1yr RI </TableCell>
-                  <TableCell align="center">No Upfront</TableCell>
-                  <TableCell align="center">$0</TableCell>
-                  <TableCell align="center">$0.2300</TableCell>
-                  <TableCell align="center">~$530</TableCell>
-                  <TableCell align="center">$196.22</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">EC2</TableCell>
-                  <TableCell align="center">i-0c1234dc</TableCell>
-                  <TableCell align="center">RI </TableCell>
-                  <TableCell align="center">t4g.2xlarge</TableCell>
-                  <TableCell align="center">t2.2xlarge </TableCell>
-                  <TableCell align="center">1yr RI </TableCell>
-                  <TableCell align="center">No Upfront</TableCell>
-                  <TableCell align="center">$0</TableCell>
-                  <TableCell align="center">$0.2300</TableCell>
-                  <TableCell align="center">~$530</TableCell>
-                  <TableCell align="center">$196.22</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">EC2</TableCell>
-                  <TableCell align="center">i-0c1234dc</TableCell>
-                  <TableCell align="center">RI </TableCell>
-                  <TableCell align="center">t4g.2xlarge</TableCell>
-                  <TableCell align="center">t2.2xlarge </TableCell>
-                  <TableCell align="center">1yr RI </TableCell>
-                  <TableCell align="center">No Upfront</TableCell>
-                  <TableCell align="center">$0</TableCell>
-                  <TableCell align="center">$0.2300</TableCell>
-                  <TableCell align="center">~$530</TableCell>
-                  <TableCell align="center">$196.22</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">EC2</TableCell>
-                  <TableCell align="center">i-0c1234dc</TableCell>
-                  <TableCell align="center">RI </TableCell>
-                  <TableCell align="center">t4g.2xlarge</TableCell>
-                  <TableCell align="center">t2.2xlarge </TableCell>
-                  <TableCell align="center">1yr RI </TableCell>
-                  <TableCell align="center">No Upfront</TableCell>
-                  <TableCell align="center">$0</TableCell>
-                  <TableCell align="center">$0.2300</TableCell>
-                  <TableCell align="center">~$530</TableCell>
-                  <TableCell align="center">$196.22</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">EC2</TableCell>
-                  <TableCell align="center">i-0c1234dc</TableCell>
-                  <TableCell align="center">RI </TableCell>
-                  <TableCell align="center">t4g.2xlarge</TableCell>
-                  <TableCell align="center">t2.2xlarge </TableCell>
-                  <TableCell align="center">1yr RI </TableCell>
-                  <TableCell align="center">No Upfront</TableCell>
-                  <TableCell align="center">$0</TableCell>
-                  <TableCell align="center">$0.2300</TableCell>
-                  <TableCell align="center">~$530</TableCell>
-                  <TableCell align="center">$196.22</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">EC2</TableCell>
-                  <TableCell align="center">i-0c1234dc</TableCell>
-                  <TableCell align="center">RI </TableCell>
-                  <TableCell align="center">t4g.2xlarge</TableCell>
-                  <TableCell align="center">t2.2xlarge </TableCell>
-                  <TableCell align="center">1yr RI </TableCell>
-                  <TableCell align="center">No Upfront</TableCell>
-                  <TableCell align="center">$0</TableCell>
-                  <TableCell align="center">$0.2300</TableCell>
-                  <TableCell align="center">~$530</TableCell>
-                  <TableCell align="center">$196.22</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">EC2</TableCell>
-                  <TableCell align="center">i-0c1234dc</TableCell>
-                  <TableCell align="center">RI </TableCell>
-                  <TableCell align="center">t4g.2xlarge</TableCell>
-                  <TableCell align="center">t2.2xlarge </TableCell>
-                  <TableCell align="center">1yr RI </TableCell>
-                  <TableCell align="center">No Upfront</TableCell>
-                  <TableCell align="center">$0</TableCell>
-                  <TableCell align="center">$0.2300</TableCell>
-                  <TableCell align="center">~$530</TableCell>
-                  <TableCell align="center">$196.22</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">EC2</TableCell>
-                  <TableCell align="center">i-0c1234dc</TableCell>
-                  <TableCell align="center">RI </TableCell>
-                  <TableCell align="center">t4g.2xlarge</TableCell>
-                  <TableCell align="center">t2.2xlarge </TableCell>
-                  <TableCell align="center">1yr RI </TableCell>
-                  <TableCell align="center">No Upfront</TableCell>
-                  <TableCell align="center">$0</TableCell>
-                  <TableCell align="center">$0.2300</TableCell>
-                  <TableCell align="center">~$530</TableCell>
-                  <TableCell align="center">$196.22</TableCell>
-                </TableRow>
-              </TableBody>
+              {this.renderTableHead()}
+              {this.renderTableBody()}
             </Table>
           </TableContainer>
         </Box>

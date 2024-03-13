@@ -165,13 +165,37 @@ class CostTopAccounts extends Component {
       </TableBody>
     );
   };
+
   handleSelectFilterModal = () => {
     this.setState({
       showSelectFilterModal: !this.state.showSelectFilterModal,
     });
   };
+
+  //  Serach
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { accounts } = this.state;
+    let data = topFiveAccounts || [];
+    if (data?.length) {
+      if (value) {
+        accounts = data.filter((tableData) => {
+          if (
+            tableData?.accountId.toLowerCase().includes(value.toLowerCase())
+          ) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        accounts = data;
+      }
+      this.setState({ accounts, searchedKey: value });
+    }
+  };
   render() {
-    const { showSelectFilterModal } = this.state;
+    let { accounts, searchedKey, showSelectFilterModal } = this.state;
     return (
       <Box className="new-reports-container">
         <Box className="list-heading">
@@ -212,7 +236,7 @@ class CostTopAccounts extends Component {
                 type="text"
                 className="input"
                 placeholder="Search Insatnce "
-                //value={searchedKey}
+                value={searchedKey}
                 onChange={this.handleSearchChange}
                 autoFocus="autoFocus"
               />
