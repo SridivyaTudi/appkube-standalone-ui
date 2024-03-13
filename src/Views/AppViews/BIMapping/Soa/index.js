@@ -580,7 +580,7 @@ class Soa extends Component {
     } else {
       savedData.push(currentData);
     }
-console.log(savedData)
+    console.log(savedData);
     if (savedService.other) {
       this.addBiMappingAPICall(savedData);
     }
@@ -639,7 +639,7 @@ console.log(savedData)
     let findSaveData = savedData.find(
       (data) => data.serviceName === serviceName
     );
-      console.log(findSaveData,savedData)
+    console.log(findSaveData, savedData);
     if (findSaveData) {
       let {
         selectedInstance,
@@ -680,12 +680,15 @@ console.log(savedData)
   };
 
   // Render loder
-  renderLoder = () => {
+  renderLoder = (customClass) => {
     return (
-      <Box className="d-blck text-center w-100 h-100 m-r-auto m-l-auto " style={{
-        height: "175px",
-        lineHeight: "175px"
-      }}>
+      <Box
+        className={`d-blck text-center w-100 h-100 m-r-auto m-l-auto ${customClass}`}
+        style={{
+          height: "175px",
+          lineHeight: "175px",
+        }}
+      >
         <Loader className="align-item-center justify-center w-100 h-100" />
       </Box>
     );
@@ -694,10 +697,13 @@ console.log(savedData)
   // when data is no found , then render the this html
   renderNoDataHtml = (text) => {
     return (
-      <Box className="group-loader text-center" style={{
-        height: "175px",
-        lineHeight: "175px"
-      }}>
+      <Box
+        className="group-loader text-center"
+        style={{
+          height: "175px",
+          lineHeight: "175px",
+        }}
+      >
         <h5 className="m-t-0 m-b-0 d-inline-block">{text}</h5>
       </Box>
     );
@@ -859,7 +865,7 @@ console.log(savedData)
                   </h4>
                   {biServicesFromProductCategory.status ===
                   status.IN_PROGRESS ? (
-                    this.renderLoder()
+                    this.renderLoder("topology-loder")
                   ) : (
                     <Box className="topology-inner-content">
                       <Box className="content-left">
