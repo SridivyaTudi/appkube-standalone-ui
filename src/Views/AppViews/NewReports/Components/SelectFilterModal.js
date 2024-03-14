@@ -9,7 +9,6 @@ import {
 } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import status from "Redux/Constants/CommonDS";
 import CloseIcon from "@mui/icons-material/Close";
 import { getCurrentUser } from "Utils";
 import { v4 } from "uuid";
@@ -63,7 +62,8 @@ class SelectFilterModal extends Component {
     this.setState({ [name]: value });
   };
 
-  handleSelectboxChange = (event, index) => {
+  h;
+  andleSelectboxChange = (event, index) => {
     const {
       target: { value },
     } = event;
@@ -71,32 +71,6 @@ class SelectFilterModal extends Component {
 
     selectedPolicy[index] = value;
     this.setState({ selectedPolicy });
-  };
-
-  // Call API create role
-  handleRoleSubmit = (e) => {
-    e.preventDefault();
-    const { name, description, selectedPolicy } = this.state;
-    this.setState({ isSubmit: true });
-    const { isValid } = this.validateForm(true);
-
-    if (isValid) {
-      let params = {
-        version: 1,
-        name,
-        description,
-        grp: false,
-        policies: selectedPolicy.map((policy) => ({ id: policy })),
-        createdBy: this.user.username,
-      };
-
-      if (this.props.roleId > 0) {
-        params["id"] = this.props.roleId;
-        this.props.updateRole(params);
-      } else {
-        this.props.createRole(params);
-      }
-    }
   };
 
   //  Reset state and close modal
@@ -119,7 +93,6 @@ class SelectFilterModal extends Component {
             size="small"
             onClick={(e) => {
               e.stopPropagation();
-              
             }}
           />
           {policy.name}
@@ -162,15 +135,6 @@ class SelectFilterModal extends Component {
   render() {
     let { selectedPolicy } = this.state;
     const errors = {};
-    let { roleUpdation, roleCreation, roleDetailsById } = this.props;
-    let createOrUpdateStatus = [
-      roleCreation?.status,
-      roleUpdation?.status,
-    ].includes(status.IN_PROGRESS);
-
-    let roleDetailsStatus = [roleDetailsById?.status].includes(
-      status.IN_PROGRESS
-    );
 
     return (
       <Modal
@@ -192,7 +156,7 @@ class SelectFilterModal extends Component {
             </IconButton>
           </h5>
         </ModalHeader>
-        {roleDetailsStatus ? (
+        {0 ? (
           this.renderLoder()
         ) : (
           <form onSubmit={this.handleRoleSubmit}>
@@ -218,7 +182,7 @@ class SelectFilterModal extends Component {
                           return labels.join(", ");
                         }}
                         value={selectedPolicy[index] || []}
-                        onChange={(e) => this.handleSelectboxChange(e, index)}
+                        // onChange={(e) => this.handleSelectboxChange(e, index)}
                         inputProps={{ "aria-label": "Without label" }}
                       >
                         {this.renderPolicies()}
@@ -246,9 +210,7 @@ class SelectFilterModal extends Component {
                 <LoadingButton
                   className="primary-btn min-width"
                   variant="contained"
-                  disabled={createOrUpdateStatus}
-                  loading={createOrUpdateStatus}
-                  onClick={this.handleRoleSubmit}
+                  onClick={this.handleCloseModal}
                 >
                   Apply
                 </LoadingButton>

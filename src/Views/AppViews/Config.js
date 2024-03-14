@@ -56,6 +56,7 @@ const config = {
   GET_BI_SERVICES_FROM_PRODUCT_CATEGORY: `/bi-service/search?productCategory=#product-category#`,
   GET_CLOUD_SERVICES: `/cloud-service/search?status=active`,
   GET_INSTANCES_SERVICES: `/cloud-element/search?cloud=#cloud-name#&elementType=#element-type#`,
+  ADD_BI_MAPPING: `/bi-mapping/add`,
 };
 
 export default config;

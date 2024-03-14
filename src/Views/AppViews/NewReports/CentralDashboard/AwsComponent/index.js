@@ -199,7 +199,7 @@ class AwsComponent extends Component {
       <>
         <TimeSpendComponent data={timeSpendData} />
         <Box className="reports-charts">
-          <Grid container spacing={2}>
+          <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={7}>
               <ChartWrapper
                 data={{
@@ -217,7 +217,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Most used services",
                   labelOfBtn: "View Details",
-                  link: "/app/new-reports/central-dashboard/cost-central-top-internal",
+                  link: "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal",
                 }}
                 ChartComponent={
                   <VerticalBarchart

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Box, Button, IconButton, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import ChartWrapper from "../../Components/ChartWrapper";
 import GroupedBarplotChart from "../../Components/GroupedBarplotChart";
-import { Link } from "react-router-dom";
 import SelectFilterModal from "../../Components/SelectFilterModal";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 let verticalBarChartData = [
   {
@@ -48,7 +48,13 @@ class SpendingTrend extends Component {
           <h3>Spending Trend</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>Overview Dashboard</li>
+              <li
+                onClick={() =>
+                  this.props.navigate("/app/new-reports/over-view-dashboard")
+                }
+              >
+                Overview Dashboard
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
@@ -71,28 +77,19 @@ class SpendingTrend extends Component {
           <Box className="reports-charts">
             <Grid
               container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+             spacing={3}
             >
               <Grid item xs={12}>
                 <ChartWrapper
-                  ChartComponent={
-                    <GroupedBarplotChart
-                      data={verticalBarChartData}
-                      chardBeforeRenderHTML={
-                        <Box className="spending-present">
-                          <label>
-                            See how much you have spent previous year vs present
-                            year
-                          </label>
-                        </Box>
-                      }
-                    />
-                  }
                   data={{
                     title: "Previous Year Spending VS Present Year Spending",
+                    description:
+                      " See how much you have spent previous year vs present year",
                     labelOfBtn: " View Details",
                   }}
+                  ChartComponent={
+                    <GroupedBarplotChart data={verticalBarChartData} />
+                  }
                   // style={{ height: '450px', width: '840px' }}
                 />
               </Grid>
@@ -112,4 +109,4 @@ class SpendingTrend extends Component {
   }
 }
 
-export default SpendingTrend;
+export default navigateRouter(SpendingTrend);

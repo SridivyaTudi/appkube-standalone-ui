@@ -12,8 +12,8 @@ import {
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
-import { Link } from "react-router-dom";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { v4 } from "uuid";
 let timeSpendData = [
   {
     name: "Avg Daily Spend",
@@ -35,11 +35,119 @@ let timeSpendData = [
   },
 ];
 
+let consumptionData = [
+  {
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    tags: "dev-prod",
+    instanceStatus: "Running",
+    pricingModel: "On Demand",
+    availabilityZone: "us-east-1a",
+    OnDemandCosthr: "$0.0015",
+    riCosthr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    tags: "dev-prod",
+    instanceStatus: "Running",
+    pricingModel: "On Demand",
+    availabilityZone: "us-east-1a",
+    OnDemandCosthr: "$0.0015",
+    riCosthr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    tags: "dev-prod",
+    instanceStatus: "Running",
+    pricingModel: "On Demand",
+    availabilityZone: "us-east-1a",
+    OnDemandCosthr: "$0.0015",
+    riCosthr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    tags: "dev-prod",
+    instanceStatus: "Running",
+    pricingModel: "On Demand",
+    availabilityZone: "us-east-1a",
+    OnDemandCosthr: "$0.0015",
+    riCosthr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    tags: "dev-prod",
+    instanceStatus: "Running",
+    pricingModel: "On Demand",
+    availabilityZone: "us-east-1a",
+    OnDemandCosthr: "$0.0015",
+    riCosthr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    tags: "dev-prod",
+    instanceStatus: "Running",
+    pricingModel: "On Demand",
+    availabilityZone: "us-east-1a",
+    OnDemandCosthr: "$0.0015",
+    riCosthr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    tags: "dev-prod",
+    instanceStatus: "Running",
+    pricingModel: "On Demand",
+    availabilityZone: "us-east-1a",
+    OnDemandCosthr: "$0.0015",
+    riCosthr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+  {
+    instanceId: "i-0c1234dc",
+    instanceType: "t2.2xlarge",
+    tags: "dev-prod",
+    instanceStatus: "Running",
+    pricingModel: "On Demand",
+    availabilityZone: "us-east-1a",
+    OnDemandCosthr: "$0.0015",
+    riCosthr: "Unavailable",
+    usageHrs: "720hrs",
+    addOns: "NA",
+    totalSpend: "$120",
+  },
+];
 class BudgetAccountDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
+      consumptions: consumptionData,
+      searchedKey: "",
     };
   }
 
@@ -62,7 +170,6 @@ class BudgetAccountDetails extends Component {
 
   //  Render table head
   renderTableHead = () => {
-    let headers = this.props.headers || [];
     return (
       <TableHead>
         <TableRow>
@@ -84,157 +191,72 @@ class BudgetAccountDetails extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    let { data } = this.props;
+    let { consumptions } = this.state;
     return (
       <TableBody>
-        <TableRow>
-          <TableCell>i-0c1234dc</TableCell>
-          <TableCell>t2.2xlarge	</TableCell>
-          <TableCell>dev-prod</TableCell>
-          <TableCell>Running</TableCell>
-          <TableCell>on Demand</TableCell>
-          <TableCell>us-east-1a</TableCell>
-          <TableCell align="center"><strong>$0.0015</strong></TableCell>
-          <TableCell>Unavailable</TableCell>
-          <TableCell align="center"><strong>720hrs</strong></TableCell>
-          <TableCell>NA</TableCell>
-          <TableCell align="center"><strong>$120</strong></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>i-0c1234dc</TableCell>
-          <TableCell>t2.2xlarge	</TableCell>
-          <TableCell>dev-prod</TableCell>
-          <TableCell>Running</TableCell>
-          <TableCell>on Demand</TableCell>
-          <TableCell>us-east-1a</TableCell>
-          <TableCell align="center"><strong>$0.0015</strong></TableCell>
-          <TableCell>Unavailable</TableCell>
-          <TableCell align="center"><strong>720hrs</strong></TableCell>
-          <TableCell>NA</TableCell>
-          <TableCell align="center"><strong>$120</strong></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>i-0c1234dc</TableCell>
-          <TableCell>t2.2xlarge	</TableCell>
-          <TableCell>dev-prod</TableCell>
-          <TableCell>Running</TableCell>
-          <TableCell>on Demand</TableCell>
-          <TableCell>us-east-1a</TableCell>
-          <TableCell align="center"><strong>$0.0015</strong></TableCell>
-          <TableCell>Unavailable</TableCell>
-          <TableCell align="center"><strong>720hrs</strong></TableCell>
-          <TableCell>NA</TableCell>
-          <TableCell align="center"><strong>$120</strong></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>i-0c1234dc</TableCell>
-          <TableCell>t2.2xlarge	</TableCell>
-          <TableCell>dev-prod</TableCell>
-          <TableCell>Running</TableCell>
-          <TableCell>on Demand</TableCell>
-          <TableCell>us-east-1a</TableCell>
-          <TableCell align="center"><strong>$0.0015</strong></TableCell>
-          <TableCell>Unavailable</TableCell>
-          <TableCell align="center"><strong>720hrs</strong></TableCell>
-          <TableCell>NA</TableCell>
-          <TableCell align="center"><strong>$120</strong></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>i-0c1234dc</TableCell>
-          <TableCell>t2.2xlarge	</TableCell>
-          <TableCell>dev-prod</TableCell>
-          <TableCell>Running</TableCell>
-          <TableCell>on Demand</TableCell>
-          <TableCell>us-east-1a</TableCell>
-          <TableCell align="center"><strong>$0.0015</strong></TableCell>
-          <TableCell>Unavailable</TableCell>
-          <TableCell align="center"><strong>720hrs</strong></TableCell>
-          <TableCell>NA</TableCell>
-          <TableCell align="center"><strong>$120</strong></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>i-0c1234dc</TableCell>
-          <TableCell>t2.2xlarge	</TableCell>
-          <TableCell>dev-prod</TableCell>
-          <TableCell>Running</TableCell>
-          <TableCell>on Demand</TableCell>
-          <TableCell>us-east-1a</TableCell>
-          <TableCell align="center"><strong>$0.0015</strong></TableCell>
-          <TableCell>Unavailable</TableCell>
-          <TableCell align="center"><strong>720hrs</strong></TableCell>
-          <TableCell>NA</TableCell>
-          <TableCell align="center"><strong>$120</strong></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>i-0c1234dc</TableCell>
-          <TableCell>t2.2xlarge	</TableCell>
-          <TableCell>dev-prod</TableCell>
-          <TableCell>Running</TableCell>
-          <TableCell>on Demand</TableCell>
-          <TableCell>us-east-1a</TableCell>
-          <TableCell align="center"><strong>$0.0015</strong></TableCell>
-          <TableCell>Unavailable</TableCell>
-          <TableCell align="center"><strong>720hrs</strong></TableCell>
-          <TableCell>NA</TableCell>
-          <TableCell align="center"><strong>$120</strong></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>i-0c1234dc</TableCell>
-          <TableCell>t2.2xlarge	</TableCell>
-          <TableCell>dev-prod</TableCell>
-          <TableCell>Running</TableCell>
-          <TableCell>on Demand</TableCell>
-          <TableCell>us-east-1a</TableCell>
-          <TableCell align="center"><strong>$0.0015</strong></TableCell>
-          <TableCell>Unavailable</TableCell>
-          <TableCell align="center"><strong>720hrs</strong></TableCell>
-          <TableCell>NA</TableCell>
-          <TableCell align="center"><strong>$120</strong></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>i-0c1234dc</TableCell>
-          <TableCell>t2.2xlarge	</TableCell>
-          <TableCell>dev-prod</TableCell>
-          <TableCell>Running</TableCell>
-          <TableCell>on Demand</TableCell>
-          <TableCell>us-east-1a</TableCell>
-          <TableCell align="center"><strong>$0.0015</strong></TableCell>
-          <TableCell>Unavailable</TableCell>
-          <TableCell align="center"><strong>720hrs</strong></TableCell>
-          <TableCell>NA</TableCell>
-          <TableCell align="center"><strong>$120</strong></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>i-0c1234dc</TableCell>
-          <TableCell>t2.2xlarge	</TableCell>
-          <TableCell>dev-prod</TableCell>
-          <TableCell>Running</TableCell>
-          <TableCell>on Demand</TableCell>
-          <TableCell>us-east-1a</TableCell>
-          <TableCell align="center"><strong>$0.0015</strong></TableCell>
-          <TableCell>Unavailable</TableCell>
-          <TableCell align="center"><strong>720hrs</strong></TableCell>
-          <TableCell>NA</TableCell>
-          <TableCell align="center"><strong>$120</strong></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>i-0c1234dc</TableCell>
-          <TableCell>t2.2xlarge	</TableCell>
-          <TableCell>dev-prod</TableCell>
-          <TableCell>Running</TableCell>
-          <TableCell>on Demand</TableCell>
-          <TableCell>us-east-1a</TableCell>
-          <TableCell align="center"><strong>$0.0015</strong></TableCell>
-          <TableCell>Unavailable</TableCell>
-          <TableCell align="center"><strong>720hrs</strong></TableCell>
-          <TableCell>NA</TableCell>
-          <TableCell align="center"><strong>$120</strong></TableCell>
-        </TableRow>
+        {consumptions?.length ? (
+          consumptions.map((consumption) => {
+            return (
+              <TableRow key={v4()}>
+                <TableCell>{consumption.instanceId}</TableCell>
+                <TableCell>{consumption.instanceType} </TableCell>
+                <TableCell>{consumption.tags}</TableCell>
+                <TableCell>{consumption.instanceStatus}</TableCell>
+                <TableCell>{consumption.pricingModel}</TableCell>
+                <TableCell>{consumption.availabilityZone}</TableCell>
+                <TableCell align="center">
+                  <strong>{consumption.OnDemandCosthr}</strong>
+                </TableCell>
+                <TableCell>{consumption.riCosthr}</TableCell>
+                <TableCell align="center">
+                  <strong>{consumption.usageHrs}</strong>
+                </TableCell>
+                <TableCell>{consumption.addOns}</TableCell>
+                <TableCell align="center">
+                  <strong>{consumption.totalSpend}</strong>
+                </TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <TableRow>
+            <TableCell colSpan={12}>
+              <Box className="d-blck text-center w-100 h-100 ">
+                <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+                  <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+                </Box>
+              </Box>
+            </TableCell>
+          </TableRow>
+        )}
       </TableBody>
     );
   };
+
+  //  Serach
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { consumptions } = this.state;
+    let data = consumptionData || [];
+    if (data?.length) {
+      if (value) {
+        consumptions = data.filter((tableData) => {
+          if (
+            tableData?.instanceId.toLowerCase().includes(value.toLowerCase())
+          ) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        consumptions = data;
+      }
+      this.setState({ consumptions, searchedKey: value });
+    }
+  };
   render() {
-    let { accounts, searchedKey, showSelectFilterModal } = this.state;
+    let { searchedKey, showSelectFilterModal } = this.state;
     return (
       <>
         <Box className="new-reports-container">
@@ -242,15 +264,35 @@ class BudgetAccountDetails extends Component {
             <h3>Budget Account Details</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li>Budget Dashboard</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate("/app/new-reports/budget-dashboard")
+                  }
+                >
+                  Budget Dashboard
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
-                <li>Budget Account</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate("/app/new-reports/budget-dashboard")
+                  }
+                >
+                  Budget Account
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
-                <li>Budget Services Account</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate(
+                      "/app/new-reports/budget-dashboard/budget-services-account"
+                    )
+                  }
+                >
+                  Budget Services Account
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
@@ -258,21 +300,18 @@ class BudgetAccountDetails extends Component {
               </ul>
             </Box>
           </Box>
-          <Box className="list-heading m-t-2 ">
-            <h4 className="m-t-0 m-b-0">Cost of EC2</h4>
-            <Box className="d-flex ">
-              <Button
-                className="light-btn p-l-15 p-r-15 m-r-3"
-                onClick={this.handleSelectFilterModal}
-              >
-                <i className="fas fa-filter m-r-2"></i> Filter
-              </Button>
-              <Button className="light-btn p-l-15 p-r-15">
-                <i className="fas fa-calendar-minus m-r-2"></i> Last Month
-              </Button>
-            </Box>
+          <Box className="d-flex align-items-center justify-content-end m-t-2">
+            <Button
+              className="light-btn p-l-15 p-r-15 m-r-3"
+              onClick={this.handleSelectFilterModal}
+            >
+              <i className="fas fa-filter m-r-2"></i> Filter
+            </Button>
+            <Button className="light-btn p-l-15 p-r-15">
+              <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+            </Button>
           </Box>
-          <Box className="m-t-2">
+          <Box className="m-t-4">
             <TimeSpendComponent data={timeSpendData} />
           </Box>
           <Box className="table-head">

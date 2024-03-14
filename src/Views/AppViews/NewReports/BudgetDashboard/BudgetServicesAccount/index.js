@@ -5,7 +5,7 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import ServiceIcon1 from "assets/img/report/service-icon1.png";
-import AccountTable from "../Components/AccountTable";
+import AccountTable from "../../CentralDashboard/Components/AccountTable";
 let timeSpendData = [
   {
     name: "Month to date spend",
@@ -33,12 +33,12 @@ let timeSpendData = [
   },
 ];
 let tableHeader = [
-  "Service name	",
+  "Service name",
+  "Total instances",
   "Current month spend",
-  "Last month Spend	",
+  "Last month Spend",
   "Variance",
-  "Avg daily spend	",
-  "Actions",
+  "Action",
 ];
 let dummyTableData = [
   {
@@ -53,7 +53,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -67,7 +67,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -81,7 +81,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -95,7 +95,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -109,7 +109,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -123,7 +123,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -137,7 +137,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
   {
     name: "EC2",
@@ -151,7 +151,7 @@ let dummyTableData = [
       </Box>
     ),
     actionUrl:
-      "/app/new-reports/central-dashboard/cost-central-top-internal/cost-central-services-internal/cost-central-services-internal-details",
+      "/app/new-reports/budget-dashboard/budget-services-account/budget-account-details",
   },
 ];
 class BudgetServicesAccount extends Component {
@@ -171,7 +171,7 @@ class BudgetServicesAccount extends Component {
   //  Serach
   handleSearchChange = (e) => {
     let value = e.target.value;
-    let { services, searchedKey } = this.state;
+    let { services } = this.state;
     let data = dummyTableData || [];
     if (data?.length) {
       if (value) {
@@ -197,11 +197,25 @@ class BudgetServicesAccount extends Component {
             <h3>Budget Sevices Account</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li>Budget Dashboard</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate("/app/new-reports/budget-dashboard")
+                  }
+                >
+                  Budget Dashboard
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
-                <li>Budget Account</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate(
+                      "/app/new-reports/budget-dashboard/budget-account"
+                    )
+                  }
+                >
+                  Budget Account
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
@@ -209,9 +223,7 @@ class BudgetServicesAccount extends Component {
               </ul>
             </Box>
           </Box>
-          <Box className="list-heading m-t-2 ">
-            <h4 className="m-t-0 m-b-0">Cost of Top Services in US East (N.Virginia) </h4>
-            <Box className="d-flex ">
+          <Box className="d-flex align-items-center justify-content-end m-t-2">
               <Button
                 className="light-btn p-l-15 p-r-15 m-r-3"
                 onClick={this.handleSelectFilterModal}
@@ -222,8 +234,7 @@ class BudgetServicesAccount extends Component {
                 <i className="fas fa-calendar-minus m-r-2"></i> Last Month
               </Button>
             </Box>
-          </Box>
-          <Box className="m-t-2">
+          <Box className="m-t-4">
             <TimeSpendComponent data={timeSpendData} />
           </Box>
           <Box className="table-head">

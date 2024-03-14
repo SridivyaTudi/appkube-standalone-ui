@@ -130,36 +130,9 @@
             }
           }
           .global-service-penal {
-            // .environment-boxs {
-            //   .environment-box {
-            //     width: 296px;
-            //     min-height: 365px;
-            //     margin-bottom: 5px;
-            //     .data-contant {
-            //       ul {
-            //         li {
-            //           padding-top: 6px;
-            //           padding-bottom: 7px;
-            //         }
-            //       }
-            //     }
-            //   }
-            // }
-
             .cluster-heading {
-              //margin-top: 30px;
               font-weight: 500;
             }
-            // .services-panel-tabs {
-            //   .tabs-head {
-            //     ul {
-            //       display: inline-block;
-            //       width: 100%;
-            //       border-radius: 30px;
-            //       background-color: #dbdff1;
-            //     }
-            //   }
-            // }
 
             .global-services-fliter {
               display: block;
@@ -317,8 +290,6 @@
               overflow-x: auto;
               margin-top: 20px;
               padding-bottom: 10px;
-
-              
             }
 
             .resources-section {
@@ -841,7 +812,7 @@
     .lambda-functions-table-section {
       display: block;
       width: 100%;
-      h3{
+      h3 {
         text-align: center;
       }
 

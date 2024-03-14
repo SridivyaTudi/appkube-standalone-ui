@@ -3,7 +3,8 @@
     display: block;
     width: 100%;
     .tabs-head {
-      margin-top: 20px;
+      margin-top: 25px;
+      margin-bottom: 25px;
       ul {
         display: inline-flex;
         width: auto;
@@ -37,7 +38,6 @@
     .tabs-content {
       display: block;
       width: 100%;
-      margin-top: 20px;
       .discovered-assets-inner-tabs {
         width: 100%;
         display: block;
@@ -45,10 +45,11 @@
           display: flex;
           flex-wrap: wrap;
           width: 100%;
-          padding: 20px 0 10px 0;
+          padding: 0;
           .tabs-content {
             width: 100%;
             display: block; 
+            margin-top: 15px;
           }
         }
       }

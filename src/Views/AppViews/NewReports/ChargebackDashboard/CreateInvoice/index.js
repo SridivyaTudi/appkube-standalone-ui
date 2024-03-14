@@ -3,7 +3,6 @@ import {
   Box,
   IconButton,
   Button,
-  List,
   ListItem,
   Select,
   MenuItem,
@@ -198,7 +197,7 @@ class CreateInvoice extends Component {
     let { errors } = this.validateSteps();
     return (
       <form onSubmit={this.setActiveStep}>
-        <Box className="users-content" sx={{ mt: 2 }}>
+        <Box className="users-content">
           {activeStep === 0 ? (
             <>
               <Box className="form-group">
@@ -352,7 +351,7 @@ class CreateInvoice extends Component {
               </Box>{" "}
             </>
           ) : activeStep === 3 ? (
-            <Box className="completed-steper m-t-5">
+            <Box className="completed-steper">
               <Box className="completed-imge">
                 <img src={SuccessfullyIcon} alt="Carrier" />
               </Box>
@@ -493,8 +492,8 @@ class CreateInvoice extends Component {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "space-between",
-                height: "300px",
+                justifyContent: "center",
+                height: "290px",
               }}
             >
               {this.allStepsCompleted() ? (

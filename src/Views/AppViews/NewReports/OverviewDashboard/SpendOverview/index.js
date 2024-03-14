@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button, List, ListItem, IconButton } from "@mui/material";
+import { Box, Button, List, ListItem, } from "@mui/material";
 import Compute from "./Compute";
 import Storage from "./Storage";
 import Database from "./Database";
@@ -103,7 +103,13 @@ class SpendOverview extends Component {
             <h3>Spend Overview</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li>Overview Dashboard</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate("/app/new-reports/over-view-dashboard")
+                  }
+                >
+                  Overview Dashboard
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>

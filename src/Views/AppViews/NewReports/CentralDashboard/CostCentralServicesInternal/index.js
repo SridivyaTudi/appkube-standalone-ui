@@ -197,11 +197,25 @@ class CostCentralServicesInternal extends Component {
             <h3>Cost Central Services Internal</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li>Cost Central dashboard</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate("/app/new-reports/central-dashboard")
+                  }
+                >
+                  Cost Central dashboard
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
-                <li >Cost Central Top Internal</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate(
+                      "/app/new-reports/central-dashboard/cost-central-top-internal"
+                    )
+                  }
+                >
+                  Cost Central Top Internal
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
@@ -209,21 +223,18 @@ class CostCentralServicesInternal extends Component {
               </ul>
             </Box>
           </Box>
-          <Box className="list-heading m-t-2 ">
-            <h4 className="m-t-0 m-b-0">Cost of Top Services in US East (N.Virginia) </h4>
-            <Box className="d-flex ">
-              <Button
-                className="light-btn p-l-15 p-r-15 m-r-3"
-                onClick={this.handleSelectFilterModal}
-              >
-                <i className="fas fa-filter m-r-2"></i> Filter
-              </Button>
-              <Button className="light-btn p-l-15 p-r-15">
-                <i className="fas fa-calendar-minus m-r-2"></i> Last Month
-              </Button>
-            </Box>
+          <Box className="d-flex align-items-center justify-content-end m-t-2">
+            <Button
+              className="light-btn p-l-15 p-r-15 m-r-3"
+              onClick={this.handleSelectFilterModal}
+            >
+              <i className="fas fa-filter m-r-2"></i> Filter
+            </Button>
+            <Button className="light-btn p-l-15 p-r-15">
+              <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+            </Button>
           </Box>
-          <Box className="m-t-2">
+          <Box className="m-t-4">
             <TimeSpendComponent data={timeSpendData} />
           </Box>
           <Box className="table-head">

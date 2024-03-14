@@ -38,7 +38,7 @@ export class AccountTable extends Component {
       <TableHead>
         <TableRow>
           {headers.map((header, index) => (
-            <TableCell align={`${index === 0 ? "left" : "center"} `}>
+            <TableCell >
               {header}
             </TableCell>
           ))}
@@ -56,38 +56,38 @@ export class AccountTable extends Component {
           data.map((details) => {
             return (
               <TableRow>
-                <TableCell align="left">
+                <TableCell >
                   {details.nameImageShow ? details.nameImageShow : <></>}
                   {details.name}
                 </TableCell>
                 {this.props?.notShowingField?.includes("id") ? (
                   <></>
                 ) : (
-                  <TableCell align="center">{details.id}</TableCell>
+                  <TableCell>{details.id}</TableCell>
                 )}
                 {this.props?.notShowingField?.includes("orgUnit") ? (
                   <></>
                 ) : (
-                  <TableCell align="left"> {details.orgUnit}</TableCell>
+                  <TableCell > {details.orgUnit}</TableCell>
                 )}
 
-                <TableCell align="center">
+                <TableCell>
                   <strong>{details.currentMonthSpend}</strong>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell>
                   <strong> {details.lastMonthSpend}</strong>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell>
                   <Box className="variance-count">
                     {details.varience}{" "}
                     <i className="fas fa-sort-down p-l-5 m-r-1"></i>
                   </Box>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell>
                   <strong> {details.avgDailySpend}</strong>
                 </TableCell>
 
-                <TableCell align="center">
+                <TableCell>
                   <Link
                     to={`${details.actionUrl || '#'}`}
                   >

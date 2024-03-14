@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import TimeSpendComponent from "../../../Components/TimeSpendComponent";
 import SpendingTable from "Views/AppViews/NewReports/OverviewDashboard/SpendOverviewDetails/Components/SpendingTable";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { Box } from "@mui/material";
 let timeSpendData = [
   {
     name: "Total EC2 Instances",
@@ -227,19 +229,36 @@ let computeSpendingTable = [
 ];
 
 class Database extends Component {
-    /** Get url details. */
-    getUrlDetails() {
-      const name = this.props.params.name;
-      return { name };
-    }
+  /** Get url details. */
+  getUrlDetails() {
+    const name = this.props.params.name;
+    return { name };
+  }
   render() {
     const { name } = this.getUrlDetails();
     return (
       <>
         {" "}
         <TimeSpendComponent data={timeSpendData} />
-        <h3 className="m-t-3">{name} SPENDINGS</h3>
-        <h4>Cost consumption of {name}</h4>
+        <Box className="table-head" alignItems={"end"}>
+          <Box className="d-block">
+            <h3>{name} SPENDINGS</h3>
+            <h4 className="m-t-3 m-b-0">Cost consumption of {name}</h4>
+          </Box>
+          <Box className="search m-r-0">
+            <input
+              type="text"
+              className="input"
+              placeholder="Search Insatnce "
+              //value={searchedKey}
+              onChange={this.handleSearchChange}
+              autoFocus="autoFocus"
+            />
+            <button className="button">
+              <SearchOutlinedIcon />
+            </button>
+          </Box>
+        </Box>
         <SpendingTable data={computeSpendingTable} />
       </>
     );

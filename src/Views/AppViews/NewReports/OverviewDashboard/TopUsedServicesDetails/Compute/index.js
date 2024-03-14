@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import TimeSpendComponent from "Views/AppViews/NewReports/Components/TimeSpendComponent";
 import SpendingTable from "Views/AppViews/NewReports/OverviewDashboard/SpendOverviewDetails/Components/SpendingTable";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { Box } from "@mui/material";
 let timeSpendData = [
   {
     name: "Total EC2 Instances",
@@ -226,20 +228,64 @@ let computeSpendingTable = [
   },
 ];
 class Compute extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchedKey: "",
+      costConsumption: computeSpendingTable,
+    };
+  }
   /** Get url details. */
   getUrlDetails() {
     const name = this.props.params.name;
     return { name };
   }
+  //  Serach
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { costConsumption } = this.state;
+    let data = computeSpendingTable || [];
+    if (data?.length) {
+      if (value) {
+        costConsumption = data.filter((tableData) => {
+          if (tableData?.tags.toLowerCase().includes(value.toLowerCase())) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        costConsumption = data;
+      }
+      this.setState({ costConsumption, searchedKey: value });
+    }
+  };
   render() {
     const { name } = this.getUrlDetails();
+    let { costConsumption, searchedKey } = this.state;
     return (
       <>
         <TimeSpendComponent data={timeSpendData} />
-
-        <h3 className="m-t-3">{name} SPENDINGS</h3>
-        <h4>Cost consumption of {name}</h4>
-        <SpendingTable data={computeSpendingTable} />
+        <Box className="table-head" alignItems={"end"}>
+          <Box className="d-block">
+            <h3 className="m-t-0 m-b-0">{name} SPENDINGS</h3>
+            <h4 className="m-t-3 m-b-0">Cost consumption of {name}</h4>
+          </Box>
+          <Box className="search m-r-0">
+            <input
+              type="text"
+              className="input"
+              placeholder="Search Insatnce "
+              value={searchedKey}
+              onChange={this.handleSearchChange}
+              autoFocus="autoFocus"
+            />
+            <button className="button">
+              <SearchOutlinedIcon />
+            </button>
+          </Box>
+        </Box>
+        <SpendingTable data={costConsumption} />
       </>
     );
   }

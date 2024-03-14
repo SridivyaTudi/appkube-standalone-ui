@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Box } from "@mui/material";
 import * as d3 from "d3";
 
 let data = [
@@ -18,7 +19,7 @@ const margin = { top: 50, right: 20, bottom: 40, left: 40 };
 
 // Increase the width and height as needed
 const width = 750; // Adjust the width
-const height = 290; // Adjust the height
+const height = 240; // Adjust the height
 
 class VerticalBarchart extends Component {
   constructor(props) {
@@ -31,6 +32,14 @@ class VerticalBarchart extends Component {
 
   renderChart = () => {
     // let { data,styleProp } = this.props;
+    var tooltip = d3
+      .select("#root")
+      .data(data)
+      .append("div")
+      .attr("class", "chart-tooltip")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
 
     const svg = d3.select(this.ref.current);
     const xScale = d3
@@ -56,15 +65,15 @@ class VerticalBarchart extends Component {
         .attr("dx", "0.80em")
         .attr("dy", "0.10em")
         .attr("transform", "translate(0,20)rotate(-90)")
-        .attr("font-size", "16px", "sans-serif");
+        .attr("font-size", "14px", "sans-serif");
 
     // .attr("transform", "rotate(-45)");
 
     const yAxis = (g) =>
       g
         .attr("transform", `translate(${margin.left},0)`)
-        .call(d3.axisLeft(yScale).tickFormat((d) => "$"+  d +"k"))
-        .attr("font-size", "16px", "sans-serif")
+        .call(d3.axisLeft(yScale).tickFormat((d) => "$" + d + "k"))
+        .attr("font-size", "14px", "sans-serif")
         .call((g) => g.select(".domain").remove());
 
     svg.selectAll("*").remove();
@@ -83,16 +92,35 @@ class VerticalBarchart extends Component {
       .attr("y", (d) => yScale(d.value))
       .attr("width", xScale.bandwidth())
       .attr("height", (d) => height - yScale(d.value))
-      .attr("fill", this.props?.color ? this.props?.color  : "#FA6298")
-      .attr("rx", 5);
+      .attr("fill", this.props?.color ? this.props?.color : "#FA6298")
+      .attr("rx", 5)
+      .on("mouseover", function (d, data) {
+        tooltip.html(
+          `<div class="chart-tooltip-contents p-5"><div class="value">R&D budget </div>
+          <div class="previous-month-data"><span>Budgeted amount</span> <label>$2000</label></div>
+          <div class="previous-month-data"><span>Overspend amount</span> <label>$3000</label></div>
+          <div class="check-details">Check Details <i class="fas fa-chevron-right"></i></div></div>`
+        );
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (d) {
+        return tooltip
+          .style("top", d.pageY - 10 + "px")
+          .style("left", d.pageX + 10 + "px");
+      })
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
   };
   render() {
     return (
-      <svg
-        // style={{ width: "100%", height: "290" }}
-        ref={this.ref}
-        viewBox={`-15 0 ${width} ${height + margin.top + margin.bottom}`}
-      />
+      <Box className="vertical-bar-chart">
+        <svg className="vertical-bar-chart-inner-section"
+          style={{ width: "100%" }}
+          ref={this.ref}
+          viewBox={`-15 0 ${width} ${height + margin.top + margin.bottom}`}
+        />
+      </Box>
     );
   }
 }

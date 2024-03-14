@@ -6,7 +6,6 @@ import Users from "./Components/Users";
 import Allowed from "./Components/Allowed";
 import Disallowed from "./Components/Disallowed";
 import Roles from "./Components/Roles";
-import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import {
   setActiveTab,
   getActiveTab,

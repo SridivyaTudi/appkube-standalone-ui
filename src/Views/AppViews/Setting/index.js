@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Box, List, ListItem } from "@mui/material";
-import Button from "@mui/material/Button";
 import AccountIcon from "assets/img/setting/account.png";
 import Account from "./Account";
 import Permissions from "./Permissions";

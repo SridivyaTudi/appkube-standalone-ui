@@ -44,11 +44,13 @@ class AddDepartment extends Component {
     };
   }
 
+  // Render Step of the form
   renderForm = () => {
     let { activeStep } = this.state;
     return activeStep === 0 ? this.renderStep1Form() : this.renderStep2Form();
   };
 
+  // Render form of the input changes
   handleInputChange = (e) => {
     const { name, value } = e.target;
     const { step1FormData, step2FormData, activeStep } = this.state;
@@ -61,6 +63,8 @@ class AddDepartment extends Component {
 
     this.setState({ step1FormData, step2FormData });
   };
+
+  // Render step-1 of the form
   renderStep1Form = () => {
     let { isSubmit, step1FormData } = this.state;
     let { errors } = this.validateSteps();
@@ -132,6 +136,7 @@ class AddDepartment extends Component {
     );
   };
 
+  // Render buttons
   renderBtns = () => {
     let {
       activeStep,
@@ -173,6 +178,7 @@ class AddDepartment extends Component {
     );
   };
 
+  // set activeTab
   setActiveTab = (isNextStep = 0) => {
     let { activeStep } = this.state;
     let isRedirectPage =
@@ -190,16 +196,18 @@ class AddDepartment extends Component {
     this.setState({ activeStep });
   };
 
+  // Click on the landing zone
   onClickLandingZone(selectedAccount) {
     let { step2FormData } = this.state;
     step2FormData.selectedLandingZone = selectedAccount;
     this.setState({ step2FormData, activeStep: 2 });
   }
-
+  // Redirect the page
   redirectPage = (redirectUrl) => {
     this.props.navigate(redirectUrl);
   };
 
+  // validate step-1 of form
   validateStep1 = () => {
     let { step1FormData, isSubmit } = this.state;
     let isValid = true;
@@ -230,6 +238,7 @@ class AddDepartment extends Component {
     return { isValid, errors };
   };
 
+  // validate all steps
   validateSteps = () => {
     let { activeStep, step2FormData } = this.state;
 
@@ -243,6 +252,7 @@ class AddDepartment extends Component {
     }
   };
 
+  // Render step-2 of form
   renderStep2Form = () => {
     const {
       step2FormData: { selectedLandingZone, selectedChildLandingZone },
@@ -334,6 +344,7 @@ class AddDepartment extends Component {
                     rowSpacing={1.5}
                     columnSpacing={{ xs: 1.5 }}
                     alignItems={"center"}
+                    className="p-b-10"
                   >
                     {[...Array(13)].map((val, index) => {
                       return (

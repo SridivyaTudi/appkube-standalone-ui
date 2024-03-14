@@ -5,6 +5,7 @@ import {
   getBiServicesFromProductCategory,
   getCloudServices,
   getInstancesServices,
+  createBiMapping,
 } from "Redux/BIMapping/BIMappingThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -37,6 +38,10 @@ export const BIMappingSlice = createSlice({
     instancesServices: {
       status: null,
       data: [],
+    },
+    creationBiMapping: {
+      status: null,
+      data: {},
     },
   },
   reducers: {
@@ -174,6 +179,32 @@ export const BIMappingSlice = createSlice({
       return {
         ...state,
         instancesServices: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [createBiMapping.pending]: (state) => {
+      return {
+        ...state,
+        creationBiMapping: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [createBiMapping.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        creationBiMapping: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [createBiMapping.rejected]: (state) => {
+      return {
+        ...state,
+        creationBiMapping: {
           status: status.FAILURE,
         },
       };

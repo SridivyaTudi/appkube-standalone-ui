@@ -337,7 +337,13 @@ class BudgetProducts extends Component {
             <h3>Products</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li>Budget Dashboard</li>
+                <li
+                  onClick={() => {
+                    this.props.navigate(`/app/new-reports/budget-dashboard`);
+                  }}
+                >
+                  Budget Dashboard
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
@@ -356,7 +362,7 @@ class BudgetProducts extends Component {
               <i className="fas fa-calendar-minus m-r-2"></i> Last Month
             </Button>
           </Box>
-          <Box className="table-head m-t-3">
+          <Box className="table-head">
             <h4 className="m-t-0 m-b-0">Products with high spending</h4>
             <Box className="search">
               <input

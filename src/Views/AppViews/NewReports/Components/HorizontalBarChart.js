@@ -19,7 +19,7 @@ class HorizontalBarChart extends Component {
     const marginTop = 10;
     const marginRight = 10;
     const marginBottom = 10;
-    const marginLeft = 100;
+    const marginLeft = 80;
     const width = 800;
     const height = 
       Math.ceil(data.length * barHeight) + marginTop + marginBottom;
@@ -111,7 +111,7 @@ class HorizontalBarChart extends Component {
     svg
       .append("g")
       .attr("style", "font-size: 16px", "sans-serif")
-      .attr("transform", `translate(${marginLeft},0)`)
+      .attr("transform", `translate(${marginLeft-10},-10)`)
       .call(d3.axisLeft(y).tickSize(0))
       .attr("class", "y-axis")
       .call(yAxis);

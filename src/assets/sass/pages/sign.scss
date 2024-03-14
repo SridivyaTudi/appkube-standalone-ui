@@ -391,20 +391,19 @@
             text-transform: inherit;
             min-width: 120px;
           }
-         .label{
-          .image-upload{
-            padding:8px;
-            cursor: pointer;
-            background: #384cff;
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 13px;
-            line-height: 24px;
-            border-radius: 5px;
-            font-family: "Open Sans", sans-serif;
-        
+          .label {
+            .image-upload {
+              padding: 8px;
+              cursor: pointer;
+              background: #384cff;
+              color: #ffffff;
+              font-weight: 600;
+              font-size: 13px;
+              line-height: 24px;
+              border-radius: 5px;
+              font-family: "Open Sans", sans-serif;
+            }
           }
-         }
         }
       }
 
@@ -413,21 +412,6 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-
-        // a {
-        //   font-size: 13px;
-        //   color: #384cff;
-        //   line-height: 24px;
-        // }
-
-        // i {
-        //   color: #384cff;
-        //   width: 13px;
-        //   height: 24px;
-        //   line-height: 24px;
-        //   font-size: 13px;
-        //   text-align: center;
-        // }
 
         span {
           padding-left: 10px;

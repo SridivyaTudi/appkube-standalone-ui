@@ -20,7 +20,7 @@ class AddProduct extends Component {
       formData: {
         name: "",
         environment: "",
-        category: "",
+        category: PRODUCT_CATEGORY_ENUM.THREE_TIER,
         moduleName: "",
       },
     };
@@ -34,13 +34,14 @@ class AddProduct extends Component {
       let formData = {
         name: productName,
         environment,
-        category,
+        category: category || PRODUCT_CATEGORY_ENUM.THREE_TIER,
         moduleName,
       };
       this.setState({ formData });
     }
   };
 
+  /** Click event for next button. */
   handleNext = (e) => {
     e.preventDefault();
     let { developmentStatus, formData } = this.state;
@@ -54,12 +55,14 @@ class AddProduct extends Component {
         let { isValid } = this.validateForm();
 
         if (isValid) {
-          let { name: departmentName } = this.getUrlDetails();
+          let { name: departmentName, id: depanrtmentId } =
+            this.getUrlDetails();
           let { createProductFormData } = this.props;
           let productData = {
             ...createProductFormData,
             ...formData,
             departmentName,
+            depanrtmentId,
           };
           productData["productName"] = productData.name;
 
@@ -68,11 +71,11 @@ class AddProduct extends Component {
           this.props.setProductIntoDepartment(productData);
           if (formData.category === PRODUCT_CATEGORY_ENUM.THREE_TIER) {
             this.props.navigate(
-              `/app/bim/add-product/${departmentName}/product-category/3-tier`
+              `/app/bim/add-product/${departmentName}/${depanrtmentId}/product-category/3-tier`
             );
           } else {
             this.props.navigate(
-              `/app/bim/add-product/${departmentName}/product-category`
+              `/app/bim/add-product/${departmentName}/${depanrtmentId}/product-category`
             );
           }
         }
@@ -80,10 +83,7 @@ class AddProduct extends Component {
     );
   };
 
-  onClickLandingZone() {
-    this.setState({ selectedLandingZone: "AWS" });
-  }
-
+  /** View the buttons. */
   renderBtns = () => {
     return (
       <Box
@@ -110,10 +110,12 @@ class AddProduct extends Component {
     );
   };
 
+  /** Manage the previous button click event. */
   handlePrevious = () => {
     this.props.navigate(`${APP_PREFIX_PATH}/bim`);
   };
 
+  /** Form input changes. */
   handleInputChange = (e) => {
     const { name, value } = e.target;
     let { formData } = this.state;
@@ -122,6 +124,7 @@ class AddProduct extends Component {
     this.setState({ formData });
   };
 
+  /** Render environments. */
   renderEnvironments = () => {
     let { formData } = this.state;
     return environments.map((environment) => {
@@ -149,6 +152,7 @@ class AddProduct extends Component {
     });
   };
 
+  /** Validate form for data. */
   validateForm = () => {
     let { formData, isSubmit, developmentStatus } = this.state;
     let isValid = true;
@@ -182,11 +186,13 @@ class AddProduct extends Component {
           errors.category = "";
         }
 
-        if (!formData.moduleName) {
-          errors.moduleName = "Please enter the module name.";
-          isValid = false;
-        } else {
-          errors.moduleName = "";
+        if (formData.category === PRODUCT_CATEGORY_ENUM.SOA) {
+          if (!formData.moduleName) {
+            errors.moduleName = "Please enter the module name.";
+            isValid = false;
+          } else {
+            errors.moduleName = "";
+          }
         }
       }
     }
@@ -196,9 +202,11 @@ class AddProduct extends Component {
   /** Get url details. */
   getUrlDetails() {
     let name = this.props.params.name;
+    let id = this.props.params.id;
     name = name?.replaceAll("-", " ");
-    return { name };
+    return { name, id };
   }
+
   render() {
     const { formData, isSubmit } = this.state;
     let { errors } = this.validateForm();
@@ -338,31 +346,37 @@ class AddProduct extends Component {
                             ) : (
                               ""
                             )}
-                            <Box className="form-group m-t-2">
-                              <label
-                                htmlFor="moduleName"
-                                className="form-label"
-                              >
-                                Module Name
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="moduleName"
-                                name="moduleName"
-                                placeholder=""
-                                value={formData.moduleName}
-                                onChange={this.handleInputChange}
-                                onKeyPress={(e) =>
-                                  e.key === "Enter" ? this.handleNext(e) : ""
-                                }
-                              />
-                              {isSubmit && errors?.moduleName ? (
-                                <span className="red">{errors.moduleName}</span>
-                              ) : (
-                                ""
-                              )}
-                            </Box>
+                            {formData.category === PRODUCT_CATEGORY_ENUM.SOA ? (
+                              <Box className="form-group m-t-2">
+                                <label
+                                  htmlFor="moduleName"
+                                  className="form-label"
+                                >
+                                  Module Name
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="moduleName"
+                                  name="moduleName"
+                                  placeholder=""
+                                  value={formData.moduleName}
+                                  onChange={this.handleInputChange}
+                                  onKeyPress={(e) =>
+                                    e.key === "Enter" ? this.handleNext(e) : ""
+                                  }
+                                />
+                                {isSubmit && errors?.moduleName ? (
+                                  <span className="red">
+                                    {errors.moduleName}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </Box>
+                            ) : (
+                              <></>
+                            )}
                           </Box>
                         ) : (
                           <></>

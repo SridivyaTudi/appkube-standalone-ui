@@ -42,6 +42,56 @@ let dummyTableData = [
     varience: "$20,000",
     budget: "$30,000",
   },
+  {
+    id: "587170574722",
+    department: "Security Organization",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$1,205",
+    varience: "$20,000",
+    budget: "$30,000",
+  },
+  {
+    id: "160079380622",
+    department: "App Development",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$1,205",
+    varience: "$20,000",
+    budget: "$30,000",
+  },
+  {
+    id: "160079380622",
+    department: "Central Operations",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$1,205",
+    varience: "$20,000",
+    budget: "$30,000",
+  },
+  {
+    id: "587170574722",
+    department: "Production",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$1,205",
+    varience: "$20,000",
+    budget: "$30,000",
+  },
+  {
+    id: "160079380622",
+    department: "HR Department",
+    vpc: "vpc-d24664bb",
+    serviceCount: "22",
+    region: "US-East (N.virginia)",
+    spending: "$1,205",
+    varience: "$20,000",
+    budget: "$30,000",
+  },
 ];
 let tableHeader = [
   "Account ID",
@@ -96,7 +146,13 @@ class BudgetAccount extends Component {
             <h3>Budget Account</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li>Budget Dashboard</li>
+                <li
+                  onClick={() =>
+                    this.props.navigate("/app/new-reports/budget-dashboard")
+                  }
+                >
+                  Budget Dashboard
+                </li>
                 <li>
                   <i className="fa-solid fa-chevron-right"></i>
                 </li>
@@ -104,9 +160,7 @@ class BudgetAccount extends Component {
               </ul>
             </Box>
           </Box>
-          <Box className="list-heading m-t-2 ">
-            <h4 className="m-t-0 m-b-0">Cost of Top Accounts</h4>
-            <Box className="d-flex ">
+          <Box className="d-flex align-items-center justify-content-end m-t-2">
               <Button
                 className="light-btn p-l-15 p-r-15 m-r-3"
                 onClick={this.handleSelectFilterModal}
@@ -117,8 +171,7 @@ class BudgetAccount extends Component {
                 <i className="fas fa-calendar-minus m-r-2"></i> Last Month
               </Button>
             </Box>
-          </Box>
-          <Box className="m-t-2">
+          <Box className="m-t-4">
             <TimeSpendComponent data={timeSpendData} />
           </Box>
           <Box className="table-head">

@@ -10,35 +10,12 @@ import {
   FormControl,
   MenuItem,
   Select,
-  Button,
   IconButton,
 } from "@mui/material";
-import { v4 } from "uuid";
 import { ADD_PRODUCT_ENUMS } from "Utils";
 import CloseIcon from "@mui/icons-material/Close";
+import { connect } from "react-redux";
 
-const HOSTED_ON_DROP_DOWN = [
-  {
-    key: ADD_PRODUCT_ENUMS.EC2,
-    value: ADD_PRODUCT_ENUMS.EC2,
-  },
-  {
-    key: ADD_PRODUCT_ENUMS.EKS,
-    value: ADD_PRODUCT_ENUMS.EKS,
-  },
-  {
-    key: ADD_PRODUCT_ENUMS.ECS,
-    value: ADD_PRODUCT_ENUMS.ECS,
-  },
-  {
-    key: ADD_PRODUCT_ENUMS.LAMBDA,
-    value: ADD_PRODUCT_ENUMS.LAMBDA,
-  },
-  {
-    key: ADD_PRODUCT_ENUMS.S3,
-    value: ADD_PRODUCT_ENUMS.S3,
-  },
-];
 const MANAGEMENT_ENDPOINT__DROP_DOWN = [
   {
     key: "IP_PORT",
@@ -80,35 +57,9 @@ const LOG_LOCATION_SUBKEY_DROP_DOWN = [
   },
 ];
 
-let data = [
+const data = [
   {
-    key: "Hosted on",
-    dropDownValues: HOSTED_ON_DROP_DOWN,
-    subKeyValue: {
-      EC2: {
-        subKey: "Instance ID",
-        subValue: ADD_PRODUCT_ENUMS.USER_INPUT,
-      },
-      EKS: {
-        subKey: "Cluster id",
-        subValue: ADD_PRODUCT_ENUMS.USER_INPUT,
-      },
-      ECS: {
-        subKey: "Cluster id",
-        subValue: ADD_PRODUCT_ENUMS.USER_INPUT,
-      },
-      LAMBDA: {
-        subKey: "Function name",
-        subValue: ADD_PRODUCT_ENUMS.USER_INPUT,
-      },
-      S3: {
-        subKey: "Bucket name",
-        subValue: ADD_PRODUCT_ENUMS.USER_INPUT,
-      },
-    },
-  },
-  {
-    key: "Management Endpoint	",
+    key: "Management Endpoint",
     dropDownValues: MANAGEMENT_ENDPOINT__DROP_DOWN,
     subKeyValue: {
       IP_PORT: {
@@ -156,52 +107,142 @@ class ManagementInfo extends Component {
     super(props);
     this.state = {
       activeTab: 0,
-      tableData: data,
+      tableData: JSON.parse(JSON.stringify(data)),
       selectedInfo: {},
       selectedSubkeys: {},
       country: "",
+      selectedSubValues: {},
     };
   }
 
   componentDidMount = () => {
-    let value = this.props.selectedCloudElement;
-    if (value) {
-      this.handleChange(
-        {
-          target: {
-            value,
-          },
-        },
-        `Hosted on_0`
-      );
-    }
-    this.setState({tableData: data})
+    this.setPreviousData();
   };
 
   componentDidUpdate = (prevProps, prevState) => {
     if (prevProps.onClickAddEntryBtn !== this.props.onClickAddEntryBtn) {
       this.onClickAddEntry();
+    } else if (prevProps.currentActiveData !== this.props.currentActiveData) {
+      this.setPreviousData();
     }
   };
 
+  setPreviousData = () => {
+    let { tableData, selectedInfo, selectedSubValues } = this.state;
+    tableData = [];
+
+    tableData = JSON.parse(JSON.stringify(data));
+    let currentActiveData = this.props.currentActiveData;
+
+    if (currentActiveData?.length) {
+      this.props.currentActiveData.forEach((activeData) => {
+        if (activeData.isCustomField) {
+          tableData.push(activeData);
+        } else {
+          tableData.forEach((prev, index) => {
+            if (
+              prev.key?.split(" ")?.join("")?.toLowerCase() === activeData.key
+            ) {
+              let prepareIndex = `${prev.key?.split(" ")?.join("_")}_${index}`;
+              if (activeData.isSubValue) {
+                selectedSubValues[prepareIndex] = activeData.value;
+              } else {
+                selectedInfo[prepareIndex] = activeData.value;
+              }
+            }
+          });
+        }
+      });
+    }
+    this.setState({ tableData, selectedInfo, selectedSubValues });
+  };
+
+  // Set active tab
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
 
-  handleChange = (event, key, isSubkey = 0) => {
+  // Set the dropdown changes.
+  handleChange = (event, key, isSubkey = 0, isSubValue = 0) => {
     let { value } = event.target;
-    let { selectedInfo, selectedSubkeys } = this.state;
+    let { selectedInfo, selectedSubkeys, selectedSubValues } = this.state;
     if (isSubkey) {
-      selectedSubkeys[`${key}`] = value;
+      selectedSubkeys[key] = value;
+    } else if (isSubValue) {
+      selectedSubValues[key] = value;
     } else {
-      selectedInfo[`${key}`] = value;
+      selectedInfo[key] = value;
     }
 
     this.setState({
       selectedInfo,
       selectedSubkeys,
+      selectedSubValues,
     });
+    this.setManagementInfo();
   };
+
+  setManagementInfo = () => {
+    let { selectedInfo, selectedSubValues } = this.state;
+    try {
+      let inputData = this.manipulateInputData(selectedInfo);
+      let subValue = this.manipulateSubvaluesInputData(selectedSubValues);
+      let customInputData = this.manipulateCustomInputData();
+      this.props.setManagentInfo(inputData.concat(customInputData, subValue));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  manipulateInputData = (selectedInfo) => {
+    let keyValues = [];
+    Object.keys(selectedInfo).forEach((infoKey) => {
+      if (selectedInfo[infoKey]) {
+        let key = infoKey.split("_");
+        key.pop();
+        key = key.join("").toLowerCase();
+        let value = selectedInfo[infoKey];
+        keyValues.push({ key, value });
+      }
+    });
+    return keyValues;
+  };
+
+  manipulateCustomInputData = () => {
+    let { tableData } = this.state;
+    let customKeyValues = [];
+
+    tableData.forEach((infoKey) => {
+      let { key, value, isCustomField, subKey, subValue } = infoKey;
+      if (isCustomField && infoKey?.key && infoKey.value) {
+        customKeyValues.push({
+          key,
+          value,
+          subKey,
+          subValue,
+          isCustomField: true,
+        });
+      }
+    });
+
+    return customKeyValues;
+  };
+
+  manipulateSubvaluesInputData = (subValues) => {
+    let keyValues = [];
+    Object.keys(subValues).forEach((infoKey) => {
+      if (subValues[infoKey]) {
+        let key = infoKey.split("_");
+        key.pop();
+        key = key.join("").toLowerCase();
+        let value = subValues[infoKey];
+        keyValues.push({ key, value, isSubValue: true });
+      }
+    });
+    return keyValues;
+  };
+
+  // Render table of head.
   renderTableHead = () => {
     return (
       <TableHead>
@@ -222,20 +263,30 @@ class ManagementInfo extends Component {
       </TableHead>
     );
   };
+
+  // Custom input changes
   handleCustomInputChange = (event, Id) => {
     let { name, value } = event.target;
     let { tableData } = this.state;
-
+    let currentData;
     tableData = tableData.map((info, index) => {
       if (Id === index) {
         info[name] = value;
+        currentData = info;
       }
       return info;
     });
-    this.setState({ tableData });
+    this.setState({ tableData }, () => {
+      if (currentData.key && currentData?.value) {
+        this.setManagementInfo();
+      }
+    });
   };
+
+  // Render table of body.
   renderTableBody = () => {
-    let { tableData, selectedInfo, selectedSubkeys } = this.state;
+    let { tableData, selectedInfo, selectedSubkeys, selectedSubValues } =
+      this.state;
     return (
       <TableBody>
         {tableData.map((info, index) => {
@@ -279,9 +330,16 @@ class ManagementInfo extends Component {
                     >
                       <Select
                         className="fliter-toggel"
-                        value={`${selectedInfo[`${info.key}_${index}`] || ""}`}
+                        value={`${
+                          selectedInfo[
+                            `${info.key?.split(" ")?.join("_")}_${index}`
+                          ] || ""
+                        }`}
                         onChange={(e) =>
-                          this.handleChange(e, `${info.key}_${index}`)
+                          this.handleChange(
+                            e,
+                            `${info.key?.split(" ")?.join("_")}_${index}`
+                          )
                         }
                         displayEmpty
                         inputProps={{ "aria-label": "Without label" }}
@@ -333,8 +391,9 @@ class ManagementInfo extends Component {
                     </FormControl>
                   </Box>
                 ) : (
-                  info.subKeyValue[selectedInfo[`${info.key}_${index}`]]
-                    ?.subKey || "-"
+                  info.subKeyValue[
+                    selectedInfo[`${info.key?.split(" ")?.join("_")}_${index}`]
+                  ]?.subKey || "-"
                 )}
               </TableCell>
               <TableCell align="center" className="text-center">
@@ -362,8 +421,9 @@ class ManagementInfo extends Component {
                       </IconButton>
                     </Box>
                   </>
-                ) : info.subKeyValue[selectedInfo[`${info.key}_${index}`]]
-                    ?.subValue === ADD_PRODUCT_ENUMS.USER_INPUT ? (
+                ) : info.subKeyValue[
+                    selectedInfo[`${info.key?.split(" ")?.join("_")}_${index}`]
+                  ]?.subValue === ADD_PRODUCT_ENUMS.USER_INPUT ? (
                   <Box className="subvalue">
                     <input
                       id={`organizationName`}
@@ -371,8 +431,19 @@ class ManagementInfo extends Component {
                       className="form-control"
                       name="organizationName"
                       placeholder="User input"
-                      // value={formData.organizationName}
-                      // onChange={this.handleInputChange}
+                      value={`${
+                        selectedSubValues[
+                          `${info.key?.split(" ")?.join("_")}_${index}`
+                        ] || ""
+                      }`}
+                      onChange={(e) =>
+                        this.handleChange(
+                          e,
+                          `${info.key?.split(" ")?.join("_")}_${index}`,
+                          0,
+                          1
+                        )
+                      }
                     />
                   </Box>
                 ) : (
@@ -386,6 +457,7 @@ class ManagementInfo extends Component {
     );
   };
 
+  // Click on add entry button
   onClickAddEntry = () => {
     let { tableData } = this.state;
     tableData.push({
@@ -398,11 +470,13 @@ class ManagementInfo extends Component {
     this.setState({ tableData });
   };
 
+  // Click on close icon
   onClickCloseIcon = (index) => {
     let { tableData } = this.state;
     delete tableData[index];
     this.setState({ tableData });
   };
+
   render() {
     let { style } = this.props;
     return (
@@ -419,5 +493,13 @@ class ManagementInfo extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  const { createProductFormData } = state.biMapping;
+  return {
+    createProductFormData,
+  };
+}
 
-export default ManagementInfo;
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManagementInfo);

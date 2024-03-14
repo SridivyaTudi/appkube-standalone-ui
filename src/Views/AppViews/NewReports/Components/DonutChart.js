@@ -1,14 +1,13 @@
 import React, { useRef, useEffect } from "react";
 import { Box } from "@mui/material";
 import * as d3 from "d3";
-const thickness = 30;
+const thickness = 25;
 const DonutChart = ({ data, width, height, style, otherData }) => {
   const svgRef = useRef();
   var pieGenerator = d3.pie().value(([key, value]) => {
     return value;
   });
   var arcData = pieGenerator(Object.entries(data));
-  const areaWidth = (width - 30) / 2;
   useEffect(() => {
     const svg = d3.select(svgRef.current);
 
@@ -25,11 +24,11 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
     const innerRadius = radius * 0.6;
     var colors = ["#FF708B", "#00B929", "#8676FF", "#FFBA69", "#F9D33D"];
     const color = d3.scaleOrdinal(colors).domain(data.map((d) => d.age_group));
-    const pie = d3.pie().value((d) => d.population);
+    const pie = d3.pie().value((d) => d.population).padAngle(0.05);
     const arc = d3
       .arc()
       .innerRadius(innerRadius - thickness)
-      .outerRadius(radius * 0.54);
+      .outerRadius(radius * 0.54).cornerRadius(10)
     const arcs = svg
       .selectAll(".arc")
       .data(pie(data))
@@ -42,9 +41,6 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
       .append("path")
       .attr("d", arc)
       .attr("fill", (d, i) => color(i))
-      .attr("stroke", "white")
-      .style("stroke-width", 6)
-      .style("stroke", "#FFFFFF")
       .style("border-radius", "50%")
       .style("fill", (d, i) => color(i))
       .attr("clip-path", (d, i) => `url(#clip${i})`);
@@ -122,6 +118,7 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
         return tooltip.style("visibility", "hidden");
       })
       .append("title");
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, height, width]);
 
   function getTotalValues() {

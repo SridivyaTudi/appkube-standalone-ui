@@ -5,8 +5,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 import AssetsMainFilterModal from "../Components/AssetsMainFilterModal";
 import FilterPopup from "Views/AppViews/DiscoveredAssets/Components/FilterPopup";
-import { count } from "d3";
-
 class AssetsFilterSection extends Component {
   constructor(props) {
     super(props);
@@ -33,13 +31,13 @@ class AssetsFilterSection extends Component {
 
     if (width > 1400) {
       noOfRow = 5;
-    } else if (width >= 1272 && width < 1400) {
+    } else if (width >= 1290 && width < 1400) {
       noOfRow = 4;
-    } else if (width >= 1071 && width < 1272) {
+    } else if (width >= 1100 && width < 1290) {
       noOfRow = 3;
-    } else if (width >= 852 && width < 1071) {
+    } else if (width >= 882 && width < 1100) {
       noOfRow = 2;
-    } else if (width >= 606 && width < 852) {
+    } else if (width >= 660 && width < 882) {
       noOfRow = 1;
     } else {
       noOfRow = 0;

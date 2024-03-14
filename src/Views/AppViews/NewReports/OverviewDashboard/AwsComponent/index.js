@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Grid, Button } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import ChartWrapper from "../../Components/ChartWrapper";
 import HorizontalBarChart from "Views/AppViews/NewReports/Components/HorizontalBarChart";
 import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarchart";
@@ -36,28 +36,6 @@ let donutData = [
   },
 ];
 
-let verticalBarChartData = [
-  {
-    label: "Compute Cost",
-    value: 110011100,
-  },
-  {
-    label: "Network ",
-    value: 40267984,
-  },
-  {
-    label: "Storage",
-    value: 30672088,
-  },
-  {
-    label: "Database",
-    value: 53980105,
-  },
-  {
-    label: "Others",
-    value: 81489445,
-  },
-];
 const spendTrendData = [
   {
     date: "1-05-12",
@@ -162,7 +140,7 @@ class AwsComponent extends Component {
     return (
       <>
         <Box className="reports-charts">
-          <Grid container spacing={2}>
+          <Grid container spacing={3}>
             <Grid item xs={12} md={5} lg={3}>
               <ChartWrapper
                 data={{
@@ -187,6 +165,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Top Used Service ",
                   labelOfBtn: " View Details",
+                  description: "Total Cost Incurred",
                   link: "/app/new-reports/over-view-dashboard/top-use-services",
                 }}
                 ChartComponent={
@@ -194,7 +173,6 @@ class AwsComponent extends Component {
                     data={totalUsedServiceData}
                     chardBeforeRenderHTML={
                       <Box className="total-cost-incurred">
-                        <label>Total Cost Incurred</label>
                         <p>
                           {" "}
                           90,579{" "}

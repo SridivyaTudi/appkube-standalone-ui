@@ -22,19 +22,23 @@ class ProgressBarChart extends Component {
               <Box className="card-content">
                 <Box className="remaining-budget">
                   <Box className="d-flex">
-                    <label>Remaining Budget &#58; </label> <span>$0</span>
+                    <label>Remaining Budget &#58;</label> <span className="p-l-5">$0</span>
                   </Box>
                   <Box className="d-flex">
-                    <label>Period &#58; </label> <span>Quarterly</span>
+                    <label>Period &#58;</label> <span className="p-l-5">Quarterly</span>
                   </Box>
                 </Box>
                 <Box className="progress-top-content">
-                    <label>Spendings $2500</label>
-                    <label>Spendings $2500</label>
+                  <label>Spendings $2500</label>
+                  <label>Spendings $2500</label>
                 </Box>
                 <ProgressChart color={"#FF708B"} />
                 <Box className="progress-bottom-content">
-                   <span> <i class="fas fa-exclamation-triangle m-r-1"></i> $500 Unbudgeted spend detected</span>
+                  <span>
+                    {" "}
+                    <i class="fas fa-exclamation-triangle m-r-1"></i> $500
+                    Unbudgeted spend detected
+                  </span>
                 </Box>
               </Box>
             </Box>
@@ -54,19 +58,23 @@ class ProgressBarChart extends Component {
               <Box className="card-content">
                 <Box className="remaining-budget">
                   <Box className="d-flex">
-                    <label>Remaining Budget &#58; </label> <span>$0</span>
+                    <label>Remaining Budget &#58; </label> <span className="p-l-5">$0</span>
                   </Box>
                   <Box className="d-flex">
-                    <label>Period &#58; </label> <span>Quarterly</span>
+                    <label>Period &#58; </label> <span className="p-l-5">Quarterly</span>
                   </Box>
                 </Box>
                 <Box className="progress-top-content">
-                    <label>Spendings $2500</label>
-                    <label>Spendings $2500</label>
+                  <label>Spendings $2500</label>
+                  <label>Spendings $2500</label>
                 </Box>
                 <ProgressChart color={"#53CA43"} />
                 <Box className="progress-bottom-content">
-                   <span> <i class="fas fa-exclamation-triangle m-r-1"></i> $500 Unbudgeted spend detected</span>
+                  <span>
+                    {" "}
+                    <i class="fas fa-exclamation-triangle m-r-1"></i> $500
+                    Unbudgeted spend detected
+                  </span>
                 </Box>
               </Box>
             </Box>
@@ -86,24 +94,27 @@ class ProgressBarChart extends Component {
               <Box className="card-content">
                 <Box className="remaining-budget">
                   <Box className="d-flex">
-                    <label>Remaining Budget &#58; </label> <span>$0</span>
+                    <label>Remaining Budget &#58; </label> <span className="p-l-5">$0</span>
                   </Box>
                   <Box className="d-flex">
-                    <label>Period &#58; </label> <span>Quarterly</span>
+                    <label>Period &#58; </label> <span className="p-l-5">Quarterly</span>
                   </Box>
                 </Box>
                 <Box className="progress-top-content">
-                    <label>Spendings $2500</label>
-                    <label>Spendings $2500</label>
+                  <label>Spendings $2500</label>
+                  <label>Spendings $2500</label>
                 </Box>
-                <ProgressChart color={"#FF708B"}  />
+                <ProgressChart color={"#FF708B"} />
                 <Box className="progress-bottom-content">
-                   <span> <i class="fas fa-exclamation-triangle m-r-1"></i> $500 Unbudgeted spend detected</span>
+                  <span>
+                    {" "}
+                    <i class="fas fa-exclamation-triangle m-r-1"></i> $500
+                    Unbudgeted spend detected
+                  </span>
                 </Box>
               </Box>
             </Box>
           </Grid>
-         
         </Grid>
       </Box>
     );

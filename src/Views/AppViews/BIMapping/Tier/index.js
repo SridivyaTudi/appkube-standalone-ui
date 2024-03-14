@@ -1,47 +1,30 @@
 import React, { Component } from "react";
-import {
-  Box,
-  Button,
-  Grid,
-  List,
-  ListItem,
-  TableContainer,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Checkbox,
-  IconButton,
-} from "@mui/material";
+import { Box, Button, Grid, List, ListItem, IconButton } from "@mui/material";
 import ChartWebLayerIcon from "assets/img/assetmanager/chart-web-layer-icon.png";
 import ChartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png";
 import DataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png";
 import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import RightArrow from "assets/img/assetmanager/right-arrow.png";
 import deployed1 from "assets/img/bimapping/deployed1.png";
-
+import LoadingButton from "@mui/lab/LoadingButton";
 import Aws from "assets/img/aws.png";
 import { v4 } from "uuid";
-import LoadBalancer from "../Soa/components/LoadBalancer";
-import Ingress from "../Soa/components/Ingress";
-import Service from "../Soa/components/Service";
-import AppTopology from "../Soa/components/AppTopology";
 import LoadBalancerIcon from "assets/img/bimapping/load-balancer-icon.png";
 import IngressIcon from "assets/img/bimapping/ingress-icon.png";
 import ServiceIcon from "assets/img/bimapping/service-icon.png";
 import StarIcon from "assets/img/bimapping/star-icon.png";
-import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 import VerticalTitleAndIconOfCard from "Components/VerticalTitleAndIconOfCard";
 import {
   getBiServicesFromProductCategory,
   getCloudServices,
   getInstancesServices,
+  createBiMapping,
 } from "Redux/BIMapping/BIMappingThunk";
 import {
   PRODUCT_CATEGORY_ENUM,
   SERVICES_CATEGORY_OF_THREE_TIER_ENUM,
   ADD_PRODUCT_ENUMS,
+  getCurrentOrgId,
 } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { connect } from "react-redux";
@@ -53,6 +36,8 @@ import ConfigInfo from "../Soa/components/ConfigInfo";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
+import InstanceListCards from "Views/AppViews/BIMapping/Components/InstanceListCards";
+import { ToastMessage } from "Toast/ToastMessage";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -69,29 +54,26 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-let serviceTableData = [
+const LAYERS = [
   {
-    name: "MockDB",
-    port: 80,
+    name: "Web Layer",
+    icon: ChartWebLayerIcon,
   },
   {
-    name: "DummyWebServer",
-    port: 443,
+    name: "App Layer",
+    icon: ChartAppLayerIcon,
   },
   {
-    name: "SimulatedQueue",
-    port: 443,
+    name: "Data Layer",
+    icon: DataServiceSvgrepo,
   },
   {
-    name: "PseudoAnalytics",
-    port: 21,
-  },
-  {
-    name: "PhantomCache",
-    port: 53,
+    name: "AUX Layer",
+    icon: DataServiceSvgrepo,
   },
 ];
 
+const orgId = getCurrentOrgId();
 class Tier extends Component {
   tabMapping = [
     {
@@ -179,6 +161,8 @@ class Tier extends Component {
       clickManInfoIdAddEntry: "",
       cloudName: "",
       editStatus: false,
+      managementInfo: [],
+      configInfo: [],
     };
   }
 
@@ -191,6 +175,7 @@ class Tier extends Component {
     this.previousDataView();
   };
 
+  // Redux data view
   previousDataView = () => {
     let { createProductFormData } = this.props;
 
@@ -213,9 +198,10 @@ class Tier extends Component {
     window.removeEventListener("load", this.redirectPage);
   }
 
+  // Redirect of the page
   redirectPage = () => {
-    let { name } = this.getUrlDetails();
-    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${name}`);
+    let { name, id } = this.getUrlDetails();
+    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${name}/${id}`);
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -247,8 +233,26 @@ class Tier extends Component {
       let instancesServices = this.props.instancesServices?.data || [];
       this.setState({ instancesServices });
     }
+
+    if (
+      prevProps.creationBiMapping.status !==
+        this.props.creationBiMapping.status &&
+      this.props.creationBiMapping.status === status.SUCCESS
+    ) {
+      if (this.props.creationBiMapping?.data) {
+        console.log("sucee");
+        let response = this.props.creationBiMapping?.data;
+        if (response) {
+          ToastMessage.success("Product added in department.");
+          this.props.navigate(`${APP_PREFIX_PATH}/bim`);
+        }
+      } else {
+        ToastMessage.error("Creation Of Add BI-mapping Failed.");
+      }
+    }
   }
 
+  // Manipulate layers data.
   manipulateLayersData = (data) => {
     let {
       dropDownLayersData: { webLayer, appLayer, auxLayer, dataLayer },
@@ -275,6 +279,7 @@ class Tier extends Component {
     });
   };
 
+  // Toggle web layer  dropdown.
   toggleWebLayer = () => {
     let { savedLayer } = this.state;
     if (!savedLayer.web) {
@@ -284,6 +289,7 @@ class Tier extends Component {
     }
   };
 
+  // Toggle app layer dropdown.
   toggleAppLayer = () => {
     let { savedLayer } = this.state;
 
@@ -294,6 +300,7 @@ class Tier extends Component {
     }
   };
 
+  // Toggle data layer dropdown.
   toggleDataLayer = () => {
     let { savedLayer } = this.state;
 
@@ -304,6 +311,7 @@ class Tier extends Component {
     }
   };
 
+  // Toggle aux layer dropdown.
   toggleAuxLayer = () => {
     let { savedLayer } = this.state;
     if (savedLayer.data && !savedLayer.aux) {
@@ -313,6 +321,7 @@ class Tier extends Component {
     }
   };
 
+  // Render Deployed cards
   renderDeployedInstances = () => {
     let { cloudServices, selectedDeployedInstance } = this.state;
     let cloudStatus = this.props.cloudServices?.status;
@@ -345,6 +354,7 @@ class Tier extends Component {
     }
   };
 
+  // Click on deployed card
   onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
     this.props.getInstancesServices({ cloudName, elementType });
     this.setState({
@@ -356,31 +366,32 @@ class Tier extends Component {
     });
   };
 
+  // Render Instance list
   renderSelectedInstance = () => {
     let { selectedInstance, instancesServices } = this.state;
     let instanceStatus = this.props.instancesServices?.status;
 
     if (instanceStatus === status.IN_PROGRESS) {
-      return this.renderLoder();
+      return this.renderLoder("instance-cards-loder");
     } else {
       if (instancesServices?.length) {
-        return instancesServices.map((instance, index) => {
+        let preparedData = instancesServices.map((instance, index) => {
           let data = [
             {
               backgroundColor: "#FFBA69",
-              label: "ID",
+              label: "ID :",
               value: instance.instanceId,
               style: { borderBottom: "none" },
             },
             {
               backgroundColor: "#8676FF",
-              label: "Name : ",
+              label: "Name :",
               value: instance.instanceName,
               style: { borderBottom: "none" },
             },
             {
               backgroundColor: "#FF2D2E",
-              label: "VPC Id: ",
+              label: "VPC Id :",
               value: instance.productEnclaveInstanceId,
               style: { borderBottom: "none" },
             },
@@ -390,34 +401,37 @@ class Tier extends Component {
             image: Aws,
             title: instance.elementType,
             data,
+            id: instance.id,
             active: selectedInstance === instance.id ? "active" : "",
             rowSeperatedByline: false,
-            style: { width: "150px", minHeight: "150px" },
+            // style: { width: "150px", minHeight: "150px" },
           };
-          return (
-            <Box className="bimapping-instance-cards">
-              <TitleIconWithInfoOfCard
-                cardDetails={instanceData}
-                onClickCard={(details) => this.onClickInstance(instance.id)}
-              />
-            </Box>
-          );
+          return instanceData;
         });
+
+        return (
+          <InstanceListCards
+            cards={preparedData}
+            onClickCard={(details) => this.onClickInstance(details.id)}
+          />
+        );
       } else {
         return this.renderNoDataHtml("There are no data available.");
       }
     }
   };
 
+  // Render Selected Instance section
   renderSelectedInstanceWrapper = () => {
     let { selectedDeployedInstance } = this.state;
+
     return selectedDeployedInstance ? (
       <Box className="deployed-section m-t-4">
         <Box className="deployed-head">
           <h4 className="m-t-0">Select Instance</h4>
         </Box>
         <Box className="deployed-content">
-          <Box className="environment-boxs">
+          <Box className="instance-list-cards">
             {this.renderSelectedInstance()}
           </Box>
         </Box>
@@ -427,6 +441,7 @@ class Tier extends Component {
     );
   };
 
+  // Render Deployed section
   renderDeployedInstanceWrapper = () => {
     let { isShowDepolyedSection } = this.state;
     if (isShowDepolyedSection) {
@@ -445,6 +460,7 @@ class Tier extends Component {
     }
   };
 
+  // Click on layer drop down
   onClickLayerDropDown = (key, value) => {
     let { selectedLayer } = this.state;
     selectedLayer[key] = value;
@@ -462,72 +478,7 @@ class Tier extends Component {
     });
   };
 
-  // Handle check box
-  handleCheckBox = (event) => {
-    let { selectedService } = this.state;
-
-    let { id, checked } = event.target;
-
-    if (checked) {
-      selectedService.push(+id);
-    } else {
-      selectedService = selectedService.filter((value) => value !== +id);
-    }
-
-    this.setState({ selectedService });
-  };
-
-  renderTableHead = () => {
-    return (
-      <TableHead>
-        <TableRow>
-          <TableCell align="center" component="th" scope="row">
-            Servicename
-          </TableCell>
-          <TableCell align="center">Port Details</TableCell>
-          <TableCell align="center">Department URL</TableCell>
-        </TableRow>
-      </TableHead>
-    );
-  };
-
-  renderTableBody = () => {
-    let { selectedService } = this.state;
-    return (
-      <TableBody>
-        {serviceTableData.map((service, index) => {
-          return (
-            <TableRow>
-              <TableCell align="left">
-                <Checkbox
-                  className="check-box"
-                  size="small"
-                  id={index}
-                  onChange={this.handleCheckBox}
-                  checked={selectedService.includes(index)}
-                />
-                <span
-                  onClick={() =>
-                    this.handleCheckBox({
-                      target: {
-                        id: index,
-                        checked: !selectedService.includes(index),
-                      },
-                    })
-                  }
-                >
-                  {service.name}
-                </span>
-              </TableCell>
-              <TableCell align="center">{service.port}</TableCell>
-              <TableCell align="center"></TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    );
-  };
-
+  // Click on save btn
   onClickSave = () => {
     let {
       savedLayer,
@@ -539,6 +490,9 @@ class Tier extends Component {
       cloudElementType,
       cloudName,
       selectedLayer,
+      configInfo,
+      managementInfo,
+      editStatus,
     } = this.state;
     let { createProductFormData } = this.props;
     let layerName = "";
@@ -555,23 +509,37 @@ class Tier extends Component {
     } else if (!savedLayer.aux) {
       savedLayer.aux = true;
       layerName = "aux";
-      this.props.navigate(`${APP_PREFIX_PATH}/bim`);
     }
-
-    savedData.push({
+    let currentSaveData = {
       layerName,
       selectedInstance,
       selectedDeployedInstance,
       selectedService,
       cloudElementType,
       cloudName,
-    });
+      configInfo,
+      managementInfo,
+    };
+    if (editStatus) {
+      savedData = savedData.map((previousData) => {
+        if (previousData.layerName === layerName) {
+          return currentSaveData;
+        }
+        return previousData;
+      });
+    } else {
+      savedData.push(currentSaveData);
+    }
 
+    if (savedLayer.aux) {
+      this.addBiMappingAPICall(savedData);
+    }
     selectedInstance = -1;
     selectedDeployedInstance = "";
     selectedService = [];
     isShowDepolyedSection = false;
-
+    configInfo = [];
+    managementInfo = [];
     this.setState({
       savedLayer,
       savedData,
@@ -579,6 +547,10 @@ class Tier extends Component {
       selectedDeployedInstance,
       selectedService,
       isShowDepolyedSection,
+      configInfo,
+      managementInfo,
+      editStatus: false,
+      activeTabEcs: 0,
     });
     let passData = JSON.parse(
       JSON.stringify({
@@ -587,9 +559,11 @@ class Tier extends Component {
         soaData: null,
       })
     );
+
     this.props.setProductIntoDepartment(passData);
   };
 
+  // set active tab
   setActiveTab = (id, isECS = 0) => {
     let { activeTabEcs, activeTabEks } = this.state;
     if (isECS) {
@@ -600,23 +574,25 @@ class Tier extends Component {
     this.setState({ activeTabEcs, activeTabEks });
   };
 
+  // On click instance
   onClickInstance = (selectedInstance) => {
-    this.setState({ selectedInstance, selectedService: [] });
+    this.setState({ selectedInstance, configInfo: [], managementInfo: [] });
   };
 
   // Render loder
-  renderLoder = () => {
+  renderLoder = (customClass) => {
     return (
-      <Box className="d-blck text-center w-100 h-100 m-r-auto m-l-auto ">
+      <Box className={`d-blck text-center ${customClass}`}>
         <Loader className="align-item-center justify-center w-100 h-100" />
       </Box>
     );
   };
 
+  // when data is no found , then render the this html
   renderNoDataHtml = (text) => {
     return (
-      <Box className="group-loader  h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
-        <h5 className="m-t-0 m-b-0">{text}</h5>
+      <Box className="group-loader instance-cards-loder text-center">
+        <h5 className="m-t-0 m-b-0 d-inline-block">{text}</h5>
       </Box>
     );
   };
@@ -624,11 +600,13 @@ class Tier extends Component {
   /** Get url details. */
   getUrlDetails() {
     let name = this.props.params.name;
-    return { name };
+    let id = this.props.params.id;
+    return { name, id };
   }
 
+  // Click on edit btn.
   onClickEditBtn = (layerName) => {
-    let { savedData, savedLayer, isShowDepolyedSection } = this.state;
+    let { savedData, savedLayer } = this.state;
 
     let findSaveData = savedData.find((data) => data.layerName === layerName);
 
@@ -639,6 +617,8 @@ class Tier extends Component {
         selectedService,
         cloudElementType: elementType,
         cloudName,
+        managementInfo,
+        configInfo,
       } = findSaveData;
       this.props.getInstancesServices({ cloudName, elementType });
 
@@ -662,62 +642,460 @@ class Tier extends Component {
         savedLayer,
         cloudElementType: elementType,
         isShowDepolyedSection: true,
+        managementInfo,
+        configInfo,
       });
     }
   };
 
-  render() {
+  // Add BI-mapping API call
+  addBiMappingAPICall = (savedData) => {
+    let { id } = this.getUrlDetails();
+    let { selectedLayer } = this.state;
+    let {
+      createProductFormData: { productName, environment },
+    } = this.props;
+    let params = {
+      org: {
+        id: orgId,
+        dep: {
+          id,
+          product: {
+            name: productName,
+            type: "3 tier",
+            productEnv: {
+              name: environment,
+              service: savedData.map((service) => {
+                return {
+                  name: selectedLayer[service.layerName],
+                  type: service.layerName?.toUpperCase(),
+                  cloudElementMapping: {
+                    id: service.selectedInstance,
+                    managementInfo: service.managementInfo
+                      .map((management) => {
+                        let { isSubValue, key, value } = management;
+                        if (!isSubValue) {
+                          let formatData = {
+                            key,
+                            value,
+                          };
+                          return formatData;
+                        }
+                      })
+                      .filter((obj) => obj),
+                    configInfo: service.configInfo.map((config) => {
+                      let { key, value } = config;
+
+                      let formatData = {
+                        key,
+                        value,
+                      };
+                      return formatData;
+                    }),
+                  },
+                };
+              }),
+            },
+          },
+        },
+      },
+    };
+
+    this.props.createBiMapping(params);
+  };
+  
+  // Render heading
+  renderHeading = () => {
+    let { name, id } = this.getUrlDetails();
+    return (
+      <Box className="list-heading">
+        <h3>3 Tier</h3>
+        <Box className="breadcrumbs">
+          <ul>
+            <li onClick={() => this.props.navigate("/app/bim")}>BI-Mapping</li>
+            <li>
+              <i className="fa-solid fa-chevron-right"></i>
+            </li>
+            <li
+              onClick={() =>
+                this.props.navigate(`/app/bim/add-product/${name}/${id}`)
+              }
+            >
+              Add Product
+            </li>
+            <li>
+              <i className="fa-solid fa-chevron-right"></i>
+            </li>
+            <li className="active">Product Category</li>
+          </ul>
+        </Box>
+      </Box>
+    );
+  };
+
+  // Render all layers
+  renderAllLayers = () => {
+    return (
+      <Box className="content-left">
+        <List>
+          {LAYERS.map((layer) => {
+            return (
+              <ListItem key={v4()}>
+                <Box className="button-box">
+                  <span>
+                    <img src={layer.icon} alt="" />
+                  </span>
+                  <p>{layer.name}</p>
+                </Box>
+                <span>
+                  <img src={RightArrow} alt="" />
+                </span>
+              </ListItem>
+            );
+          })}
+        </List>
+      </Box>
+    );
+  };
+
+  // Render all layers of dropDowns
+  renderAllLayersOfDropDowns = () => {
     let {
       isSelectNginxOpen,
       isSelectSpringBootOpen,
       isSelectMySQLOpen,
       isSelectRedisOpen,
       selectedLayer,
-      selectedInstance,
-      selectedService,
-      activeTabEks,
       dropDownLayersData,
       savedLayer,
+    } = this.state;
+    return (
+      <Box className="content-middle">
+        <List>
+          <ListItem>
+            <Box className="application-balancer">
+              <Button className="secondary-btn min-width" variant="contained">
+                SSL
+              </Button>
+              <Box className="balancer-boxs">
+                <Box className="balancer-box">
+                  <span>
+                    <img src={bottomArrow} alt="" />
+                  </span>
+                </Box>
+              </Box>
+            </Box>
+          </ListItem>
+          <ListItem>
+            <Box className="application-balancer">
+              <Box className="mapping-fliter">
+                <Box
+                  className="fliter-toggel"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.toggleWebLayer();
+                  }}
+                >
+                  {selectedLayer.web || "Select"}
+                  <i className="fa-solid fa-caret-down arrow-icon"></i>
+                </Box>
+                <Box
+                  className={
+                    isSelectNginxOpen
+                      ? "fliter-collapse active"
+                      : "fliter-collapse"
+                  }
+                >
+                  <List>
+                    {dropDownLayersData.webLayer.map((layer) => (
+                      <ListItem
+                        key={v4()}
+                        className={`${
+                          selectedLayer.web === layer.name ? "active" : ""
+                        }`}
+                        onClick={() =>
+                          this.onClickLayerDropDown("web", layer.name)
+                        }
+                      >
+                        <i className="fa-solid fa-circle-dot"></i>{" "}
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={layer.name}
+                        >
+                          <p>{layer.name}</p>
+                        </HtmlTooltip>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+                <div
+                  className={
+                    isSelectNginxOpen
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
+                  onClick={(e) => {
+                    this.toggleWebLayer();
+                  }}
+                />
+              </Box>
+              <Box className="balancer-boxs">
+                <Box className="balancer-box">
+                  <span>
+                    <img src={bottomArrow} alt="" />
+                  </span>
+                </Box>
+              </Box>
+            </Box>
+          </ListItem>
+          <ListItem
+            className={`  ${
+              dropDownLayersData.appLayer.includes(selectedLayer.app)
+                ? "active"
+                : ""
+            }`}
+          >
+            <Box className="application-balancer">
+              <Box className="mapping-fliter">
+                <Box
+                  className="fliter-toggel"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.toggleAppLayer();
+                  }}
+                >
+                  {selectedLayer.app || "Select"}
+                  <i className="fa-solid fa-caret-down arrow-icon"></i>
+                </Box>
+                <Box
+                  className={
+                    isSelectSpringBootOpen
+                      ? "fliter-collapse active"
+                      : "fliter-collapse"
+                  }
+                >
+                  <List>
+                    {dropDownLayersData.appLayer.map((layer) => (
+                      <ListItem
+                        key={v4()}
+                        onClick={() =>
+                          this.onClickLayerDropDown("app", layer.name)
+                        }
+                        className={`${
+                          selectedLayer.app === layer.name ? "active" : ""
+                        }`}
+                      >
+                        <i className="fa-solid fa-circle-dot"></i>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={layer.name}
+                        >
+                          <p>{layer.name}</p>
+                        </HtmlTooltip>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+                <div
+                  className={
+                    isSelectSpringBootOpen
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
+                  onClick={(e) => {
+                    this.toggleAppLayer();
+                  }}
+                />
+              </Box>
+              <Box className="balancer-boxs">
+                <Box className="balancer-box">
+                  <span>
+                    <img src={bottomArrow} alt="" />
+                  </span>
+                </Box>
+              </Box>
+            </Box>
+          </ListItem>
+          <ListItem
+            className={`  ${
+              dropDownLayersData.dataLayer.includes(selectedLayer.data)
+                ? "active"
+                : ""
+            }`}
+          >
+            <Box className="application-balancer">
+              <Box className="mapping-fliter">
+                <Box
+                  className="fliter-toggel"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.toggleDataLayer();
+                  }}
+                >
+                  {selectedLayer.data || "Select"}
+                  <i className="fa-solid fa-caret-down arrow-icon"></i>
+                </Box>
+                <Box
+                  className={
+                    isSelectMySQLOpen
+                      ? "fliter-collapse active"
+                      : "fliter-collapse"
+                  }
+                >
+                  <List>
+                    {dropDownLayersData.dataLayer.map((layer) => (
+                      <ListItem
+                        key={v4()}
+                        onClick={() =>
+                          this.onClickLayerDropDown("data", layer.name)
+                        }
+                        className={`${
+                          selectedLayer.data === layer.name ? "active" : ""
+                        }`}
+                      >
+                        <i className="fa-solid fa-circle-dot"></i>
+                        <HtmlTooltip
+                          className="table-tooltip"
+                          title={layer.name}
+                        >
+                          <p>{layer.name}</p>
+                        </HtmlTooltip>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+                <div
+                  className={
+                    isSelectMySQLOpen
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
+                  onClick={(e) => {
+                    this.toggleDataLayer();
+                  }}
+                />
+              </Box>
+              <Box className="balancer-boxs">
+                <Box className="balancer-box">
+                  <span>
+                    <img src={bottomArrow} alt="" />
+                  </span>
+                </Box>
+              </Box>
+            </Box>
+          </ListItem>
+          <ListItem
+            className={`  ${
+              dropDownLayersData.auxLayer.includes(selectedLayer.aux)
+                ? "active"
+                : ""
+            }`}
+          >
+            <Box className="mapping-fliter">
+              <Box
+                className="fliter-toggel"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  this.toggleAuxLayer();
+                }}
+              >
+                {selectedLayer.aux || "Select"}
+                <i className="fa-solid fa-caret-down arrow-icon"></i>
+              </Box>
+              <Box
+                className={
+                  isSelectRedisOpen
+                    ? "fliter-collapse active"
+                    : "fliter-collapse"
+                }
+              >
+                <List>
+                  {dropDownLayersData.auxLayer.map((layer) => (
+                    <ListItem
+                      key={v4()}
+                      onClick={() =>
+                        this.onClickLayerDropDown("aux", layer.name)
+                      }
+                      className={`${
+                        selectedLayer.aux === layer.name ? "active" : ""
+                      }`}
+                    >
+                      <i className="fa-solid fa-circle-dot"></i>
+                      <HtmlTooltip className="table-tooltip" title={layer.name}>
+                        <p>{layer.name}</p>
+                      </HtmlTooltip>
+                    </ListItem>
+                  ))}
+                </List>
+              </Box>
+              <div
+                className={
+                  isSelectRedisOpen
+                    ? "fliters-collapse-bg active"
+                    : "fliters-collapse-bg"
+                }
+                onClick={(e) => {
+                  this.toggleAuxLayer();
+                }}
+              />
+            </Box>
+          </ListItem>
+        </List>
+        <Box className="check-icons-box">
+          <List>
+            {Object.keys(selectedLayer).map((key) => {
+              return (
+                <ListItem key={v4()}>
+                  <Box
+                    className={`d-flex align-items-center edit-icons  ${
+                      this.state.editStatus ? "delete-icons" : ""
+                    }`}
+                  >
+                    {selectedLayer[key] !== "" && savedLayer[key] ? (
+                      <>
+                        <IconButton className="check-icon">
+                          <i class="fas fa-check"></i>
+                        </IconButton>
+                        <IconButton
+                          className="edit-icon"
+                          onClick={() => {
+                            this.onClickEditBtn(key);
+                            this.setState({
+                              editStatus: true,
+                            });
+                          }}
+                        >
+                          <i class="fas fa-edit"></i>
+                        </IconButton>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </Box>
+                </ListItem>
+              );
+            })}
+          </List>
+        </Box>
+      </Box>
+    );
+  };
+
+  render() {
+    let {
+      selectedInstance,
       activeTabEcs,
       isShowDepolyedSection,
       clickConfigInfoIdAddEntry,
       clickManInfoIdAddEntry,
-      cloudElementType,
+      editStatus,
+      configInfo,
+      managementInfo,
     } = this.state;
-    let { biServicesFromProductCategory, createProductFormData } = this.props;
-    let { name } = this.getUrlDetails();
-    let isShowManagementInfoTab = this.showManagementInfoTab.includes(
-      cloudElementType?.toUpperCase()
-    );
-    let isSaveEnable =
-      selectedService.length || activeTabEks === 3 || isShowManagementInfoTab;
-    console.log(createProductFormData);
+    let { biServicesFromProductCategory, creationBiMapping } = this.props;
     return (
       <Box className="bimapping-container">
-        <Box className="list-heading">
-          <h3>3 Tier</h3>
-          <Box className="breadcrumbs">
-            <ul>
-              <li onClick={() => this.props.navigate("/app/bim")}>
-                BI-Mapping
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li
-                onClick={() =>
-                  this.props.navigate(`/app/bim/add-product/${name}`)
-                }
-              >
-                Add Product
-              </li>
-              <li>
-                <i className="fa-solid fa-chevron-right"></i>
-              </li>
-              <li className="active">Product Category</li>
-            </ul>
-          </Box>
-        </Box>
+        {this.renderHeading()}
         <Box className="tier-container">
           <Grid
             container
@@ -727,412 +1105,13 @@ class Tier extends Component {
             <Grid item xs={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
-                  <h4 className="m-t-0 m-b-0">
-                    {" "}
-                    MODULE : {createProductFormData.moduleName}
-                  </h4>
                   {biServicesFromProductCategory.status ===
                   status.IN_PROGRESS ? (
-                    this.renderLoder()
+                    this.renderLoder("topology-loder")
                   ) : (
                     <Box className="topology-inner-content">
-                      <Box className="content-left">
-                        <List>
-                          <ListItem>
-                            <Box className="button-box">
-                              <span>
-                                <img src={ChartWebLayerIcon} alt="" />
-                              </span>
-                              <p>Web Layer</p>
-                            </Box>
-                            <span>
-                              <img src={RightArrow} alt="" />
-                            </span>
-                          </ListItem>
-                          <ListItem>
-                            <Box className="button-box">
-                              <span>
-                                <img src={ChartAppLayerIcon} alt="" />
-                              </span>
-                              <p>App Layer</p>
-                            </Box>
-                            <span>
-                              <img src={RightArrow} alt="" />
-                            </span>
-                          </ListItem>
-                          <ListItem>
-                            <Box className="button-box">
-                              <span>
-                                <img src={DataServiceSvgrepo} alt="" />
-                              </span>
-                              <p>Data Layer</p>
-                            </Box>
-                            <span>
-                              <img src={RightArrow} alt="" />
-                            </span>
-                          </ListItem>
-                          <ListItem>
-                            <Box className="button-box">
-                              <span>
-                                <img src={DataServiceSvgrepo} alt="" />
-                              </span>
-                              <p>AUX Layer</p>
-                            </Box>
-                            <span>
-                              <img src={RightArrow} alt="" />
-                            </span>
-                          </ListItem>
-                        </List>
-                      </Box>
-                      <Box className="content-middle">
-                        <List>
-                          <ListItem>
-                            <Box className="application-balancer">
-                              <Button
-                                className="secondary-btn min-width"
-                                variant="contained"
-                              >
-                                SSL
-                              </Button>
-                              <Box className="balancer-boxs">
-                                <Box className="balancer-box">
-                                  <span>
-                                    <img src={bottomArrow} alt="" />
-                                  </span>
-                                </Box>
-                              </Box>
-                            </Box>
-                          </ListItem>
-                          <ListItem>
-                            <Box className="application-balancer">
-                              <Box className="mapping-fliter">
-                                <Box
-                                  className="fliter-toggel"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    this.toggleWebLayer();
-                                  }}
-                                >
-                                  {selectedLayer.web || "Select"}
-                                  <i className="fa-solid fa-caret-down arrow-icon"></i>
-                                </Box>
-                                <Box
-                                  className={
-                                    isSelectNginxOpen
-                                      ? "fliter-collapse active"
-                                      : "fliter-collapse"
-                                  }
-                                >
-                                  <List>
-                                    {dropDownLayersData.webLayer.map(
-                                      (layer) => (
-                                        <ListItem
-                                          key={v4()}
-                                          className={`${
-                                            selectedLayer.web === layer.name
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                          onClick={() =>
-                                            this.onClickLayerDropDown(
-                                              "web",
-                                              layer.name
-                                            )
-                                          }
-                                        >
-                                          <i className="fa-solid fa-circle-dot"></i>{" "}
-                                          <HtmlTooltip
-                                            className="table-tooltip"
-                                            title={layer.name}
-                                          >
-                                            <p>{layer.name}</p>
-                                          </HtmlTooltip>
-                                        </ListItem>
-                                      )
-                                    )}
-                                  </List>
-                                </Box>
-                                <div
-                                  className={
-                                    isSelectNginxOpen
-                                      ? "fliters-collapse-bg active"
-                                      : "fliters-collapse-bg"
-                                  }
-                                  onClick={(e) => {
-                                    this.toggleWebLayer();
-                                  }}
-                                />
-                              </Box>
-                              <Box className="balancer-boxs">
-                                <Box className="balancer-box">
-                                  <span>
-                                    <img src={bottomArrow} alt="" />
-                                  </span>
-                                </Box>
-                              </Box>
-                            </Box>
-                          </ListItem>
-                          <ListItem
-                            className={`  ${
-                              dropDownLayersData.appLayer.includes(
-                                selectedLayer.app
-                              )
-                                ? "active"
-                                : ""
-                            }`}
-                          >
-                            <Box className="application-balancer">
-                              <Box className="mapping-fliter">
-                                <Box
-                                  className="fliter-toggel"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    this.toggleAppLayer();
-                                  }}
-                                >
-                                  {selectedLayer.app || "Select"}
-                                  <i className="fa-solid fa-caret-down arrow-icon"></i>
-                                </Box>
-                                <Box
-                                  className={
-                                    isSelectSpringBootOpen
-                                      ? "fliter-collapse active"
-                                      : "fliter-collapse"
-                                  }
-                                >
-                                  <List>
-                                    {dropDownLayersData.appLayer.map(
-                                      (layer) => (
-                                        <ListItem
-                                          key={v4()}
-                                          onClick={() =>
-                                            this.onClickLayerDropDown(
-                                              "app",
-                                              layer.name
-                                            )
-                                          }
-                                          className={`${
-                                            selectedLayer.app === layer.name
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                        >
-                                          <i className="fa-solid fa-circle-dot"></i>
-                                          <HtmlTooltip
-                                            className="table-tooltip"
-                                            title={layer.name}
-                                          >
-                                            <p>{layer.name}</p>
-                                          </HtmlTooltip>
-                                        </ListItem>
-                                      )
-                                    )}
-                                  </List>
-                                </Box>
-                                <div
-                                  className={
-                                    isSelectSpringBootOpen
-                                      ? "fliters-collapse-bg active"
-                                      : "fliters-collapse-bg"
-                                  }
-                                  onClick={(e) => {
-                                    this.toggleAppLayer();
-                                  }}
-                                />
-                              </Box>
-                              <Box className="balancer-boxs">
-                                <Box className="balancer-box">
-                                  <span>
-                                    <img src={bottomArrow} alt="" />
-                                  </span>
-                                </Box>
-                              </Box>
-                            </Box>
-                          </ListItem>
-                          <ListItem
-                            className={`  ${
-                              dropDownLayersData.dataLayer.includes(
-                                selectedLayer.data
-                              )
-                                ? "active"
-                                : ""
-                            }`}
-                          >
-                            <Box className="application-balancer">
-                              <Box className="mapping-fliter">
-                                <Box
-                                  className="fliter-toggel"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    this.toggleDataLayer();
-                                  }}
-                                >
-                                  {selectedLayer.data || "Select"}
-                                  <i className="fa-solid fa-caret-down arrow-icon"></i>
-                                </Box>
-                                <Box
-                                  className={
-                                    isSelectMySQLOpen
-                                      ? "fliter-collapse active"
-                                      : "fliter-collapse"
-                                  }
-                                >
-                                  <List>
-                                    {dropDownLayersData.dataLayer.map(
-                                      (layer) => (
-                                        <ListItem
-                                          key={v4()}
-                                          onClick={() =>
-                                            this.onClickLayerDropDown(
-                                              "data",
-                                              layer.name
-                                            )
-                                          }
-                                          className={`${
-                                            selectedLayer.data === layer.name
-                                              ? "active"
-                                              : ""
-                                          }`}
-                                        >
-                                          <i className="fa-solid fa-circle-dot"></i>
-                                          <HtmlTooltip
-                                            className="table-tooltip"
-                                            title={layer.name}
-                                          >
-                                            <p>{layer.name}</p>
-                                          </HtmlTooltip>
-                                        </ListItem>
-                                      )
-                                    )}
-                                  </List>
-                                </Box>
-                                <div
-                                  className={
-                                    isSelectMySQLOpen
-                                      ? "fliters-collapse-bg active"
-                                      : "fliters-collapse-bg"
-                                  }
-                                  onClick={(e) => {
-                                    this.toggleDataLayer();
-                                  }}
-                                />
-                              </Box>
-                              <Box className="balancer-boxs">
-                                <Box className="balancer-box">
-                                  <span>
-                                    <img src={bottomArrow} alt="" />
-                                  </span>
-                                </Box>
-                              </Box>
-                            </Box>
-                          </ListItem>
-                          <ListItem
-                            className={`  ${
-                              dropDownLayersData.auxLayer.includes(
-                                selectedLayer.aux
-                              )
-                                ? "active"
-                                : ""
-                            }`}
-                          >
-                            <Box className="mapping-fliter">
-                              <Box
-                                className="fliter-toggel"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  this.toggleAuxLayer();
-                                }}
-                              >
-                                {selectedLayer.aux || "Select"}
-                                <i className="fa-solid fa-caret-down arrow-icon"></i>
-                              </Box>
-                              <Box
-                                className={
-                                  isSelectRedisOpen
-                                    ? "fliter-collapse active"
-                                    : "fliter-collapse"
-                                }
-                              >
-                                <List>
-                                  {dropDownLayersData.auxLayer.map((layer) => (
-                                    <ListItem
-                                      key={v4()}
-                                      onClick={() =>
-                                        this.onClickLayerDropDown(
-                                          "aux",
-                                          layer.name
-                                        )
-                                      }
-                                      className={`${
-                                        selectedLayer.aux === layer.name
-                                          ? "active"
-                                          : ""
-                                      }`}
-                                    >
-                                      <i className="fa-solid fa-circle-dot"></i>
-                                      <HtmlTooltip
-                                        className="table-tooltip"
-                                        title={layer.name}
-                                      >
-                                        <p>{layer.name}</p>
-                                      </HtmlTooltip>
-                                    </ListItem>
-                                  ))}
-                                </List>
-                              </Box>
-                              <div
-                                className={
-                                  isSelectRedisOpen
-                                    ? "fliters-collapse-bg active"
-                                    : "fliters-collapse-bg"
-                                }
-                                onClick={(e) => {
-                                  this.toggleAuxLayer();
-                                }}
-                              />
-                            </Box>
-                          </ListItem>
-                        </List>
-                        <Box className="check-icons-box">
-                          <List>
-                            {Object.keys(selectedLayer).map((key) => {
-                              return (
-                                <ListItem>
-                                  <Box
-                                    className={`d-flex align-items-center edit-icons  ${
-                                      this.state.editStatus
-                                        ? "delete-icons"
-                                        : ""
-                                    }`}
-                                  >
-                                    {selectedLayer[key] !== "" &&
-                                    savedLayer[key] ? (
-                                      <>
-                                        <IconButton className="check-icon">
-                                          <i class="fas fa-check"></i>
-                                        </IconButton>
-                                        <IconButton
-                                          className="edit-icon"
-                                          onClick={() => {
-                                            this.onClickEditBtn(key);
-                                            this.setState({
-                                              editStatus: true,
-                                            });
-                                          }}
-                                        >
-                                          <i class="fas fa-edit"></i>
-                                        </IconButton>
-                                      </>
-                                    ) : (
-                                      <></>
-                                    )}
-                                  </Box>
-                                </ListItem>
-                              );
-                            })}
-                          </List>
-                        </Box>
-                      </Box>
+                      {this.renderAllLayers()}
+                      {this.renderAllLayersOfDropDowns()}
                     </Box>
                   )}
                 </Box>
@@ -1150,54 +1129,9 @@ class Tier extends Component {
               )}
             </Grid>
           </Grid>
+
           {selectedInstance >= 0 ? (
-            cloudElementType?.toUpperCase() === ADD_PRODUCT_ENUMS.CDN ? (
-              <Box className="nginx-section">
-                <Box className="tabs">
-                  <List className="tabs-menu">
-                    {this.tabMapping.map((tabData, index) => {
-                      return (
-                        <ListItem
-                          key={`ops-tab-${index}`}
-                          className={index === activeTabEks ? "active" : ""}
-                          onClick={() => this.setActiveTab(index)}
-                        >
-                          <Box className="m-r-2">
-                            <img src={tabData.image} alt="" />
-                          </Box>
-                          {tabData.name}
-                        </ListItem>
-                      );
-                    })}
-                  </List>
-                  <Box className="tabs-content">
-                    {activeTabEks === 0 ? (
-                      <LoadBalancer
-                        setNextTab={(activeTabEks) => {
-                          this.setState({ activeTabEks });
-                        }}
-                      />
-                    ) : activeTabEks === 1 ? (
-                      <Ingress
-                        setNextTab={(activeTabEks) => {
-                          this.setState({ activeTabEks });
-                        }}
-                      />
-                    ) : activeTabEks === 2 ? (
-                      <Service
-                        setNextTab={(activeTabEks) => {
-                          this.setState({ activeTabEks });
-                        }}
-                      />
-                    ) : activeTabEks === 3 ? (
-                      <AppTopology />
-                    ) : (
-                      <></>
-                    )}
-                  </Box>
-                </Box>
-              </Box>
-            ) : isShowManagementInfoTab ? (
+            <>
               <Box className="nginx-section">
                 <Box className="tabs">
                   <List className="tabs-menu">
@@ -1222,8 +1156,11 @@ class Tier extends Component {
                         this.setState({ activeTabEcs });
                       }}
                       onClickAddEntryBtn={clickManInfoIdAddEntry}
-                      selectedCloudElement={cloudElementType?.toUpperCase()}
                       style={{ display: activeTabEcs === 0 ? "block" : "none" }}
+                      setManagentInfo={(managementInfo) => {
+                        this.setState({ managementInfo });
+                      }}
+                      currentActiveData={editStatus ? managementInfo : null}
                     />
 
                     <ConfigInfo
@@ -1232,35 +1169,21 @@ class Tier extends Component {
                       }}
                       onClickAddEntryBtn={clickConfigInfoIdAddEntry}
                       style={{ display: activeTabEcs === 1 ? "block" : "none" }}
+                      setConfigInfo={(configInfo) => {
+                        this.setState({ configInfo });
+                      }}
+                      currentActiveData={editStatus ? configInfo : null}
                     />
                   </Box>
                 </Box>
               </Box>
-            ) : (
-              <>
-                <Box className="tier-table-section m-t-4">
-                  <TableContainer className="table">
-                    <Table className="overview">
-                      {this.renderTableHead()}
-                      {this.renderTableBody()}
-                    </Table>
-                  </TableContainer>
-                </Box>
-              </>
-            )
-          ) : (
-            <></>
-          )}
-
-          {selectedInstance >= 0 ? (
-            <Box className="width-100 m-t-3">
-              <Grid
-                container
-                rowSpacing={1}
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              >
-                <Grid item xs={4} alignItems={"flex-start"}>
-                  {isShowManagementInfoTab ? (
+              <Box className="width-100 m-t-3">
+                <Grid
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                >
+                  <Grid item xs={4} alignItems={"flex-start"}>
                     <Button
                       className={` primary-btn min-width-inherit`}
                       variant="contained"
@@ -1284,28 +1207,28 @@ class Tier extends Component {
                       <i className="fa-sharp fa-solid fa-plus m-r-1"></i>
                       Add Entry
                     </Button>
-                  ) : (
-                    <></>
-                  )}
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Box className="d-block text-center">
+                      <LoadingButton
+                        className={`primary-btn min-width-inherit`}
+                        variant="contained"
+                        disabled={
+                          creationBiMapping.status === status.IN_PROGRESS
+                        }
+                        loading={
+                          creationBiMapping.status === status.IN_PROGRESS
+                        }
+                        onClick={this.onClickSave}
+                      >
+                        Save
+                      </LoadingButton>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={4}></Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  <Box className="d-block text-center">
-                    <Button
-                      className={` ${
-                        isSaveEnable ? "" : "info-btn"
-                      } primary-btn min-width-inherit`}
-                      variant="contained"
-                      onClick={() =>
-                        isSaveEnable ? this.onClickSave() : <></>
-                      }
-                    >
-                      Save
-                    </Button>
-                  </Box>
-                </Grid>
-                <Grid item xs={4}></Grid>
-              </Grid>
-            </Box>
+              </Box>
+            </>
           ) : (
             <></>
           )}
@@ -1320,12 +1243,14 @@ function mapStateToProps(state) {
     createProductFormData,
     cloudServices,
     instancesServices,
+    creationBiMapping,
   } = state.biMapping;
   return {
     biServicesFromProductCategory,
     createProductFormData,
     cloudServices,
     instancesServices,
+    creationBiMapping,
   };
 }
 
@@ -1334,6 +1259,7 @@ const mapDispatchToProps = {
   getCloudServices,
   getInstancesServices,
   setProductIntoDepartment,
+  createBiMapping,
 };
 
 export default connect(

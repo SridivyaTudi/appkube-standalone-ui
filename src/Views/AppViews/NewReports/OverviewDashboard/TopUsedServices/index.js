@@ -1,18 +1,6 @@
 import React, { Component } from "react";
-import {
-  Box,
-  Button,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableBody,
-  TableCell,
-  IconButton,
-} from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Button } from "@mui/material";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ServiceIcon7 from "assets/img/report/service-icon7.png";
 import ServiceIcon8 from "assets/img/report/service-icon8.png";
 import ServiceIcon9 from "assets/img/report/service-icon9.png";
@@ -25,6 +13,7 @@ import ServiceIcon15 from "assets/img/report/service-icon15.png";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import SpendingTable from "../Components/SpendingTable";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 let timeSpendData = [
   {
@@ -60,7 +49,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$1,800",
     variance: "15% ",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "Lambda",
@@ -68,7 +57,7 @@ let computeSpendingTable = [
     last_month_spend: "$1,500",
     month_spend: "$2,500",
     variance: "20%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "Light Sail",
@@ -76,7 +65,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "ECS",
@@ -84,7 +73,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "EKS",
@@ -92,7 +81,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "Fargate",
@@ -100,7 +89,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "Fargate",
@@ -108,7 +97,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "Fargate",
@@ -116,7 +105,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
   {
     name: "Fargate",
@@ -124,7 +113,7 @@ let computeSpendingTable = [
     last_month_spend: "$2,000",
     month_spend: "$2,000",
     variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services-details/`,
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
   },
 ];
 class TopUsedServices extends Component {
@@ -132,9 +121,32 @@ class TopUsedServices extends Component {
     super(props);
     this.state = {
       activeTab: 0,
+      searchedKey: "",
+      accounts: computeSpendingTable,
     };
   }
+  //  Serach
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { accounts } = this.state;
+    let data = computeSpendingTable || [];
+    if (data?.length) {
+      if (value) {
+        accounts = data.filter((tableData) => {
+          if (tableData?.name.toLowerCase().includes(value.toLowerCase())) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        accounts = data;
+      }
+      this.setState({ accounts, searchedKey: value });
+    }
+  };
   render() {
+    let { accounts, searchedKey } = this.state;
     return (
       <Box className="new-reports-container">
         <Box className="list-heading">
@@ -164,11 +176,28 @@ class TopUsedServices extends Component {
           </Button>
         </Box>
 
-        <Box className="reports-tab-section m-t-3">
+        <Box className="reports-tab-section m-t-4">
           <TimeSpendComponent data={timeSpendData} />
-          <h3>Spendings Of Top Used Services</h3>
-          <h4>Overview of Top 10 Services</h4>
-          <SpendingTable data={computeSpendingTable} />
+          <Box className="table-head" alignItems={"end"}>
+            <Box className="d-block">
+              <h3>Spendings Of Top Used Services</h3>
+              <h4 className="m-t-3 m-b-0">Overview of Top 10 Services</h4>
+            </Box>
+            <Box className="search m-r-0">
+              <input
+                type="text"
+                className="input"
+                placeholder="Search Insatnce "
+                value={searchedKey}
+                onChange={this.handleSearchChange}
+                autoFocus="autoFocus"
+              />
+              <button className="button">
+                <SearchOutlinedIcon />
+              </button>
+            </Box>
+          </Box>
+          <SpendingTable data={accounts} />
         </Box>
       </Box>
     );

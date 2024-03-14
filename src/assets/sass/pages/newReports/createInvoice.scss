@@ -11,7 +11,7 @@
     margin-top: 15px;
 
     .steper-label {
-      font-size: 12px;
+      font-size: 14px;
       line-height: 18px;
       font-weight: 500;
       color: #383874;
@@ -22,7 +22,13 @@
     .steper-button {
       //   padding: 0;
       width: 150px;
-
+      .css-vnkopk-MuiStepLabel-iconContainer{
+        padding-right: 0;
+      }
+      .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root{
+        width: 1.3em;
+        height: 1.3em;
+      }
       .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
         color: #00b929;
       }
@@ -30,6 +36,9 @@
       .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
         color: #00b929;
       }
+     .css-8je8zh-MuiTouchRipple-root{
+      width: 0;
+     }
     }
 
     .css-j5w0w9-MuiStepConnector-root {
@@ -39,8 +48,8 @@
         display: block;
         border-color: #bdbdbd;
         border-top-style: solid;
-        border-top-width: 2px;
-        margin-right: -67px;
+        border-top-width: 3px;
+        margin-right: -68px;
         margin-left: -75px;
       }
 

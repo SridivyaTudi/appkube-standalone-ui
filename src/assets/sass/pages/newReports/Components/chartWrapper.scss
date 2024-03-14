@@ -15,13 +15,35 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    h4 {
-      margin: 0;
-      font-size: 16px;
-      line-height: 20px;
-      font-weight: 600;
-      color: #383874;
+    .chart-title {
+     display: block;
+     width: 60%;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+      .title {
+        margin: 0;
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 600;
+        color: #383874;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .description {
+        width: 100%;
+        margin: 0;
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 400;
+        color: #383874;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
+
     button.primary-outline-btn {
       font-weight: 600;
       font-size: 12px;
@@ -43,6 +65,7 @@
       width: 100%;
       display: block;
       .total-cost-incurred {
+       display: block;
         label {
           font-size: 16px;
           font-weight: 400;
@@ -85,15 +108,9 @@
     .vertical-bar-chart {
       width: 100%;
       display: block;
-      .spending-present {
-        display: inline-block;
-        label {
-          font-size: 12px;
-          font-weight: 500;
-          line-height: 16px;
-          color: #383874;
-        }
-      }
+     .vertical-bar-chart-inner-section{
+      height: 277px;
+     }
     }
     .gauge-chart {
       display: flex;
@@ -188,5 +205,20 @@
 @media only screen and (max-width: 892px) {
   .reports-chart-box {
     min-height: 0;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .reports-chart-box {
+    .chart-content {
+      .vertical-bar-chart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 285px;
+        .vertical-bar-chart-inner-section{
+          height: 100%;
+         }
+      }
+    }
   }
 }

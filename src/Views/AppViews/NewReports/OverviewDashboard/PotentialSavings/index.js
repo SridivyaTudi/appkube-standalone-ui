@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Box, Button, IconButton, List, ListItem } from "@mui/material";
+import { Box, Button, List, ListItem } from "@mui/material";
 import Compute from "./Compute";
 import Storage from "./Storage";
 import Network from "./Network";
-import { Link } from "react-router-dom";
 import SelectFilterModal from "../../Components/SelectFilterModal";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 class PotentialSavings extends Component {
   tabMapping = [
@@ -86,7 +86,13 @@ class PotentialSavings extends Component {
           <h3> Potential savings</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li>Overview Dashboard</li>
+              <li
+                onClick={() =>
+                  this.props.navigate("/app/new-reports/over-view-dashboard")
+                }
+              >
+                Overview Dashboard
+              </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
@@ -98,7 +104,10 @@ class PotentialSavings extends Component {
           <Box className="tabs">
             {this.renderTabMenu()}
             <Box className="d-flex ">
-              <Button className="light-btn p-l-15 p-r-15 m-r-3"  onClick={this.handleSelectFilterModal}>
+              <Button
+                className="light-btn p-l-15 p-r-15 m-r-3"
+                onClick={this.handleSelectFilterModal}
+              >
                 <i className="fas fa-filter m-r-2"></i> Filter
               </Button>
               <Button className="light-btn p-l-15 p-r-15">
@@ -121,4 +130,4 @@ class PotentialSavings extends Component {
   }
 }
 
-export default PotentialSavings;
+export default navigateRouter(PotentialSavings);
