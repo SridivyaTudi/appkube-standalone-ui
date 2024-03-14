@@ -34,6 +34,8 @@ BeyondSoft
 EKS explorer:
 https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?type=design&node-id=12383-64820&t=9Xrymh7JYyOv4TIB-1&scaling=scale-down-width&page-id=12227%3A62321&starting-point-node-id=12455%3A71734
 
+https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?page-id=12227%3A62321&type=design&node-id=28999-37369&viewport=403%2C10%2C0.14&t=irP2MjCrBvmjMJvJ-1&scaling=scale-down-width&starting-point-node-id=12455%3A71734
+
 ELB/NLB explorer:
 https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?type=design&amp%3Bnode-id=12252-62320&amp%3Bt=pwdkxRU4L3feUy5a-1&amp%3Bscaling=min-zoom&amp%3Bpage-id=12227%3A62325&amp%3Bstarting-point-node-id=12252%3A62320&amp%3Bmode=design&utm_source=link-unfurl&utm_medium=msft&utm_content=mSwpmnkmrqHXX6AkzXzbtC&utm_product_type=design&node-id=10061-64679&starting-point-node-id=10061%3A64679
 
