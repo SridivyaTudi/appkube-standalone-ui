@@ -34,6 +34,7 @@
           font-weight: 500;
           color: #000000;
           border: none;
+         
           font-family: "Poppins", sans-serif;
           border-bottom: 1px dashed #b3b3b3;
         }
@@ -69,6 +70,9 @@
           font-weight: 500;
           color: #101828;
           position: relative;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
           border-bottom: 1px solid #eaecf0;
           font-family: "Poppins", sans-serif;
           .service-image {

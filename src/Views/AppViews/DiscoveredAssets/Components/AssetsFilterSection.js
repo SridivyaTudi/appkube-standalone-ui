@@ -70,7 +70,7 @@ class AssetsFilterSection extends Component {
                 <Box className="filter-box" key={v4()}>
                   <Box className="d-flex  align-items-center m-r-3">
                     <label>{filter.name} &#58; </label>
-                    <span> {filter.value} </span>
+                    <span className="p-l-5"> {filter.value} </span>
                   </Box>
                   <CloseIcon
                     fontSize="inherit"
@@ -122,7 +122,7 @@ class AssetsFilterSection extends Component {
         }}
       >
         <Box className="d-flex  align-items-center m-r-3">
-          <label>More &#58; </label> <span> +{count} </span>
+          <label>More &#58; </label> <span className="p-l-5"> +{count} </span>
         </Box>
       </Box>
     );
