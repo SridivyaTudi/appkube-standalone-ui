@@ -21,7 +21,7 @@
 // Pages Css //
 @import "./pages/sign";
 @import "./pages/forgetpassword";
-@import "./pages/dashboard";
+@import "./pages/dashboard/style.scss";
 @import "./pages/environmentlist/styles.scss";
 @import "./pages/setting/styles.scss";
 @import "./pages/newaccountsetup";
@@ -30,7 +30,6 @@
 @import "./pages/createscratch.scss";
 @import "./pages/selectyourtemplate.scss";
 @import "./pages/resetpassword.scss";
-@import "./pages/applicationStatusDashboard.scss";
 @import "./pages/error.scss";
 @import "./pages/reports.scss";
 @import "./pages/bimapping/styles.scss";
