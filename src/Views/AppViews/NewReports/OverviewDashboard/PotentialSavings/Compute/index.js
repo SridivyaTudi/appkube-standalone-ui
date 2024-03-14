@@ -304,7 +304,6 @@ class Compute extends Component {
               placeholder="Search Insatnce "
               value={searchedKey}
               onChange={this.handleSearchChange}
-              autoFocus="autoFocus"
             />
             <button className="button">
               <SearchOutlinedIcon />

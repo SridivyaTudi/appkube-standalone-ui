@@ -181,7 +181,7 @@ class ConfigInfo extends Component {
   onClickCloseIcon = (index) => {
     let { tableData } = this.state;
     delete tableData[index];
-    this.setState({ tableData });
+    this.setState({ tableData }, () => this.setConfigInfo());
   };
 
   // Render table of body.

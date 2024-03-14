@@ -474,7 +474,7 @@ class ManagementInfo extends Component {
   onClickCloseIcon = (index) => {
     let { tableData } = this.state;
     delete tableData[index];
-    this.setState({ tableData });
+    this.setState({ tableData }, () => this.setManagementInfo());
   };
 
   render() {
