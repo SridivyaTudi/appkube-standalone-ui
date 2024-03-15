@@ -107,7 +107,19 @@ class ProductCategory extends Component {
                 </Link>
               </Box>
             </Box>
-            <Box className="product-category-cards"></Box>
+            <Box className="product-category-cards">
+              <Box className="product-category-card">
+                <Box
+                  className="product-category-details"
+                  onClick={() => this.handleServiceModal()}
+                >
+                  <Box className="product-image">
+                    <img src={admissionIcon} alt="" />
+                  </Box>
+                  <span className="d-block name">Admission</span>
+                </Box>
+              </Box>
+            </Box>
           </Box>
           <Box className="d-block">
             <Box className="product-title-card">
@@ -129,8 +141,8 @@ class ProductCategory extends Component {
                   Driving innovation and efficiency in Business Services through
                   seamless integration of SOA and microservices architecture
                 </p>
-              </Box> */}
-              {/* <Box className="product-category-card">
+              </Box>  */}
+              <Box className="product-category-card">
                 <Box
                   className="product-category-details"
                   onClick={() => this.handleServiceModal()}
@@ -140,8 +152,8 @@ class ProductCategory extends Component {
                   </Box>
                   <span className="d-block name">Search</span>
                 </Box>
-              </Box> */}
-              {/* <Box className="product-category-card">
+              </Box>
+              <Box className="product-category-card">
                 <Box
                   className="product-category-details"
                   onClick={() => this.handleServiceModal()}
@@ -151,8 +163,8 @@ class ProductCategory extends Component {
                   </Box>
                   <span className="d-block name">Filter</span>
                 </Box>
-              </Box> */}
-              {/* <Box className="product-category-card">
+              </Box>
+              <Box className="product-category-card">
                 <Box
                   className="product-category-details"
                   onClick={() => this.handleServiceModal()}
@@ -162,7 +174,7 @@ class ProductCategory extends Component {
                   </Box>
                   <span className="d-block name">RBAC</span>
                 </Box>
-              </Box> */}
+              </Box>
             </Box>
           </Box>
         </Box>
