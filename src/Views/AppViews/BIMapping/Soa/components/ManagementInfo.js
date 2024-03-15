@@ -128,7 +128,12 @@ class ManagementInfo extends Component {
   };
 
   setPreviousData = () => {
-    let { tableData, selectedInfo, selectedSubValues } = this.state;
+    let {
+      tableData,
+      selectedInfo,
+      selectedSubValues,
+      selectedSubkeys = {},
+    } = this.state;
     tableData = [];
 
     tableData = JSON.parse(JSON.stringify(data));
@@ -144,7 +149,9 @@ class ManagementInfo extends Component {
               prev.key?.split(" ")?.join("")?.toLowerCase() === activeData.key
             ) {
               let prepareIndex = `${prev.key?.split(" ")?.join("_")}_${index}`;
-              if (activeData.isSubValue) {
+              if (activeData.isSubKey) {
+                selectedSubkeys[prepareIndex] = activeData.value;
+              } else if (activeData.isSubValue) {
                 selectedSubValues[prepareIndex] = activeData.value;
               } else {
                 selectedInfo[prepareIndex] = activeData.value;
@@ -154,7 +161,13 @@ class ManagementInfo extends Component {
         }
       });
     }
-    this.setState({ tableData, selectedInfo, selectedSubValues });
+
+    this.setState({
+      tableData,
+      selectedInfo,
+      selectedSubValues,
+      selectedSubkeys,
+    });
   };
 
   // Set active tab
@@ -183,12 +196,15 @@ class ManagementInfo extends Component {
   };
 
   setManagementInfo = () => {
-    let { selectedInfo, selectedSubValues } = this.state;
+    let { selectedInfo, selectedSubValues, selectedSubkeys } = this.state;
     try {
       let inputData = this.manipulateInputData(selectedInfo);
+      let subKey = this.manipulateSubkeyDropDown(selectedSubkeys);
       let subValue = this.manipulateSubvaluesInputData(selectedSubValues);
       let customInputData = this.manipulateCustomInputData();
-      this.props.setManagentInfo(inputData.concat(customInputData, subValue));
+      this.props.setManagentInfo(
+        inputData.concat(customInputData, subValue, subKey)
+      );
     } catch (error) {
       console.log(error);
     }
@@ -240,6 +256,18 @@ class ManagementInfo extends Component {
       }
     });
     return keyValues;
+  };
+
+  manipulateSubkeyDropDown = (selectedSubkeys) => {
+    let objKey = Object.keys(selectedSubkeys);
+    if (objKey.length) {
+      let key = objKey[0].split("_");
+      key.pop();
+      key = key.join("").toLowerCase();
+      let value = selectedSubkeys[objKey[0]];
+      return [{ key, value, isSubKey: true }];
+    }
+    return [];
   };
 
   // Render table of head.
@@ -375,10 +403,16 @@ class ManagementInfo extends Component {
                       <Select
                         className="fliter-toggel"
                         value={`${
-                          selectedSubkeys[`${info.key}_${index}`] || ""
+                          selectedSubkeys[
+                            `${info.key?.split(" ")?.join("_")}_${index}`
+                          ] || ""
                         }`}
                         onChange={(e) =>
-                          this.handleChange(e, `${info.key}_${index}`, 1)
+                          this.handleChange(
+                            e,
+                            `${info.key?.split(" ")?.join("_")}_${index}`,
+                            1
+                          )
                         }
                         displayEmpty
                         inputProps={{ "aria-label": "Without label" }}

@@ -3,7 +3,6 @@ import { Box } from "@mui/material";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 
-
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -40,7 +39,7 @@ export class VerticalTitleAndIconOfCard extends Component {
           </Box>
           <Box className="deployed-title">
             <HtmlTooltip className="table-tooltip" title={label}>
-              {label}
+              <span>{label}</span>
             </HtmlTooltip>
           </Box>
         </Box>

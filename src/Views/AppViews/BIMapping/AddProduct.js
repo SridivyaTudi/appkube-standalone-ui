@@ -7,6 +7,7 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import { connect } from "react-redux";
 import { PRODUCT_CATEGORY_ENUM } from "Utils";
+import { v4 } from "uuid";
 
 let environments = ["Development", "Test", "Stage", "Production"];
 class AddProduct extends Component {
@@ -130,7 +131,7 @@ class AddProduct extends Component {
     return environments.map((environment) => {
       return (
         <ListItem
-          className={`${environment === formData.environment ? "active" : ""}`}
+          className={`${environment === formData.environment ? "active" : ""}`} key={v4()}
         >
           <Button
             className="secondary-btn min-width"
