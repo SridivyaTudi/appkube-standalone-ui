@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import admissionIcon from "assets/img/bimapping/admission.png";
 import searchIcon from "assets/img/bimapping/search.png";
 import filterIcon from "assets/img/bimapping/filter.png";
@@ -109,6 +109,14 @@ class ProductCategory extends Component {
             </Box>
             <Box className="product-category-cards">
               <Box className="product-category-card">
+                <Box className="d-flex icon-buttons">
+                  <IconButton className="edit-icon">
+                    <i class="fas fa-edit"></i>
+                  </IconButton>
+                  <IconButton className="close-icon">
+                    <i class="fas fa-close"></i>
+                  </IconButton>
+                </Box>
                 <Box
                   className="product-category-details"
                   onClick={() => this.handleServiceModal()}
@@ -143,6 +151,14 @@ class ProductCategory extends Component {
                 </p>
               </Box>  */}
               <Box className="product-category-card">
+                <Box className="d-flex icon-buttons">
+                  <IconButton className="edit-icon">
+                    <i class="fas fa-edit"></i>
+                  </IconButton>
+                  <IconButton className="close-icon">
+                    <i class="fas fa-close"></i>
+                  </IconButton>
+                </Box>
                 <Box
                   className="product-category-details"
                   onClick={() => this.handleServiceModal()}
@@ -154,6 +170,14 @@ class ProductCategory extends Component {
                 </Box>
               </Box>
               <Box className="product-category-card">
+                <Box className="d-flex icon-buttons">
+                  <IconButton className="edit-icon">
+                    <i class="fas fa-edit"></i>
+                  </IconButton>
+                  <IconButton className="close-icon">
+                    <i class="fas fa-close"></i>
+                  </IconButton>
+                </Box>
                 <Box
                   className="product-category-details"
                   onClick={() => this.handleServiceModal()}
@@ -165,6 +189,14 @@ class ProductCategory extends Component {
                 </Box>
               </Box>
               <Box className="product-category-card">
+                <Box className="d-flex icon-buttons">
+                  <IconButton className="edit-icon">
+                    <i class="fas fa-edit"></i>
+                  </IconButton>
+                  <IconButton className="close-icon">
+                    <i class="fas fa-close"></i>
+                  </IconButton>
+                </Box>
                 <Box
                   className="product-category-details"
                   onClick={() => this.handleServiceModal()}

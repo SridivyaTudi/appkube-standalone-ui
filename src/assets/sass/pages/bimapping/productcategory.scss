@@ -22,7 +22,7 @@
     margin-top: 4px;
     box-shadow: none;
     min-height: 156px;
-    padding: 10px 15px;
+    padding: 20px 15px;
     background-color: #ffffff;
     border-radius: 6px;
     display: inline-flex;
@@ -35,21 +35,46 @@
     }
 
     .product-category-card {
-      width: 105px;
-      height: 105px;
+      position: relative;
+      width: 135px;
+      height: 135px;
+      padding: 10px;
       margin-right: 15px;
       border-radius: 6px;
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #6c49ac0d;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      // box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #6c49ac0d;
+      .icon-buttons {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        .edit-icon {
+          width: 20px;
+          height: 20px;
+          border-radius: 50px;
+          padding: 5px;
+          font-size: 12px;
+          color: #384cff;
+        }
+        .close-icon {
+          width: 20px;
+          height: 20px;
+          border-radius: 50px;
+          padding: 5px;
+          font-size: 12px;
+          color: red;
+        }
+      }
       &:last-child {
         margin-right: 0;
       }
-      .product-category-details{
+      .product-category-details {
         text-align: center;
-        .product-image{
+        .product-image {
           width: 35px;
           height: 35px;
           margin: 0 auto;
@@ -57,9 +82,17 @@
         .name {
           margin-top: 8px;
           font-size: 15px;
-          line-height: 28px;
+          line-height: 20px;
           color: #344054;
           font-weight: 500;
+          max-height: 3.2em;
+          overflow: hidden;
+          display: block;
+          display: -webkit-box;
+          max-width: 100%;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          text-overflow: ellipsis;
         }
       }
     }
