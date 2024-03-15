@@ -175,28 +175,39 @@ class AddDepartment extends Component {
     let departmentStatus =
       this.props.creationDepartment?.status === status.IN_PROGRESS;
     return (
-      <Box
-        justifyContent={"center"}
-        className="d-flex align-items-center wizard-step-button m-t-4"
-      >
-        <Button
-          className="primary-outline-btn m-r-2"
-          variant="outlined"
-          onClick={() => this.setActiveTab()}
-          disabled={departmentStatus}
+      <Box>
+        <Box className="landing-zone-check-box d-block">
+          <Checkbox
+            className="check-box"
+            size="small"
+            //checked={isCreateWithoutLandingZone}
+            onClick={this.onClickCheckBox}
+          />
+          <label>Create without landing-zone</label>
+        </Box>
+        <Box
+          justifyContent={"center"}
+          className="d-flex align-items-center wizard-step-button m-t-2"
         >
-          Previous
-        </Button>
+          <Button
+            className="primary-outline-btn m-r-2"
+            variant="outlined"
+            onClick={() => this.setActiveTab()}
+            disabled={departmentStatus}
+          >
+            Previous
+          </Button>
 
-        <LoadingButton
-          className="primary-btn"
-          variant="contained"
-          onClick={this.onClickNextBtn}
-          disabled={departmentStatus}
-          loading={departmentStatus}
-        >
-          Next
-        </LoadingButton>
+          <LoadingButton
+            className="primary-btn"
+            variant="contained"
+            onClick={this.onClickNextBtn}
+            disabled={departmentStatus}
+            loading={departmentStatus}
+          >
+            Next
+          </LoadingButton>
+        </Box>
       </Box>
     );
   };
@@ -388,7 +399,7 @@ class AddDepartment extends Component {
               <Box className="landing-head">
                 <span>Select Landing zone</span>
                 <span>
-                  <Checkbox disabled className="check-box" size="small" />
+                  <Checkbox  className="check-box" size="small" />
                   Include associated LZ
                 </span>
               </Box>
@@ -466,21 +477,6 @@ class AddDepartment extends Component {
           ) : (
             <></>
           )}
-          <Box className="landing-head">
-            <span>
-              <FormControlLabel
-                label="Create without landing-zone"
-                control={
-                  <Checkbox
-                    className="check-box"
-                    size="small"
-                    checked={isCreateWithoutLandingZone}
-                    onClick={this.onClickCheckBox}
-                  />
-                }
-              />
-            </span>
-          </Box>
         </Box>
       </Box>
     );
