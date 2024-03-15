@@ -771,10 +771,6 @@
         }
       }
     }
-  }
-}
-@media (max-width: 1024px) {
-  .tier-container {
     .topology-panel {
       .topology-panel-body {
         .topology-inner-content {
@@ -792,3 +788,22 @@
     }
   }
 }
+// @media (max-width: 1024px) {
+//   .tier-container {
+//     .topology-panel {
+//       .topology-panel-body {
+//         .topology-inner-content {
+//           width: 100%;
+//           overflow: auto;
+//           padding: 15px 0;
+//           .content-middle {
+//             ul {
+//               display: block;
+//               padding: 0;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
