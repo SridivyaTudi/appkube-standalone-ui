@@ -108,23 +108,25 @@ class ProductCategory extends Component {
               </Box>
             </Box>
             <Box className="product-category-cards">
-              <Box className="product-category-card">
-                <Box className="d-flex icon-buttons">
-                  <IconButton className="edit-icon">
-                    <i class="fas fa-edit"></i>
-                  </IconButton>
-                  <IconButton className="close-icon">
-                    <i class="fas fa-close"></i>
-                  </IconButton>
-                </Box>
-                <Box
-                  className="product-category-details"
-                  onClick={() => this.handleServiceModal()}
-                >
-                  <Box className="product-image">
-                    <img src={admissionIcon} alt="" />
+              <Box className="product-category-inner">
+                <Box className="product-category-card">
+                  <Box className="d-flex icon-buttons">
+                    <IconButton className="edit-icon">
+                      <i class="fas fa-edit"></i>
+                    </IconButton>
+                    <IconButton className="close-icon">
+                      <i class="fas fa-close"></i>
+                    </IconButton>
                   </Box>
-                  <span className="d-block name">Admission</span>
+                  <Box
+                    className="product-category-details"
+                    onClick={() => this.handleServiceModal()}
+                  >
+                    <Box className="product-image">
+                      <img src={admissionIcon} alt="" />
+                    </Box>
+                    <span className="d-block name">Admission</span>
+                  </Box>
                 </Box>
               </Box>
             </Box>
@@ -144,67 +146,69 @@ class ProductCategory extends Component {
               </Box>
             </Box>
             <Box className="product-category-cards">
-              {/* <Box className="content">
+              <Box className="product-category-inner">
+                {/* <Box className="content">
                 <p>
                   Driving innovation and efficiency in Business Services through
                   seamless integration of SOA and microservices architecture
                 </p>
               </Box>  */}
-              <Box className="product-category-card">
-                <Box className="d-flex icon-buttons">
-                  <IconButton className="edit-icon">
-                    <i class="fas fa-edit"></i>
-                  </IconButton>
-                  <IconButton className="close-icon">
-                    <i class="fas fa-close"></i>
-                  </IconButton>
-                </Box>
-                <Box
-                  className="product-category-details"
-                  onClick={() => this.handleServiceModal()}
-                >
-                  <Box className="product-image">
-                    <img src={searchIcon} alt="" />
+                <Box className="product-category-card">
+                  <Box className="d-flex icon-buttons">
+                    <IconButton className="edit-icon">
+                      <i class="fas fa-edit"></i>
+                    </IconButton>
+                    <IconButton className="close-icon">
+                      <i class="fas fa-close"></i>
+                    </IconButton>
                   </Box>
-                  <span className="d-block name">Search</span>
-                </Box>
-              </Box>
-              <Box className="product-category-card">
-                <Box className="d-flex icon-buttons">
-                  <IconButton className="edit-icon">
-                    <i class="fas fa-edit"></i>
-                  </IconButton>
-                  <IconButton className="close-icon">
-                    <i class="fas fa-close"></i>
-                  </IconButton>
-                </Box>
-                <Box
-                  className="product-category-details"
-                  onClick={() => this.handleServiceModal()}
-                >
-                  <Box className="product-image">
-                    <img src={filterIcon} alt="" />
+                  <Box
+                    className="product-category-details"
+                    onClick={() => this.handleServiceModal()}
+                  >
+                    <Box className="product-image">
+                      <img src={searchIcon} alt="" />
+                    </Box>
+                    <span className="d-block name">Search</span>
                   </Box>
-                  <span className="d-block name">Filter</span>
                 </Box>
-              </Box>
-              <Box className="product-category-card">
-                <Box className="d-flex icon-buttons">
-                  <IconButton className="edit-icon">
-                    <i class="fas fa-edit"></i>
-                  </IconButton>
-                  <IconButton className="close-icon">
-                    <i class="fas fa-close"></i>
-                  </IconButton>
-                </Box>
-                <Box
-                  className="product-category-details"
-                  onClick={() => this.handleServiceModal()}
-                >
-                  <Box className="product-image">
-                    <img src={rbacIcon} alt="" />
+                <Box className="product-category-card">
+                  <Box className="d-flex icon-buttons">
+                    <IconButton className="edit-icon">
+                      <i class="fas fa-edit"></i>
+                    </IconButton>
+                    <IconButton className="close-icon">
+                      <i class="fas fa-close"></i>
+                    </IconButton>
                   </Box>
-                  <span className="d-block name">RBAC</span>
+                  <Box
+                    className="product-category-details"
+                    onClick={() => this.handleServiceModal()}
+                  >
+                    <Box className="product-image">
+                      <img src={filterIcon} alt="" />
+                    </Box>
+                    <span className="d-block name">Filter</span>
+                  </Box>
+                </Box>
+                <Box className="product-category-card">
+                  <Box className="d-flex icon-buttons">
+                    <IconButton className="edit-icon">
+                      <i class="fas fa-edit"></i>
+                    </IconButton>
+                    <IconButton className="close-icon">
+                      <i class="fas fa-close"></i>
+                    </IconButton>
+                  </Box>
+                  <Box
+                    className="product-category-details"
+                    onClick={() => this.handleServiceModal()}
+                  >
+                    <Box className="product-image">
+                      <img src={rbacIcon} alt="" />
+                    </Box>
+                    <span className="d-block name">RBAC</span>
+                  </Box>
                 </Box>
               </Box>
             </Box>
