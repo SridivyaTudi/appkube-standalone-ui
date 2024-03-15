@@ -10,11 +10,7 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import { connect } from "react-redux";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import {
-  getSingleValueFromLocalStorage,
-  setSingleValueInLocalStorage,
-  removeSingleValueFromLocalStorage,
-} from "Utils";
+import { v4 } from "uuid";
 
 class ProductCategory extends Component {
   constructor(props) {
@@ -59,10 +55,63 @@ class ProductCategory extends Component {
       serviceType,
     });
   };
+
+  renderBusinessService = () => {
+    let soaData = this.props.createProductFormData.soaData || [];
+    if (soaData.length) {
+      return soaData.map((soa, index) => {
+        return (
+          <Box className="product-category-card" key={v4()}>
+            <Box className="d-flex icon-buttons">
+              <IconButton className="edit-icon">
+                <i class="fas fa-edit"></i>
+              </IconButton>
+              <IconButton
+                className="close-icon"
+                onClick={() => this.onClickCloseBtn(index)}
+              >
+                <i class="fas fa-close"></i>
+              </IconButton>
+            </Box>
+            <Box
+              className="product-category-details"
+              onClick={() => this.handleServiceModal()}
+            >
+              <Box className="product-image">
+                <img src={admissionIcon} alt="" />
+              </Box>
+              <span className="d-block name">
+                {soa.module}-{index}
+              </span>
+            </Box>
+          </Box>
+        );
+      });
+    }
+  };
+
+  onClickCloseBtn = (index) => {
+    let { createProductFormData } = this.props;
+    let soaData = JSON.parse(
+      JSON.stringify(createProductFormData.soaData || [])
+    );
+    if (soaData.length) {
+      soaData = soaData.filter((soa, soaIndex) => soaIndex !== index);
+      let passData = JSON.parse(
+        JSON.stringify({
+          ...createProductFormData,
+          soaData,
+          "3_tierData": null,
+        })
+      );
+      this.props.setProductIntoDepartment(passData);
+    }
+  };
   render() {
     const { showServiceModal } = this.state;
     let { createProductFormData } = this.props;
     let { name: departMentName, id } = this.getUrlDetails();
+    console.log(createProductFormData);
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -109,25 +158,7 @@ class ProductCategory extends Component {
             </Box>
             <Box className="product-category-cards">
               <Box className="product-category-inner">
-                <Box className="product-category-card">
-                  <Box className="d-flex icon-buttons">
-                    <IconButton className="edit-icon">
-                      <i class="fas fa-edit"></i>
-                    </IconButton>
-                    <IconButton className="close-icon">
-                      <i class="fas fa-close"></i>
-                    </IconButton>
-                  </Box>
-                  <Box
-                    className="product-category-details"
-                    onClick={() => this.handleServiceModal()}
-                  >
-                    <Box className="product-image">
-                      <img src={admissionIcon} alt="" />
-                    </Box>
-                    <span className="d-block name">Admission</span>
-                  </Box>
-                </Box>
+                {this.renderBusinessService()}
               </Box>
             </Box>
           </Box>
@@ -146,13 +177,13 @@ class ProductCategory extends Component {
               </Box>
             </Box>
             <Box className="product-category-cards">
-              <Box className="product-category-inner">
-                {/* <Box className="content">
+              {/* <Box className="content">
                 <p>
                   Driving innovation and efficiency in Business Services through
                   seamless integration of SOA and microservices architecture
                 </p>
               </Box>  */}
+              <Box className="product-category-inner">
                 <Box className="product-category-card">
                   <Box className="d-flex icon-buttons">
                     <IconButton className="edit-icon">

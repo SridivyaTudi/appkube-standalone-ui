@@ -113,3 +113,33 @@ export const createDepartment = createAsyncThunk(
     }
   }
 );
+
+export const getLandingzone = createAsyncThunk(
+  "BIMapping/getLandingzone",
+  async (params) => {
+    try {
+      let { orgId, cloud } = params;
+      let url = config.GET_LANDINGZONE.replace("#org-id#", orgId).replace(
+        "#cloud#",
+        cloud
+      );
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const createDepartmentWithLandingZone = createAsyncThunk(
+  "BIMapping/createDepartmentWithLandingZone",
+  async (params) => {
+    try {
+      let url = config.ADD_DEPARTMENT_WITH_LANDINGZONE;
+      const response = await postLoginService.post(url, params);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

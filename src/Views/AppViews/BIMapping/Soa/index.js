@@ -187,6 +187,7 @@ class Soa extends Component {
       editStatus: false,
       configInfo: [],
       managementInfo: [],
+      tempSoaData: [],
     };
   }
 
@@ -590,9 +591,6 @@ class Soa extends Component {
       savedData.push(currentData);
     }
 
-    if (savedService.other) {
-      // this.addBiMappingAPICall(savedData);
-    }
     selectedInstance = -1;
     selectedDeployedInstance = "";
     selectedService = [];
@@ -609,19 +607,39 @@ class Soa extends Component {
       configInfo,
       managementInfo,
     });
-    let passData = JSON.parse(
-      JSON.stringify({
-        ...createProductFormData,
-        soaData: {
-          savedService,
-          savedData,
-          selectedService,
-          selectedServiceData,
-        },
-        "3_tierData": null,
-      })
-    );
-    this.props.setProductIntoDepartment(passData);
+
+    if (savedService.other) {
+      let appendSoaData = {
+        savedService,
+        savedData,
+        selectedService,
+        selectedServiceData,
+      };
+      let soaData = JSON.parse(
+        JSON.stringify(createProductFormData.soaData || [])
+      );
+      if (soaData.length) {
+        soaData.push({
+          module: "module " + (soaData.length + 1),
+          values: appendSoaData,
+        });
+      } else {
+        soaData = [{ module: "module 1", values: appendSoaData }];
+      }
+
+      let passData = JSON.parse(
+        JSON.stringify({
+          ...createProductFormData,
+          soaData,
+          "3_tierData": null,
+        })
+      );
+      this.props.setProductIntoDepartment(passData);
+      let { name, id } = this.getUrlDetails();
+      this.props.navigate(
+        `/app/bim/add-product/${name}/${id}/product-category`
+      );
+    }
   };
 
   // On click instance
@@ -1276,14 +1294,8 @@ class Soa extends Component {
                   <Grid item xs={4}>
                     <Box className="d-block text-center">
                       <LoadingButton
-                        // className={` ${
-                        //   isSaveEnable ? "" : "info-btn"
-                        // } primary-btn min-width-inherit`}
                         className={` primary-btn min-width-inherit`}
                         variant="contained"
-                        // onClick={() =>
-                        //   isSaveEnable ? this.onClickSave() : <></>
-                        // }
                         onClick={this.onClickSave}
                         disabled={
                           creationBiMapping.status === status.IN_PROGRESS

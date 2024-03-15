@@ -18,18 +18,23 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import Checkbox from "@mui/material/Checkbox";
 import { v4 } from "uuid";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
-import { createDepartment } from "Redux/BIMapping/BIMappingThunk";
+import {
+  createDepartment,
+  getLandingzone,
+  createDepartmentWithLandingZone,
+} from "Redux/BIMapping/BIMappingThunk";
 import { connect } from "react-redux";
-import { getCurrentOrgId } from "Utils";
+import { getCurrentOrgId, getCurrentUser } from "Utils";
 import LoadingButton from "@mui/lab/LoadingButton";
 import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
+import Loader from "Components/Loader";
 
 class AddDepartment extends Component {
   ACCOUNTS_ICON = {
-    MICROSOFT_AZURE: Microsoftazure,
-    AWS: Aws,
-    GOOGLE_CLOUD: GoogleCloud,
+    azure: Microsoftazure,
+    aws: Aws,
+    gcp: GoogleCloud,
   };
   steps = {
     STEP1: 0,
@@ -40,7 +45,7 @@ class AddDepartment extends Component {
     ADMIN: "ADMIN",
     CMDB: "CMDB",
   };
-
+  user = { cmdbOrgId: "" };
   constructor(props) {
     super(props);
     this.state = {
@@ -56,7 +61,12 @@ class AddDepartment extends Component {
         description: "",
       },
       isCreateWithoutLandingZone: false,
+      landingZones: [],
     };
+    let userDetails = getCurrentUser()?.info?.user?.organization;
+    if (userDetails) {
+      this.user = userDetails;
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -71,6 +81,28 @@ class AddDepartment extends Component {
       } else {
         ToastMessage.error("Department Creation  Failed.");
       }
+    }
+
+    if (
+      prevProps.creationDepartmentWithLandingZone.status !==
+        this.props.creationDepartmentWithLandingZone.status &&
+      this.props.creationDepartmentWithLandingZone.status === status.SUCCESS
+    ) {
+      if (this.props.creationDepartmentWithLandingZone?.data) {
+        ToastMessage.success("Department Created Successfully.");
+        this.redirectPage(`${APP_PREFIX_PATH}/bim`);
+      } else {
+        ToastMessage.error("Department Creation  Failed.");
+      }
+    }
+
+    if (
+      prevProps.landingZones.status !== this.props.landingZones.status &&
+      this.props.landingZones.status === status.SUCCESS &&
+      this.props.landingZones?.data
+    ) {
+      let landingZones = this.props.landingZones?.data || [];
+      this.setState({ landingZones });
     }
   }
 
@@ -170,25 +202,34 @@ class AddDepartment extends Component {
   renderBtns = () => {
     let {
       activeStep,
-      step2FormData: { selectedChildLandingZone, selectedLandingZone }
+      isCreateWithoutLandingZone,
+      step2FormData: { selectedChildLandingZone, selectedLandingZone },
     } = this.state;
-    let departmentStatus =
-      this.props.creationDepartment?.status === status.IN_PROGRESS;
+    let { creationDepartmentWithLandingZone, creationDepartment } = this.props;
+    let departmentStatus = [
+      creationDepartment?.status,
+      creationDepartmentWithLandingZone?.status,
+    ].includes(status.IN_PROGRESS);
     return (
       <Box>
-        <Box className="landing-zone-check-box d-block m-t-1">
-          <FormControlLabel
-            label="Create without landing-zone"
-            control={
-              <Checkbox
-                className="check-box"
-                size="small"
-                //checked={isCreateWithoutLandingZone}
-                onClick={this.onClickCheckBox}
-              />
-            }
-          />
-        </Box>
+        {activeStep !== 0 ? (
+          <Box className="landing-zone-check-box d-block m-t-1">
+            <FormControlLabel
+              label="Create without landing-zone"
+              control={
+                <Checkbox
+                  className="check-box"
+                  size="small"
+                  checked={isCreateWithoutLandingZone}
+                  onClick={this.onClickCheckBox}
+                />
+              }
+            />
+          </Box>
+        ) : (
+          <></>
+        )}
+
         <Box
           justifyContent={"center"}
           className="d-flex align-items-center wizard-step-button m-t-2"
@@ -218,21 +259,31 @@ class AddDepartment extends Component {
 
   // set activeTab
   setActiveTab = (isNextStep = 0) => {
-    let { activeStep } = this.state;
+    let { activeStep, isCreateWithoutLandingZone } = this.state;
 
     if (activeStep === 0 && !isNextStep) {
       this.redirectPage(`${APP_PREFIX_PATH}/bim`);
     } else if ([1, 2].includes(activeStep) && isNextStep) {
       let { isValid } = this.validateSteps();
       if (isValid) {
-        let organizationId = getCurrentOrgId();
-        let { name, description } = this.state.step1FormData;
-        let params = {
-          name,
-          description,
-          organizationId,
-        };
-        this.props.createDepartment(params);
+        let { name: departmentName, description: departmentDescription } =
+          this.state.step1FormData;
+        let { step2FormData } = this.state;
+        if (isCreateWithoutLandingZone) {
+          let params = {
+            name: departmentName,
+            organizationId: +this.user.cmdbOrgId,
+          };
+          this.props.createDepartment(params);
+        } else {
+          let params = {
+            departmentName,
+            departmentDescription,
+            organizationId: +this.user.cmdbOrgId,
+            landingZone: [step2FormData.selectedChildLandingZone],
+          };
+          this.props.createDepartmentWithLandingZone(params);
+        }
       }
     }
 
@@ -256,6 +307,10 @@ class AddDepartment extends Component {
     } else {
       step2FormData.selectedLandingZone = selectedAccount;
       activeStep = 2;
+      this.props.getLandingzone({
+        orgId: getCurrentOrgId(),
+        cloud: selectedAccount,
+      });
     }
 
     step2FormData.selectedChildLandingZone = "";
@@ -313,7 +368,14 @@ class AddDepartment extends Component {
       return this.validateStep2();
     }
   };
-
+  // Render loder
+  renderLoder = () => {
+    return (
+      <Box className="d-blck text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100" />
+      </Box>
+    );
+  };
   // Render step-2 of form
   renderStep2Form = () => {
     const {
@@ -321,7 +383,10 @@ class AddDepartment extends Component {
       activeStep,
       isCreateWithoutLandingZone,
       isSubmit,
+      landingZones,
     } = this.state;
+    let landingZoneLoder =
+      this.props.landingZones.status === status.IN_PROGRESS;
     let { errors } = this.validateSteps();
     return (
       <Box className="basic-information-section">
@@ -346,12 +411,12 @@ class AddDepartment extends Component {
           <Box className="associate-boxs">
             <List>
               <ListItem
-                className={`${selectedLandingZone === "AWS" ? "active" : ""}`}
+                className={`${selectedLandingZone === "aws" ? "active" : ""}`}
               >
                 <Button
                   className="secondary-btn min-width"
                   variant="contained"
-                  onClick={() => this.onClickLandingZone("AWS")}
+                  onClick={() => this.onClickLandingZone("aws")}
                 >
                   <Box className="image-box">
                     <img src={Aws} alt="" />
@@ -360,14 +425,12 @@ class AddDepartment extends Component {
                 </Button>
               </ListItem>
               <ListItem
-                className={`${
-                  selectedLandingZone === "MICROSOFT_AZURE" ? "active" : ""
-                }`}
+                className={`${selectedLandingZone === "azure" ? "active" : ""}`}
               >
                 <Button
                   className="secondary-btn min-width"
                   variant="contained"
-                  onClick={() => this.onClickLandingZone("MICROSOFT_AZURE")}
+                  onClick={() => this.onClickLandingZone("azure")}
                 >
                   <Box className="image-box">
                     <img src={Microsoftazure} alt="" />
@@ -376,14 +439,12 @@ class AddDepartment extends Component {
                 </Button>
               </ListItem>
               <ListItem
-                className={`${
-                  selectedLandingZone === "GOOGLE_CLOUD" ? "active" : ""
-                }`}
+                className={`${selectedLandingZone === "gcp" ? "active" : ""}`}
               >
                 <Button
                   className="secondary-btn min-width"
                   variant="contained"
-                  onClick={() => this.onClickLandingZone("GOOGLE_CLOUD")}
+                  onClick={() => this.onClickLandingZone("gcp")}
                 >
                   <Box className="image-box">
                     <img src={GoogleCloud} alt="" />
@@ -409,67 +470,85 @@ class AddDepartment extends Component {
               </Box>
               <Box className="select-card-section">
                 <Box className="select-landing-cards m-t-2">
-                  <Grid
-                    container
-                    rowSpacing={1.5}
-                    columnSpacing={{ xs: 1.5 }}
-                    alignItems={"center"}
-                    className="p-b-10"
-                  >
-                    {[...Array(13)].map((val, index) => {
-                      return (
-                        <Grid
-                          item
-                          xl={6}
-                          lg={6}
-                          md={12}
-                          xs={12}
-                          onClick={() =>
-                            this.setState({
-                              step2FormData: {
-                                ...this.state.step2FormData,
-                                selectedChildLandingZone:
-                                  selectedChildLandingZone === index
-                                    ? ""
-                                    : index,
-                              },
-                            })
-                          }
-                          key={v4()}
-                        >
-                          <Card
-                            className={`select-landing-card ${
-                              selectedChildLandingZone === index ? "active" : ""
-                            }`}
-                          >
-                            <Box className="card-content text-center">
-                              <Box className="card-image">
-                                <img
-                                  src={this.ACCOUNTS_ICON[selectedLandingZone]}
-                                  alt=""
-                                />
-                              </Box>
-                              <Box className="card-title">
-                                Account no 123456
-                              </Box>
-                            </Box>
-                            <Box className="card-footer">
-                              <Box className="footer-left-content">
-                                <span className="d-block">Associated LOB</span>
-                                <label className="d-block">002</label>
-                              </Box>
-                              <Box className="footer-right-content">
-                                <span className="d-block">Assets</span>
-                                <label className="d-block text-right">
-                                  150
-                                </label>
-                              </Box>
-                            </Box>
-                          </Card>
-                        </Grid>
-                      );
-                    })}
-                  </Grid>
+                  {landingZoneLoder ? (
+                    this.renderLoder()
+                  ) : (
+                    <Grid
+                      container
+                      rowSpacing={1.5}
+                      columnSpacing={{ xs: 1.5 }}
+                      alignItems={"center"}
+                      className="p-b-10"
+                    >
+                      {landingZones?.length ? (
+                        landingZones.map((val, index) => {
+                          return (
+                            <Grid
+                              item
+                              xl={6}
+                              lg={6}
+                              md={12}
+                              xs={12}
+                              onClick={() =>
+                                this.setState({
+                                  step2FormData: {
+                                    ...this.state.step2FormData,
+                                    selectedChildLandingZone:
+                                      selectedChildLandingZone ===
+                                      val.landingZone
+                                        ? ""
+                                        : val.landingZone,
+                                  },
+                                })
+                              }
+                              key={v4()}
+                            >
+                              <Card
+                                className={`select-landing-card ${
+                                  selectedChildLandingZone === val.landingZone
+                                    ? "active"
+                                    : ""
+                                }`}
+                              >
+                                <Box className="card-content text-center">
+                                  <Box className="card-image">
+                                    <img
+                                      src={
+                                        this.ACCOUNTS_ICON[selectedLandingZone]
+                                      }
+                                      alt=""
+                                    />
+                                  </Box>
+                                  <Box className="card-title">
+                                    Landing-Zone : {val.landingZone}
+                                  </Box>
+                                </Box>
+                                <Box className="card-footer">
+                                  <Box className="footer-left-content">
+                                    <span className="d-block">
+                                      {val.departmentName}
+                                    </span>
+                                    <label className="d-block">
+                                      {" "}
+                                      {val.departmentId}
+                                    </label>
+                                  </Box>
+                                  <Box className="footer-right-content">
+                                    <span className="d-block">Assets</span>
+                                    <label className="d-block text-right">
+                                      {val.totalAssets}
+                                    </label>
+                                  </Box>
+                                </Box>
+                              </Card>
+                            </Grid>
+                          );
+                        })
+                      ) : (
+                        <></>
+                      )}
+                    </Grid>
+                  )}
                 </Box>
               </Box>
               {isSubmit && errors?.landingZone ? (
@@ -610,14 +689,22 @@ class AddDepartment extends Component {
   }
 }
 function mapStateToProps(state) {
-  const { creationDepartment } = state.biMapping;
+  const {
+    creationDepartment,
+    creationDepartmentWithLandingZone,
+    landingZones,
+  } = state.biMapping;
   return {
     creationDepartment,
+    landingZones,
+    creationDepartmentWithLandingZone,
   };
 }
 
 const mapDispatchToProps = {
   createDepartment,
+  getLandingzone,
+  createDepartmentWithLandingZone,
 };
 
 export default connect(
