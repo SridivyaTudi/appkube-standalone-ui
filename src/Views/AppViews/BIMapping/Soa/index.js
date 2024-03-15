@@ -589,9 +589,9 @@ class Soa extends Component {
     } else {
       savedData.push(currentData);
     }
-    console.log(savedData);
+
     if (savedService.other) {
-      this.addBiMappingAPICall(savedData);
+      // this.addBiMappingAPICall(savedData);
     }
     selectedInstance = -1;
     selectedDeployedInstance = "";
@@ -755,9 +755,9 @@ class Soa extends Component {
     });
     let params = {
       org: {
-        id: orgId,
+        id: +orgId,
         dep: {
-          id,
+          id: +id,
           product: {
             name: productName,
             type: "SOA",

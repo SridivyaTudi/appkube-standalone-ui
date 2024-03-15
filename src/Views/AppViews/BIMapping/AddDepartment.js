@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Box, Button, List, ListItem, Grid, Card } from "@mui/material";
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  Grid,
+  Card,
+  FormControlLabel,
+} from "@mui/material";
 import DepartmentBanner from "assets/img/bimapping/department-banner.png";
 import DepartmentBanner1 from "assets/img/bimapping/department-banner1.png";
 import AddIcon from "../../../assets/img/bimapping/add-icon.png";
@@ -10,6 +18,12 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import Checkbox from "@mui/material/Checkbox";
 import { v4 } from "uuid";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { createDepartment } from "Redux/BIMapping/BIMappingThunk";
+import { connect } from "react-redux";
+import { getCurrentOrgId } from "Utils";
+import LoadingButton from "@mui/lab/LoadingButton";
+import status from "Redux/Constants/CommonDS";
+import { ToastMessage } from "Toast/ToastMessage";
 
 class AddDepartment extends Component {
   ACCOUNTS_ICON = {
@@ -41,7 +55,23 @@ class AddDepartment extends Component {
         name: "",
         description: "",
       },
+      isCreateWithoutLandingZone: false,
     };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.creationDepartment.status !==
+        this.props.creationDepartment.status &&
+      this.props.creationDepartment.status === status.SUCCESS
+    ) {
+      if (this.props.creationDepartment?.data) {
+        ToastMessage.success("Department Created Successfully.");
+        this.redirectPage(`${APP_PREFIX_PATH}/bim`);
+      } else {
+        ToastMessage.error("Department Creation  Failed.");
+      }
+    }
   }
 
   // Render Step of the form
@@ -142,7 +172,8 @@ class AddDepartment extends Component {
       activeStep,
       step2FormData: { selectedChildLandingZone, selectedLandingZone },
     } = this.state;
-
+    let departmentStatus =
+      this.props.creationDepartment?.status === status.IN_PROGRESS;
     return (
       <Box
         justifyContent={"center"}
@@ -152,28 +183,20 @@ class AddDepartment extends Component {
           className="primary-outline-btn m-r-2"
           variant="outlined"
           onClick={() => this.setActiveTab()}
+          disabled={departmentStatus}
         >
           Previous
         </Button>
-        <Button
+
+        <LoadingButton
           className="primary-btn"
           variant="contained"
-          onClick={() => {
-            this.setState({ isSubmit: true }, () => {
-              let { isValid } = this.validateSteps();
-              if (isValid) {
-                this.setActiveTab(1);
-              }
-            });
-          }}
-          disabled={
-            activeStep === 1 &&
-            !selectedChildLandingZone &&
-            !selectedLandingZone
-          }
+          onClick={this.onClickNextBtn}
+          disabled={departmentStatus}
+          loading={departmentStatus}
         >
           Next
-        </Button>
+        </LoadingButton>
       </Box>
     );
   };
@@ -181,26 +204,53 @@ class AddDepartment extends Component {
   // set activeTab
   setActiveTab = (isNextStep = 0) => {
     let { activeStep } = this.state;
-    let isRedirectPage =
-      (activeStep === 2 && isNextStep) || (activeStep === 0 && !isNextStep);
-    if (isRedirectPage) {
+
+    if (activeStep === 0 && !isNextStep) {
       this.redirectPage(`${APP_PREFIX_PATH}/bim`);
+    } else if ([1, 2].includes(activeStep) && isNextStep) {
+      let { isValid } = this.validateSteps();
+      if (isValid) {
+        let organizationId = getCurrentOrgId();
+        let { name, description } = this.state.step1FormData;
+        let params = {
+          name,
+          description,
+          organizationId,
+        };
+        this.props.createDepartment(params);
+      }
     }
 
     if (isNextStep) {
-      activeStep++;
+      activeStep = 1;
     } else {
-      activeStep--;
+      activeStep = 0;
     }
 
-    this.setState({ activeStep });
+    this.setState({ activeStep, isSubmit: false });
   };
 
   // Click on the landing zone
   onClickLandingZone(selectedAccount) {
-    let { step2FormData } = this.state;
-    step2FormData.selectedLandingZone = selectedAccount;
-    this.setState({ step2FormData, activeStep: 2 });
+    let { step2FormData, activeStep, isCreateWithoutLandingZone } = this.state;
+    let isSameSelectLandingZone =
+      step2FormData.selectedLandingZone === selectedAccount;
+
+    if (isSameSelectLandingZone) {
+      step2FormData.selectedLandingZone = "";
+    } else {
+      step2FormData.selectedLandingZone = selectedAccount;
+      activeStep = 2;
+    }
+
+    step2FormData.selectedChildLandingZone = "";
+    isCreateWithoutLandingZone = false;
+
+    this.setState({
+      step2FormData,
+      activeStep,
+      isCreateWithoutLandingZone,
+    });
   }
   // Redirect the page
   redirectPage = (redirectUrl) => {
@@ -240,15 +290,12 @@ class AddDepartment extends Component {
 
   // validate all steps
   validateSteps = () => {
-    let { activeStep, step2FormData } = this.state;
+    let { activeStep } = this.state;
 
     if (activeStep === 0) {
       return this.validateStep1();
-    } else if (
-      (activeStep === 1 && step2FormData.selectedLandingZone) ||
-      activeStep === 2
-    ) {
-      return { isValid: true };
+    } else if ([1, 2].includes(activeStep)) {
+      return this.validateStep2();
     }
   };
 
@@ -257,7 +304,10 @@ class AddDepartment extends Component {
     const {
       step2FormData: { selectedLandingZone, selectedChildLandingZone },
       activeStep,
+      isCreateWithoutLandingZone,
+      isSubmit,
     } = this.state;
+    let { errors } = this.validateSteps();
     return (
       <Box className="basic-information-section">
         <Box className="basic-information">
@@ -328,7 +378,12 @@ class AddDepartment extends Component {
               </ListItem>
             </List>
           </Box>
-          {activeStep === 2 ? (
+          {isSubmit && errors?.associateLandingZone ? (
+            <span className="red">{errors.associateLandingZone}</span>
+          ) : (
+            ""
+          )}
+          {selectedLandingZone && !isCreateWithoutLandingZone ? (
             <Box className="select-landing-section">
               <Box className="landing-head">
                 <span>Select Landing zone</span>
@@ -358,7 +413,10 @@ class AddDepartment extends Component {
                             this.setState({
                               step2FormData: {
                                 ...this.state.step2FormData,
-                                selectedChildLandingZone: index,
+                                selectedChildLandingZone:
+                                  selectedChildLandingZone === index
+                                    ? ""
+                                    : index,
                               },
                             })
                           }
@@ -399,15 +457,84 @@ class AddDepartment extends Component {
                   </Grid>
                 </Box>
               </Box>
+              {isSubmit && errors?.landingZone ? (
+                <span className="red">{errors.landingZone}</span>
+              ) : (
+                ""
+              )}
             </Box>
           ) : (
             <></>
           )}
+          <Box className="landing-head">
+            <span>
+              <FormControlLabel
+                label="Create without landing-zone"
+                control={
+                  <Checkbox
+                    className="check-box"
+                    size="small"
+                    checked={isCreateWithoutLandingZone}
+                    onClick={this.onClickCheckBox}
+                  />
+                }
+              />
+            </span>
+          </Box>
         </Box>
       </Box>
     );
   };
 
+  onClickCheckBox = (e) => {
+    let { id, checked } = e.target;
+    let { isCreateWithoutLandingZone, step2FormData } = this.state;
+    if (checked) {
+      isCreateWithoutLandingZone = true;
+      step2FormData.selectedLandingZone = "";
+      step2FormData.selectedChildLandingZone = "";
+    } else {
+      isCreateWithoutLandingZone = false;
+    }
+
+    this.setState({ isCreateWithoutLandingZone, step2FormData });
+  };
+
+  onClickNextBtn = () => {
+    this.setState({ isSubmit: true }, () => {
+      let { isValid } = this.validateSteps();
+      if (isValid) {
+        this.setActiveTab(1);
+      }
+    });
+  };
+
+  validateStep2 = () => {
+    let { step2FormData, isSubmit, isCreateWithoutLandingZone } = this.state;
+    let isValid = true;
+    let errors = {
+      associateLandingZone: "",
+      landingZone: "",
+    };
+
+    if (isSubmit && !isCreateWithoutLandingZone) {
+      if (!step2FormData.selectedLandingZone) {
+        errors.associateLandingZone =
+          "Please select the associate landing-zone.";
+        isValid = false;
+      } else {
+        errors.associateLandingZone = "";
+      }
+
+      if (!step2FormData.selectedChildLandingZone) {
+        errors.landingZone = "Please select the  landing-zone.";
+        isValid = false;
+      } else {
+        errors.landingZone = "";
+      }
+    }
+    return { isValid, errors };
+  };
   render() {
     const { activeStep } = this.state;
     const { STEP1, STEP2, STEP3 } = this.steps;
@@ -454,11 +581,6 @@ class AddDepartment extends Component {
                 >
                   <span>step 2</span>
                 </ListItem>
-                <ListItem
-                  className={[STEP3].includes(activeStep) ? "active" : ""}
-                >
-                  <span>step 3</span>
-                </ListItem>
               </List>
 
               {/* <form onSubmit={this.setActiveStep}> */}
@@ -487,4 +609,18 @@ class AddDepartment extends Component {
     );
   }
 }
-export default navigateRouter(AddDepartment);
+function mapStateToProps(state) {
+  const { creationDepartment } = state.biMapping;
+  return {
+    creationDepartment,
+  };
+}
+
+const mapDispatchToProps = {
+  createDepartment,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(AddDepartment));

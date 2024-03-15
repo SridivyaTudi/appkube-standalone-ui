@@ -57,6 +57,7 @@ const config = {
   GET_CLOUD_SERVICES: `/cloud-service/search?status=active`,
   GET_INSTANCES_SERVICES: `/cloud-element/search?cloud=#cloud-name#&elementType=#element-type#`,
   ADD_BI_MAPPING: `/bi-mapping/add`,
+  ADD_DEPARTMENT: `department`,
 };
 
 export default config;

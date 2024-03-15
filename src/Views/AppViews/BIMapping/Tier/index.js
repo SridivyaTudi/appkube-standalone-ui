@@ -657,9 +657,9 @@ class Tier extends Component {
     } = this.props;
     let params = {
       org: {
-        id: orgId,
+        id: +orgId,
         dep: {
-          id,
+          id: +id,
           product: {
             name: productName,
             type: "3 tier",
@@ -703,7 +703,7 @@ class Tier extends Component {
 
     this.props.createBiMapping(params);
   };
-  
+
   // Render heading
   renderHeading = () => {
     let { name, id } = this.getUrlDetails();

@@ -100,3 +100,16 @@ export const createBiMapping = createAsyncThunk(
     }
   }
 );
+
+export const createDepartment = createAsyncThunk(
+  "BIMapping/createDepartment",
+  async (params) => {
+    try {
+      let url = config.ADD_DEPARTMENT;
+      const response = await postLoginService.post(url, params);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
