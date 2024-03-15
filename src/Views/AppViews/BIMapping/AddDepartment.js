@@ -170,20 +170,24 @@ class AddDepartment extends Component {
   renderBtns = () => {
     let {
       activeStep,
-      step2FormData: { selectedChildLandingZone, selectedLandingZone },
+      step2FormData: { selectedChildLandingZone, selectedLandingZone }
     } = this.state;
     let departmentStatus =
       this.props.creationDepartment?.status === status.IN_PROGRESS;
     return (
       <Box>
-        <Box className="landing-zone-check-box d-block">
-          <Checkbox
-            className="check-box"
-            size="small"
-            //checked={isCreateWithoutLandingZone}
-            onClick={this.onClickCheckBox}
+        <Box className="landing-zone-check-box d-block m-t-1">
+          <FormControlLabel
+            label="Create without landing-zone"
+            control={
+              <Checkbox
+                className="check-box"
+                size="small"
+                //checked={isCreateWithoutLandingZone}
+                onClick={this.onClickCheckBox}
+              />
+            }
           />
-          <label>Create without landing-zone</label>
         </Box>
         <Box
           justifyContent={"center"}
@@ -399,7 +403,7 @@ class AddDepartment extends Component {
               <Box className="landing-head">
                 <span>Select Landing zone</span>
                 <span>
-                  <Checkbox  className="check-box" size="small" />
+                  <Checkbox className="check-box" size="small" />
                   Include associated LZ
                 </span>
               </Box>

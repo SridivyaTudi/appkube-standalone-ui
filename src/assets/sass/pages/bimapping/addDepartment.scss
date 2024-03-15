@@ -522,14 +522,18 @@
             }
           }
         }
-        .landing-zone-check-box{
-          label{
-            font-size: 12px;
-            line-height: 16px;
-            font-weight: 400;
-            color: #000000;
+        .landing-zone-check-box {
+          display: block;
+          width: 100%;
+          label {
+            span {
+              font-size: 12px;
+              line-height: 16px;
+              font-weight: 400;
+              color: #000000;
+            }
           }
-          .check-box{
+          .check-box {
             padding: 5px;
           }
         }
