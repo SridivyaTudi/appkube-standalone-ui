@@ -493,86 +493,93 @@ class AddDepartment extends Component {
                   {landingZoneLoder ? (
                     this.renderLoder()
                   ) : (
-                    <Grid
-                      container
-                      rowSpacing={1.5}
-                      columnSpacing={{ xs: 1.5 }}
-                      alignItems={"center"}
-                      className="p-b-10"
-                    >
-                      {landingZones?.length ? (
-                        landingZones.map((val, index) => {
-                          return (
-                            <Grid
-                              item
-                              xl={6}
-                              lg={6}
-                              md={12}
-                              xs={12}
-                              onClick={() =>
-                                this.setState({
-                                  step2FormData: {
-                                    ...this.state.step2FormData,
-                                    selectedChildLandingZone:
-                                      selectedChildLandingZone === val.id
-                                        ? ""
-                                        : val.id,
-                                  },
-                                })
-                              }
-                              key={v4()}
-                            >
-                              <Card
-                                className={`select-landing-card ${
-                                  selectedChildLandingZone === val.id
-                                    ? "active"
-                                    : ""
-                                }`}
+                    <>
+                      <Grid
+                        container
+                        rowSpacing={1.5}
+                        columnSpacing={{ xs: 1.5 }}
+                        alignItems={"center"}
+                        className="p-b-10"
+                      >
+                        {landingZones?.length ? (
+                          landingZones.map((val, index) => {
+                            return (
+                              <Grid
+                                item
+                                xl={6}
+                                lg={6}
+                                md={12}
+                                xs={12}
+                                onClick={() =>
+                                  this.setState({
+                                    step2FormData: {
+                                      ...this.state.step2FormData,
+                                      selectedChildLandingZone:
+                                        selectedChildLandingZone === val.id
+                                          ? ""
+                                          : val.id,
+                                    },
+                                  })
+                                }
+                                key={v4()}
                               >
-                                <Box className="card-content text-center">
-                                  <Box className="card-image">
-                                    <img
-                                      src={
-                                        this.ACCOUNTS_ICON[selectedLandingZone]
-                                      }
-                                      alt=""
-                                    />
+                                <Card
+                                  className={`select-landing-card ${
+                                    selectedChildLandingZone === val.id
+                                      ? "active"
+                                      : ""
+                                  }`}
+                                >
+                                  <Box className="card-content text-center">
+                                    <Box className="card-image">
+                                      <img
+                                        src={
+                                          this.ACCOUNTS_ICON[
+                                            selectedLandingZone
+                                          ]
+                                        }
+                                        alt=""
+                                      />
+                                    </Box>
+                                    <Box className="card-title">
+                                      Landing-Zone : {val.landingZone}
+                                    </Box>
                                   </Box>
-                                  <Box className="card-title">
-                                    Landing-Zone : {val.landingZone}
+                                  <Box className="card-footer">
+                                    <Box className="footer-left-content">
+                                      <span className="d-block">
+                                        {val.departmentName}
+                                      </span>
+                                      <label className="d-block">
+                                        {" "}
+                                        {val.departmentId}
+                                      </label>
+                                    </Box>
+                                    <Box className="footer-right-content">
+                                      <span className="d-block">Assets</span>
+                                      <label className="d-block text-right">
+                                        {val.totalAssets}
+                                      </label>
+                                    </Box>
                                   </Box>
-                                </Box>
-                                <Box className="card-footer">
-                                  <Box className="footer-left-content">
-                                    <span className="d-block">
-                                      {val.departmentName}
-                                    </span>
-                                    <label className="d-block">
-                                      {" "}
-                                      {val.departmentId}
-                                    </label>
-                                  </Box>
-                                  <Box className="footer-right-content">
-                                    <span className="d-block">Assets</span>
-                                    <label className="d-block text-right">
-                                      {val.totalAssets}
-                                    </label>
-                                  </Box>
-                                </Box>
-                              </Card>
-                            </Grid>
-                          );
-                        })
+                                </Card>
+                              </Grid>
+                            );
+                          })
+                        ) : (
+                          <></>
+                        )}
+                      </Grid>
+                      {landingZones.length ? (
+                        <></>
                       ) : (
-                        <Box className="d-blck text-center w-100 h-100 ">
-                          <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-                            <h5 className="m-t-0 m-b-0">
-                              There are no data available.
-                            </h5>
-                          </Box>
+                        <Box className="environment-loader text-center  align-item-center justify-center p-t-20 p-b-20 ">
+                          <h5 className="m-t-0 m-b-0">
+                            There are no data available.
+                          </h5>
                         </Box>
                       )}
-                    </Grid>
+                    </>
                   )}
                 </Box>
               </Box>
