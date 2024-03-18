@@ -20,16 +20,16 @@
           "name": "Environments"
         },
         {
+          "link": "/discovered-assets",
+          "name": "Discovered Assets"
+        },
+        {
           "link": "#",
           "name": "Dept Wise Product"
         },
         {
           "link": "#",
           "name": "All Service"
-        },
-        {
-          "link": "/discovered-assets",
-          "name": "Discovered Assets"
         },
         {
           "link": "#",

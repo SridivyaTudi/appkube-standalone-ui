@@ -31,10 +31,16 @@
       width: 100%;
       padding: 20px 20px;
       position: relative;
+      h4{
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
       .topology-inner-content {
         display: flex;
         align-items: flex-end;
         justify-content: flex-start;
+        margin-top: 10px;
         .content-left {
           ul {
             display: block;
@@ -788,22 +794,3 @@
     }
   }
 }
-// @media (max-width: 1024px) {
-//   .tier-container {
-//     .topology-panel {
-//       .topology-panel-body {
-//         .topology-inner-content {
-//           width: 100%;
-//           overflow: auto;
-//           padding: 15px 0;
-//           .content-middle {
-//             ul {
-//               display: block;
-//               padding: 0;
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
