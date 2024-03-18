@@ -319,10 +319,10 @@ class Soa extends Component {
 
   // Render Deployed cards
   renderDeployedInstances = () => {
-    let { deployedInstances, selectedDeployedInstance } = this.state;
+    let {deployedInstances, selectedDeployedInstance } = this.state;
     let cloudStatus = this.props.cloudServices?.status;
     if (cloudStatus === status.IN_PROGRESS) {
-      return this.renderLoder("instance-cards-loder");
+      return this.renderLoder("deployed-cards-loader");
     } else {
       if (deployedInstances?.length) {
         return deployedInstances.map((instance) => {
