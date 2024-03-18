@@ -446,7 +446,7 @@ class ProductCategory extends Component {
         </Box>
         {createProductFormData?.soaData?.length ? (
           <Grid item xs={4}>
-            <Box className="d-block text-center">
+            <Box className="d-block text-center m-t-4">
               <LoadingButton
                 className={` primary-btn min-width-inherit`}
                 variant="contained"
