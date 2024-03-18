@@ -507,7 +507,7 @@ class AddDepartment extends Component {
                                 item
                                 xl={6}
                                 lg={6}
-                                md={12}
+                                md={6}
                                 xs={12}
                                 onClick={() =>
                                   this.setState({
@@ -555,7 +555,7 @@ class AddDepartment extends Component {
                                       </label>
                                     </Box>
                                     <Box className="footer-right-content">
-                                      <span className="d-block">Assets</span>
+                                      <span className="d-block text-right">Assets</span>
                                       <label className="d-block text-right">
                                         {val.totalAssets}
                                       </label>

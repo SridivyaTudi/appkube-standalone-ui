@@ -425,10 +425,17 @@
                         justify-content: space-between;
 
                         .footer-left-content {
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          width: 70%;
                           span {
                             font-size: 10px;
                             line-height: 14px;
                             color: #535362;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                           }
 
                           label {
@@ -436,14 +443,24 @@
                             line-height: 14px;
                             font-weight: 500;
                             color: #00b929;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                           }
                         }
 
                         .footer-right-content {
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          width: 30%;
                           span {
                             font-size: 10px;
                             line-height: 14px;
                             color: #535362;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                           }
 
                           label {
@@ -451,6 +468,9 @@
                             line-height: 14px;
                             font-weight: 500;
                             color: #000000;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                           }
                         }
                       }
@@ -546,6 +566,7 @@
   .department-container {
     .department-left {
       .department-left-content {
+       
         span {
           margin-top: 10px;
         }
@@ -553,6 +574,7 @@
     }
     .department-right {
       .department-right-content {
+        width: 85%;
         .create-department-content {
           .wizard-step-button {
             .primary-outline-btn {
