@@ -220,7 +220,7 @@ class AddDepartment extends Component {
     return (
       <Box>
         {activeStep !== 0 ? (
-          <Box className="landing-zone-check-box d-block m-t-1">
+          <Box className="landing-zone-check-box d-block m-t-1 p-l-5">
             <FormControlLabel
               label="Create without landing-zone"
               control={
@@ -238,7 +238,6 @@ class AddDepartment extends Component {
         )}
 
         <Box
-          justifyContent={"center"}
           className="d-flex align-items-center wizard-step-button m-t-2"
         >
           <Button
