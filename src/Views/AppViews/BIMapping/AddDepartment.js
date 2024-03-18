@@ -103,6 +103,12 @@ class AddDepartment extends Component {
       this.props.landingZones?.data
     ) {
       let landingZones = this.props.landingZones?.data || [];
+
+      landingZones = landingZones.filter(
+        (landingZone) =>
+          landingZone.departmentId === null &&
+          landingZone.departmentName === null
+      );
       this.setState({ landingZones });
     }
   }
@@ -269,7 +275,7 @@ class AddDepartment extends Component {
       if (isValid) {
         let { name: departmentName, description: departmentDescription } =
           this.state.step1FormData;
-        let { step2FormData } = this.state;
+        let { step2FormData, landingZones } = this.state;
         if (isCreateWithoutLandingZone) {
           let params = {
             name: departmentName,
@@ -277,11 +283,14 @@ class AddDepartment extends Component {
           };
           this.props.createDepartment(params);
         } else {
+          let landingZone = landingZones.find(
+            (landing) => landing.id === step2FormData.selectedChildLandingZone
+          ).landingZone;
           let params = {
             departmentName,
             departmentDescription,
-            organizationId: +this.user.cmdbOrgId,
-            landingZone: [step2FormData.selectedChildLandingZone],
+            orgId: +this.user.cmdbOrgId,
+            landingZone: [landingZone],
           };
           this.props.createDepartmentWithLandingZone(params);
         }
@@ -555,7 +564,13 @@ class AddDepartment extends Component {
                           );
                         })
                       ) : (
-                        <></>
+                        <Box className="d-blck text-center w-100 h-100 ">
+                          <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+                            <h5 className="m-t-0 m-b-0">
+                              There are no data available.
+                            </h5>
+                          </Box>
+                        </Box>
                       )}
                     </Grid>
                   )}
@@ -596,11 +611,16 @@ class AddDepartment extends Component {
         isCreateWithoutLandingZone = true;
         step2FormData.selectedLandingZone = "";
         step2FormData.selectedChildLandingZone = "";
-        isIncludeLandingZone = false
+        isIncludeLandingZone = false;
       }
     } else {
       if (isIncludeLandingZoneAction) {
-        landingZones = this.props.landingZones?.data || [];
+        let landingZonesData = this.props.landingZones?.data || [];
+        landingZones = landingZonesData.filter(
+          (landingZone) =>
+            landingZone.departmentId === null &&
+            landingZone.departmentName === null
+        );
         isIncludeLandingZone = false;
       } else {
         isCreateWithoutLandingZone = false;
