@@ -566,7 +566,6 @@
   .department-container {
     .department-left {
       .department-left-content {
-       
         span {
           margin-top: 10px;
         }
@@ -627,6 +626,24 @@
             }
             .primary-btn {
               min-width: 100px;
+            }
+          }
+          .create-department-inner-content {
+            .basic-information-section {
+              .information-form {
+                .select-landing-section {
+                  .landing-head {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    label{
+                      margin-left: 0;
+                      margin-top: 5px;
+                    }
+                  }
+                }
+              }
             }
           }
         }
