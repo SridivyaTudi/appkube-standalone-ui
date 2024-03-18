@@ -238,7 +238,7 @@ class Tier extends Component {
       this.props.creationBiMapping.status === status.SUCCESS
     ) {
       if (this.props.creationBiMapping?.data) {
-        console.log("sucee");
+       
         let response = this.props.creationBiMapping?.data;
         if (response) {
           ToastMessage.success("Product added in department.");

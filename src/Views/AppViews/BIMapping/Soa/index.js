@@ -319,7 +319,7 @@ class Soa extends Component {
 
   // Render Deployed cards
   renderDeployedInstances = () => {
-    let {deployedInstances, selectedDeployedInstance } = this.state;
+    let { deployedInstances, selectedDeployedInstance } = this.state;
     let cloudStatus = this.props.cloudServices?.status;
     if (cloudStatus === status.IN_PROGRESS) {
       return this.renderLoder("deployed-cards-loader");
@@ -373,6 +373,7 @@ class Soa extends Component {
   renderSelectedInstance = () => {
     let { selectedInstance, instancesServices } = this.state;
     let instanceStatus = this.props.instancesServices?.status;
+
     if (instanceStatus === status.IN_PROGRESS) {
       return this.renderLoder("instance-cards-loder");
     } else {
@@ -532,10 +533,23 @@ class Soa extends Component {
   // Redux data view
   previousDataView = () => {
     let { createProductFormData } = this.props;
-    if (createProductFormData["soaData"]) {
+
+    let editId = createProductFormData["editServiceId"];
+    let soaData = createProductFormData["soaData"];
+
+    if (["search", "security"].includes(editId)) {
+      soaData.forEach((soa, index) => {
+        if (soa.currentCommonService === editId) {
+          editId = index;
+        }
+      });
+    }
+
+    if (editId >= 0 && soaData[editId]?.values) {
       try {
         let { savedService, savedData, selectedService, selectedServiceData } =
-          createProductFormData["soaData"];
+          soaData[editId]?.values;
+
         this.setState({
           savedService: JSON.parse(JSON.stringify(savedService)),
           savedData: JSON.parse(JSON.stringify(savedData)),
@@ -625,13 +639,39 @@ class Soa extends Component {
       let soaData = JSON.parse(
         JSON.stringify(createProductFormData.soaData || [])
       );
-      if (soaData.length) {
-        soaData.push({
-          module: "module " + (soaData.length + 1),
-          values: appendSoaData,
+      let editId = createProductFormData["editServiceId"];
+      if (["search", "security"].includes(editId)) {
+        soaData.forEach((soa, index) => {
+          if (soa.currentCommonService === editId) {
+            editId = index;
+          }
         });
+      }
+
+      let currentCommonService =
+        createProductFormData.serviceType === "common"
+          ? createProductFormData.currentCommonService
+          : "";
+      if (editStatus && editId >= 0) {
+        soaData[editId].values = appendSoaData;
       } else {
-        soaData = [{ module: "module 1", values: appendSoaData }];
+        if (soaData.length) {
+          soaData.push({
+            module: "module " + (soaData.length + 1),
+            values: appendSoaData,
+            service: createProductFormData.serviceType,
+            currentCommonService,
+          });
+        } else {
+          soaData = [
+            {
+              module: "module 1",
+              values: appendSoaData,
+              service: createProductFormData.serviceType,
+              currentCommonService,
+            },
+          ];
+        }
       }
 
       let passData = JSON.parse(
@@ -639,6 +679,7 @@ class Soa extends Component {
           ...createProductFormData,
           soaData,
           "3_tierData": null,
+          currentCommonService:''
         })
       );
       this.props.setProductIntoDepartment(passData);
@@ -668,7 +709,7 @@ class Soa extends Component {
 
   // Click on edit btn.
   onClickEditBtn = (serviceName) => {
-    let { savedData, savedService } = this.state;
+    let { savedData, savedService, activeServiceCategory } = this.state;
     let findSaveData = savedData.find(
       (data) => data.serviceName === serviceName
     );
@@ -683,6 +724,11 @@ class Soa extends Component {
         managementInfo,
         configInfo,
       } = findSaveData;
+      this.props.getCloudServices({
+        serviceCategory: serviceName,
+        productCategory: PRODUCT_CATEGORY_ENUM.SOA,
+      });
+      activeServiceCategory = serviceName;
       this.props.getInstancesServices({ cloudName, elementType });
 
       Object.keys(savedService).forEach((key) => {
@@ -707,6 +753,7 @@ class Soa extends Component {
         isShowDepolyedSection: true,
         managementInfo,
         configInfo,
+        activeServiceCategory,
       });
     }
   };
@@ -1180,6 +1227,7 @@ class Soa extends Component {
       createProductFormData,
       creationBiMapping,
     } = this.props;
+    console.log(createProductFormData)
     return (
       <Box className="bimapping-container">
         {this.renderHeading()}
