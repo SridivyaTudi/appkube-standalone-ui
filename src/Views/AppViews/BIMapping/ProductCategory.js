@@ -195,7 +195,7 @@ class ProductCategory extends Component {
                   </Box>
                   <Box
                     className="product-category-details"
-                    onClick={() => this.handleServiceModal()}
+                    // onClick={() => this.handleServiceModal()}
                   >
                     <Box className="product-image">
                       <img src={searchIcon} alt="" />
@@ -203,6 +203,7 @@ class ProductCategory extends Component {
                     <span className="d-block name">Search</span>
                   </Box>
                 </Box>
+
                 <Box className="product-category-card">
                   <Box className="d-flex icon-buttons">
                     <IconButton className="edit-icon">
@@ -214,31 +215,12 @@ class ProductCategory extends Component {
                   </Box>
                   <Box
                     className="product-category-details"
-                    onClick={() => this.handleServiceModal()}
-                  >
-                    <Box className="product-image">
-                      <img src={filterIcon} alt="" />
-                    </Box>
-                    <span className="d-block name">Filter</span>
-                  </Box>
-                </Box>
-                <Box className="product-category-card">
-                  <Box className="d-flex icon-buttons">
-                    <IconButton className="edit-icon">
-                      <i class="fas fa-edit"></i>
-                    </IconButton>
-                    <IconButton className="close-icon">
-                      <i class="fas fa-close"></i>
-                    </IconButton>
-                  </Box>
-                  <Box
-                    className="product-category-details"
-                    onClick={() => this.handleServiceModal()}
+                    // onClick={() => this.handleServiceModal()}
                   >
                     <Box className="product-image">
                       <img src={rbacIcon} alt="" />
                     </Box>
-                    <span className="d-block name">RBAC</span>
+                    <span className="d-block name">Security</span>
                   </Box>
                 </Box>
               </Box>

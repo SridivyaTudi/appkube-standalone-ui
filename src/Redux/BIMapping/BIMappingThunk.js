@@ -60,9 +60,13 @@ export const getBiServicesFromProductCategory = createAsyncThunk(
 
 export const getCloudServices = createAsyncThunk(
   "BIMapping/getCloudServices",
-  async () => {
+  async (params) => {
     try {
-      let url = config.GET_CLOUD_SERVICES;
+      let { serviceCategory, productCategory } = params;
+      let url = config.GET_CLOUD_SERVICES.replace(
+        "#product-category#",
+        productCategory
+      ).replace("#service-category#", serviceCategory);
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {

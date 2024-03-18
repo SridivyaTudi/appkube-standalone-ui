@@ -152,8 +152,6 @@ class Soa extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentActiveNode: "",
-      activeLayer: "",
       isSelectSpringBootOpen: false,
       isSelectMySQLOpen: false,
       isSelectRedisOpen: false,
@@ -188,12 +186,12 @@ class Soa extends Component {
       configInfo: [],
       managementInfo: [],
       tempSoaData: [],
+      activeServiceCategory: "",
     };
   }
 
   componentDidMount = () => {
     window.addEventListener("load", this.redirectPage);
-    this.props.getCloudServices();
     this.props.getBiServicesFromProductCategory({
       productCategory: PRODUCT_CATEGORY_ENUM.SOA,
     });
@@ -324,7 +322,7 @@ class Soa extends Component {
     let { deployedInstances, selectedDeployedInstance } = this.state;
     let cloudStatus = this.props.cloudServices?.status;
     if (cloudStatus === status.IN_PROGRESS) {
-      return this.renderLoder();
+      return this.renderLoder("instance-cards-loder");
     } else {
       if (deployedInstances?.length) {
         return deployedInstances.map((instance) => {
@@ -442,8 +440,16 @@ class Soa extends Component {
 
   // Click on service dropdown.
   onClickServiceDropDown = (key, value) => {
-    let { selectedServiceData } = this.state;
+    let { selectedServiceData, activeServiceCategory } = this.state;
     selectedServiceData[key] = value;
+
+    if (activeServiceCategory !== key) {
+      this.props.getCloudServices({
+        serviceCategory: key,
+        productCategory: PRODUCT_CATEGORY_ENUM.SOA,
+      });
+      activeServiceCategory = key;
+    }
 
     this.setState({
       selectedServiceData,
@@ -451,6 +457,7 @@ class Soa extends Component {
       isSelectSpringBootOpen: false,
       isSelectMySQLOpen: false,
       isSelectRedisOpen: false,
+      activeServiceCategory,
     });
   };
 

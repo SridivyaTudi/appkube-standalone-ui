@@ -123,8 +123,6 @@ class Tier extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentActiveNode: "",
-      activeLayer: "",
       isSelectNginxOpen: false,
       isSelectSpringBootOpen: false,
       isSelectMySQLOpen: false,
@@ -163,12 +161,12 @@ class Tier extends Component {
       editStatus: false,
       managementInfo: [],
       configInfo: [],
+      activeServiceCategory: "",
     };
   }
 
   componentDidMount = () => {
     window.addEventListener("load", this.redirectPage);
-    this.props.getCloudServices();
     this.props.getBiServicesFromProductCategory({
       productCategory: PRODUCT_CATEGORY_ENUM.THREE_TIER,
     });
@@ -462,8 +460,16 @@ class Tier extends Component {
 
   // Click on layer drop down
   onClickLayerDropDown = (key, value) => {
-    let { selectedLayer } = this.state;
+    let { selectedLayer, activeServiceCategory } = this.state;
     selectedLayer[key] = value;
+
+    if (activeServiceCategory !== key) {
+      this.props.getCloudServices({
+        serviceCategory: key,
+        productCategory: PRODUCT_CATEGORY_ENUM.THREE_TIER,
+      });
+      activeServiceCategory = key;
+    }
 
     this.setState({
       selectedLayer,
@@ -475,6 +481,7 @@ class Tier extends Component {
       selectedDeployedInstance: "",
       selectedInstance: -1,
       cloudElementType: "",
+      activeServiceCategory,
     });
   };
 
