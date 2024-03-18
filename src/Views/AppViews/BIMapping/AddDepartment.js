@@ -55,6 +55,7 @@ class AddDepartment extends Component {
       step2FormData: {
         selectedLandingZone: "",
         selectedChildLandingZone: "",
+        isIncludeLandingZone: false,
       },
       step1FormData: {
         name: "",
@@ -384,6 +385,7 @@ class AddDepartment extends Component {
       isCreateWithoutLandingZone,
       isSubmit,
       landingZones,
+      isIncludeLandingZone,
     } = this.state;
     let landingZoneLoder =
       this.props.landingZones.status === status.IN_PROGRESS;
@@ -464,8 +466,17 @@ class AddDepartment extends Component {
               <Box className="landing-head">
                 <span>Select Landing zone</span>
                 <span>
-                  <Checkbox className="check-box" size="small" />
-                  Include associated LZ
+                  <FormControlLabel
+                    label="Include associated LZ"
+                    control={
+                      <Checkbox
+                        className="check-box"
+                        size="small"
+                        checked={isIncludeLandingZone}
+                        onClick={(e) => this.onClickCheckBox(e, 1)}
+                      />
+                    }
+                  />
                 </span>
               </Box>
               <Box className="select-card-section">
@@ -494,10 +505,9 @@ class AddDepartment extends Component {
                                   step2FormData: {
                                     ...this.state.step2FormData,
                                     selectedChildLandingZone:
-                                      selectedChildLandingZone ===
-                                      val.landingZone
+                                      selectedChildLandingZone === val.id
                                         ? ""
-                                        : val.landingZone,
+                                        : val.id,
                                   },
                                 })
                               }
@@ -505,7 +515,7 @@ class AddDepartment extends Component {
                             >
                               <Card
                                 className={`select-landing-card ${
-                                  selectedChildLandingZone === val.landingZone
+                                  selectedChildLandingZone === val.id
                                     ? "active"
                                     : ""
                                 }`}
@@ -565,18 +575,44 @@ class AddDepartment extends Component {
     );
   };
 
-  onClickCheckBox = (e) => {
+  onClickCheckBox = (e, isIncludeLandingZoneAction = 0) => {
     let { id, checked } = e.target;
-    let { isCreateWithoutLandingZone, step2FormData } = this.state;
+    let {
+      isCreateWithoutLandingZone,
+      step2FormData,
+      isIncludeLandingZone,
+      landingZones,
+    } = this.state;
     if (checked) {
-      isCreateWithoutLandingZone = true;
-      step2FormData.selectedLandingZone = "";
-      step2FormData.selectedChildLandingZone = "";
+      if (isIncludeLandingZoneAction) {
+        let landingZonesData = this.props.landingZones?.data || [];
+        landingZones = landingZonesData.filter(
+          (landingZone) =>
+            landingZone.departmentId !== null &&
+            landingZone.departmentName !== null
+        );
+        isIncludeLandingZone = true;
+      } else {
+        isCreateWithoutLandingZone = true;
+        step2FormData.selectedLandingZone = "";
+        step2FormData.selectedChildLandingZone = "";
+        isIncludeLandingZone = false
+      }
     } else {
-      isCreateWithoutLandingZone = false;
+      if (isIncludeLandingZoneAction) {
+        landingZones = this.props.landingZones?.data || [];
+        isIncludeLandingZone = false;
+      } else {
+        isCreateWithoutLandingZone = false;
+      }
     }
 
-    this.setState({ isCreateWithoutLandingZone, step2FormData });
+    this.setState({
+      isCreateWithoutLandingZone,
+      step2FormData,
+      isIncludeLandingZone,
+      landingZones,
+    });
   };
 
   onClickNextBtn = () => {
