@@ -157,7 +157,7 @@ class AssetsMainFilterModal extends Component {
     return data.length ? (
       data.map((fillterData, index) => {
         return (
-          <Grid item lg={4} md={3} xs={12} key={v4()}>
+          <Grid item xs={12} sm={6}   md={6}  lg={4} key={v4()}>
             <Box className="environment-fliter">
               <Box
                 className="fliter-toggel new-environment"
