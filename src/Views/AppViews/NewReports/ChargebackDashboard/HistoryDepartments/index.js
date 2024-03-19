@@ -43,12 +43,14 @@ class HistoryDepartments extends Component {
             Chargeback Dashboard
           </h3>
           <Box className="d-flex align-items-center">
+          <Link to={`/app/new-reports/chargeback-dashboard/create-invoice`}>
             <Button
               variant="outlined"
               className="primary-outline-btn min-width-inherit m-r-3 p-l-15 p-r-15"
             >
               View
             </Button>
+            </Link>
             <Link to={`/app/new-reports/chargeback-dashboard`}>
               <Button className="primary-btn min-width-inherit m-r-3 p-l-15 p-r-15">
                 Home

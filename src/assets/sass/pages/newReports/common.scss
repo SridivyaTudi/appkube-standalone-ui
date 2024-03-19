@@ -214,6 +214,9 @@
 @media only screen and (max-width: 767px) {
   .table-head {
     flex-wrap: wrap;
+    .check-box-group{
+      margin-top: 8px;
+    }
     .search {
       margin-top: 20px;
     }

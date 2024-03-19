@@ -22,10 +22,10 @@
     .steper-button {
       //   padding: 0;
       width: 150px;
-      .css-vnkopk-MuiStepLabel-iconContainer{
+      .css-vnkopk-MuiStepLabel-iconContainer {
         padding-right: 0;
       }
-      .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root{
+      .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root {
         width: 1.3em;
         height: 1.3em;
       }
@@ -36,9 +36,9 @@
       .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
         color: #00b929;
       }
-     .css-8je8zh-MuiTouchRipple-root{
-      width: 0;
-     }
+      .css-8je8zh-MuiTouchRipple-root {
+        width: 0;
+      }
     }
 
     .css-j5w0w9-MuiStepConnector-root {
@@ -104,7 +104,7 @@
               width: 100%;
               height: 40px;
               line-height: 40px;
-  
+
               .MuiSelect-select {
                 width: 100%;
                 display: block;
@@ -116,24 +116,24 @@
                 border-color: #d0d5dd;
                 padding: 0 15px;
                 font-style: normal;
-  
+
                 .MuiSelect-nativeInput {
                   height: 36px;
                 }
-  
+
                 em {
                   font-style: normal;
                 }
-  
+
                 &:focus-visible {
                   outline-color: transparent;
                 }
-  
+
                 &:hover {
                   border-color: #d0d5dd;
                 }
               }
-  
+
               .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon {
                 top: calc(54% - 0.5em);
               }
@@ -166,6 +166,29 @@
             }
           }
         }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .create-invoice-container {
+    .stepar-content {
+      .steper-body-content {
+        width: 50%;
+        text-align: center;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 767px) {
+  .create-invoice-container {
+    .stepar-content {
+      .steper-body-content {
+        width: 70%;
+        text-align: center;
+        margin: 0 auto;
       }
     }
   }

@@ -265,8 +265,8 @@ class Compute extends Component {
                 ChartComponent={
                   <DonutChart
                     data={donutData}
-                    width={270}
-                    height={270}
+                    width={250}
+                    height={300}
                     otherData={{
                       centerValue: "$65,690",
                     }}
