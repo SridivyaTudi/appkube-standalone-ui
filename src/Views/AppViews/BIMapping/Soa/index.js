@@ -38,7 +38,6 @@ import {
   PRODUCT_CATEGORY_ENUM,
   SERVICES_CATEGORY_OF_SOA_ENUM,
   ADD_PRODUCT_ENUMS,
-  getCurrentOrgId,
 } from "Utils";
 import { connect } from "react-redux";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -101,8 +100,6 @@ const SERVICES = [
     icon: DataServiceSvgrepo,
   },
 ];
-
-const orgId = getCurrentOrgId();
 class Soa extends Component {
   tabMapping = [
     {
@@ -782,73 +779,6 @@ class Soa extends Component {
     let id = this.props.params.id;
     return { name, id };
   }
-
-  // Add BI-mapping API call
-  addBiMappingAPICall = (savedData) => {
-    let { id } = this.getUrlDetails();
-    let { selectedServiceData } = this.state;
-    let {
-      createProductFormData: {
-        productName,
-        environment,
-        moduleName,
-        serviceType,
-      },
-    } = this.props;
-    let serviceData = savedData.map((service) => {
-      return {
-        name: selectedServiceData[service.serviceName],
-        type: service.serviceName?.toUpperCase(),
-        cloudElementMapping: {
-          id: service.selectedInstance,
-          managementInfo: service.managementInfo
-            .map((management) => {
-              let { isSubValue, key, value } = management;
-              if (!isSubValue) {
-                let formatData = {
-                  key,
-                  value,
-                };
-                return formatData;
-              }
-            })
-            .filter((obj) => obj),
-          configInfo: service.configInfo.map((config) => {
-            let { key, value } = config;
-
-            let formatData = {
-              key,
-              value,
-            };
-            return formatData;
-          }),
-        },
-      };
-    });
-    let params = {
-      org: {
-        id: +orgId,
-        dep: {
-          id: +id,
-          product: {
-            name: productName,
-            type: "SOA",
-            productEnv: {
-              name: environment,
-              module: {
-                name: moduleName,
-                service: {
-                  business: serviceType === "business" ? serviceData : [],
-                  common: serviceType === "common" ? serviceData : [],
-                },
-              },
-            },
-          },
-        },
-      },
-    };
-    this.props.createBiMapping(params);
-  };
 
   // Render heading
   renderHeading = () => {

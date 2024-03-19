@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { Link } from "react-router-dom";
+import { v4 } from "uuid";
 
 export class AccountTable extends Component {
   constructor(props) {
@@ -38,9 +39,7 @@ export class AccountTable extends Component {
       <TableHead>
         <TableRow>
           {headers.map((header, index) => (
-            <TableCell >
-              {header}
-            </TableCell>
+            <TableCell key={v4()}>{header}</TableCell>
           ))}
         </TableRow>
       </TableHead>
@@ -55,8 +54,8 @@ export class AccountTable extends Component {
         {data?.length ? (
           data.map((details) => {
             return (
-              <TableRow>
-                <TableCell >
+              <TableRow key={v4()}>
+                <TableCell>
                   {details.nameImageShow ? details.nameImageShow : <></>}
                   {details.name}
                 </TableCell>
@@ -68,7 +67,7 @@ export class AccountTable extends Component {
                 {this.props?.notShowingField?.includes("orgUnit") ? (
                   <></>
                 ) : (
-                  <TableCell > {details.orgUnit}</TableCell>
+                  <TableCell> {details.orgUnit}</TableCell>
                 )}
 
                 <TableCell>
@@ -88,9 +87,7 @@ export class AccountTable extends Component {
                 </TableCell>
 
                 <TableCell>
-                  <Link
-                    to={`${details.actionUrl || '#'}`}
-                  >
+                  <Link to={`${details.actionUrl || "#"}`}>
                     <Button className="light-btn p-l-15 p-r-15 ">
                       view more <OpenInNewIcon className="p-l-5" />
                     </Button>
