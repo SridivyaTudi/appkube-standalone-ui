@@ -182,7 +182,7 @@ class BudgetAccountDetails extends Component {
           <TableCell align="center">Ondemand cost / hr</TableCell>
           <TableCell>RI cost / hr</TableCell>
           <TableCell align="center">Usage Hours</TableCell>
-          <TableCell>Add-ons</TableCell>
+          <TableCell align="center">Add-ons</TableCell>
           <TableCell align="center">Total Spend</TableCell>
         </TableRow>
       </TableHead>
@@ -211,7 +211,7 @@ class BudgetAccountDetails extends Component {
                 <TableCell align="center">
                   <strong>{consumption.usageHrs}</strong>
                 </TableCell>
-                <TableCell>{consumption.addOns}</TableCell>
+                <TableCell align="center">{consumption.addOns}</TableCell>
                 <TableCell align="center">
                   <strong>{consumption.totalSpend}</strong>
                 </TableCell>
