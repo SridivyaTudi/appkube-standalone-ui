@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button, IconButton, Grid } from "@mui/material";
+import { Box, IconButton, Grid } from "@mui/material";
 import admissionIcon from "assets/img/bimapping/admission.png";
 import searchIcon from "assets/img/bimapping/search.png";
 import rbacIcon from "assets/img/bimapping/rbac.png";
@@ -232,13 +232,11 @@ class ProductCategory extends Component {
   // Click on save button.
   onClickSave = () => {
     let { id } = this.getUrlDetails();
-    let { selectedServiceData } = this.state;
     let {
       createProductFormData: {
         productName,
         environment,
         moduleName,
-        serviceType,
         soaData = [],
       },
     } = this.props;
@@ -264,6 +262,8 @@ class ProductCategory extends Component {
                       value,
                     };
                     return formatData;
+                  } else {
+                    return null;
                   }
                 })
                 .filter((obj) => obj),

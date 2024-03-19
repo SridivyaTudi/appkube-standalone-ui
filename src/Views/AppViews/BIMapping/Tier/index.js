@@ -238,7 +238,6 @@ class Tier extends Component {
       this.props.creationBiMapping.status === status.SUCCESS
     ) {
       if (this.props.creationBiMapping?.data) {
-       
         let response = this.props.creationBiMapping?.data;
         if (response) {
           ToastMessage.success("Product added in department.");
@@ -540,13 +539,15 @@ class Tier extends Component {
 
     if (savedLayer.aux) {
       this.addBiMappingAPICall(savedData);
+    } else {
+      selectedInstance = -1;
+      selectedDeployedInstance = "";
+      selectedService = [];
+      isShowDepolyedSection = false;
+      configInfo = [];
+      managementInfo = [];
     }
-    selectedInstance = -1;
-    selectedDeployedInstance = "";
-    selectedService = [];
-    isShowDepolyedSection = false;
-    configInfo = [];
-    managementInfo = [];
+
     this.setState({
       savedLayer,
       savedData,
@@ -687,6 +688,8 @@ class Tier extends Component {
                             value,
                           };
                           return formatData;
+                        } else {
+                          return null;
                         }
                       })
                       .filter((obj) => obj),

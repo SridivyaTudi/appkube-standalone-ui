@@ -16,7 +16,6 @@ import StatusImg2 from "assets/img/report/status-img2.png";
 import StatusImg3 from "assets/img/report/status-img3.png";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SelectFilterModal from "../../Components/SelectFilterModal";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 class HistoryDepartments extends Component {
   constructor(props) {
     super(props);
