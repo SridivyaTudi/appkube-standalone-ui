@@ -657,7 +657,7 @@ class Soa extends Component {
       } else {
         if (soaData.length) {
           soaData.push({
-            module: "module " + (soaData.length + 1),
+            module: createProductFormData.moduleName,
             values: appendSoaData,
             service: createProductFormData.serviceType,
             currentCommonService,
@@ -665,7 +665,7 @@ class Soa extends Component {
         } else {
           soaData = [
             {
-              module: "module 1",
+              module: createProductFormData.moduleName,
               values: appendSoaData,
               service: createProductFormData.serviceType,
               currentCommonService,
