@@ -283,6 +283,28 @@ class ProductCategory extends Component {
 
     this.props.createBiMapping(params);
   };
+
+  onClickCommonService = (service) => {
+    let { createProductFormData } = this.props;
+    let { activeCommonService } = this.state;
+    let currentCommonService = "";
+
+    if (!activeCommonService.includes(service)) {
+      currentCommonService = service;
+      activeCommonService = [service];
+    } else {
+      currentCommonService = "";
+      activeCommonService = [];
+    }
+    this.props.setProductIntoDepartment({
+      ...createProductFormData,
+      currentCommonService,
+    });
+    console.log(activeCommonService);
+    this.setState({
+      activeCommonService,
+    });
+  };
   render() {
     const { showServiceModal, activeCommonService } = this.state;
     let { createProductFormData, creationBiMapping } = this.props;
@@ -356,7 +378,10 @@ class ProductCategory extends Component {
               <Box className="product-category-inner">
                 <Box
                   className={`product-category-card ${
-                    this.isCommonServiceAdded(["search"]) ? "active" : ""
+                    this.isCommonServiceAdded(["search"]) ||
+                    activeCommonService.includes("search")
+                      ? "active"
+                      : ""
                   }`}
                 >
                   <Box className="d-flex icon-buttons">
@@ -375,21 +400,7 @@ class ProductCategory extends Component {
                   </Box>
                   <Box
                     className="product-category-details"
-                    onClick={() => {
-                      let service = activeCommonService;
-                      if (!activeCommonService.includes("search")) {
-                        service.push("search");
-                        let { createProductFormData } = this.props;
-                        this.props.setProductIntoDepartment({
-                          ...createProductFormData,
-                          currentCommonService: "search",
-                        });
-                      }
-
-                      this.setState({
-                        activeCommonService: service,
-                      });
-                    }}
+                    onClick={() => this.onClickCommonService("search")}
                   >
                     <Box className="product-image">
                       <img src={searchIcon} alt="" />
@@ -399,7 +410,10 @@ class ProductCategory extends Component {
                 </Box>
                 <Box
                   className={`product-category-card ${
-                    this.isCommonServiceAdded(["security"]) ? "active" : ""
+                    this.isCommonServiceAdded(["security"]) ||
+                    activeCommonService.includes("security")
+                      ? "active"
+                      : ""
                   }`}
                 >
                   <Box className="d-flex icon-buttons">
@@ -418,21 +432,7 @@ class ProductCategory extends Component {
                   </Box>
                   <Box
                     className="product-category-details"
-                    onClick={() => {
-                      let service = activeCommonService;
-                      if (!activeCommonService.includes("security")) {
-                        service.push("security");
-                        let { createProductFormData } = this.props;
-                        this.props.setProductIntoDepartment({
-                          ...createProductFormData,
-                          currentCommonService: "security",
-                        });
-                      }
-
-                      this.setState({
-                        activeCommonService: service,
-                      });
-                    }}
+                    onClick={() => this.onClickCommonService("security")}
                   >
                     <Box className="product-image">
                       <img src={rbacIcon} alt="" />

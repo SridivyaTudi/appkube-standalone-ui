@@ -679,7 +679,7 @@ class Soa extends Component {
           ...createProductFormData,
           soaData,
           "3_tierData": null,
-          currentCommonService:''
+          currentCommonService: "",
         })
       );
       this.props.setProductIntoDepartment(passData);
@@ -1227,7 +1227,7 @@ class Soa extends Component {
       createProductFormData,
       creationBiMapping,
     } = this.props;
-    console.log(createProductFormData)
+
     return (
       <Box className="bimapping-container">
         {this.renderHeading()}
