@@ -324,7 +324,7 @@ class Tier extends Component {
     let { cloudServices, selectedDeployedInstance } = this.state;
     let cloudStatus = this.props.cloudServices?.status;
     if (cloudStatus === status.IN_PROGRESS) {
-      return this.renderLoder();
+      return this.renderLoder("deployed-cards-loader");
     } else {
       if (cloudServices?.length) {
         return cloudServices.map((instance) => {
