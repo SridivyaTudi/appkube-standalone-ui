@@ -49,9 +49,11 @@ class HistoryDepartments extends Component {
             >
               View
             </Button>
-            <Button className="primary-btn min-width-inherit m-r-3 p-l-15 p-r-15">
-              Home
-            </Button>
+            <Link to={`/app/new-reports/chargeback-dashboard`}>
+              <Button className="primary-btn min-width-inherit m-r-3 p-l-15 p-r-15">
+                Home
+              </Button>
+            </Link>
           </Box>
         </Box>
         <Box className="history-departments-container m-t-3">
