@@ -103,11 +103,13 @@ class AddDepartment extends Component {
       this.props.landingZones?.data
     ) {
       let landingZones = this.props.landingZones?.data || [];
-
-      landingZones = landingZones.filter(
-        (landingZone) =>
-          landingZone.departmentId === null &&
-          landingZone.departmentName === null
+      let { isIncludeLandingZone } = this.state;
+      landingZones = landingZones.filter((landingZone) =>
+        isIncludeLandingZone
+          ? landingZone.departmentId !== null &&
+            landingZone.departmentName !== null
+          : landingZone.departmentId === null &&
+            landingZone.departmentName === null
       );
       this.setState({ landingZones });
     }
@@ -237,9 +239,7 @@ class AddDepartment extends Component {
           <></>
         )}
 
-        <Box
-          className="d-flex align-items-center wizard-step-button m-t-2"
-        >
+        <Box className="d-flex align-items-center wizard-step-button m-t-2">
           <Button
             className="primary-outline-btn m-r-2"
             variant="outlined"
@@ -274,7 +274,7 @@ class AddDepartment extends Component {
       if (isValid) {
         let { name: departmentName, description: departmentDescription } =
           this.state.step1FormData;
-        let { step2FormData, landingZones } = this.state;
+        let { step2FormData, landingZones, selectedLandingZone } = this.state;
         if (isCreateWithoutLandingZone) {
           let params = {
             name: departmentName,
@@ -284,13 +284,15 @@ class AddDepartment extends Component {
         } else {
           let landingZone = landingZones.find(
             (landing) => landing.id === step2FormData.selectedChildLandingZone
-          ).landingZone;
+          );
           let params = {
             departmentName,
             departmentDescription,
             orgId: +this.user.cmdbOrgId,
-            landingZone: [landingZone],
+            landingZoneId: [+landingZone?.id],
+            cloud: landingZone?.cloud,
           };
+
           this.props.createDepartmentWithLandingZone(params);
         }
       }
@@ -307,7 +309,12 @@ class AddDepartment extends Component {
 
   // Click on the landing zone
   onClickLandingZone(selectedAccount) {
-    let { step2FormData, activeStep, isCreateWithoutLandingZone } = this.state;
+    let {
+      step2FormData,
+      activeStep,
+      isCreateWithoutLandingZone,
+      isIncludeLandingZone,
+    } = this.state;
     let isSameSelectLandingZone =
       step2FormData.selectedLandingZone === selectedAccount;
 
@@ -423,8 +430,11 @@ class AddDepartment extends Component {
               <ListItem
                 className={`${selectedLandingZone === "aws" ? "active" : ""}`}
               >
-                <Button 
-                  className="secondary-btn min-width disabled"
+                <Button
+                  disabled={isCreateWithoutLandingZone}
+                  className={` ${
+                    isCreateWithoutLandingZone ? "" : "secondary-btn"
+                  } min-width `}
                   variant="contained"
                   onClick={() => this.onClickLandingZone("aws")}
                 >
@@ -438,7 +448,10 @@ class AddDepartment extends Component {
                 className={`${selectedLandingZone === "azure" ? "active" : ""}`}
               >
                 <Button
-                  className="secondary-btn min-width"
+                  disabled={isCreateWithoutLandingZone}
+                  className={` ${
+                    isCreateWithoutLandingZone ? "" : "secondary-btn"
+                  } min-width `}
                   variant="contained"
                   onClick={() => this.onClickLandingZone("azure")}
                 >
@@ -452,7 +465,10 @@ class AddDepartment extends Component {
                 className={`${selectedLandingZone === "gcp" ? "active" : ""}`}
               >
                 <Button
-                  className="secondary-btn min-width"
+                  disabled={isCreateWithoutLandingZone}
+                  className={` ${
+                    isCreateWithoutLandingZone ? "" : "secondary-btn"
+                  } min-width `}
                   variant="contained"
                   onClick={() => this.onClickLandingZone("gcp")}
                 >
@@ -555,7 +571,9 @@ class AddDepartment extends Component {
                                       </label>
                                     </Box>
                                     <Box className="footer-right-content">
-                                      <span className="d-block text-right">Assets</span>
+                                      <span className="d-block text-right">
+                                        Assets
+                                      </span>
                                       <label className="d-block text-right">
                                         {val.totalAssets}
                                       </label>

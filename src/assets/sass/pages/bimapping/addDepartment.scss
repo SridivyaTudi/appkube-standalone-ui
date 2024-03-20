@@ -318,10 +318,16 @@
                     width: auto;
                     margin-right: 10px;
                     padding: 0;
-                    .disabled{
-                      color: #363333;
-                      background-color: #dde1f8a8;
-                    }
+                    .Mui-disabled {
+                      color: rgba(0, 0, 0, 0.26);
+                      box-shadow: none;
+                      text-transform: capitalize;
+                      background-color: rgba(0, 0, 0, 0.12);
+                      font-weight: 600;
+                      font-size: 13px;
+                      line-height: 24px;
+                      letter-spacing: 0px;
+                  }
 
                     .secondary-btn {
                       background-color: #dde1f8;
