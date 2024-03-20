@@ -423,8 +423,8 @@ class AddDepartment extends Component {
               <ListItem
                 className={`${selectedLandingZone === "aws" ? "active" : ""}`}
               >
-                <Button
-                  className="secondary-btn min-width"
+                <Button 
+                  className="secondary-btn min-width disabled"
                   variant="contained"
                   onClick={() => this.onClickLandingZone("aws")}
                 >

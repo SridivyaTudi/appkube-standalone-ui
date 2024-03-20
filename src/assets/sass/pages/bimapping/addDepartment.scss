@@ -318,6 +318,10 @@
                     width: auto;
                     margin-right: 10px;
                     padding: 0;
+                    .disabled{
+                      color: #363333;
+                      background-color: #dde1f8a8;
+                    }
 
                     .secondary-btn {
                       background-color: #dde1f8;
