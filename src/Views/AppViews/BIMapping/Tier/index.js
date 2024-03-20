@@ -238,7 +238,6 @@ class Tier extends Component {
       this.props.creationBiMapping.status === status.SUCCESS
     ) {
       if (this.props.creationBiMapping?.data) {
-       
         let response = this.props.creationBiMapping?.data;
         if (response) {
           ToastMessage.success("Product added in department.");
@@ -540,13 +539,15 @@ class Tier extends Component {
 
     if (savedLayer.aux) {
       this.addBiMappingAPICall(savedData);
+    } else {
+      selectedInstance = -1;
+      selectedDeployedInstance = "";
+      selectedService = [];
+      isShowDepolyedSection = false;
+      configInfo = [];
+      managementInfo = [];
     }
-    selectedInstance = -1;
-    selectedDeployedInstance = "";
-    selectedService = [];
-    isShowDepolyedSection = false;
-    configInfo = [];
-    managementInfo = [];
+
     this.setState({
       savedLayer,
       savedData,
@@ -687,6 +688,8 @@ class Tier extends Component {
                             value,
                           };
                           return formatData;
+                        } else {
+                          return null;
                         }
                       })
                       .filter((obj) => obj),
@@ -1107,9 +1110,9 @@ class Tier extends Component {
           <Grid
             container
             rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            columnSpacing={{ xs: 2, sm: 2, md: 3 }}
           >
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
                   {biServicesFromProductCategory.status ===
@@ -1125,7 +1128,7 @@ class Tier extends Component {
               </Box>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
               {isShowDepolyedSection ? (
                 <Box className="nginx-cards">
                   {this.renderDeployedInstanceWrapper()}

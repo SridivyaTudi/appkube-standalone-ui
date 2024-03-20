@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button, IconButton, Grid } from "@mui/material";
+import { Box, IconButton, Grid } from "@mui/material";
 import admissionIcon from "assets/img/bimapping/admission.png";
 import searchIcon from "assets/img/bimapping/search.png";
 import rbacIcon from "assets/img/bimapping/rbac.png";
@@ -60,12 +60,14 @@ class ProductCategory extends Component {
       showServiceModal: !this.state.showServiceModal,
     });
   };
+
   /** Get url details. */
   getUrlDetails() {
     let name = this.props.params.name;
     let id = this.props.params.id;
     return { name, id };
   }
+
   // Move to next page
   moveToNextPage = (serviceType) => {
     let { createProductFormData } = this.props;
@@ -92,6 +94,7 @@ class ProductCategory extends Component {
     });
   };
 
+  // Render the business service.
   renderBusinessService = () => {
     let soaData = this.props.createProductFormData.soaData || [];
     if (soaData.length) {
@@ -128,6 +131,7 @@ class ProductCategory extends Component {
     }
   };
 
+  // Click on edit icon from business service.
   onClickEditIconBusinessService = (editServiceId) => {
     let { createProductFormData } = this.props;
     let passData = JSON.parse(
@@ -143,6 +147,7 @@ class ProductCategory extends Component {
     );
   };
 
+  // Click on edit icon from common service.
   onClickEditIconCommonService = (editServiceId) => {
     let { createProductFormData } = this.props;
     let passData = JSON.parse(
@@ -158,6 +163,7 @@ class ProductCategory extends Component {
     );
   };
 
+  // Click on remove icon from business service.
   onClickCloseBtn = (index) => {
     let { createProductFormData } = this.props;
     let soaData = JSON.parse(
@@ -176,6 +182,7 @@ class ProductCategory extends Component {
     }
   };
 
+  // Check common service already created.
   isCommonServiceAdded = (keys) => {
     try {
       let { createProductFormData } = this.props;
@@ -194,6 +201,27 @@ class ProductCategory extends Component {
     return false;
   };
 
+  // Check Business service already created.
+  isBusinessServiceAdded = () => {
+    try {
+      let { createProductFormData } = this.props;
+
+      let soaData = createProductFormData.soaData;
+      if (soaData?.length) {
+        for (let index = 0; index < soaData.length; index++) {
+          const service = soaData[index];
+          if (service.service === "business") {
+            return true;
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    return false;
+  };
+
+  // Check both common service already created.
   isBothCommonServiceAdded = () => {
     return (
       this.isCommonServiceAdded(["search"]) &&
@@ -201,15 +229,14 @@ class ProductCategory extends Component {
     );
   };
 
+  // Click on save button.
   onClickSave = () => {
     let { id } = this.getUrlDetails();
-    let { selectedServiceData } = this.state;
     let {
       createProductFormData: {
         productName,
         environment,
         moduleName,
-        serviceType,
         soaData = [],
       },
     } = this.props;
@@ -235,6 +262,8 @@ class ProductCategory extends Component {
                       value,
                     };
                     return formatData;
+                  } else {
+                    return null;
                   }
                 })
                 .filter((obj) => obj),
@@ -284,6 +313,7 @@ class ProductCategory extends Component {
     this.props.createBiMapping(params);
   };
 
+  // Click on common service
   onClickCommonService = (service) => {
     let { createProductFormData } = this.props;
     let { activeCommonService } = this.state;
@@ -300,11 +330,12 @@ class ProductCategory extends Component {
       ...createProductFormData,
       currentCommonService,
     });
-    console.log(activeCommonService);
+
     this.setState({
       activeCommonService,
     });
   };
+
   render() {
     const { showServiceModal, activeCommonService } = this.state;
     let { createProductFormData, creationBiMapping } = this.props;
@@ -344,13 +375,14 @@ class ProductCategory extends Component {
             <Box className="product-title-card">
               <Box className="d-flex justify-content-between align-items-center">
                 <h3>Business Services</h3>
-
-                <Button
+                <LoadingButton
                   className="primary-btn"
+                  variant="contained"
                   onClick={() => this.moveToNextPage("business")}
+                  disabled={this.isBusinessServiceAdded()}
                 >
                   Add
-                </Button>
+                </LoadingButton>
               </Box>
             </Box>
             <Box className="product-category-cards">
@@ -383,6 +415,10 @@ class ProductCategory extends Component {
                       ? "active"
                       : ""
                   }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.onClickCommonService("search");
+                  }}
                 >
                   <Box className="d-flex icon-buttons">
                     {this.isCommonServiceAdded(["search"]) ? (
@@ -398,10 +434,7 @@ class ProductCategory extends Component {
                       <></>
                     )}
                   </Box>
-                  <Box
-                    className="product-category-details"
-                    onClick={() => this.onClickCommonService("search")}
-                  >
+                  <Box className="product-category-details">
                     <Box className="product-image">
                       <img src={searchIcon} alt="" />
                     </Box>
@@ -415,6 +448,10 @@ class ProductCategory extends Component {
                       ? "active"
                       : ""
                   }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    this.onClickCommonService("security");
+                  }}
                 >
                   <Box className="d-flex icon-buttons">
                     {this.isCommonServiceAdded(["security"]) ? (
@@ -430,10 +467,7 @@ class ProductCategory extends Component {
                       <></>
                     )}
                   </Box>
-                  <Box
-                    className="product-category-details"
-                    onClick={() => this.onClickCommonService("security")}
-                  >
+                  <Box className="product-category-details">
                     <Box className="product-image">
                       <img src={rbacIcon} alt="" />
                     </Box>

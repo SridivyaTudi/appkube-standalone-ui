@@ -38,7 +38,6 @@ import {
   PRODUCT_CATEGORY_ENUM,
   SERVICES_CATEGORY_OF_SOA_ENUM,
   ADD_PRODUCT_ENUMS,
-  getCurrentOrgId,
 } from "Utils";
 import { connect } from "react-redux";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -101,8 +100,6 @@ const SERVICES = [
     icon: DataServiceSvgrepo,
   },
 ];
-
-const orgId = getCurrentOrgId();
 class Soa extends Component {
   tabMapping = [
     {
@@ -657,7 +654,7 @@ class Soa extends Component {
       } else {
         if (soaData.length) {
           soaData.push({
-            module: "module " + (soaData.length + 1),
+            module: createProductFormData.moduleName,
             values: appendSoaData,
             service: createProductFormData.serviceType,
             currentCommonService,
@@ -665,7 +662,7 @@ class Soa extends Component {
         } else {
           soaData = [
             {
-              module: "module 1",
+              module: createProductFormData.moduleName,
               values: appendSoaData,
               service: createProductFormData.serviceType,
               currentCommonService,
@@ -782,73 +779,6 @@ class Soa extends Component {
     let id = this.props.params.id;
     return { name, id };
   }
-
-  // Add BI-mapping API call
-  addBiMappingAPICall = (savedData) => {
-    let { id } = this.getUrlDetails();
-    let { selectedServiceData } = this.state;
-    let {
-      createProductFormData: {
-        productName,
-        environment,
-        moduleName,
-        serviceType,
-      },
-    } = this.props;
-    let serviceData = savedData.map((service) => {
-      return {
-        name: selectedServiceData[service.serviceName],
-        type: service.serviceName?.toUpperCase(),
-        cloudElementMapping: {
-          id: service.selectedInstance,
-          managementInfo: service.managementInfo
-            .map((management) => {
-              let { isSubValue, key, value } = management;
-              if (!isSubValue) {
-                let formatData = {
-                  key,
-                  value,
-                };
-                return formatData;
-              }
-            })
-            .filter((obj) => obj),
-          configInfo: service.configInfo.map((config) => {
-            let { key, value } = config;
-
-            let formatData = {
-              key,
-              value,
-            };
-            return formatData;
-          }),
-        },
-      };
-    });
-    let params = {
-      org: {
-        id: +orgId,
-        dep: {
-          id: +id,
-          product: {
-            name: productName,
-            type: "SOA",
-            productEnv: {
-              name: environment,
-              module: {
-                name: moduleName,
-                service: {
-                  business: serviceType === "business" ? serviceData : [],
-                  common: serviceType === "common" ? serviceData : [],
-                },
-              },
-            },
-          },
-        },
-      },
-    };
-    this.props.createBiMapping(params);
-  };
 
   // Render heading
   renderHeading = () => {
@@ -1235,9 +1165,9 @@ class Soa extends Component {
           <Grid
             container
             rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            columnSpacing={{ xs: 2, sm: 2, md: 3 }}
           >
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
                   <h4 className="m-t-0 m-b-0">
@@ -1255,7 +1185,7 @@ class Soa extends Component {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
               {isShowDepolyedSection ? (
                 <Box className="nginx-cards">
                   {this.renderDeployedInstanceWrapper()}

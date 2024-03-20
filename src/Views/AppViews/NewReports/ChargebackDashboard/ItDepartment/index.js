@@ -8,7 +8,6 @@ import {
   TableRow,
   TableBody,
   TableCell,
-  IconButton,
   Checkbox,
 } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -225,7 +224,7 @@ class ItDepartment extends Component {
           </Box>
           <Box className="new-reports-table">
             <TableContainer className="table">
-              <Table>
+              <Table style={{minWidth: 800}}>
                 {this.renderTableHead()}
                 {this.renderTableBody()}
               </Table>
