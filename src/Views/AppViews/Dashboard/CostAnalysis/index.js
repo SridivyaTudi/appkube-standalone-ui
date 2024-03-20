@@ -27,6 +27,14 @@ const colorPallate = [
   "#FB4B93",
   "#A04D4D",
   "#608E7D",
+  "#1e81b0",
+  "#eeeee4",
+  "#e28743",
+  "#eab676",
+  "#76b5c5",
+  "#21130d",
+  "#873e23",
+  "#063970",
 ];
 
 const HtmlTooltip = styled(({ className, ...props }) => (
