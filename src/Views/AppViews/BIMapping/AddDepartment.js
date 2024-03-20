@@ -272,7 +272,7 @@ class AddDepartment extends Component {
       if (isValid) {
         let { name: departmentName, description: departmentDescription } =
           this.state.step1FormData;
-        let { step2FormData, landingZones } = this.state;
+        let { step2FormData, landingZones,selectedLandingZone } = this.state;
         if (isCreateWithoutLandingZone) {
           let params = {
             name: departmentName,
@@ -282,13 +282,15 @@ class AddDepartment extends Component {
         } else {
           let landingZone = landingZones.find(
             (landing) => landing.id === step2FormData.selectedChildLandingZone
-          ).landingZone;
+          );
           let params = {
             departmentName,
             departmentDescription,
             orgId: +this.user.cmdbOrgId,
-            landingZone: [+landingZone],
+            landingZoneId: [+landingZone.id],
+            cloud:landingZone?.cloud
           };
+          
           this.props.createDepartmentWithLandingZone(params);
         }
       }
