@@ -533,7 +533,7 @@ class Soa extends Component {
 
     let editId = createProductFormData["editServiceId"];
     let soaData = createProductFormData["soaData"];
-
+    console.log(editId)
     if (["search", "security"].includes(editId)) {
       soaData.forEach((soa, index) => {
         if (soa.currentCommonService === editId) {

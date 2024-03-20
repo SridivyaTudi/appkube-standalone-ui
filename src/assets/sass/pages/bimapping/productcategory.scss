@@ -99,8 +99,11 @@
           }
         }
         &.active{
+         
+          border: 1px solid #384cff;
+        }
+        &.edit-active{
           background: #f2f5fa;
-          // border: 1px solid #384cff;
         }
       }
     }

@@ -156,6 +156,7 @@ class ProductCategory extends Component {
         editServiceId,
       })
     );
+    console.log(passData);
     this.props.setProductIntoDepartment(passData);
     let { name, id } = this.getUrlDetails();
     this.props.navigate(
@@ -409,9 +410,10 @@ class ProductCategory extends Component {
             <Box className="product-category-cards">
               <Box className="product-category-inner">
                 <Box
-                  className={`product-category-card ${
-                    this.isCommonServiceAdded(["search"]) ||
-                    activeCommonService.includes("search")
+                  className={`product-category-card  ${
+                    this.isCommonServiceAdded(["search"])
+                      ? "edit-active"
+                      : activeCommonService.includes("search")
                       ? "active"
                       : ""
                   }`}
@@ -424,9 +426,10 @@ class ProductCategory extends Component {
                     {this.isCommonServiceAdded(["search"]) ? (
                       <IconButton
                         className="edit-icon"
-                        onClick={() =>
-                          this.onClickEditIconCommonService("search")
-                        }
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          this.onClickEditIconCommonService("search");
+                        }}
                       >
                         <i class="fas fa-edit"></i>
                       </IconButton>
@@ -443,8 +446,9 @@ class ProductCategory extends Component {
                 </Box>
                 <Box
                   className={`product-category-card ${
-                    this.isCommonServiceAdded(["security"]) ||
-                    activeCommonService.includes("security")
+                    this.isCommonServiceAdded(["security"])
+                      ? "edit-active"
+                      : activeCommonService.includes("security")
                       ? "active"
                       : ""
                   }`}
@@ -478,7 +482,7 @@ class ProductCategory extends Component {
             </Box>
           </Box>
         </Box>
-        {createProductFormData?.soaData?.length ? (
+        {this.isBusinessServiceAdded() ? (
           <Grid item xs={4}>
             <Box className="d-block text-center m-t-4">
               <LoadingButton

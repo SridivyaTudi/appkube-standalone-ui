@@ -237,9 +237,7 @@ class AddDepartment extends Component {
           <></>
         )}
 
-        <Box
-          className="d-flex align-items-center wizard-step-button m-t-2"
-        >
+        <Box className="d-flex align-items-center wizard-step-button m-t-2">
           <Button
             className="primary-outline-btn m-r-2"
             variant="outlined"
@@ -289,7 +287,7 @@ class AddDepartment extends Component {
             departmentName,
             departmentDescription,
             orgId: +this.user.cmdbOrgId,
-            landingZone: [landingZone],
+            landingZone: [+landingZone],
           };
           this.props.createDepartmentWithLandingZone(params);
         }
@@ -423,8 +421,11 @@ class AddDepartment extends Component {
               <ListItem
                 className={`${selectedLandingZone === "aws" ? "active" : ""}`}
               >
-                <Button 
-                  className="secondary-btn min-width disabled"
+                <Button
+                  disabled={isCreateWithoutLandingZone}
+                  className={` ${
+                    isCreateWithoutLandingZone ? "" : "secondary-btn"
+                  } min-width `}
                   variant="contained"
                   onClick={() => this.onClickLandingZone("aws")}
                 >
@@ -438,7 +439,10 @@ class AddDepartment extends Component {
                 className={`${selectedLandingZone === "azure" ? "active" : ""}`}
               >
                 <Button
-                  className="secondary-btn min-width"
+                  disabled={isCreateWithoutLandingZone}
+                  className={` ${
+                    isCreateWithoutLandingZone ? "" : "secondary-btn"
+                  } min-width `}
                   variant="contained"
                   onClick={() => this.onClickLandingZone("azure")}
                 >
@@ -452,7 +456,10 @@ class AddDepartment extends Component {
                 className={`${selectedLandingZone === "gcp" ? "active" : ""}`}
               >
                 <Button
-                  className="secondary-btn min-width"
+                  disabled={isCreateWithoutLandingZone}
+                  className={` ${
+                    isCreateWithoutLandingZone ? "" : "secondary-btn"
+                  } min-width `}
                   variant="contained"
                   onClick={() => this.onClickLandingZone("gcp")}
                 >
@@ -555,7 +562,9 @@ class AddDepartment extends Component {
                                       </label>
                                     </Box>
                                     <Box className="footer-right-content">
-                                      <span className="d-block text-right">Assets</span>
+                                      <span className="d-block text-right">
+                                        Assets
+                                      </span>
                                       <label className="d-block text-right">
                                         {val.totalAssets}
                                       </label>
