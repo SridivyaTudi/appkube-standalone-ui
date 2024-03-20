@@ -9,6 +9,7 @@ import settingsReducer from "Redux/Settings/SettingsSlice";
 import associateAppReducer from "Redux/AssociateApp/AssociateAppSlice";
 import ServiceViewTopologyReducer from "Redux/ServiceViewTopology/ServiceViewTopologySlice";
 import BIMapping from "Redux/BIMapping/BIMappingSlice";
+import Reports from "Redux/Reports/ReportsSlice";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     associateApp: associateAppReducer,
     serviceTopology: ServiceViewTopologyReducer,
     biMapping: BIMapping,
+    reports: Reports,
   },
 });
 

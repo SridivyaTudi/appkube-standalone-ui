@@ -3,6 +3,8 @@ import { Box, Button, List, ListItem } from "@mui/material";
 import AwsComponent from "./AwsComponent";
 import AzureComponent from "./AzureComponent";
 import GcpComponent from "./GcpComponent";
+import { connect } from "react-redux";
+import { getSpendOverview } from "Redux/Reports/ReportsThunk";
 
 export class OverviewDashboard extends Component {
   tabMapping = [
@@ -30,7 +32,7 @@ export class OverviewDashboard extends Component {
     };
   }
   componentWillUnmount() {
-    this.removeTooltipElement()
+    this.removeTooltipElement();
   }
 
   removeTooltipElement = () => {
@@ -103,4 +105,13 @@ export class OverviewDashboard extends Component {
   }
 }
 
-export default OverviewDashboard;
+function mapStateToProps(state) {
+  const {} = state.reports;
+  return {};
+}
+
+const mapDispatchToProps = {
+  getSpendOverview,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(OverviewDashboard);

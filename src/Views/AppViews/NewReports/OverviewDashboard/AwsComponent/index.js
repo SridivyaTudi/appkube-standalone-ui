@@ -6,6 +6,11 @@ import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarch
 import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 import MultiLineChart from "Views/AppViews/NewReports/Components/MultiLineChart";
 import GaugeChart from "Views/AppViews/NewReports/Components/GaugeChart";
+import { connect } from "react-redux";
+import { getSpendOverview } from "Redux/Reports/ReportsThunk";
+import status from "Redux/Constants/CommonDS";
+import { getCurrentOrgId } from "Utils";
+import Loader from "Components/Loader";
 const totalUsedServiceData = [
   { label: "EC2", value: 4700, color: "#A145FF" },
   { label: "RDS", value: 4500, color: "#FA6298" },
@@ -13,28 +18,7 @@ const totalUsedServiceData = [
   { label: "EKS", value: 4000, color: "#F9D33D" },
   { label: "Lambda", value: 3800, color: "#F9D33D" },
 ];
-let donutData = [
-  {
-    age_group: "Compute Cost",
-    population: 110011100,
-  },
-  {
-    age_group: "Network ",
-    population: 40267984,
-  },
-  {
-    age_group: "Storage",
-    population: 30672088,
-  },
-  {
-    age_group: "Database",
-    population: 53980105,
-  },
-  {
-    age_group: "Others",
-    population: 81489445,
-  },
-];
+
 
 const spendTrendData = [
   {
@@ -136,7 +120,68 @@ let costOfTopAccounts = [
   { name: "R&D", value: 10400 },
 ];
 class AwsComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      spendOverviewData: [],
+      spendOverviewTotal: 0,
+    };
+  }
+
+  componentDidMount = () => {
+    this.props.getSpendOverview({
+      serviceCategory: "all",
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.spendOverviewData.status !==
+        this.props.spendOverviewData.status &&
+      this.props.spendOverviewData.status === status.SUCCESS &&
+      this.props.spendOverviewData?.data
+    ) {
+      const spendOverviewData = this.props.spendOverviewData.data;
+      if (spendOverviewData) {
+        this.maniplateSpendOverviewData(spendOverviewData.data);
+      }
+    }
+  }
+
+  // Manipulate spendoverview data
+  maniplateSpendOverviewData = (data) => {
+    let { spendOverviewData, spendOverviewTotal } = this.state;
+    spendOverviewTotal = 0;
+    spendOverviewData = [];
+    if (data?.length) {
+      spendOverviewData = data.map((obj) => {
+        spendOverviewTotal = spendOverviewTotal + parseInt(obj.total);
+        return {
+          age_group: obj.serviceCategory,
+          population: obj.total,
+          percentage: obj.percentage,
+        };
+      });
+    }
+    this.setState({ spendOverviewData, spendOverviewTotal });
+  };
+
+  // Render loder
+  renderLoder = () => {
+    return (
+      <Box className="d-blck text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100" />
+      </Box>
+    );
+  };
   render() {
+    let { spendOverviewData, spendOverviewTotal } = this.state;
+    let { spendOverviewData:spendoverviewProps } = this.props
+    let spendOverviewLoder = spendoverviewProps.status === status.IN_PROGRESS
     return (
       <>
         <Box className="reports-charts">
@@ -145,16 +190,17 @@ class AwsComponent extends Component {
               <ChartWrapper
                 data={{
                   title: "Spend Overview",
-                  labelOfBtn: " View Details",
+                  labelOfBtn: "View Details",
                   link: "/app/new-reports/over-view-dashboard/spend-overview",
                 }}
                 ChartComponent={
+                  spendOverviewLoder ? this.renderLoder() :
                   <DonutChart
-                    data={donutData}
+                    data={spendOverviewData}
                     width={250}
                     height={300}
                     otherData={{
-                      centerValue: "$10,000",
+                      centerValue: `$${spendOverviewTotal}`,
                     }}
                   />
                 }
@@ -238,4 +284,13 @@ class AwsComponent extends Component {
   }
 }
 
-export default AwsComponent;
+function mapStateToProps(state) {
+  const { spendOverviewData } = state.reports;
+  return { spendOverviewData };
+}
+
+const mapDispatchToProps = {
+  getSpendOverview,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AwsComponent);

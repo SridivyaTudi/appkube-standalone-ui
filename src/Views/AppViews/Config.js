@@ -60,6 +60,7 @@ const config = {
   ADD_DEPARTMENT: `department`,
   ADD_DEPARTMENT_WITH_LANDINGZONE: `/department/add-department-with-landing-zone`,
   GET_LANDINGZONE: `/landingzone/search?organizationId=#org-id#&cloud=#cloud#`,
+  GET_SPEND_OVERVIEW: `/reporting/organization/#org-id#/spend-overview?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
 };
 
 export default config;
