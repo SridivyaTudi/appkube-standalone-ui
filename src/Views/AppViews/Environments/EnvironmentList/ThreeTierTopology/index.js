@@ -143,7 +143,7 @@ class ThreeTierTopology extends Component {
                 tabs={this.tabMapping}
                 setActiveTab={this.setActiveTab}
                 activeTab={activeTab}
-                breakWidth={1280}
+                breakWidth={767}
                 key={v4()}
               />
             </Box>
