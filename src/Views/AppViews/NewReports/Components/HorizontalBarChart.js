@@ -13,6 +13,12 @@ class HorizontalBarChart extends Component {
     this.renderChart();
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.data !== this.props.data) {
+      this.renderChart();
+    }
+  }
+
   renderChart = () => {
     let { data } = this.props;
     const barHeight = 45;
@@ -21,7 +27,7 @@ class HorizontalBarChart extends Component {
     const marginBottom = 10;
     const marginLeft = 80;
     const width = 800;
-    const height = 
+    const height =
       Math.ceil(data.length * barHeight) + marginTop + marginBottom;
 
     function make_x_gridlines() {
@@ -111,12 +117,13 @@ class HorizontalBarChart extends Component {
     svg
       .append("g")
       .attr("style", "font-size: 16px", "sans-serif")
-      .attr("transform", `translate(${marginLeft-10},-10)`)
+      .attr("transform", `translate(${marginLeft - 10},-10)`)
       .call(d3.axisLeft(y).tickSize(0))
       .attr("class", "y-axis")
       .call(yAxis);
     d3.select(this.ref.current);
   };
+
   render() {
     return (
       <Box className="top-used-service-chrt">

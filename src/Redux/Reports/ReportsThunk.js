@@ -20,3 +20,32 @@ export const getSpendOverview = createAsyncThunk(
     }
   }
 );
+
+export const getTopUsedService = createAsyncThunk(
+  "Reports/getTopUsedService",
+  async (objIds) => {
+    try {
+      let {
+        orgId,
+        serviceCategory,
+        cloud,
+        granularity,
+        compareTo,
+        noOfRecords,
+        order,
+      } = objIds;
+      let url = config.GET_TOP_USED_SERVICE.replace("#org-id#", orgId)
+        .replace("#service-category#", serviceCategory)
+        .replace("#cloud-name#", cloud)
+        .replace("#granularity#", granularity)
+        .replace("#compare-to#", compareTo)
+        .replace("#no-of-records#", noOfRecords)
+        .replace("#order#", order);
+
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

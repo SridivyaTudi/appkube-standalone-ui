@@ -7,18 +7,21 @@ import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 import MultiLineChart from "Views/AppViews/NewReports/Components/MultiLineChart";
 import GaugeChart from "Views/AppViews/NewReports/Components/GaugeChart";
 import { connect } from "react-redux";
-import { getSpendOverview } from "Redux/Reports/ReportsThunk";
+import {
+  getSpendOverview,
+  getTopUsedService,
+} from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 import { getCurrentOrgId } from "Utils";
 import Loader from "Components/Loader";
-const totalUsedServiceData = [
-  { label: "EC2", value: 4700, color: "#A145FF" },
-  { label: "RDS", value: 4500, color: "#FA6298" },
-  { label: "S3", value: 4300, color: "#FAA24B" },
-  { label: "EKS", value: 4000, color: "#F9D33D" },
-  { label: "Lambda", value: 3800, color: "#F9D33D" },
-];
 
+const totalUsedServiceColor = [
+  "#A145FF",
+  "#FA6298",
+  "#FAA24B",
+  "#F9D33D",
+  "#F9D33D",
+];
 
 const spendTrendData = [
   {
@@ -125,6 +128,7 @@ class AwsComponent extends Component {
     this.state = {
       spendOverviewData: [],
       spendOverviewTotal: 0,
+      topUsedServiceData: [],
     };
   }
 
@@ -134,6 +138,15 @@ class AwsComponent extends Component {
       cloud: "aws",
       granularity: "quarterly",
       compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getTopUsedService({
+      serviceCategory: "all",
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      noOfRecords: 10,
+      order: "top",
       orgId: getCurrentOrgId(),
     });
   };
@@ -150,7 +163,19 @@ class AwsComponent extends Component {
         this.maniplateSpendOverviewData(spendOverviewData.data);
       }
     }
+    if (
+      prevProps.topUsedServiceData.status !==
+        this.props.topUsedServiceData.status &&
+      this.props.topUsedServiceData.status === status.SUCCESS &&
+      this.props.topUsedServiceData?.data
+    ) {
+      const topUsedServiceData = this.props.topUsedServiceData.data;
+      if (topUsedServiceData) {
+        this.maniplateTopUsedServiceData(topUsedServiceData.data);
+      }
+    }
   }
+  
 
   // Manipulate spendoverview data
   maniplateSpendOverviewData = (data) => {
@@ -170,18 +195,38 @@ class AwsComponent extends Component {
     this.setState({ spendOverviewData, spendOverviewTotal });
   };
 
+  // Manipulate Top Used Service data
+  maniplateTopUsedServiceData = (data) => {
+    let { topUsedServiceData } = this.state;
+    topUsedServiceData = [];
+    if (data?.length) {
+      topUsedServiceData = data.map((obj, index) => {
+        return {
+          label: obj.elementType,
+          value: obj.total,
+          color: totalUsedServiceColor[index],
+        };
+      });
+    }
+    this.setState({ topUsedServiceData });
+  };
+
   // Render loder
   renderLoder = () => {
     return (
       <Box className="chart-loader">
-        <Loader/>
+        <Loader />
       </Box>
     );
   };
+
   render() {
-    let { spendOverviewData, spendOverviewTotal } = this.state;
-    let { spendOverviewData:spendoverviewProps } = this.props
-    let spendOverviewLoder = spendoverviewProps.status === status.IN_PROGRESS
+    let { spendOverviewData, spendOverviewTotal, topUsedServiceData } =
+      this.state;
+    let { spendOverviewData: spendoverviewProps, topUsedServiceData:  topUsedServiceProps} = this.props;
+    let spendOverviewLoder = spendoverviewProps.status === status.IN_PROGRESS;
+    let topUsedServiceLoder = topUsedServiceProps.status === status.IN_PROGRESS;
+    console.log(topUsedServiceData);
     return (
       <>
         <Box className="reports-charts">
@@ -194,15 +239,18 @@ class AwsComponent extends Component {
                   link: "/app/new-reports/over-view-dashboard/spend-overview",
                 }}
                 ChartComponent={
-                  spendOverviewLoder ? this.renderLoder() :
-                  <DonutChart
-                    data={spendOverviewData}
-                    width={250}
-                    height={300}
-                    otherData={{
-                      centerValue: `$${spendOverviewTotal}`,
-                    }}
-                  />
+                  spendOverviewLoder ? (
+                    this.renderLoder()
+                  ) : (
+                    <DonutChart
+                      data={spendOverviewData}
+                      width={250}
+                      height={300}
+                      otherData={{
+                        centerValue: `$${spendOverviewTotal}`,
+                      }}
+                    />
+                  )
                 }
               />
             </Grid>
@@ -215,21 +263,25 @@ class AwsComponent extends Component {
                   link: "/app/new-reports/over-view-dashboard/top-use-services",
                 }}
                 ChartComponent={
-                  <HorizontalBarChart
-                    data={totalUsedServiceData}
-                    chardBeforeRenderHTML={
-                      <Box className="total-cost-incurred">
-                        <p>
-                          {" "}
-                          90,579{" "}
-                          <span>
+                  topUsedServiceLoder ? (
+                    this.renderLoder()
+                  ) : (
+                    <HorizontalBarChart
+                      data={topUsedServiceData}
+                      chardBeforeRenderHTML={
+                        <Box className="total-cost-incurred">
+                          <p>
                             {" "}
-                            <i class="fas fa-sort-up p-l-5"></i> 10 &#37;
-                          </span>
-                        </p>
-                      </Box>
-                    }
-                  />
+                            90,579{" "}
+                            <span>
+                              {" "}
+                              <i class="fas fa-sort-up p-l-5"></i> 10 &#37;
+                            </span>
+                          </p>
+                        </Box>
+                      }
+                    />
+                  )
                 }
               />
             </Grid>
@@ -285,12 +337,13 @@ class AwsComponent extends Component {
 }
 
 function mapStateToProps(state) {
-  const { spendOverviewData } = state.reports;
-  return { spendOverviewData };
+  const { spendOverviewData, topUsedServiceData } = state.reports;
+  return { spendOverviewData, topUsedServiceData };
 }
 
 const mapDispatchToProps = {
   getSpendOverview,
+  getTopUsedService,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AwsComponent);
