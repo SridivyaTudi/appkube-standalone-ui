@@ -52,7 +52,7 @@ reports ui:
 https://www.figma.com/file/gsXH45MPpJKqaxwpOLAdbu/AppKube-DRS?type=design&node-id=26842-23627&mode=design&t=s7Hd0VhLXCCvn4wf-0
 
 BI Mapping:
-https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?page-id=31293%3A37843&type=design&node-id=31294-81693&viewport=662%2C878%2C0.05&t=rHQJMeskccF0kjiK-1&scaling=scale-down-width&starting-point-node-id=31294%3A81693&mode=design
+https://www.figma.com/proto/mSwpmnkmrqHXX6AkzXzbtC/Aws-Elements?page-id=33683%3A65676&type=design&node-id=33741-91059&viewport=628%2C187%2C0.03&t=G9s1ufU1BSZfHmvk-1&scaling=scale-down-width&starting-point-node-id=33741%3A91059&mode=design
 
 Discovered assets:
 https://www.figma.com/proto/T1v5T4vk20KfW4rASjo3uM/Appkube-Main-Evn?page-id=12432%3A71156&type=design&node-id=31262-49736&viewport=-3051%2C6757%2C0.27&t=8cU2h36ABFdu0icb-1&scaling=scale-down-width&starting-point-node-id=21976%3A124846&mode=design
