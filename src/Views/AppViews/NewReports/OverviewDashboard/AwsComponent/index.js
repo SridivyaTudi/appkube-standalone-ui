@@ -173,8 +173,8 @@ class AwsComponent extends Component {
   // Render loder
   renderLoder = () => {
     return (
-      <Box className="d-blck text-center w-100 h-100 ">
-        <Loader className="align-item-center justify-center w-100 h-100" />
+      <Box className="chart-loader">
+        <Loader/>
       </Box>
     );
   };
