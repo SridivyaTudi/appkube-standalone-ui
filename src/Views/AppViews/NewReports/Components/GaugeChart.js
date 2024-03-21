@@ -23,7 +23,9 @@ class GaugeChart extends Component {
   }
 
   componentDidMount = () => {
-    this.renderChart();
+    if (this.props.data?.length) {
+      this.renderChart();
+    }
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -58,6 +60,7 @@ class GaugeChart extends Component {
 
     var pieData = data.map((v, i) => {
       return [
+        { percentage: 100, arc: arcs[i], value: v.value },
         {
           percentage: v.percentage,
           arc: arcs[i],
@@ -67,7 +70,6 @@ class GaugeChart extends Component {
         },
       ];
     });
-    
 
     svg
       .append("text")
@@ -100,7 +102,7 @@ class GaugeChart extends Component {
         return d.data.arc(d);
       })
       .attr("fill", (d, i) => {
-        return i == 0 ? d.data.color : "#DBDFF1";
+        return i == 0 ? "#DBDFF1" : d.data.color;
       });
 
     var gText = svg
@@ -117,12 +119,13 @@ class GaugeChart extends Component {
     svg.selectAll("g").each(function (d, index) {
       var el = d3.select(this);
       var path = el.selectAll("path").each(function (r, i) {
-        if (i === 0) {
+        if (i === 1) {
           var centroidText = r.data.arc.centroid({
-            startAngle: r.startAngle,
-            endAngle: r.startAngle,
+            startAngle:0,
+            endAngle:0,
           });
           var lableObj = r.data;
+        
           let label = `${lableObj.name} $${lableObj.value}`;
           gText
             .append("text")
