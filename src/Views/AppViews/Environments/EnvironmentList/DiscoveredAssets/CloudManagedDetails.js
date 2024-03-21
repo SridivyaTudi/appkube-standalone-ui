@@ -370,15 +370,9 @@ class CloudManagedDetails extends React.Component {
                     {childJSX.length ? (
                       childJSX
                     ) : (
-                      <p
-                        style={{
-                          fontSize: "16px",
-                          margin: "30% auto",
-                          color: "#000",
-                        }}
-                      >
-                        No Data Available!
-                      </p>
+                      <Box className="width-100 text-center h-100 data-available">
+                        <h4>No Data Available!</h4>
+                      </Box>
                     )}
                   </Box>
                 </Box>
@@ -400,7 +394,8 @@ class CloudManagedDetails extends React.Component {
             data={cuttentItem}
             onClickCard={(data) => {
               this.onClickCurrentCategory(index, item.elementType);
-            }} key={v4()}
+            }}
+            key={v4()}
           />
         );
       });
@@ -418,9 +413,9 @@ class CloudManagedDetails extends React.Component {
       return [
         <Box className="cloud-managed-cards" key={v4()}>
           <Box className="cloud-managed-cards-scroll">
-            <p style={{ fontSize: "16px", margin: "22% auto", color: "#000" }}>
-              No Data Available!
-            </p>
+            <Box className="width-100 text-center h-100 data-available">
+              <h4>No Data Available!</h4>
+            </Box>
           </Box>
         </Box>,
       ];
