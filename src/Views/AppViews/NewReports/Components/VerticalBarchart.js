@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Box } from "@mui/material";
 import * as d3 from "d3";
+import { convertDigitToThousand } from "Utils";
 
 const margin = { top: 50, right: 20, bottom: 40, left: 40 };
 
@@ -25,14 +26,6 @@ class VerticalBarchart extends Component {
 
   renderChart = () => {
     let { data } = this.props;
-    var tooltip = d3
-      .select("#root")
-      .data(data)
-      .append("div")
-      .attr("class", "chart-tooltip")
-      .style("position", "absolute")
-      .style("z-index", "10")
-      .style("visibility", "hidden");
 
     const svg = d3.select(this.ref.current);
     const xScale = d3
@@ -45,7 +38,6 @@ class VerticalBarchart extends Component {
       .scaleLinear()
       .range([height, margin.top])
       .domain([0, d3.max(data, (d) => d.value)])
-
       .nice();
 
     const xAxis = (g) =>
@@ -64,8 +56,8 @@ class VerticalBarchart extends Component {
 
     const yAxis = (g) =>
       g
-        .attr("transform", `translate(${margin.left},0)`)
-        .call(d3.axisLeft(yScale).tickFormat((d) => "$" + d + "k"))
+        .attr("transform", `translate(${margin.left+10},0)`)
+        .call(d3.axisLeft(yScale).tickFormat((d) => "$" + convertDigitToThousand(d)))
         .attr("font-size", "14px", "sans-serif")
         .call((g) => g.select(".domain").remove());
 
@@ -86,25 +78,9 @@ class VerticalBarchart extends Component {
       .attr("width", xScale.bandwidth())
       .attr("height", (d) => height - yScale(d.value))
       .attr("fill", this.props?.color ? this.props?.color : "#FA6298")
-      .attr("rx", 5)
-      // .on("mouseover", function (d, data) {
-      //   tooltip.html(
-      //     `<div class="chart-tooltip-contents p-5"><div class="value">R&D budget </div>
-      //     <div class="previous-month-data"><span>Budgeted amount</span> <label>$2000</label></div>
-      //     <div class="previous-month-data"><span>Overspend amount</span> <label>$3000</label></div>
-      //     <div class="check-details">Check Details <i class="fas fa-chevron-right"></i></div></div>`
-      //   );
-      //   return tooltip.style("visibility", "visible");
-      // })
-      // .on("mousemove", function (d) {
-      //   return tooltip
-      //     .style("top", d.pageY - 10 + "px")
-      //     .style("left", d.pageX + 10 + "px");
-      // })
-      .on("mouseout", function () {
-        return tooltip.style("visibility", "hidden");
-      });
+      .attr("rx", 5);
   };
+  
   render() {
     return (
       <Box className="vertical-bar-chart">
