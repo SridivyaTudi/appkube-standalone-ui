@@ -25,7 +25,7 @@ class HorizontalBarChart extends Component {
     const marginTop = 0;
     const marginRight = 10;
     const marginBottom = 0;
-    const marginLeft = 80;
+    const marginLeft = 105;
     const width = 800;
     const height =
       Math.ceil(data.length * barHeight) + marginTop + marginBottom;
