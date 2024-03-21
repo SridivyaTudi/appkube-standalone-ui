@@ -146,13 +146,16 @@ class AwsComponent extends Component {
     spendOverviewTotal = 0;
     spendOverviewData = [];
     if (data?.length) {
-      spendOverviewData = data.map((obj) => {
-        spendOverviewTotal = spendOverviewTotal + parseInt(obj.total);
-        return {
-          age_group: obj.serviceCategory,
-          population: obj.total,
-          percentage: obj.percentage,
-        };
+      data.forEach((obj) => {
+        if (!["Grand Total"].includes(obj.serviceCategory)) {
+          spendOverviewData.push({
+            age_group: obj.serviceCategory,
+            population: obj.total,
+            percentage: obj.percentage,
+          });
+        } else {
+          spendOverviewTotal = parseInt(obj.total);
+        }
       });
     }
     this.setState({ spendOverviewData, spendOverviewTotal });
@@ -163,12 +166,18 @@ class AwsComponent extends Component {
     let { topUsedServiceData } = this.state;
     topUsedServiceData = [];
     if (data?.length) {
-      topUsedServiceData = data.map((obj, index) => {
-        return {
-          label: obj.elementType,
-          value: obj.total,
-          color: totalUsedServiceColor[index],
-        };
+      data.forEach((obj, index) => {
+        if (
+          !["PREVIOUS_TOTAL", "PERCENTAGE", "CURRENT_TOTAL"].includes(
+            obj.elementType
+          )
+        ) {
+          topUsedServiceData.push({
+            label: obj.elementType,
+            value: obj.total,
+            color: totalUsedServiceColor[index],
+          });
+        } 
       });
     }
     this.setState({ topUsedServiceData });
