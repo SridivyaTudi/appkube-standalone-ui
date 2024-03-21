@@ -5,6 +5,7 @@ import { Box } from "@mui/material";
 let margin = { top: 20, right: 20, bottom: 50, left: 5 },
   width = 524 - margin.left - margin.right,
   height = 270 - margin.top - margin.bottom;
+  
 class MultiLineChart extends Component {
   constructor(props) {
     super(props);

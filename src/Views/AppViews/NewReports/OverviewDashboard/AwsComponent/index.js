@@ -11,6 +11,8 @@ import {
   getSpendOverview,
   getTopUsedService,
   getPotentialSavings,
+  getCostTopAccounts,
+  getSpendingTrend,
 } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 import { getCurrentOrgId } from "Utils";
@@ -26,106 +28,6 @@ const totalUsedServiceColor = [
 
 const potentialSavingColor = ["#FF708B", "#FFBA69", "#01F1E3", "#8676FF"];
 
-const spendTrendData = [
-  {
-    date: "1-05-12",
-    last_quarter: 30000,
-    current_quarter: 35000,
-    forecasted_spend: 13000,
-  },
-  {
-    date: "30-04-12",
-    last_quarter: 35000,
-    current_quarter: 40000,
-    forecasted_spend: 23000,
-  },
-  {
-    date: "27-04-12",
-    last_quarter: 60000,
-    current_quarter: 38000,
-    forecasted_spend: 33000,
-  },
-  {
-    date: "26-04-12",
-    last_quarter: 34000,
-    current_quarter: 33000,
-    forecasted_spend: 44000,
-  },
-  {
-    date: "25-04-12",
-    last_quarter: 45000,
-    current_quarter: 20000,
-    forecasted_spend: 27000,
-  },
-  {
-    date: "24-04-12",
-    last_quarter: 33333,
-    current_quarter: 22222,
-    forecasted_spend: 11000,
-  },
-  {
-    date: "23-04-12",
-    last_quarter: 11111,
-    current_quarter: 33333,
-    forecasted_spend: 44000,
-  },
-  {
-    date: "20-04-12",
-    last_quarter: 34000,
-    current_quarter: 44000,
-    forecasted_spend: 40000,
-  },
-  {
-    date: "19-04-12",
-    last_quarter: 44000,
-    current_quarter: 38888,
-    forecasted_spend: 38000,
-  },
-  {
-    date: "18-04-12",
-    last_quarter: 33333,
-    current_quarter: 11111,
-    forecasted_spend: 34000,
-  },
-  {
-    date: "17-04-12",
-    last_quarter: 28000,
-    current_quarter: 38000,
-    forecasted_spend: 32000,
-  },
-  {
-    date: "16-04-12",
-    last_quarter: 29000,
-    current_quarter: 39000,
-    forecasted_spend: 30000,
-  },
-  {
-    date: "13-04-12",
-    last_quarter: 22000,
-    current_quarter: 38000,
-    forecasted_spend: 22000,
-  },
-];
-
-var potentialSavingData = [
-  { color: "#FF708B", percentage: 65, name: "Spot Instace", value: "532" },
-  { color: "#FFBA69", percentage: 70, name: "Reserved Ins.", value: 539 },
-  { color: "#01F1E3", percentage: 60, name: "Others", value: 4532 },
-  { color: "#8676FF", percentage: 50, name: "Rightsizing", value: 786 },
-];
-
-let costOfTopAccounts = [
-  { name: "IT Infra", value: 55000 },
-  { name: "IT Security", value: 45000 },
-  { name: "IT Ops", value: 40000 },
-  { name: "IT Dev", value: 35000 },
-  { name: "Analytics", value: 30000 },
-  { name: "HR", value: 25050 },
-  { name: "Marketing", value: 20050 },
-  { name: "Finance", value: 15550 },
-  { name: "Sales", value: 10550 },
-  { name: "R&D", value: 10400 },
-];
 class AwsComponent extends Component {
   constructor(props) {
     super(props);
@@ -134,6 +36,8 @@ class AwsComponent extends Component {
       spendOverviewTotal: 0,
       topUsedServiceData: [],
       potentialSavingsData: [],
+      costTopAccountsData: [],
+      spendingTrendData: [],
     };
   }
 
@@ -158,6 +62,22 @@ class AwsComponent extends Component {
       cloud: "aws",
       granularity: "quarterly",
       compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getCostTopAccounts({
+      cloud: "aws",
+      account: "all",
+      granularity: "quarterly",
+      compareTo: -1,
+      noOfRecords: 10,
+      order: "top",
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getSpendingTrend({
+      cloud: "aws",
+      granularity: "monthly",
+      compareTo: -1,
+      forcast: true,
       orgId: getCurrentOrgId(),
     });
   };
@@ -193,8 +113,29 @@ class AwsComponent extends Component {
     ) {
       const potentialSavingsData = this.props.potentialSavingsData.data;
       if (potentialSavingsData) {
-        console.log(potentialSavingsData);
         this.maniplatePotentialSavingData(potentialSavingsData.data);
+      }
+    }
+    if (
+      prevProps.costTopAccountsData.status !==
+        this.props.costTopAccountsData.status &&
+      this.props.costTopAccountsData.status === status.SUCCESS &&
+      this.props.costTopAccountsData?.data
+    ) {
+      const costTopAccountsData = this.props.costTopAccountsData.data;
+      if (costTopAccountsData) {
+        this.maniplateCostTopAccountsData(costTopAccountsData.data);
+      }
+    }
+    if (
+      prevProps.spendingTrendData.status !==
+        this.props.spendingTrendData.status &&
+      this.props.spendingTrendData.status === status.SUCCESS &&
+      this.props.spendingTrendData?.data
+    ) {
+      const spendingTrendData = this.props.spendingTrendData.data;
+      if (spendingTrendData) {
+        this.maniplateSpendingTrendData(spendingTrendData.data.forcast);
       }
     }
   }
@@ -233,7 +174,7 @@ class AwsComponent extends Component {
     this.setState({ topUsedServiceData });
   };
 
-  // Manipulate Top Used Service data
+  // Manipulate Potential Saving data
   maniplatePotentialSavingData = (data) => {
     let { potentialSavingsData } = this.state;
     potentialSavingsData = [];
@@ -247,6 +188,38 @@ class AwsComponent extends Component {
       });
     }
     this.setState({ potentialSavingsData });
+  };
+
+  // Manipulate Cost Top Accounts data
+  maniplateCostTopAccountsData = (data) => {
+    let { costTopAccountsData } = this.state;
+    costTopAccountsData = [];
+    if (data?.length) {
+      costTopAccountsData = data.map((obj) => {
+        return {
+          name: obj.department,
+          value: obj.total,
+        };
+      });
+    }
+    this.setState({ costTopAccountsData });
+  };
+
+  // Maniplate Spending Trend data
+  maniplateSpendingTrendData = (data) => {
+    let { spendingTrendData } = this.state;
+    spendingTrendData = [];
+    if (data?.length) {
+      spendingTrendData = data.map((obj) => {
+        return {
+          date: new Date(obj.dates),
+          last_quarter: obj.total,
+          current_quarter: 35000,
+          forecasted_spend: 13000,
+        };
+      });
+    }
+    this.setState({ spendingTrendData });
   };
 
   // Render loder
@@ -264,17 +237,23 @@ class AwsComponent extends Component {
       spendOverviewTotal,
       topUsedServiceData,
       potentialSavingsData,
+      costTopAccountsData,
+      spendingTrendData,
     } = this.state;
     let {
       spendOverviewData: spendoverviewProps,
       topUsedServiceData: topUsedServiceProps,
       potentialSavingsData: potentialSavingsProps,
+      costTopAccountsData: costTopAccountsProps,
+      spendingTrendData: spendingTrendProps,
     } = this.props;
     let spendOverviewLoder = spendoverviewProps.status === status.IN_PROGRESS;
     let topUsedServiceLoder = topUsedServiceProps.status === status.IN_PROGRESS;
     let potentialSavingsLoder =
       potentialSavingsProps.status === status.IN_PROGRESS;
-      // console.log(potentialSavingsData);
+    let costTopAccountsLoder =
+      costTopAccountsProps.status === status.IN_PROGRESS;
+    let spendingTrendLoder = spendingTrendProps.status === status.IN_PROGRESS;
     return (
       <>
         <Box className="reports-charts">
@@ -357,24 +336,32 @@ class AwsComponent extends Component {
                   link: "/app/new-reports/over-view-dashboard/cost-top-accounts",
                 }}
                 ChartComponent={
-                  <VerticalBarchart
-                    data={costOfTopAccounts}
-                    style={{ width: "100%", height: "350" }}
-                  />
+                  costTopAccountsLoder ? (
+                    this.renderLoder()
+                  ) : (
+                    <VerticalBarchart
+                      data={costTopAccountsData}
+                      style={{ width: "100%", height: "350" }}
+                    />
+                  )
                 }
               />
             </Grid>
             <Grid item xs={12} md={12} lg={6}>
               <ChartWrapper
                 ChartComponent={
-                  <MultiLineChart
-                    data={spendTrendData}
-                    labels={[
-                      { name: "Last Quarter", color: "orange" },
-                      { name: "Current Quarter", color: "bule" },
-                      { name: "Forecasted Spend", color: "pink" },
-                    ]}
-                  />
+                  spendingTrendLoder ? (
+                    this.renderLoder()
+                  ) : (
+                    <MultiLineChart
+                      data={spendingTrendData}
+                      labels={[
+                        { name: "Last Quarter", color: "orange" },
+                        { name: "Current Quarter", color: "bule" },
+                        { name: "Forecasted Spend", color: "pink" },
+                      ]}
+                    />
+                  )
                 }
                 data={{
                   title: "Speding Trend",
@@ -391,15 +378,28 @@ class AwsComponent extends Component {
 }
 
 function mapStateToProps(state) {
-  const { spendOverviewData, topUsedServiceData, potentialSavingsData } =
-    state.reports;
-  return { spendOverviewData, topUsedServiceData, potentialSavingsData };
+  const {
+    spendOverviewData,
+    topUsedServiceData,
+    potentialSavingsData,
+    costTopAccountsData,
+    spendingTrendData,
+  } = state.reports;
+  return {
+    spendOverviewData,
+    topUsedServiceData,
+    potentialSavingsData,
+    costTopAccountsData,
+    spendingTrendData,
+  };
 }
 
 const mapDispatchToProps = {
   getSpendOverview,
   getTopUsedService,
   getPotentialSavings,
+  getCostTopAccounts,
+  getSpendingTrend,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AwsComponent);

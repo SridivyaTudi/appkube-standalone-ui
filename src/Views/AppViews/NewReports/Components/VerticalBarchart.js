@@ -2,19 +2,6 @@ import React, { Component } from "react";
 import { Box } from "@mui/material";
 import * as d3 from "d3";
 
-let data = [
-  { name: "IT Infra", value: 90 },
-  { name: "IT Security", value: 80 },
-  { name: "IT Ops", value: 70 },
-  { name: "IT Dev", value: 60 },
-  { name: "Analytics", value: 50 },
-  { name: "HR", value: 40 },
-  { name: "Marketing", value: 30 },
-  { name: "Finance", value: 20 },
-  { name: "Sales", value: 10 },
-  { name: "R&D", value: 5 },
-];
-
 const margin = { top: 50, right: 20, bottom: 40, left: 40 };
 
 // Increase the width and height as needed
@@ -30,8 +17,14 @@ class VerticalBarchart extends Component {
 
   componentDidMount = () => this.renderChart();
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.data !== this.props.data) {
+      this.renderChart();
+    }
+  }
+
   renderChart = () => {
-    // let { data,styleProp } = this.props;
+    let { data } = this.props;
     var tooltip = d3
       .select("#root")
       .data(data)
@@ -115,7 +108,8 @@ class VerticalBarchart extends Component {
   render() {
     return (
       <Box className="vertical-bar-chart">
-        <svg className="vertical-bar-chart-inner-section"
+        <svg
+          className="vertical-bar-chart-inner-section"
           style={{ width: "100%" }}
           ref={this.ref}
           viewBox={`-15 0 ${width} ${height + margin.top + margin.bottom}`}
