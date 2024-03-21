@@ -36,6 +36,7 @@ class AwsComponent extends Component {
       spendOverviewTotal: 0,
       topUsedServiceData: [],
       potentialSavingsData: [],
+      potentialSavingsPercentage: 0,
       costTopAccountsData: [],
       spendingTrendData: [],
     };
@@ -177,7 +178,7 @@ class AwsComponent extends Component {
             value: obj.total,
             color: totalUsedServiceColor[index],
           });
-        } 
+        }
       });
     }
     this.setState({ topUsedServiceData });
@@ -185,18 +186,35 @@ class AwsComponent extends Component {
 
   // Manipulate Potential Saving data
   maniplatePotentialSavingData = (data) => {
-    let { potentialSavingsData } = this.state;
+    let { potentialSavingsData, potentialSavingsPercentage } = this.state;
     potentialSavingsData = [];
     if (data?.length) {
-      potentialSavingsData = data.map((obj, index) => {
-        return {
-          name: obj.instanceType,
-          value: obj.total,
-          color: potentialSavingColor[index],
-        };
+      let total = data.reduce(
+        (total, currentVal) => total + parseInt(currentVal.total),
+        0
+      );
+
+      potentialSavingsData = [];
+      potentialSavingsPercentage = 0;
+      data.forEach((obj, index) => {
+        if (
+          !["PREVIOUS_TOTAL", "CURRENT_TOTAL", "PERCENTAGE"].includes(
+            obj.instanceType
+          )
+        ) {
+          potentialSavingsData.push({
+            name: obj.instanceType,
+            value: obj.total,
+            percentage: parseInt(
+              ((parseInt(obj.total) / total) * 100).toFixed(0)
+            ),
+          });
+        } else if (obj.instanceType === "PERCENTAGE") {
+          potentialSavingsPercentage = obj.total;
+        }
       });
     }
-    this.setState({ potentialSavingsData });
+    this.setState({ potentialSavingsData, potentialSavingsPercentage });
   };
 
   // Manipulate Cost Top Accounts data
@@ -247,7 +265,7 @@ class AwsComponent extends Component {
       topUsedServiceData,
       potentialSavingsData,
       costTopAccountsData,
-      spendingTrendData,
+      spendingTrendData,potentialSavingsPercentage
     } = this.state;
     let {
       spendOverviewData: spendoverviewProps,
@@ -332,7 +350,12 @@ class AwsComponent extends Component {
                   potentialSavingsLoder ? (
                     this.renderLoder()
                   ) : (
-                    <GaugeChart data={potentialSavingsData} />
+                    <GaugeChart
+                      data={potentialSavingsData}
+                      otherData={{
+                        centerValue: `${potentialSavingsPercentage}%`,
+                      }}
+                    />
                   )
                 }
               />

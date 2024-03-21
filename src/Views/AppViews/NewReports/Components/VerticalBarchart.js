@@ -87,20 +87,20 @@ class VerticalBarchart extends Component {
       .attr("height", (d) => height - yScale(d.value))
       .attr("fill", this.props?.color ? this.props?.color : "#FA6298")
       .attr("rx", 5)
-      .on("mouseover", function (d, data) {
-        tooltip.html(
-          `<div class="chart-tooltip-contents p-5"><div class="value">R&D budget </div>
-          <div class="previous-month-data"><span>Budgeted amount</span> <label>$2000</label></div>
-          <div class="previous-month-data"><span>Overspend amount</span> <label>$3000</label></div>
-          <div class="check-details">Check Details <i class="fas fa-chevron-right"></i></div></div>`
-        );
-        return tooltip.style("visibility", "visible");
-      })
-      .on("mousemove", function (d) {
-        return tooltip
-          .style("top", d.pageY - 10 + "px")
-          .style("left", d.pageX + 10 + "px");
-      })
+      // .on("mouseover", function (d, data) {
+      //   tooltip.html(
+      //     `<div class="chart-tooltip-contents p-5"><div class="value">R&D budget </div>
+      //     <div class="previous-month-data"><span>Budgeted amount</span> <label>$2000</label></div>
+      //     <div class="previous-month-data"><span>Overspend amount</span> <label>$3000</label></div>
+      //     <div class="check-details">Check Details <i class="fas fa-chevron-right"></i></div></div>`
+      //   );
+      //   return tooltip.style("visibility", "visible");
+      // })
+      // .on("mousemove", function (d) {
+      //   return tooltip
+      //     .style("top", d.pageY - 10 + "px")
+      //     .style("left", d.pageX + 10 + "px");
+      // })
       .on("mouseout", function () {
         return tooltip.style("visibility", "hidden");
       });

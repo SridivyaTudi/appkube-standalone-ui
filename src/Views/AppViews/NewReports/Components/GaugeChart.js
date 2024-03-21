@@ -3,10 +3,10 @@ import { Box, List, ListItem } from "@mui/material";
 import * as d3 from "d3";
 import { v4 } from "uuid";
 const colorPallate = [
+  "#FF708B",
+  "#FFBA69",
+  "#01F1E3",
   "#8676FF",
-  "#42CD7E",
-  "#FF9066",
-  "#FFCC41",
   "#FF97AA",
   "#34A2C2",
   "#FB4B93",
@@ -27,19 +27,19 @@ class GaugeChart extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log(prevProps);
     if (prevProps.data !== this.props.data) {
       this.renderChart();
     }
   }
 
   renderChart = async () => {
-    let { data } = this.props;
-   
-    var svg = d3
+    let { data, otherData } = this.props;
+
+    let svg = d3
       .select(this.ref.current)
       .attr("width", width)
       .attr("height", height);
+    svg.selectAll("*").remove();
     let tooltip = d3
       .select("#root")
       .data(data)
@@ -52,22 +52,23 @@ class GaugeChart extends Component {
       return d3
         .arc()
         .innerRadius(i * 20 + 30)
-        .outerRadius(i * 20 - 5 + 30);
+        .outerRadius(i * 20 - 5 + 30)
+        .startAngle(0);
     });
 
     var pieData = data.map((v, i) => {
       return [
         {
-          percentage: v.percentage * 0.75,
+          percentage: v.percentage,
           arc: arcs[i],
           name: v.name,
-          color: v.color,
+          color: colorPallate[i],
           value: v.value,
         },
-        { percentage: (100 - v.percentage) * 0.75, arc: arcs[i] },
-        { percentage: 0.25, arc: arcs[i] },
       ];
     });
+    
+
     svg
       .append("text")
       .attr("text-anchor", "middle")
@@ -75,7 +76,7 @@ class GaugeChart extends Component {
       .attr("font-size", "14px")
       .attr("font-weight", "600")
       .attr("fill", "#383874")
-      .text("64.3%")
+      .text(otherData?.centerValue)
       .attr("transform", `translate(${width / 2.05},${height / 1.89})`);
     var pie = d3
       .pie()
@@ -94,10 +95,14 @@ class GaugeChart extends Component {
       .data((d) => pie(d))
       .enter()
       .append("path")
-      .attr("d", (d) => d.data.arc(d))
+      .attr("d", (d) => {
+        d.endAngle = (2 * Math.PI) / (100 / parseInt(d.value));
+        return d.data.arc(d);
+      })
       .attr("fill", (d, i) => {
         return i == 0 ? d.data.color : "#DBDFF1";
       });
+
     var gText = svg
       .selectAll("g.textClass")
       .data(data)
@@ -197,11 +202,7 @@ class GaugeChart extends Component {
   render() {
     return (
       <Box className="gauge-chart">
-        <svg
-          // style={{ width: "100%", height: "auto" }}
-          ref={this.ref}
-          viewBox={`0 0 ${width} ${height}`}
-        ></svg>
+        <svg ref={this.ref} viewBox={`0 0 ${width} ${height}`}></svg>
         <Box className="d-block chart-details">
           <List>{this.renderBarsData(this.props.data)}</List>
         </Box>
