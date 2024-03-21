@@ -69,7 +69,7 @@ class LambdaTable extends Component {
     const { tableData } = this.props;
     if (!tableData.length) {
       return (
-        <Box className="lambda-functions-container p-0">
+        <Box className="lambda-functions-container">
           <Box className="heading">
             {title ? `${title} Functions` : "Lambda Functions"}
           </Box>
