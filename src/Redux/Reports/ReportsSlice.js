@@ -3,6 +3,8 @@ import {
   getSpendOverview,
   getTopUsedService,
   getPotentialSavings,
+  getCostTopAccounts,
+  getSpendingTrend,
 } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -18,6 +20,14 @@ export const ReportsSlice = createSlice({
       data: [],
     },
     potentialSavingsData: {
+      status: null,
+      data: [],
+    },
+    costTopAccountsData: {
+      status: null,
+      data: [],
+    },
+    spendingTrendData: {
       status: null,
       data: [],
     },
@@ -96,6 +106,58 @@ export const ReportsSlice = createSlice({
       return {
         ...state,
         potentialSavingsData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getCostTopAccounts.pending]: (state) => {
+      return {
+        ...state,
+        costTopAccountsData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getCostTopAccounts.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        costTopAccountsData: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getCostTopAccounts.rejected]: (state) => {
+      return {
+        ...state,
+        costTopAccountsData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getSpendingTrend.pending]: (state) => {
+      return {
+        ...state,
+        spendingTrendData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getSpendingTrend.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        spendingTrendData: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getSpendingTrend.rejected]: (state) => {
+      return {
+        ...state,
+        spendingTrendData: {
           status: status.FAILURE,
         },
       };

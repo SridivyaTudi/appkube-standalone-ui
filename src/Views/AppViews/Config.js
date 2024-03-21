@@ -64,7 +64,9 @@ const config = {
   /* Reporting */
   GET_SPEND_OVERVIEW: `/reporting/organization/#org-id#/spend-overview?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
   GET_TOP_USED_SERVICE: `/reporting/organization/#org-id#/top-used-service?service=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#&noOfRecords=#no-of-records#&order=#order#`,
-  GET_POTENTIAL_SERVICES: `/reporting/organization/#org-id#/potential-savings?cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`
+  GET_POTENTIAL_SERVICES: `/reporting/organization/#org-id#/potential-savings?cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
+  GET_COST_TOP_ACCOUNTS: `/reporting/organization/#org-id#/cost-top-accounts?cloud=#cloud-name#&account=#account#&granularity=#granularity#&compareTo=#compare-to#&noOfRecords=#no-of-records#&order=#order#`,
+  GET_SPENDING_TREND: `/reporting/organization/#org-id#/spending-trend?cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#&forcast=#forcast#`
 };
 
 export default config;
