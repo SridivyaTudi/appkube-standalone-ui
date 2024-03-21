@@ -26,6 +26,13 @@ class GaugeChart extends Component {
     this.renderChart();
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    // console.log(prevProps);
+    if (prevProps.data !== this.props.data) {
+      this.renderChart();
+    }
+  }
+
   renderChart = async () => {
     let { data } = this.props;
    

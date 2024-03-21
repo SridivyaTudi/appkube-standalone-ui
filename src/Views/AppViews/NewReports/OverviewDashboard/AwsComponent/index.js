@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import {
   getSpendOverview,
   getTopUsedService,
+  getPotentialSavings,
 } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 import { getCurrentOrgId } from "Utils";
@@ -22,6 +23,8 @@ const totalUsedServiceColor = [
   "#F9D33D",
   "#F9D33D",
 ];
+
+const potentialSavingColor = ["#FF708B", "#FFBA69", "#01F1E3", "#8676FF"];
 
 const spendTrendData = [
   {
@@ -103,6 +106,7 @@ const spendTrendData = [
     forecasted_spend: 22000,
   },
 ];
+
 var potentialSavingData = [
   { color: "#FF708B", percentage: 65, name: "Spot Instace", value: "532" },
   { color: "#FFBA69", percentage: 70, name: "Reserved Ins.", value: 539 },
@@ -129,6 +133,7 @@ class AwsComponent extends Component {
       spendOverviewData: [],
       spendOverviewTotal: 0,
       topUsedServiceData: [],
+      potentialSavingsData: [],
     };
   }
 
@@ -147,6 +152,12 @@ class AwsComponent extends Component {
       compareTo: -1,
       noOfRecords: 10,
       order: "top",
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getPotentialSavings({
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
       orgId: getCurrentOrgId(),
     });
   };
@@ -174,8 +185,19 @@ class AwsComponent extends Component {
         this.maniplateTopUsedServiceData(topUsedServiceData.data);
       }
     }
+    if (
+      prevProps.potentialSavingsData.status !==
+        this.props.potentialSavingsData.status &&
+      this.props.potentialSavingsData.status === status.SUCCESS &&
+      this.props.potentialSavingsData?.data
+    ) {
+      const potentialSavingsData = this.props.potentialSavingsData.data;
+      if (potentialSavingsData) {
+        console.log(potentialSavingsData);
+        this.maniplatePotentialSavingData(potentialSavingsData.data);
+      }
+    }
   }
-  
 
   // Manipulate spendoverview data
   maniplateSpendOverviewData = (data) => {
@@ -211,6 +233,22 @@ class AwsComponent extends Component {
     this.setState({ topUsedServiceData });
   };
 
+  // Manipulate Top Used Service data
+  maniplatePotentialSavingData = (data) => {
+    let { potentialSavingsData } = this.state;
+    potentialSavingsData = [];
+    if (data?.length) {
+      potentialSavingsData = data.map((obj, index) => {
+        return {
+          name: obj.instanceType,
+          value: obj.total,
+          color: potentialSavingColor[index],
+        };
+      });
+    }
+    this.setState({ potentialSavingsData });
+  };
+
   // Render loder
   renderLoder = () => {
     return (
@@ -221,12 +259,22 @@ class AwsComponent extends Component {
   };
 
   render() {
-    let { spendOverviewData, spendOverviewTotal, topUsedServiceData } =
-      this.state;
-    let { spendOverviewData: spendoverviewProps, topUsedServiceData:  topUsedServiceProps} = this.props;
+    let {
+      spendOverviewData,
+      spendOverviewTotal,
+      topUsedServiceData,
+      potentialSavingsData,
+    } = this.state;
+    let {
+      spendOverviewData: spendoverviewProps,
+      topUsedServiceData: topUsedServiceProps,
+      potentialSavingsData: potentialSavingsProps,
+    } = this.props;
     let spendOverviewLoder = spendoverviewProps.status === status.IN_PROGRESS;
     let topUsedServiceLoder = topUsedServiceProps.status === status.IN_PROGRESS;
-    console.log(topUsedServiceData);
+    let potentialSavingsLoder =
+      potentialSavingsProps.status === status.IN_PROGRESS;
+      // console.log(potentialSavingsData);
     return (
       <>
         <Box className="reports-charts">
@@ -292,7 +340,13 @@ class AwsComponent extends Component {
                   labelOfBtn: " View Details",
                   link: "/app/new-reports/over-view-dashboard/potential-sevings",
                 }}
-                ChartComponent={<GaugeChart data={potentialSavingData} />}
+                ChartComponent={
+                  potentialSavingsLoder ? (
+                    this.renderLoder()
+                  ) : (
+                    <GaugeChart data={potentialSavingsData} />
+                  )
+                }
               />
             </Grid>
             <Grid item xs={12} md={7} lg={6}>
@@ -337,13 +391,15 @@ class AwsComponent extends Component {
 }
 
 function mapStateToProps(state) {
-  const { spendOverviewData, topUsedServiceData } = state.reports;
-  return { spendOverviewData, topUsedServiceData };
+  const { spendOverviewData, topUsedServiceData, potentialSavingsData } =
+    state.reports;
+  return { spendOverviewData, topUsedServiceData, potentialSavingsData };
 }
 
 const mapDispatchToProps = {
   getSpendOverview,
   getTopUsedService,
+  getPotentialSavings,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AwsComponent);

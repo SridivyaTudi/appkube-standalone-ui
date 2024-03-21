@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getSpendOverview,
   getTopUsedService,
+  getPotentialSavings,
 } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -13,6 +14,10 @@ export const ReportsSlice = createSlice({
       data: [],
     },
     topUsedServiceData: {
+      status: null,
+      data: [],
+    },
+    potentialSavingsData: {
       status: null,
       data: [],
     },
@@ -65,6 +70,32 @@ export const ReportsSlice = createSlice({
       return {
         ...state,
         topUsedServiceData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getPotentialSavings.pending]: (state) => {
+      return {
+        ...state,
+        potentialSavingsData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getPotentialSavings.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        potentialSavingsData: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getPotentialSavings.rejected]: (state) => {
+      return {
+        ...state,
+        potentialSavingsData: {
           status: status.FAILURE,
         },
       };

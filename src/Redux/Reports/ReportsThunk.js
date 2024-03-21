@@ -49,3 +49,26 @@ export const getTopUsedService = createAsyncThunk(
     }
   }
 );
+
+export const getPotentialSavings = createAsyncThunk(
+  "Reports/getPotentialSavings",
+  async (objIds) => {
+    try {
+      let {
+        orgId,
+        cloud,
+        granularity,
+        compareTo,
+      } = objIds;
+      let url = config.GET_POTENTIAL_SERVICES.replace("#org-id#", orgId)
+        .replace("#cloud-name#", cloud)
+        .replace("#granularity#", granularity)
+        .replace("#compare-to#", compareTo)
+
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

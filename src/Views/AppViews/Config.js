@@ -60,9 +60,11 @@ const config = {
   ADD_DEPARTMENT: `department`,
   ADD_DEPARTMENT_WITH_LANDINGZONE: `/department/add-department-with-landing-zone`,
   GET_LANDINGZONE: `/landingzone/search?organizationId=#org-id#&cloud=#cloud#`,
+
   /* Reporting */
   GET_SPEND_OVERVIEW: `/reporting/organization/#org-id#/spend-overview?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
-  GET_TOP_USED_SERVICE: `/reporting/organization/#org-id#/top-used-service?service=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#&noOfRecords=#no-of-records#&order=#order#`
+  GET_TOP_USED_SERVICE: `/reporting/organization/#org-id#/top-used-service?service=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#&noOfRecords=#no-of-records#&order=#order#`,
+  GET_POTENTIAL_SERVICES: `/reporting/organization/#org-id#/potential-savings?cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`
 };
 
 export default config;
