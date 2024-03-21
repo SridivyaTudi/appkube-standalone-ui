@@ -21,10 +21,10 @@ class HorizontalBarChart extends Component {
 
   renderChart = () => {
     let { data } = this.props;
-    const barHeight = 45;
-    const marginTop = 10;
+    const barHeight = 28;
+    const marginTop = 0;
     const marginRight = 10;
-    const marginBottom = 10;
+    const marginBottom = 0;
     const marginLeft = 80;
     const width = 800;
     const height =
@@ -43,7 +43,7 @@ class HorizontalBarChart extends Component {
     const y = d3
       .scaleBand()
       .domain(d3.sort(data, (d) => -d.value).map((d) => d.label))
-      .rangeRound([marginTop - 20, height - marginBottom])
+      .rangeRound([marginTop, height - marginBottom])
       .padding(0.3);
 
     const yAxis = (g) =>
@@ -77,7 +77,7 @@ class HorizontalBarChart extends Component {
       .attr("x", x(0))
       .attr("y", (d) => y(d.label))
       .attr("width", (d) => x(d.value) - x(0))
-      .attr("height", y.bandwidth() - 20)
+      .attr("height", y.bandwidth() - 5)
       .attr("fill", (d) => (d?.color ? d.color : "steelblue"));
 
     // Append a label for each label.
@@ -117,7 +117,7 @@ class HorizontalBarChart extends Component {
     svg
       .append("g")
       .attr("style", "font-size: 16px", "sans-serif")
-      .attr("transform", `translate(${marginLeft - 10},-10)`)
+      .attr("transform", `translate(${marginLeft - 10},-3)`)
       .call(d3.axisLeft(y).tickSize(0))
       .attr("class", "y-axis")
       .call(yAxis);

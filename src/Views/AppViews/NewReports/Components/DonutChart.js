@@ -59,6 +59,7 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
           .attr("text-anchor", "middle")
           .attr("dominant-baseline", "middle")
           .attr("font-size", "20px")
+          .attr("font-family", "'Poppins', sans-serif")
           .attr("font-weight", "600")
           .attr("fill", "#383874")
           .text(otherData?.centerValue)
@@ -91,7 +92,7 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
           })
           //   legend circles
           .attr("x", -70)
-          .attr("y", 31 - 10)
+          .attr("y", 32 - 10)
           .attr("width", 7)
           .attr("height", 7)
           .attr("rx", 4)
@@ -100,33 +101,34 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
 
         //   legend text
         lg.append("text")
-          .style("font-family", "Georgia")
+          .style("font-family", "'Poppins', sans-serif")
           .style("font-size", "12px")
+          .style("text-transform", "lowercase")
           .attr("x", -60)
           .attr("y", 30)
           .text((d) => {
             let label = `${d.data[1].age_group} ${d.data[1]?.percentage || 0}%`;
             return label;
-          })
-          // .on("mouseover", function (d, data) {
-          //   let label = `${data.data[1]?.age_group} ${
-          //     d.data[1]?.percentage || 0
-          //   }%%`;
+          });
+        // .on("mouseover", function (d, data) {
+        //   let label = `${data.data[1]?.age_group} ${
+        //     d.data[1]?.percentage || 0
+        //   }%%`;
 
-          //   tooltip.html(
-          //     `<div class="chart-tooltip-contents"><div class="value">${label}</div></div>`
-          //   );
-          //   return tooltip.style("visibility", "visible");
-          // })
-          // .on("mousemove", function (d) {
-          //   return tooltip
-          //     .style("top", d.pageY - 30 + "px")
-          //     .style("left", d.pageX - 60 + "px");
-          // })
-          // .on("mouseout", function () {
-          //   return tooltip.style("visibility", "hidden");
-          // })
-          // .append("title");
+        //   tooltip.html(
+        //     `<div class="chart-tooltip-contents"><div class="value">${label}</div></div>`
+        //   );
+        //   return tooltip.style("visibility", "visible");
+        // })
+        // .on("mousemove", function (d) {
+        //   return tooltip
+        //     .style("top", d.pageY - 30 + "px")
+        //     .style("left", d.pageX - 60 + "px");
+        // })
+        // .on("mouseout", function () {
+        //   return tooltip.style("visibility", "hidden");
+        // })
+        // .append("title");
       } catch (error) {
         console.log(error.message);
       }
