@@ -14,6 +14,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import status from "Redux/Constants/CommonDS";
 import { createBiMapping } from "Redux/BIMapping/BIMappingThunk";
 import { getCurrentOrgId } from "Utils";
+import AddNewModulePopup from "./Components/AddNewModulePopup";
 
 const orgId = getCurrentOrgId();
 class ProductCategory extends Component {
@@ -74,13 +75,17 @@ class ProductCategory extends Component {
     let { name: departMentName, id } = this.getUrlDetails();
     let { activeCommonService } = this.state;
 
-    if (
+    if (serviceType === "business") {
+      this.setState({ showCreateModuleModal: true });
+      return 1;
+    } else if (
       serviceType === "common" &&
       !createProductFormData.currentCommonService
     ) {
       ToastMessage.error("Please select the one of the common service.");
       return 0;
     }
+
     this.props.navigate(
       `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/product-category/${createProductFormData?.category
         ?.toLowerCase()
@@ -91,6 +96,7 @@ class ProductCategory extends Component {
       serviceType,
       editServiceId: -1,
       activeCommonService,
+      moduleName: createProductFormData.currentCommonService,
     });
   };
 
@@ -105,7 +111,9 @@ class ProductCategory extends Component {
               <Box className="d-flex icon-buttons">
                 <IconButton
                   className="edit-icon"
-                  onClick={() => this.onClickEditIconBusinessService(index)}
+                  onClick={() =>
+                    this.onClickEditIconBusinessService(index, soa.module)
+                  }
                 >
                   <i class="fas fa-edit"></i>
                 </IconButton>
@@ -132,12 +140,13 @@ class ProductCategory extends Component {
   };
 
   // Click on edit icon from business service.
-  onClickEditIconBusinessService = (editServiceId) => {
+  onClickEditIconBusinessService = (editServiceId, moduleName) => {
     let { createProductFormData } = this.props;
     let passData = JSON.parse(
       JSON.stringify({
         ...createProductFormData,
         editServiceId,
+        moduleName,
       })
     );
     this.props.setProductIntoDepartment(passData);
@@ -150,13 +159,15 @@ class ProductCategory extends Component {
   // Click on edit icon from common service.
   onClickEditIconCommonService = (editServiceId) => {
     let { createProductFormData } = this.props;
+    let moduleName = editServiceId;
     let passData = JSON.parse(
       JSON.stringify({
         ...createProductFormData,
         editServiceId,
+        moduleName,
       })
     );
-    console.log(passData);
+
     this.props.setProductIntoDepartment(passData);
     let { name, id } = this.getUrlDetails();
     this.props.navigate(
@@ -337,8 +348,35 @@ class ProductCategory extends Component {
     });
   };
 
+  handleCreateModuleModal = () => {
+    this.setState({
+      showCreateModuleModal: !this.state.showCreateModuleModal,
+    });
+  };
+
+  onClickAddModule = (moduleName) => {
+    let { createProductFormData } = this.props;
+    let { name: departMentName, id } = this.getUrlDetails();
+    let { activeCommonService } = this.state;
+
+    this.props.navigate(
+      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/product-category/${createProductFormData?.category
+        ?.toLowerCase()
+        ?.replace(" ", "-")}`
+    );
+    this.props.setProductIntoDepartment({
+      ...createProductFormData,
+      serviceType: "business",
+      editServiceId: -1,
+      activeCommonService,
+      moduleName,
+    });
+    this.setState({ showCreateModuleModal: false });
+  };
+
   render() {
-    const { showServiceModal, activeCommonService } = this.state;
+    const { showServiceModal, activeCommonService, showCreateModuleModal } =
+      this.state;
     let { createProductFormData, creationBiMapping } = this.props;
 
     let { name: departMentName, id } = this.getUrlDetails();
@@ -380,7 +418,6 @@ class ProductCategory extends Component {
                   className="primary-btn"
                   variant="contained"
                   onClick={() => this.moveToNextPage("business")}
-                  disabled={this.isBusinessServiceAdded()}
                 >
                   Add
                 </LoadingButton>
@@ -418,8 +455,8 @@ class ProductCategory extends Component {
                       : ""
                   }`}
                   onClick={(e) => {
-                    e.stopPropagation();
                     this.onClickCommonService("search");
+                    e.stopPropagation();
                   }}
                 >
                   <Box className="d-flex icon-buttons">
@@ -427,8 +464,8 @@ class ProductCategory extends Component {
                       <IconButton
                         className="edit-icon"
                         onClick={(e) => {
-                          e.stopPropagation();
                           this.onClickEditIconCommonService("search");
+                          e.stopPropagation();
                         }}
                       >
                         <i class="fas fa-edit"></i>
@@ -461,9 +498,10 @@ class ProductCategory extends Component {
                     {this.isCommonServiceAdded(["security"]) ? (
                       <IconButton
                         className="edit-icon"
-                        onClick={() =>
-                          this.onClickEditIconCommonService("security")
-                        }
+                        onClick={(e) => {
+                          this.onClickEditIconCommonService("security");
+                          e.stopPropagation();
+                        }}
                       >
                         <i class="fas fa-edit"></i>
                       </IconButton>
@@ -504,6 +542,16 @@ class ProductCategory extends Component {
           <ServiceModal
             showModal={showServiceModal}
             handleServiceModal={this.handleServiceModal}
+          />
+        ) : (
+          <></>
+        )}
+
+        {showCreateModuleModal ? (
+          <AddNewModulePopup
+            showModal={showCreateModuleModal}
+            handleCreateModuleModal={this.handleCreateModuleModal}
+            setModuleName={(name) => this.onClickAddModule(name)}
           />
         ) : (
           <></>

@@ -435,7 +435,7 @@ class AwsComponent extends Component {
                   )
                 }
                 data={{
-                  title: "Speding Trend",
+                  title: "Spending Trend",
                   labelOfBtn: " View Details",
                   link: "/app/new-reports/over-view-dashboard/spending-trend",
                 }}
