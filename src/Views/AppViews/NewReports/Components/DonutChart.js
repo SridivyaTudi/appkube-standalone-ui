@@ -24,7 +24,7 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
           .style("visibility", "hidden");
         const radius = Math.min(width, height) / 1.6;
         const innerRadius = radius * 0.6;
-        var colors = ["#FF708B", "#00B929", "#8676FF", "#FFBA69"];
+        var colors = ["#FF708B", "#ffba69", "#f9d33d", "#8676ff"];
         const color = d3
           .scaleOrdinal(colors)
           .domain(data.map((d) => d.age_group));
