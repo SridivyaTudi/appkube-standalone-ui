@@ -594,7 +594,7 @@
         .tiersoc-boxs {
           display: -webkit-box;
           width: 100%;
-          //margin-top: 20px;
+          margin-top: 25px;
           overflow: hidden;
           overflow-x: auto;
 
@@ -800,7 +800,8 @@
   .lambda-functions-container {
     width: 100%;
     display: block;
-    padding: 20px 0;
+    // padding: 20px 0;
+    margin-top: 25px;
 
     .heading {
       display: block;
