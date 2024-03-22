@@ -15,6 +15,23 @@ import status from "Redux/Constants/CommonDS";
 import { createBiMapping } from "Redux/BIMapping/BIMappingThunk";
 import { getCurrentOrgId } from "Utils";
 import AddNewModulePopup from "./Components/AddNewModulePopup";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 const orgId = getCurrentOrgId();
 class ProductCategory extends Component {
@@ -128,7 +145,15 @@ class ProductCategory extends Component {
                 <Box className="product-image">
                   <img src={admissionIcon} alt="" />
                 </Box>
-                <span className="d-block name">{soa.module}</span>
+                <span className="d-block name">
+                <HtmlTooltip
+                    className="table-tooltip"
+                    title={soa.module}
+                  >
+                   {soa.module}
+                  </HtmlTooltip>
+                  
+                  </span>
               </Box>
             </Box>
           );
