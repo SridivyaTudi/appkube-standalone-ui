@@ -136,7 +136,7 @@ class AwsComponent extends Component {
     ) {
       const spendingTrendData = this.props.spendingTrendData.data;
       if (spendingTrendData) {
-        this.maniplateSpendingTrendData(spendingTrendData.data.forcast);
+        this.maniplateSpendingTrendData(spendingTrendData.data);
       }
     }
   }
@@ -236,19 +236,55 @@ class AwsComponent extends Component {
   maniplateSpendingTrendData = (data) => {
     let { spendingTrendData } = this.state;
     spendingTrendData = [];
-    if (data?.length) {
-      spendingTrendData = data.map((obj) => {
-        return {
-          date: new Date(obj.dates),
-          last_quarter: obj.total,
-          current_quarter: 35000,
-          forecasted_spend: 13000,
-        };
-      });
+
+    if (data) {
+      let { current = [], forcast = [], previous = [] } = data;
+      spendingTrendData = this.manipulateDateWiseData(
+        current.concat(forcast, previous)
+      );
     }
     this.setState({ spendingTrendData });
   };
 
+  manipulateDateWiseData = (data) => {
+    let spendTrendData = [];
+    if (data?.length) {
+      let allData = JSON.parse(JSON.stringify(data));
+
+      data.forEach((obj) => {
+        // Find data date wise
+        let sameDateData = JSON.parse(
+          JSON.stringify(allData.filter((spend) => spend.dates === obj.dates))
+        );
+
+        if (sameDateData.length) {
+          let pushData = {
+            date: new Date(obj.dates),
+            last_quarter: 0,
+            current_quarter: 0,
+            forecasted_spend: 0,
+          };
+
+          sameDateData.forEach((sameDate) => {
+            if (sameDate.tenure === "current") {
+              pushData["current_quarter"] = sameDate.total;
+            } else if (sameDate.tenure === "forcast") {
+              pushData["forecasted_spend"] = sameDate.total;
+            } else if (sameDate.tenure === "previous") {
+              pushData["last_quarter"] = sameDate.total;
+            }
+          });
+
+          spendTrendData.push(pushData);
+
+          // Remove data
+          allData = allData.filter((spend) => spend.dates !== obj.dates);
+        }
+      });
+    }
+
+    return spendTrendData;
+  };
   // Render loder
   renderLoder = () => {
     return (
@@ -265,7 +301,8 @@ class AwsComponent extends Component {
       topUsedServiceData,
       potentialSavingsData,
       costTopAccountsData,
-      spendingTrendData,potentialSavingsPercentage
+      spendingTrendData,
+      potentialSavingsPercentage,
     } = this.state;
     let {
       spendOverviewData: spendoverviewProps,
@@ -389,7 +426,7 @@ class AwsComponent extends Component {
                       data={spendingTrendData}
                       labels={[
                         { name: "Last Quarter", color: "orange" },
-                        { name: "Current Quarter", color: "bule" },
+                        { name: "Current Quarter", color: "steelblue" },
                         { name: "Forecasted Spend", color: "pink" },
                       ]}
                     />

@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 let margin = { top: 20, right: 20, bottom: 50, left: 5 },
   width = 524 - margin.left - margin.right,
   height = 270 - margin.top - margin.bottom;
-  
+
 class MultiLineChart extends Component {
   constructor(props) {
     super(props);
@@ -125,13 +125,11 @@ class MultiLineChart extends Component {
       .style("stroke-dasharray", "3, 3")
       .attr("fill", "none")
       .style("stroke", "pink")
-
       .attr("d", valueline3);
 
     // Add the X Axis
     svg
       .append("g")
-
       .attr("transform", "translate(0," + height + ") ")
       .call(
         d3.axisBottom(x).tickFormat((d) => {
@@ -148,7 +146,6 @@ class MultiLineChart extends Component {
     // Add the Y Axis
     svg
       .append("g")
-
       .call(d3.axisLeft(y).tickFormat((d) => "$" + convertDigitToThousand(d)));
 
     let legend = svg
@@ -157,18 +154,20 @@ class MultiLineChart extends Component {
       .enter()
       .append("g")
       .attr("class", "legend")
-      .attr("transform", (d, i) => `translate(${60 + (i * 30)},10)`);
+      .attr("transform", (d, i) => `translate(${60 + i * 30},10)`);
 
     legend
       .append("rect")
       .attr("width", 20)
       .attr("height", 8)
-      .style("fill", (d) => d.color)
       .attr(
         "transform",
         (d, i) =>
           `translate(${i * 80 + 30 * i - 25}, ${height + (margin.bottom - 0)})`
-      );
+      )
+      .attr("fill", (d) => {
+        return d.color;
+      });
 
     legend
       .append("text")
@@ -180,21 +179,21 @@ class MultiLineChart extends Component {
             height + (margin.bottom - 0) + 7
           })`
       )
-      .attr("font-size", "12px ")
-      .on("mouseover", function (d, data) {
-        tooltip.html(
-          `<div class="chart-tooltip-contents"><div class="value">${data.name}</div></div>`
-        );
-        return tooltip.style("visibility", "visible");
-      })
-      .on("mousemove", function (d) {
-        return tooltip
-          .style("top", d.pageY - 10 + "px")
-          .style("left", d.pageX + 10 + "px");
-      })
-      .on("mouseout", function () {
-        return tooltip.style("visibility", "hidden");
-      });
+      .attr("font-size", "12px ");
+    // .on("mouseover", function (d, data) {
+    //   tooltip.html(
+    //     `<div class="chart-tooltip-contents"><div class="value">${data.name}</div></div>`
+    //   );
+    //   return tooltip.style("visibility", "visible");
+    // })
+    // .on("mousemove", function (d) {
+    //   return tooltip
+    //     .style("top", d.pageY - 10 + "px")
+    //     .style("left", d.pageX + 10 + "px");
+    // })
+    // .on("mouseout", function () {
+    //   return tooltip.style("visibility", "hidden");
+    // });
     d3.select(this.ref.current);
   };
   render() {
