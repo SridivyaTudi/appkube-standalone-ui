@@ -50,13 +50,12 @@ class VerticalBarchart extends Component {
     const xAxis = (g) =>
       g
         .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(xScale).tickSize(0))
+        .call(d3.axisBottom(xScale))
         // .call((g) => g.select(".domain").remove())
         .selectAll("text")
-        .style("text-anchor", "end")
-        .attr("dx", "0.80em")
-        .attr("dy", "0.10em")
-        .attr("transform", "translate(0,20)")
+        // .attr("dx", "0.80em")
+        // .attr("dy", "0.10em")
+        .attr("transform", "translate(0,10)")
         .attr("font-size", "14px", "sans-serif");
 
     // .attr("transform", "rotate(-45)");
