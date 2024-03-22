@@ -29,7 +29,14 @@ class HorizontalBarChart extends Component {
     const width = 800;
     const height =
       Math.ceil(data.length * barHeight) + marginTop + marginBottom;
-
+    let tooltip = d3
+      .select("#root")
+      .data(data)
+      .append("div")
+      .attr("class", "chart-tooltip")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
     function make_x_gridlines() {
       return d3.axisBottom(x);
     }
@@ -61,7 +68,6 @@ class HorizontalBarChart extends Component {
       .attr("class", "x grid")
       .attr("transform", `translate(0,${height})`)
       .attr("color", "lightgray")
-
       .call(
         make_x_gridlines()
           .tickSize(-height + 4)
@@ -78,7 +84,21 @@ class HorizontalBarChart extends Component {
       .attr("y", (d) => y(d.label))
       .attr("width", (d) => x(d.value) - x(0))
       .attr("height", y.bandwidth() - 5)
-      .attr("fill", (d) => (d?.color ? d.color : "steelblue"));
+      .attr("fill", (d) => (d?.color ? d.color : "steelblue"))
+      .on("mouseover", function (d, data) {
+        tooltip.html(
+          `<div class="chart-tooltip-contents"><div class="value">$${data.value}</div></div>`
+        );
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (d) {
+        return tooltip
+          .style("top", d.pageY - 30 + "px")
+          .style("left", d.pageX - 60 + "px");
+      })
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
 
     // Append a label for each label.
     svg
@@ -92,7 +112,6 @@ class HorizontalBarChart extends Component {
       .attr("y", (d) => y(d.label) + y.bandwidth() / 2)
       .attr("dy", "0.35em")
       .attr("dx", -4)
-
       .call((text) =>
         text
           .filter((d) => x(d.value) - x(0) < 20) // short bars

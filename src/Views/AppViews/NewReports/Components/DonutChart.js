@@ -51,7 +51,23 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
           .attr("fill", (d, i) => color(i))
           .style("border-radius", "50%")
           .style("fill", (d, i) => color(i))
-          .attr("clip-path", (d, i) => `url(#clip${i})`);
+          .attr("clip-path", (d, i) => `url(#clip${i})`)
+          .on("mouseover", function (d, data) {
+            tooltip.html(
+              `<div class="chart-tooltip-contents"><div class="value">${
+                data?.data?.age_group
+              } : $${data?.data?.population || 0}</div></div>`
+            );
+            return tooltip.style("visibility", "visible");
+          })
+          .on("mousemove", function (d) {
+            return tooltip
+              .style("top", d.pageY - 30 + "px")
+              .style("left", d.pageX - 60 + "px");
+          })
+          .on("mouseout", function () {
+            return tooltip.style("visibility", "hidden");
+          });
 
         //   middle text center text
         svg

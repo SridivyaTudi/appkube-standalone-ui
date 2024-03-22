@@ -26,7 +26,14 @@ class VerticalBarchart extends Component {
 
   renderChart = () => {
     let { data } = this.props;
-
+    let tooltip = d3
+      .select("#root")
+      .data(data)
+      .append("div")
+      .attr("class", "chart-tooltip")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
     const svg = d3.select(this.ref.current);
     const xScale = d3
       .scaleBand()
@@ -44,22 +51,24 @@ class VerticalBarchart extends Component {
       g
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(xScale).tickSize(0))
-        .call((g) => g.select(".domain").remove())
+        // .call((g) => g.select(".domain").remove())
         .selectAll("text")
         .style("text-anchor", "end")
         .attr("dx", "0.80em")
         .attr("dy", "0.10em")
-        .attr("transform", "translate(0,20)rotate(-90)")
+        .attr("transform", "translate(0,20)")
         .attr("font-size", "14px", "sans-serif");
 
     // .attr("transform", "rotate(-45)");
 
     const yAxis = (g) =>
       g
-        .attr("transform", `translate(${margin.left+10},0)`)
-        .call(d3.axisLeft(yScale).tickFormat((d) => "$" + convertDigitToThousand(d)))
-        .attr("font-size", "14px", "sans-serif")
-        .call((g) => g.select(".domain").remove());
+        .attr("transform", `translate(${margin.left + 10},0)`)
+        .call(
+          d3.axisLeft(yScale).tickFormat((d) => "$" + convertDigitToThousand(d))
+        )
+        .attr("font-size", "14px", "sans-serif");
+    // .call((g) => g.select(".domain").remove());
 
     svg.selectAll("*").remove();
 
@@ -78,9 +87,25 @@ class VerticalBarchart extends Component {
       .attr("width", xScale.bandwidth())
       .attr("height", (d) => height - yScale(d.value))
       .attr("fill", this.props?.color ? this.props?.color : "#FA6298")
-      .attr("rx", 5);
+      .attr("rx", 5)
+      .on("mouseover", function (d, data) {
+        tooltip.html(
+          `<div class="chart-tooltip-contents"><div class="value">$${
+            data?.value || 0
+          }</div></div>`
+        );
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (d) {
+        return tooltip
+          .style("top", d.pageY - 30 + "px")
+          .style("left", d.pageX - 60 + "px");
+      })
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
   };
-  
+
   render() {
     return (
       <Box className="vertical-bar-chart">
