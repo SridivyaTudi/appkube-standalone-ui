@@ -394,7 +394,7 @@ class SOATopology extends Component {
                 <Box className="discovered-assets-body">
                   <Grid
                     container
-                    rowSpacing={1}
+                    // rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                   >
                     {this.renderTopologyView()}
