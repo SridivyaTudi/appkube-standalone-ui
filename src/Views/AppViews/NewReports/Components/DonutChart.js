@@ -112,8 +112,7 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
           .attr("width", 7)
           .attr("height", 7)
           .attr("rx", 4)
-          .append("title")
-          .html((d) => d.data[1]);
+          .append("title");
 
         //   legend text
         lg.append("text")
