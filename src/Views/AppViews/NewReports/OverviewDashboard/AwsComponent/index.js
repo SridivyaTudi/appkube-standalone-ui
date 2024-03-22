@@ -18,15 +18,17 @@ import status from "Redux/Constants/CommonDS";
 import { getCurrentOrgId } from "Utils";
 import Loader from "Components/Loader";
 
-const totalUsedServiceColor = [
-  "#A145FF",
-  "#FA6298",
-  "#FAA24B",
-  "#F9D33D",
-  "#F9D33D",
-];
-
-const potentialSavingColor = ["#FF708B", "#FFBA69", "#01F1E3", "#8676FF"];
+const totalUsedServiceColor = {
+  CDN: "#01f1e3",
+  DYNAMODB: "#fa71a3",
+  EC2: "#f9d33d",
+  ECS: "#ffba69",
+  EKS: "#8676ff",
+  KINESYS: "#2b5aff",
+  LAMBDA: "#ff8e3e",
+  RDS: "#fa6298",
+  S3: "#53ca43",
+};
 
 class AwsComponent extends Component {
   constructor(props) {
@@ -167,7 +169,7 @@ class AwsComponent extends Component {
     let { topUsedServiceData } = this.state;
     topUsedServiceData = [];
     if (data?.length) {
-      data.forEach((obj, index) => {
+      data.forEach((obj) => {
         if (
           !["PREVIOUS_TOTAL", "PERCENTAGE", "CURRENT_TOTAL"].includes(
             obj.elementType
@@ -176,7 +178,7 @@ class AwsComponent extends Component {
           topUsedServiceData.push({
             label: obj.elementType,
             value: obj.total,
-            color: totalUsedServiceColor[index],
+            color: totalUsedServiceColor[obj.elementType],
           });
         }
       });

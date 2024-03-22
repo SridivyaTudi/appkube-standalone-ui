@@ -6,8 +6,8 @@ import { convertDigitToThousand } from "Utils";
 const margin = { top: 50, right: 20, bottom: 40, left: 40 };
 
 // Increase the width and height as needed
-const width = 750; // Adjust the width
-const height = 240; // Adjust the height
+const width = 860; // Adjust the width
+const height = 320; // Adjust the height
 
 class VerticalBarchart extends Component {
   constructor(props) {
