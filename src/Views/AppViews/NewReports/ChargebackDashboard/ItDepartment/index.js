@@ -17,16 +17,16 @@ import ServiceIcon7 from "assets/img/report/service-icon7.png";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 let timeSpendData = [
   {
-    name: "Last Month Spend",
+    name: "Last Quarter Spend",
     value: "$10,00",
     percentage: "20",
     subName: " More than previous month",
   },
   {
-    name: "This Month’s Spend",
+    name: "This Quarter Spend",
     value: "$70,000",
     percentage: "20",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
   {
     name: "Avg Daily Spend",
@@ -86,8 +86,8 @@ class ItDepartment extends Component {
       <TableHead>
         <TableRow>
           <TableCell align="left">Service name</TableCell>
-          <TableCell align="center">last month spend </TableCell>
-          <TableCell align="center">This month spend </TableCell>
+          <TableCell align="center">Last quarter spend </TableCell>
+          <TableCell align="center">This quarter spend </TableCell>
           <TableCell align="center">variance</TableCell>
           <TableCell align="center">Actions</TableCell>
         </TableRow>
@@ -168,7 +168,7 @@ class ItDepartment extends Component {
           </Link>
 
           <Button className="light-btn p-l-15 p-r-15">
-            <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+            <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
           </Button>
         </Box>
         <Box className="reports-tab-section m-t-3">

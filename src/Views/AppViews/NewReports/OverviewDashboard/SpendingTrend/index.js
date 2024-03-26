@@ -70,7 +70,7 @@ class SpendingTrend extends Component {
             <i className="fas fa-filter m-r-2"></i> Filter
           </Button>
           <Button className="light-btn p-l-15 p-r-15">
-            <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+            <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
           </Button>
         </Box>
         <Box className="reports-tab-section m-t-3">

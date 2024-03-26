@@ -28,10 +28,10 @@ let timeSpendData = [
     subName: "",
   },
   {
-    name: "Last Month Spend",
+    name: "Last Quarter Spend",
     value: "$90,000",
     percentage: "5",
-    subName: "vs Last Month",
+    subName: "vs Last Quarter",
   },
 ];
 
@@ -308,7 +308,7 @@ class BudgetAccountDetails extends Component {
               <i className="fas fa-filter m-r-2"></i> Filter
             </Button>
             <Button className="light-btn p-l-15 p-r-15">
-              <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+              <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
             </Button>
           </Box>
           <Box className="m-t-4">

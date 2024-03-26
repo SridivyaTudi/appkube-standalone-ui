@@ -8,7 +8,7 @@ import ServiceIcon1 from "assets/img/report/service-icon1.png";
 import AccountTable from "../Components/AccountTable";
 let timeSpendData = [
   {
-    name: "Month to date spend",
+    name: "Quarter to date spend",
     value: "$70,000",
     percentage: "",
     subName: "",
@@ -17,13 +17,13 @@ let timeSpendData = [
     name: "Forecasted Spend",
     value: "$85,000",
     percentage: "15",
-    subName: "vs Last Month",
+    subName: "vs Last Quarter",
   },
   {
-    name: "Last Month Spend",
+    name: "Last Quarter Spend",
     value: "$90,000",
     percentage: "5",
-    subName: "vs Last Month",
+    subName: "vs Last Quarter",
   },
   {
     name: "Avg Daily Spend",
@@ -34,8 +34,8 @@ let timeSpendData = [
 ];
 let tableHeader = [
   "Service name	",
-  "Current month spend",
-  "Last month Spend	",
+  "Current quarter spend",
+  "Last quarter Spend	",
   "Variance",
   "Avg daily spend	",
   "Actions",
@@ -231,7 +231,7 @@ class CostCentralServicesInternal extends Component {
               <i className="fas fa-filter m-r-2"></i> Filter
             </Button>
             <Button className="light-btn p-l-15 p-r-15">
-              <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+              <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
             </Button>
           </Box>
           <Box className="m-t-4">

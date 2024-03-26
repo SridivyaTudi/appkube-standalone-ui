@@ -12,28 +12,28 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 let timeSpendData = [
   {
-    name: "Last Month Spend",
+    name: "Last Quarter Spend",
     value: "$90,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
   {
     name: "Month to date spend ",
     value: "$70,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
   {
     name: "Forecasted Spend ",
     value: "$90,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
   {
     name: "Avg Daily Spend",
     value: "$90,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
 ];
 let computeSpendingTable = [
