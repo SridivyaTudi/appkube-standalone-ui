@@ -6,137 +6,320 @@ import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarch
 import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 import MultiLineChart from "Views/AppViews/NewReports/Components/MultiLineChart";
 import GaugeChart from "Views/AppViews/NewReports/Components/GaugeChart";
-const totalUsedServiceData = [
-  { label: "EC2", value: 4700, color: "#A145FF" },
-  { label: "RDS", value: 4500, color: "#FA6298" },
-  { label: "S3", value: 4300, color: "#FAA24B" },
-  { label: "EKS", value: 4000, color: "#F9D33D" },
-  { label: "Lambda", value: 3800, color: "#F9D33D" },
-];
-let donutData = [
-  {
-    age_group: "Compute Cost",
-    population: 110011100,
-  },
-  {
-    age_group: "Network ",
-    population: 40267984,
-  },
-  {
-    age_group: "Storage",
-    population: 30672088,
-  },
-  {
-    age_group: "Database",
-    population: 53980105,
-  },
-  {
-    age_group: "Others",
-    population: 81489445,
-  },
-];
+import { connect } from "react-redux";
+import {
+  getSpendOverview,
+  getTopUsedService,
+  getPotentialSavings,
+  getCostTopAccounts,
+  getSpendingTrend,
+} from "Redux/Reports/ReportsThunk";
+import status from "Redux/Constants/CommonDS";
+import { getCurrentOrgId } from "Utils";
+import Loader from "Components/Loader";
 
-const spendTrendData = [
-  {
-    date: "1-05-12",
-    last_quarter: 30000,
-    current_quarter: 35000,
-    forecasted_spend: 13000,
-  },
-  {
-    date: "30-04-12",
-    last_quarter: 35000,
-    current_quarter: 40000,
-    forecasted_spend: 23000,
-  },
-  {
-    date: "27-04-12",
-    last_quarter: 60000,
-    current_quarter: 38000,
-    forecasted_spend: 33000,
-  },
-  {
-    date: "26-04-12",
-    last_quarter: 34000,
-    current_quarter: 33000,
-    forecasted_spend: 44000,
-  },
-  {
-    date: "25-04-12",
-    last_quarter: 45000,
-    current_quarter: 20000,
-    forecasted_spend: 27000,
-  },
-  {
-    date: "24-04-12",
-    last_quarter: 33333,
-    current_quarter: 22222,
-    forecasted_spend: 11000,
-  },
-  {
-    date: "23-04-12",
-    last_quarter: 11111,
-    current_quarter: 33333,
-    forecasted_spend: 44000,
-  },
-  {
-    date: "20-04-12",
-    last_quarter: 34000,
-    current_quarter: 44000,
-    forecasted_spend: 40000,
-  },
-  {
-    date: "19-04-12",
-    last_quarter: 44000,
-    current_quarter: 38888,
-    forecasted_spend: 38000,
-  },
-  {
-    date: "18-04-12",
-    last_quarter: 33333,
-    current_quarter: 11111,
-    forecasted_spend: 34000,
-  },
-  {
-    date: "17-04-12",
-    last_quarter: 28000,
-    current_quarter: 38000,
-    forecasted_spend: 32000,
-  },
-  {
-    date: "16-04-12",
-    last_quarter: 29000,
-    current_quarter: 39000,
-    forecasted_spend: 30000,
-  },
-  {
-    date: "13-04-12",
-    last_quarter: 22000,
-    current_quarter: 38000,
-    forecasted_spend: 22000,
-  },
-];
-var potentialSavingData = [
-  { color: "#FF708B", percentage: 65, name: "Spot Instace", value: "532" },
-  { color: "#FFBA69", percentage: 70, name: "Reserved Ins.", value: 539 },
-  { color: "#01F1E3", percentage: 60, name: "Others", value: 4532 },
-  { color: "#8676FF", percentage: 50, name: "Rightsizing", value: 786 },
-];
+const totalUsedServiceColor = {
+  CDN: "#01f1e3",
+  DYNAMODB: "#fa71a3",
+  EC2: "#f9d33d",
+  ECS: "#ffba69",
+  EKS: "#8676ff",
+  KINESYS: "#2b5aff",
+  LAMBDA: "#ff8e3e",
+  RDS: "#fa6298",
+  S3: "#53ca43",
+};
 
-let costOfTopAccounts = [
-  { name: "IT Infra", value: 55000 },
-  { name: "IT Security", value: 45000 },
-  { name: "IT Ops", value: 40000 },
-  { name: "IT Dev", value: 35000 },
-  { name: "Analytics", value: 30000 },
-  { name: "HR", value: 25050 },
-  { name: "Marketing", value: 20050 },
-  { name: "Finance", value: 15550 },
-  { name: "Sales", value: 10550 },
-  { name: "R&D", value: 10400 },
-];
 class AwsComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      spendOverviewData: [],
+      spendOverviewTotal: 0,
+      topUsedServiceData: [],
+      potentialSavingsData: [],
+      potentialSavingsPercentage: 0,
+      costTopAccountsData: [],
+      spendingTrendData: [],
+    };
+  }
+
+  componentDidMount = () => {
+    this.props.getSpendOverview({
+      serviceCategory: "all",
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getTopUsedService({
+      serviceCategory: "all",
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      noOfRecords: 10,
+      order: "top",
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getPotentialSavings({
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getCostTopAccounts({
+      cloud: "aws",
+      account: "all",
+      granularity: "quarterly",
+      compareTo: -1,
+      noOfRecords: 10,
+      order: "top",
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getSpendingTrend({
+      cloud: "aws",
+      granularity: "monthly",
+      compareTo: -1,
+      forcast: true,
+      orgId: getCurrentOrgId(),
+    });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.spendOverviewData.status !==
+        this.props.spendOverviewData.status &&
+      this.props.spendOverviewData.status === status.SUCCESS &&
+      this.props.spendOverviewData?.data
+    ) {
+      const spendOverviewData = this.props.spendOverviewData.data;
+      if (spendOverviewData) {
+        this.maniplateSpendOverviewData(spendOverviewData.data);
+      }
+    }
+    if (
+      prevProps.topUsedServiceData.status !==
+        this.props.topUsedServiceData.status &&
+      this.props.topUsedServiceData.status === status.SUCCESS &&
+      this.props.topUsedServiceData?.data
+    ) {
+      const topUsedServiceData = this.props.topUsedServiceData.data;
+      if (topUsedServiceData) {
+        this.maniplateTopUsedServiceData(topUsedServiceData.data);
+      }
+    }
+    if (
+      prevProps.potentialSavingsData.status !==
+        this.props.potentialSavingsData.status &&
+      this.props.potentialSavingsData.status === status.SUCCESS &&
+      this.props.potentialSavingsData?.data
+    ) {
+      const potentialSavingsData = this.props.potentialSavingsData.data;
+      if (potentialSavingsData) {
+        this.maniplatePotentialSavingData(potentialSavingsData.data);
+      }
+    }
+    if (
+      prevProps.costTopAccountsData.status !==
+        this.props.costTopAccountsData.status &&
+      this.props.costTopAccountsData.status === status.SUCCESS &&
+      this.props.costTopAccountsData?.data
+    ) {
+      const costTopAccountsData = this.props.costTopAccountsData.data;
+      if (costTopAccountsData) {
+        this.maniplateCostTopAccountsData(costTopAccountsData.data);
+      }
+    }
+    if (
+      prevProps.spendingTrendData.status !==
+        this.props.spendingTrendData.status &&
+      this.props.spendingTrendData.status === status.SUCCESS &&
+      this.props.spendingTrendData?.data
+    ) {
+      const spendingTrendData = this.props.spendingTrendData.data;
+      if (spendingTrendData) {
+        this.maniplateSpendingTrendData(spendingTrendData.data);
+      }
+    }
+  }
+
+  // Manipulate spendoverview data
+  maniplateSpendOverviewData = (data) => {
+    let { spendOverviewData, spendOverviewTotal } = this.state;
+    spendOverviewTotal = 0;
+    spendOverviewData = [];
+    if (data?.length) {
+      data.forEach((obj) => {
+        if (!["Grand Total"].includes(obj.serviceCategory)) {
+          spendOverviewData.push({
+            age_group: obj.serviceCategory,
+            population: obj.total,
+            percentage: obj.percentage,
+          });
+        } else {
+          spendOverviewTotal = parseInt(obj.total);
+        }
+      });
+    }
+    this.setState({ spendOverviewData, spendOverviewTotal });
+  };
+
+  // Manipulate Top Used Service data
+  maniplateTopUsedServiceData = (data) => {
+    let { topUsedServiceData } = this.state;
+    topUsedServiceData = [];
+    if (data?.length) {
+      data.forEach((obj) => {
+        if (
+          !["PREVIOUS_TOTAL", "PERCENTAGE", "CURRENT_TOTAL"].includes(
+            obj.elementType
+          )
+        ) {
+          topUsedServiceData.push({
+            label: obj.elementType,
+            value: obj.total,
+            color: totalUsedServiceColor[obj.elementType],
+          });
+        }
+      });
+    }
+    this.setState({ topUsedServiceData });
+  };
+
+  // Manipulate Potential Saving data
+  maniplatePotentialSavingData = (data) => {
+    let { potentialSavingsData, potentialSavingsPercentage } = this.state;
+    potentialSavingsData = [];
+    if (data?.length) {
+      let total = data.reduce(
+        (total, currentVal) => total + parseInt(currentVal.total),
+        0
+      );
+
+      potentialSavingsData = [];
+      potentialSavingsPercentage = 0;
+      data.forEach((obj, index) => {
+        if (
+          !["PREVIOUS_TOTAL", "CURRENT_TOTAL", "PERCENTAGE"].includes(
+            obj.instanceType
+          )
+        ) {
+          potentialSavingsData.push({
+            name: obj.instanceType,
+            value: obj.total,
+            percentage: parseInt(
+              ((parseInt(obj.total) / total) * 100).toFixed(0)
+            ),
+          });
+        } else if (obj.instanceType === "PERCENTAGE") {
+          potentialSavingsPercentage = obj.total;
+        }
+      });
+    }
+    this.setState({ potentialSavingsData, potentialSavingsPercentage });
+  };
+
+  // Manipulate Cost Top Accounts data
+  maniplateCostTopAccountsData = (data) => {
+    let { costTopAccountsData } = this.state;
+    costTopAccountsData = [];
+    if (data?.length) {
+      costTopAccountsData = data.map((obj) => {
+        return {
+          name: obj.department,
+          value: obj.total,
+        };
+      });
+    }
+    this.setState({ costTopAccountsData });
+  };
+
+  // Maniplate Spending Trend data
+  maniplateSpendingTrendData = (data) => {
+    let { spendingTrendData } = this.state;
+    spendingTrendData = [];
+
+    if (data) {
+      let { current = [], forcast = [], previous = [] } = data;
+      spendingTrendData = this.manipulateDateWiseData(
+        current.concat(forcast, previous)
+      );
+    }
+    this.setState({ spendingTrendData });
+  };
+
+  manipulateDateWiseData = (data) => {
+    let spendTrendData = [];
+    if (data?.length) {
+      let allData = JSON.parse(JSON.stringify(data));
+
+      data.forEach((obj) => {
+        // Find data date wise
+        let sameDateData = JSON.parse(
+          JSON.stringify(allData.filter((spend) => spend.dates === obj.dates))
+        );
+
+        if (sameDateData.length) {
+          let pushData = {
+            date: new Date(obj.dates),
+            last_quarter: 0,
+            current_quarter: 0,
+            forecasted_spend: 0,
+          };
+
+          sameDateData.forEach((sameDate) => {
+            if (sameDate.tenure === "current") {
+              pushData["current_quarter"] = sameDate.total;
+            } else if (sameDate.tenure === "forcast") {
+              pushData["forecasted_spend"] = sameDate.total;
+            } else if (sameDate.tenure === "previous") {
+              pushData["last_quarter"] = sameDate.total;
+            }
+          });
+
+          spendTrendData.push(pushData);
+
+          // Remove data
+          allData = allData.filter((spend) => spend.dates !== obj.dates);
+        }
+      });
+    }
+
+    return spendTrendData;
+  };
+  // Render loder
+  renderLoder = () => {
+    return (
+      <Box className="chart-loader">
+        <Loader />
+      </Box>
+    );
+  };
+
   render() {
+    let {
+      spendOverviewData,
+      spendOverviewTotal,
+      topUsedServiceData,
+      potentialSavingsData,
+      costTopAccountsData,
+      spendingTrendData,
+      potentialSavingsPercentage,
+    } = this.state;
+    let {
+      spendOverviewData: spendoverviewProps,
+      topUsedServiceData: topUsedServiceProps,
+      potentialSavingsData: potentialSavingsProps,
+      costTopAccountsData: costTopAccountsProps,
+      spendingTrendData: spendingTrendProps,
+    } = this.props;
+    let spendOverviewLoder = spendoverviewProps.status === status.IN_PROGRESS;
+    let topUsedServiceLoder = topUsedServiceProps.status === status.IN_PROGRESS;
+    let potentialSavingsLoder =
+      potentialSavingsProps.status === status.IN_PROGRESS;
+    let costTopAccountsLoder =
+      costTopAccountsProps.status === status.IN_PROGRESS;
+    let spendingTrendLoder = spendingTrendProps.status === status.IN_PROGRESS;
     return (
       <>
         <Box className="reports-charts">
@@ -145,18 +328,22 @@ class AwsComponent extends Component {
               <ChartWrapper
                 data={{
                   title: "Spend Overview",
-                  labelOfBtn: " View Details",
+                  labelOfBtn: "View Details",
                   link: "/app/new-reports/over-view-dashboard/spend-overview",
                 }}
                 ChartComponent={
-                  <DonutChart
-                    data={donutData}
-                    width={250}
-                    height={300}
-                    otherData={{
-                      centerValue: "$10,000",
-                    }}
-                  />
+                  spendOverviewLoder ? (
+                    this.renderLoder()
+                  ) : (
+                    <DonutChart
+                      data={spendOverviewData}
+                      width={250}
+                      height={300}
+                      otherData={{
+                        centerValue: `$${spendOverviewTotal}`,
+                      }}
+                    />
+                  )
                 }
               />
             </Grid>
@@ -169,21 +356,25 @@ class AwsComponent extends Component {
                   link: "/app/new-reports/over-view-dashboard/top-use-services",
                 }}
                 ChartComponent={
-                  <HorizontalBarChart
-                    data={totalUsedServiceData}
-                    chardBeforeRenderHTML={
-                      <Box className="total-cost-incurred">
-                        <p>
-                          {" "}
-                          90,579{" "}
-                          <span>
+                  topUsedServiceLoder ? (
+                    this.renderLoder()
+                  ) : (
+                    <HorizontalBarChart
+                      data={topUsedServiceData}
+                      chardBeforeRenderHTML={
+                        <Box className="total-cost-incurred">
+                          <p>
                             {" "}
-                            <i class="fas fa-sort-up p-l-5"></i> 10 &#37;
-                          </span>
-                        </p>
-                      </Box>
-                    }
-                  />
+                            90,579{" "}
+                            <span>
+                              {" "}
+                              <i class="fas fa-sort-up p-l-5"></i> 10 &#37;
+                            </span>
+                          </p>
+                        </Box>
+                      }
+                    />
+                  )
                 }
               />
             </Grid>
@@ -194,7 +385,18 @@ class AwsComponent extends Component {
                   labelOfBtn: " View Details",
                   link: "/app/new-reports/over-view-dashboard/potential-sevings",
                 }}
-                ChartComponent={<GaugeChart data={potentialSavingData} />}
+                ChartComponent={
+                  potentialSavingsLoder ? (
+                    this.renderLoder()
+                  ) : (
+                    <GaugeChart
+                      data={potentialSavingsData}
+                      otherData={{
+                        centerValue: `${potentialSavingsPercentage}%`,
+                      }}
+                    />
+                  )
+                }
               />
             </Grid>
             <Grid item xs={12} md={7} lg={6}>
@@ -205,27 +407,35 @@ class AwsComponent extends Component {
                   link: "/app/new-reports/over-view-dashboard/cost-top-accounts",
                 }}
                 ChartComponent={
-                  <VerticalBarchart
-                    data={costOfTopAccounts}
-                    style={{ width: "100%", height: "350" }}
-                  />
+                  costTopAccountsLoder ? (
+                    this.renderLoder()
+                  ) : (
+                    <VerticalBarchart
+                      data={costTopAccountsData}
+                      style={{ width: "100%", height: "350" }}
+                    />
+                  )
                 }
               />
             </Grid>
             <Grid item xs={12} md={12} lg={6}>
               <ChartWrapper
                 ChartComponent={
-                  <MultiLineChart
-                    data={spendTrendData}
-                    labels={[
-                      { name: "Last Quarter", color: "orange" },
-                      { name: "Current Quarter", color: "bule" },
-                      { name: "Forecasted Spend", color: "pink" },
-                    ]}
-                  />
+                  spendingTrendLoder ? (
+                    this.renderLoder()
+                  ) : (
+                    <MultiLineChart
+                      data={spendingTrendData}
+                      labels={[
+                        { name: "Last Quarter", color: "orange" },
+                        { name: "Current Quarter", color: "steelblue" },
+                        { name: "Forecasted Spend", color: "pink" },
+                      ]}
+                    />
+                  )
                 }
                 data={{
-                  title: "Speding Trend",
+                  title: "Spending Trend",
                   labelOfBtn: " View Details",
                   link: "/app/new-reports/over-view-dashboard/spending-trend",
                 }}
@@ -238,4 +448,29 @@ class AwsComponent extends Component {
   }
 }
 
-export default AwsComponent;
+function mapStateToProps(state) {
+  const {
+    spendOverviewData,
+    topUsedServiceData,
+    potentialSavingsData,
+    costTopAccountsData,
+    spendingTrendData,
+  } = state.reports;
+  return {
+    spendOverviewData,
+    topUsedServiceData,
+    potentialSavingsData,
+    costTopAccountsData,
+    spendingTrendData,
+  };
+}
+
+const mapDispatchToProps = {
+  getSpendOverview,
+  getTopUsedService,
+  getPotentialSavings,
+  getCostTopAccounts,
+  getSpendingTrend,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AwsComponent);

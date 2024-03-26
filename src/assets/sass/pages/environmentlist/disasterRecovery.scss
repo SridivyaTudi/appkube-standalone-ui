@@ -9,21 +9,10 @@
     .tabs-head {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       width: 100%;
 
-      h3 {
-        font-size: 24px;
-        font-weight: 500;
-        line-height: 36px;
-        color: #383874;
-        margin-bottom: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 20%;
-        text-align: left;
-      }
+      
       ul {
         display: inline-flex;
         width: auto;
@@ -53,57 +42,12 @@
           }
         }
       }
-      .breadcrumbs-content {
-        display: inline-flex;
-        width: auto;
-        ul {
-          display: inline-flex;
-          background: none;
-          padding: 0;
-
-          li {
-            display: inline-flex;
-            padding-left: 3px;
-            padding-right: 3px;
-            line-height: 32px;
-            align-items: center;
-            font-size: 12px;
-            color: #8676ff;
-            font-weight: 400;
-
-            &.active {
-              font-weight: 600;
-              cursor: auto;
-              color: #414d55;
-              background: transparent;
-              span {
-                max-width: 140px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              }
-            }
-
-            a {
-              color: #8676ff;
-              width: 75px;
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-            }
-
-            i {
-              font-size: 10px;
-              color: #414d55;
-            }
-          }
-        }
-      }
+     
     }
     .tabs-content {
       display: block;
       width: 100%;
-      margin-top: 20px;
+      margin-top: 25px;
 
       .open-close {
         width: 28px;

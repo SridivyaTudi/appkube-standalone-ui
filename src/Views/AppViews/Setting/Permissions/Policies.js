@@ -275,7 +275,7 @@ class Policies extends Component {
             />
           ) : (
             <Box className="group-control-boxs">
-              <Box className="group-loader h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
+              <Box className="group-loader h-100  width-100 text-center  p-t-20 p-b-20">
                 <h5 className="m-t-0 m-b-0">There are no policy available.</h5>
               </Box>
             </Box>

@@ -87,6 +87,49 @@ class ThreeTierTopology extends Component {
       this.getUrlDetails();
     return (
       <Box className="disaster-recovery-container environment-container">
+        <Box className="list-heading">
+          <HtmlTooltip className="table-tooltip" title={productName}>
+            <h3>{productName}</h3>
+          </HtmlTooltip>
+          <Box className="breadcrumbs">
+            <ul>
+              <li>
+                <Link
+                  to={`${APP_PREFIX_PATH}/environments`}
+                  onClick={() => removeActiveTabInEnvironmentData()}
+                >
+                  <HtmlTooltip className="table-tooltip" title={`Environments`}>
+                    Environments
+                  </HtmlTooltip>
+                </Link>
+              </li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li>
+                <Link
+                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+                >
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={`${cloudName} ${landingZone}`}
+                  >
+                    {cloudName} &nbsp;(
+                    {landingZone})
+                  </HtmlTooltip>
+                </Link>
+              </li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">
+                <HtmlTooltip className="table-tooltip" title={productName}>
+                  {productName}
+                </HtmlTooltip>
+              </li>
+            </ul>
+          </Box>
+        </Box>
         {isActivityViewDetails ? (
           <ActivityLogViewDetails
             backToDRS={() => {
@@ -96,54 +139,13 @@ class ThreeTierTopology extends Component {
         ) : (
           <Box className="services-panel-tabs">
             <Box className="tabs-head ">
-              <HtmlTooltip className="table-tooltip" title={productName}>
-                <h3>{productName}</h3>
-              </HtmlTooltip>
               <TabsMenu
                 tabs={this.tabMapping}
                 setActiveTab={this.setActiveTab}
                 activeTab={activeTab}
-                breakWidth={1280}
+                breakWidth={767}
                 key={v4()}
               />
-              <Box className="breadcrumbs-content">
-                <ul>
-                  <li>
-                    <Link to={`${APP_PREFIX_PATH}/environments`} onClick={()=>removeActiveTabInEnvironmentData()}>
-                      <HtmlTooltip
-                        className="table-tooltip"
-                        title={`Environments`}
-                      >
-                        Environments
-                      </HtmlTooltip>
-                    </Link>
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-chevron-right"></i>
-                  </li>
-                  <li>
-                    <Link
-                      to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
-                    >
-                      <HtmlTooltip
-                        className="table-tooltip"
-                        title={`${cloudName} ${landingZone}`}
-                      >
-                        {cloudName} &nbsp;(
-                        {landingZone})
-                      </HtmlTooltip>
-                    </Link>
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-chevron-right"></i>
-                  </li>
-                  <li className="active">
-                    <HtmlTooltip className="table-tooltip" title={productName}>
-                      {productName}
-                    </HtmlTooltip>
-                  </li>
-                </ul>
-              </Box>
             </Box>
             <Box className="tabs-content">
               {activeTab === 0 && <Topology />}

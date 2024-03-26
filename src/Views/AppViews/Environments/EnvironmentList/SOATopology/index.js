@@ -324,62 +324,66 @@ class SOATopology extends Component {
 
     return (
       <Box className="disaster-recovery-container environment-container">
+        <Box className="list-heading">
+          <HtmlTooltip className="table-tooltip" title={productName}>
+            <h3>{productName}</h3>
+          </HtmlTooltip>
+          <Box className="breadcrumbs">
+            <ul>
+              <li>
+                <HtmlTooltip
+                  className="table-tooltip"
+                  title={<span>Environments</span>}
+                >
+                  <Link
+                    to={`${APP_PREFIX_PATH}/environments`}
+                    onClick={() => removeActiveTabInEnvironmentData()}
+                  >
+                    Environments
+                  </Link>
+                </HtmlTooltip>
+              </li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li>
+                <HtmlTooltip
+                  className="table-tooltip"
+                  title={
+                    <>
+                      {cloudName} &nbsp;(
+                      {landingZone})
+                    </>
+                  }
+                >
+                  <Link
+                    to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+                  >
+                    {cloudName} &nbsp;(
+                    {landingZone})
+                  </Link>
+                </HtmlTooltip>
+              </li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active">
+                <HtmlTooltip className="table-tooltip" title={productName}>
+                  <span>{productName}</span>
+                </HtmlTooltip>
+              </li>
+            </ul>
+          </Box>
+        </Box>
         <Box className="services-panel-tabs">
           <Box className="tabs-head ">
-            <HtmlTooltip className="table-tooltip" title={productName}>
-              <h3>{productName}</h3>
-            </HtmlTooltip>
-
             <TabsMenu
               tabs={this.tabMapping}
               setActiveTab={this.setActiveTab}
               activeTab={activeTab}
-              breakWidth={1280}
+              breakWidth={767}
               key={v4()}
             />
-            <Box className="breadcrumbs-content">
-              <ul>
-                <li>
-                  <HtmlTooltip
-                    className="table-tooltip"
-                    title={<span>Environments</span>}
-                  >
-                    <Link to={`${APP_PREFIX_PATH}/environments`} onClick={()=>removeActiveTabInEnvironmentData()}>
-                      Environments
-                    </Link>
-                  </HtmlTooltip>
-                </li>
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
-                <li>
-                  <HtmlTooltip
-                    className="table-tooltip"
-                    title={
-                      <>
-                        {cloudName} &nbsp;(
-                        {landingZone})
-                      </>
-                    }
-                  >
-                    <Link
-                      to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
-                    >
-                      {cloudName} &nbsp;(
-                      {landingZone})
-                    </Link>
-                  </HtmlTooltip>
-                </li>
-                <li>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </li>
-                <li className="active">
-                  <HtmlTooltip className="table-tooltip" title={productName}>
-                    <span>{productName}</span>
-                  </HtmlTooltip>
-                </li>
-              </ul>
-            </Box>
           </Box>
           <Box className="tabs-content">
             <Box
@@ -390,7 +394,7 @@ class SOATopology extends Component {
                 <Box className="discovered-assets-body">
                   <Grid
                     container
-                    rowSpacing={1}
+                    // rowSpacing={1}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                   >
                     {this.renderTopologyView()}

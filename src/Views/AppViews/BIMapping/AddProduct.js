@@ -22,7 +22,6 @@ class AddProduct extends Component {
         name: "",
         environment: "",
         category: PRODUCT_CATEGORY_ENUM.THREE_TIER,
-        moduleName: "",
       },
     };
   }
@@ -30,13 +29,11 @@ class AddProduct extends Component {
   componentDidMount = () => {
     let { createProductFormData } = this.props;
     if (createProductFormData) {
-      let { productName, category, moduleName, environment } =
-        createProductFormData;
+      let { productName, category, environment } = createProductFormData;
       let formData = {
         name: productName,
         environment,
         category: category || PRODUCT_CATEGORY_ENUM.THREE_TIER,
-        moduleName,
       };
       this.setState({ formData });
     }
@@ -131,7 +128,8 @@ class AddProduct extends Component {
     return environments.map((environment) => {
       return (
         <ListItem
-          className={`${environment === formData.environment ? "active" : ""}`} key={v4()}
+          className={`${environment === formData.environment ? "active" : ""}`}
+          key={v4()}
         >
           <Button
             className="secondary-btn min-width"
@@ -185,15 +183,6 @@ class AddProduct extends Component {
           isValid = false;
         } else {
           errors.category = "";
-        }
-
-        if (formData.category === PRODUCT_CATEGORY_ENUM.SOA) {
-          if (!formData.moduleName) {
-            errors.moduleName = "Please enter the module name.";
-            isValid = false;
-          } else {
-            errors.moduleName = "";
-          }
         }
       }
     }
@@ -346,37 +335,6 @@ class AddProduct extends Component {
                               <span className="red">{errors.category}</span>
                             ) : (
                               ""
-                            )}
-                            {formData.category === PRODUCT_CATEGORY_ENUM.SOA ? (
-                              <Box className="form-group m-t-2">
-                                <label
-                                  htmlFor="moduleName"
-                                  className="form-label"
-                                >
-                                  Module Name
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="moduleName"
-                                  name="moduleName"
-                                  placeholder=""
-                                  value={formData.moduleName}
-                                  onChange={this.handleInputChange}
-                                  onKeyPress={(e) =>
-                                    e.key === "Enter" ? this.handleNext(e) : ""
-                                  }
-                                />
-                                {isSubmit && errors?.moduleName ? (
-                                  <span className="red">
-                                    {errors.moduleName}
-                                  </span>
-                                ) : (
-                                  ""
-                                )}
-                              </Box>
-                            ) : (
-                              <></>
                             )}
                           </Box>
                         ) : (

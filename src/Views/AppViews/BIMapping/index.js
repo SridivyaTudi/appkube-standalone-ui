@@ -76,6 +76,17 @@ let headers = [
     styled: {},
   },
 ];
+
+function makeStringForUrl(str) {
+  try {
+    return str
+      .replace(/[^a-zA-Z0-9 ]/g, "")
+      .replace(/\s+/g, "-")
+      .toLowerCase();
+  } catch (error) {
+    return str;
+  }
+}
 class BIMapping extends Component {
   TYPE = {
     ORGANIZATION: "organization",
@@ -186,9 +197,9 @@ class BIMapping extends Component {
         id,
         isLink: type === this.TYPE.DEPARTMENT,
         url: isTypeDepartment
-          ? `/app/bim/add-product/${dataDetails?.name
-              ?.toLowerCase()
-              ?.replaceAll(" ", "-")}/${dataDetails?.id}`
+          ? `/app/bim/add-product/${makeStringForUrl(dataDetails?.name)}/${
+              dataDetails?.id
+            }`
           : "",
         chlidren: [],
         type,

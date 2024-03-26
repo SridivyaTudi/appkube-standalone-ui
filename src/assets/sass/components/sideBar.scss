@@ -13,6 +13,7 @@
   transition: width 0.2s;
   flex: 1;
   flex-direction: column;
+    
 
   &.open {
     width: 200px;
@@ -170,8 +171,8 @@
         width: 100%;
         height: auto;
         cursor: pointer;
-        margin-top: 15px;
-        margin-bottom: 15px;
+        margin-top: 12px;
+        margin-bottom: 12px;
         position: relative;
         padding-left: 10px;
         padding-right: 14px;

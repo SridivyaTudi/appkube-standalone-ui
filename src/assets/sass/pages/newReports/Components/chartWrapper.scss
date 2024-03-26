@@ -10,6 +10,7 @@
   box-shadow: 0px 6.650102138519287px 5.32008171081543px 0px #6c49ac07;
   box-shadow: 0px 12.521552085876465px 10.017241477966309px 0px #6c49ac09;
   box-shadow: 0px 22.3363094329834px 17.869047164916992px 0px #6c49ac0b;
+ 
 
   .heading {
     display: flex;
@@ -54,6 +55,12 @@
   .chart-content {
     display: block;
     width: 100%;
+    .chart-loader{
+      height: 285px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .spend-overview-chart {
       width: 100%;
       overflow: hidden;

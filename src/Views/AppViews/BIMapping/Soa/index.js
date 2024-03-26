@@ -533,7 +533,7 @@ class Soa extends Component {
 
     let editId = createProductFormData["editServiceId"];
     let soaData = createProductFormData["soaData"];
-
+   
     if (["search", "security"].includes(editId)) {
       soaData.forEach((soa, index) => {
         if (soa.currentCommonService === editId) {
@@ -677,6 +677,7 @@ class Soa extends Component {
           soaData,
           "3_tierData": null,
           currentCommonService: "",
+          moduleName:''
         })
       );
       this.props.setProductIntoDepartment(passData);
@@ -1157,7 +1158,7 @@ class Soa extends Component {
       createProductFormData,
       creationBiMapping,
     } = this.props;
-
+    console.log(createProductFormData)
     return (
       <Box className="bimapping-container">
         {this.renderHeading()}

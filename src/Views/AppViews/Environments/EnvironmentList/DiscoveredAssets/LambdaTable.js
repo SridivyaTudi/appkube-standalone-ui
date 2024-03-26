@@ -71,7 +71,7 @@ class LambdaTable extends Component {
       return (
         <Box className="lambda-functions-container">
           <Box className="heading">
-            {title ? `${title} Functions` : "Lambda Functions"}
+            <h4> {title ? `${title} Functions` : "Lambda Functions"}</h4>
           </Box>
           <Box className="lambda-functions-table-section">
             <h3>No Data available!</h3>
@@ -82,7 +82,7 @@ class LambdaTable extends Component {
     return (
       <Box className="lambda-functions-container">
         <Box className="heading">
-          {title ? `${title} Functions` : "Lambda Functions"}
+          <h4>{title ? `${title} Functions` : "Lambda Functions"}</h4>
         </Box>
         <Box className="lambda-functions-table-section">
           <TableContainer className="table">
@@ -135,7 +135,7 @@ class LambdaTable extends Component {
                         className="table-tooltip"
                         title={row.environment}
                       >
-                           <span> {row.environment} </span>
+                        <span> {row.environment} </span>
                       </HtmlTooltip>
                     </TableCell>
                     <TableCell align="center">{row.actions}</TableCell>

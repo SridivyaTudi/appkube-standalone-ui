@@ -13,17 +13,30 @@ class HorizontalBarChart extends Component {
     this.renderChart();
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.data !== this.props.data) {
+      this.renderChart();
+    }
+  }
+
   renderChart = () => {
     let { data } = this.props;
-    const barHeight = 45;
-    const marginTop = 10;
+    const barHeight = 28;
+    const marginTop = 0;
     const marginRight = 10;
-    const marginBottom = 10;
-    const marginLeft = 80;
+    const marginBottom = 0;
+    const marginLeft = 105;
     const width = 800;
-    const height = 
+    const height =
       Math.ceil(data.length * barHeight) + marginTop + marginBottom;
-
+    let tooltip = d3
+      .select("#root")
+      .data(data)
+      .append("div")
+      .attr("class", "chart-tooltip")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
     function make_x_gridlines() {
       return d3.axisBottom(x);
     }
@@ -31,13 +44,13 @@ class HorizontalBarChart extends Component {
     // Create the scales.
     const x = d3
       .scaleLinear()
-      .domain([0, d3.max(data, (d) => d.value)])
+      .domain([0, d3.max(data, (d) => parseInt(d.value))])
       .range([marginLeft, width - marginRight]);
 
     const y = d3
       .scaleBand()
       .domain(d3.sort(data, (d) => -d.value).map((d) => d.label))
-      .rangeRound([marginTop - 20, height - marginBottom])
+      .rangeRound([marginTop, height - marginBottom])
       .padding(0.3);
 
     const yAxis = (g) =>
@@ -55,7 +68,6 @@ class HorizontalBarChart extends Component {
       .attr("class", "x grid")
       .attr("transform", `translate(0,${height})`)
       .attr("color", "lightgray")
-
       .call(
         make_x_gridlines()
           .tickSize(-height + 4)
@@ -71,8 +83,22 @@ class HorizontalBarChart extends Component {
       .attr("x", x(0))
       .attr("y", (d) => y(d.label))
       .attr("width", (d) => x(d.value) - x(0))
-      .attr("height", y.bandwidth() - 20)
-      .attr("fill", (d) => (d?.color ? d.color : "steelblue"));
+      .attr("height", y.bandwidth() - 5)
+      .attr("fill", (d) => (d?.color ? d.color : "steelblue"))
+      .on("mouseover", function (d, data) {
+        tooltip.html(
+          `<div class="chart-tooltip-contents"><div class="value">$${data.value}</div></div>`
+        );
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (d) {
+        return tooltip
+          .style("top", d.pageY - 30 + "px")
+          .style("left", d.pageX - 60 + "px");
+      })
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
 
     // Append a label for each label.
     svg
@@ -86,7 +112,6 @@ class HorizontalBarChart extends Component {
       .attr("y", (d) => y(d.label) + y.bandwidth() / 2)
       .attr("dy", "0.35em")
       .attr("dx", -4)
-
       .call((text) =>
         text
           .filter((d) => x(d.value) - x(0) < 20) // short bars
@@ -111,12 +136,13 @@ class HorizontalBarChart extends Component {
     svg
       .append("g")
       .attr("style", "font-size: 16px", "sans-serif")
-      .attr("transform", `translate(${marginLeft-10},-10)`)
+      .attr("transform", `translate(${marginLeft - 10},-3)`)
       .call(d3.axisLeft(y).tickSize(0))
       .attr("class", "y-axis")
       .call(yAxis);
     d3.select(this.ref.current);
   };
+
   render() {
     return (
       <Box className="top-used-service-chrt">
