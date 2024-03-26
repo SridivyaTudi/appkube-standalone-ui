@@ -20,6 +20,7 @@ import { getCurrentOrgId,setActiveTabInEnvironmentData } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
+import {APPLICATION_TYPE} from 'CommonData';
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -90,7 +91,7 @@ class Application extends Component {
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
     let JSX = [];
     applicationTableData.forEach((item) => {
-      let type = item.appType === "3 Tier" ? "3tier" : "soa";
+      let type = item.appType.toUpperCase() === APPLICATION_TYPE.THREE_TIER ? "3tier" : "soa";
       JSX.push(
         <TableRow key={v4()}>
           <TableCell align="left" className="p-l-15">

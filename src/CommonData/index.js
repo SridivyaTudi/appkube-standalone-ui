@@ -15,3 +15,9 @@ export const LOGOS = {
   GCP: GoogleCloud,
   KUBERNETES: Kubernetes,
 };
+
+
+export const APPLICATION_TYPE = {
+  SOA: "SOA",
+  THREE_TIER: "3 TIER"
+};
