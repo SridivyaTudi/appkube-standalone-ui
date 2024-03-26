@@ -10,6 +10,10 @@ import SpendingTable from "Views/AppViews/NewReports/OverviewDashboard/Component
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { Box } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import status from "Redux/Constants/CommonDS";
+import { connect } from "react-redux";
+import { getSpendOverviewComputeDetails } from "Redux/Reports/ReportsThunk";
+import { getCurrentOrgId } from "Utils";
 
 let timeSpendData = [
   {
@@ -96,6 +100,33 @@ class Compute extends Component {
       accounts: computeSpendingTable,
     };
   }
+
+  componentDidMount = () => {
+    this.props.getSpendOverviewComputeDetails({
+      serviceCategory: "all",
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
+    
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.spendOverviewComputeDetailsData.status !==
+        this.props.spendOverviewComputeDetailsData.status &&
+      this.props.spendOverviewComputeDetailsData.status === status.SUCCESS &&
+      this.props.spendOverviewComputeDetailsData?.data
+    ) {
+      const spendOverviewComputeDetailsData = this.props.spendOverviewComputeDetailsData.data;
+      if (spendOverviewComputeDetailsData) {
+        // this.maniplatespendOverviewComputeDetailsData(spendOverviewComputeDetailsData.data);
+      }
+    }
+    
+  }
+  
   //  Serach
   handleSearchChange = (e) => {
     let value = e.target.value;
@@ -146,4 +177,13 @@ class Compute extends Component {
   }
 }
 
-export default Compute;
+function mapStateToProps(state) {
+  const { spendOverviewComputeDetailsData } = state.reports;
+  return { spendOverviewComputeDetailsData };
+}
+
+const mapDispatchToProps = {
+  getSpendOverviewComputeDetails,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Compute);

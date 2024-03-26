@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getSpendOverview,
+  getSpendOverviewComputeDetails,
   getTopUsedService,
   getPotentialSavings,
   getCostTopAccounts,
   getSpendingTrend,
+  getTopUsedServiceDetails,
 } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -15,7 +17,15 @@ export const ReportsSlice = createSlice({
       status: null,
       data: [],
     },
+    spendOverviewComputeDetailsData: {
+      status: null,
+      data: [],
+    },
     topUsedServiceData: {
+      status: null,
+      data: [],
+    },
+    topUsedServiceDetailsData: {
       status: null,
       data: [],
     },
@@ -59,6 +69,32 @@ export const ReportsSlice = createSlice({
       };
     },
 
+    [getSpendOverviewComputeDetails.pending]: (state) => {
+      return {
+        ...state,
+        spendOverviewComputeDetailsData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getSpendOverviewComputeDetails.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        spendOverviewComputeDetailsData: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getSpendOverviewComputeDetails.rejected]: (state) => {
+      return {
+        ...state,
+        spendOverviewComputeDetailsData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
     [getTopUsedService.pending]: (state) => {
       return {
         ...state,
@@ -80,6 +116,32 @@ export const ReportsSlice = createSlice({
       return {
         ...state,
         topUsedServiceData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getTopUsedServiceDetails.pending]: (state) => {
+      return {
+        ...state,
+        topUsedServiceDetailsData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getTopUsedServiceDetails.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        topUsedServiceDetailsData: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getTopUsedServiceDetails.rejected]: (state) => {
+      return {
+        ...state,
+        topUsedServiceDetailsData: {
           status: status.FAILURE,
         },
       };

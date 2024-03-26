@@ -21,6 +21,28 @@ export const getSpendOverview = createAsyncThunk(
   }
 );
 
+export const getSpendOverviewComputeDetails = createAsyncThunk(
+  "Reports/getSpendOverviewComputeDetails",
+  async (objIds) => {
+    try {
+      let { orgId, serviceCategory, cloud, granularity, compareTo } = objIds;
+      let url = config.GET_SPEND_OVERVIEW_COMPUTE_DETAILS.replace(
+        "#org-id#",
+        orgId
+      )
+        .replace("#service-category#", serviceCategory)
+        .replace("#cloud-name#", cloud)
+        .replace("#granularity#", granularity)
+        .replace("#compare-to#", compareTo);
+
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const getTopUsedService = createAsyncThunk(
   "Reports/getTopUsedService",
   async (objIds) => {
@@ -41,6 +63,25 @@ export const getTopUsedService = createAsyncThunk(
         .replace("#compare-to#", compareTo)
         .replace("#no-of-records#", noOfRecords)
         .replace("#order#", order);
+
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getTopUsedServiceDetails = createAsyncThunk(
+  "Reports/getTopUsedServiceDetails",
+  async (objIds) => {
+    try {
+      let { orgId, serviceCategory, cloud, granularity, compareTo } = objIds;
+      let url = config.GET_TOP_USED_SERVICE_DETAILS.replace("#org-id#", orgId)
+        .replace("#service-category#", serviceCategory)
+        .replace("#cloud-name#", cloud)
+        .replace("#granularity#", granularity)
+        .replace("#compare-to#", compareTo);
 
       const response = await postLoginService.get(url);
       return response;

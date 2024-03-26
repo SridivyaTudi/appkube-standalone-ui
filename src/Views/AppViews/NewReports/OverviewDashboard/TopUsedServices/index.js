@@ -14,6 +14,10 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import SpendingTable from "../Components/SpendingTable";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import status from "Redux/Constants/CommonDS";
+import { connect } from "react-redux";
+import { getTopUsedServiceDetails } from "Redux/Reports/ReportsThunk";
+import { getCurrentOrgId } from "Utils";
 
 let timeSpendData = [
   {
@@ -125,6 +129,34 @@ class TopUsedServices extends Component {
       accounts: computeSpendingTable,
     };
   }
+
+  componentDidMount = () => {
+    this.props.getTopUsedServiceDetails({
+      serviceCategory: "all",
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
+    
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.topUsedServiceDetailsData.status !==
+        this.props.topUsedServiceDetailsData.status &&
+      this.props.topUsedServiceDetailsData.status === status.SUCCESS &&
+      this.props.topUsedServiceDetailsData?.data
+    ) {
+      const topUsedServiceDetailsData = this.props.topUsedServiceDetailsData.data;
+      if (topUsedServiceDetailsData) {
+        console.log(topUsedServiceDetailsData);
+        // this.maniplatetopUsedServiceDetailsData(topUsedServiceDetailsData.data);
+      }
+    }
+    
+  }
+
   //  Serach
   handleSearchChange = (e) => {
     let value = e.target.value;
@@ -203,4 +235,14 @@ class TopUsedServices extends Component {
     );
   }
 }
-export default navigateRouter(TopUsedServices);
+
+function mapStateToProps(state) {
+  const { topUsedServiceDetailsData } = state.reports;
+  return { topUsedServiceDetailsData };
+}
+
+const mapDispatchToProps = {
+  getTopUsedServiceDetails,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopUsedServices);
