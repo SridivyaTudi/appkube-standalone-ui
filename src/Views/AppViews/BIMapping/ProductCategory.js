@@ -146,14 +146,10 @@ class ProductCategory extends Component {
                   <img src={admissionIcon} alt="" />
                 </Box>
                 <span className="d-block name">
-                <HtmlTooltip
-                    className="table-tooltip"
-                    title={soa.module}
-                  >
-                   {soa.module}
+                  <HtmlTooltip className="table-tooltip" title={soa.module}>
+                    {soa.module}
                   </HtmlTooltip>
-                  
-                  </span>
+                </span>
               </Box>
             </Box>
           );
@@ -277,17 +273,24 @@ class ProductCategory extends Component {
         soaData = [],
       },
     } = this.props;
-    let business = [];
-    let common = [];
+
+    let modules = [];
     if (soaData?.length) {
       soaData.forEach((soa) => {
         let { service: serviceCategory } = soa;
         let { savedData, selectedServiceData } = soa.values;
 
+        let module = {
+          name: soa.module,
+          service: {
+            business: [],
+            common: [],
+          },
+        };
         savedData.forEach((service) => {
           let appendData = {
             name: selectedServiceData[service.serviceName],
-            type: service.serviceName?.toUpperCase(),
+            type: service.serviceName?.toLowerCase(),
             cloudElementMapping: {
               id: service.selectedInstance,
               managementInfo: service.managementInfo
@@ -316,11 +319,12 @@ class ProductCategory extends Component {
             },
           };
           if (serviceCategory === "business") {
-            business.push(appendData);
+            module.service.business.push(appendData);
           } else {
-            common.push(appendData);
+            module.service.common.push(appendData);
           }
         });
+        modules.push(module);
       });
     }
 
@@ -334,19 +338,13 @@ class ProductCategory extends Component {
             type: "SOA",
             productEnv: {
               name: environment,
-              module: {
-                name: moduleName,
-                service: {
-                  business,
-                  common,
-                },
-              },
+              modules,
             },
           },
         },
       },
     };
-
+  
     this.props.createBiMapping(params);
   };
 
@@ -403,7 +401,7 @@ class ProductCategory extends Component {
     const { showServiceModal, activeCommonService, showCreateModuleModal } =
       this.state;
     let { createProductFormData, creationBiMapping } = this.props;
-
+    console.log(createProductFormData);
     let { name: departMentName, id } = this.getUrlDetails();
     return (
       <Box className="bimapping-container">

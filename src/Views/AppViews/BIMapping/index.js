@@ -189,7 +189,7 @@ class BIMapping extends Component {
     let isTypeDepartment = type === this.TYPE.DEPARTMENT;
     return data.map((dataDetails, index) => {
       let { name, id, instanceName } = dataDetails;
-      name = <> {isArrOfObj ? dataDetails : instanceName || name} </>;
+      name = isArrOfObj ? dataDetails : instanceName || name;
       id = isArrOfObj ? `${dataDetails}_${exptraIds?.productId}_${index}` : id;
 
       return {
@@ -436,7 +436,7 @@ class BIMapping extends Component {
   // Click on organization element types
   onClickNode(data) {
     let { type, departmentId, productId, productEnvId, id, name } = data;
-
+    console.log(data);
     if (type === this.TYPE.DEPARTMENT) {
       this.props.getProductList(id);
     } else if (type === this.TYPE.PRODUCT) {
