@@ -36,8 +36,8 @@ export class SpendingTable extends Component {
       <TableHead>
         <TableRow>
           <TableCell align="left">Service name</TableCell>
-          <TableCell align="center">Last month spend </TableCell>
-          <TableCell align="center">This month spend</TableCell>
+          <TableCell align="center">Last quarter spend </TableCell>
+          <TableCell align="center">This quarter spend</TableCell>
           <TableCell align="center">Variance</TableCell>
           <TableCell align="center">Actions</TableCell>
         </TableRow>

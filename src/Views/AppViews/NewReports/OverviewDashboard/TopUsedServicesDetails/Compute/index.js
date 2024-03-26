@@ -9,25 +9,25 @@ let timeSpendData = [
     name: "Total EC2 Instances",
     value: "200",
     percentage: "5",
-    subName: "vs Last Month",
+    subName: "vs Last Quarter",
   },
   {
     name: "Running Instances",
     value: "$70,000",
     percentage: "5",
-    subName: "vs Last Month",
+    subName: "vs Last Quarter",
   },
   {
     name: "Stopped Instances",
     value: "$90,000",
     percentage: "5",
-    subName: "vs Last Month",
+    subName: "vs Last Quarter",
   },
   {
     name: "Terminated Instances",
     value: "$90,000",
     percentage: "5",
-    subName: "vs Last Month",
+    subName: "vs Last Quarter",
   },
 ];
 let computeSpendingTable = [

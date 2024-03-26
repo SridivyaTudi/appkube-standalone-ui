@@ -168,19 +168,19 @@ const spendTrendData = [
 ];
 let timeSpendData = [
   {
-    name: "This Month Savings ",
+    name: "This Quarter Savings ",
     value: "$85,000",
     percentage: "15",
-    subName: "vs Last Month",
+    subName: "vs Last Quarter",
   },
   {
     name: "Forecasting Savings",
     value: "$90,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
   {
-    name: "Last Month savings ",
+    name: "Last Quarter savings ",
     value: "$80,000",
     percentage: "5",
     subName: "vs Previous Month",
@@ -315,11 +315,11 @@ class AwsComponent extends Component {
     return (
       <TableHead>
         <TableRow>
-          <TableCell align="left">Month</TableCell>
+          <TableCell align="left">Quarter</TableCell>
           <TableCell align="center">Account-ID</TableCell>
           <TableCell align="left">Department </TableCell>
           <TableCell align="center">Budget</TableCell>
-          <TableCell align="center">Current Month’s Spend</TableCell>
+          <TableCell align="center">Current Quarter Spend</TableCell>
           <TableCell align="center">Differenece</TableCell>
           <TableCell align="left">Payment Status </TableCell>
           <TableCell align="center">Actions</TableCell>
@@ -401,7 +401,7 @@ class AwsComponent extends Component {
             <Grid item xs={12} md={6} lg={7}>
               <ChartWrapper
                 data={{
-                  title: "Monthly Usage by IT Department",
+                  title: "Quarterly Usage by IT Department",
                   labelOfBtn: "View Details",
                   link: "",
                 }}
@@ -415,7 +415,7 @@ class AwsComponent extends Component {
             </Grid>
           </Grid>
         </Box>
-        <h3 className="m-t-3">Monthly cost and Budget overview</h3>
+        <h3 className="m-t-3">Quarterly cost and Budget overview</h3>
         <Box className="new-reports-table">
           <TableContainer className="table">
             <Table style={{ width: 1700 }}>

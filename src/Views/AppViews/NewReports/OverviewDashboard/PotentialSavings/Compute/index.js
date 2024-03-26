@@ -82,19 +82,19 @@ let verticalBarChartData = [
 
 let timeSpendData = [
   {
-    name: "This Month Savings ",
+    name: "This Quarter Savings ",
     value: "$85,000",
     percentage: "15",
-    subName: "vs Last Month",
+    subName: "vs Last Quarter",
   },
   {
     name: "Forecasting Savings",
     value: "$90,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
   {
-    name: "Last Month savings ",
+    name: "Last Quarter savings ",
     value: "$80,000",
     percentage: "5",
     subName: "vs Previous Month",
@@ -103,7 +103,7 @@ let timeSpendData = [
     name: "Total Savings ",
     value: "$110,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
 ];
 

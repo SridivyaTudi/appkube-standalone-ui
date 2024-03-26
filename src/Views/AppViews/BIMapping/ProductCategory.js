@@ -401,7 +401,7 @@ class ProductCategory extends Component {
     const { showServiceModal, activeCommonService, showCreateModuleModal } =
       this.state;
     let { createProductFormData, creationBiMapping } = this.props;
-    console.log(createProductFormData);
+    
     let { name: departMentName, id } = this.getUrlDetails();
     return (
       <Box className="bimapping-container">

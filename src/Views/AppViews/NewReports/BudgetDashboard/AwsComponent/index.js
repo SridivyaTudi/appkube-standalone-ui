@@ -235,7 +235,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Top Products with High Spending",
                   description:
-                    " See how your products is spending this Month vs last month",
+                    " See how your products is spending this Month vs Last Quarter",
                   labelOfBtn: " View Details",
                   link: "/app/new-reports/budget-dashboard/budget-products",
                 }}
@@ -249,7 +249,7 @@ class AwsComponent extends Component {
                 data={{
                   title: "Top Department Exceeding Budget",
                   description:
-                    " See how your products is spending this Month vs last month",
+                    " See how your products is spending this Month vs Last Quarter",
                   labelOfBtn: "View Details",
                   link: "/app/new-reports/budget-dashboard/budget-depanrtments",
                 }}

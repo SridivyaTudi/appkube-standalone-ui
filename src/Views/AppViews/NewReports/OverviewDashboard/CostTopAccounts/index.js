@@ -19,28 +19,28 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 let timeSpendData = [
   {
-    name: "Last Month Spend",
+    name: "Last Quarter Spend",
     value: "$90,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
   {
-    name: "Month to date spend ",
+    name: "Quarter to date spend ",
     value: "$70,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
   {
     name: "Forecasted Spend ",
     value: "$90,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
   {
     name: "Avg Daily Spend",
     value: "$90,000",
     percentage: "5",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
 ];
 
@@ -224,7 +224,7 @@ class CostTopAccounts extends Component {
             <i className="fas fa-filter m-r-2"></i> Filter
           </Button>
           <Button className="light-btn p-l-15 p-r-15">
-            <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+            <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
           </Button>
         </Box>
         <Box className="reports-tab-section m-t-4">

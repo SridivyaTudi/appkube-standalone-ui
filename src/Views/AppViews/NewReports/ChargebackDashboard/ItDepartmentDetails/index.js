@@ -15,16 +15,16 @@ import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 let timeSpendData = [
   {
-    name: "Last Month Spend",
+    name: "Last Quarter Spend",
     value: "$10,00",
     percentage: "20",
     subName: " More than previous month",
   },
   {
-    name: "This Month’s Spend",
+    name: "This Quarter Spend",
     value: "$70,000",
     percentage: "20",
-    subName: " vs Last Month",
+    subName: " vs Last Quarter",
   },
   {
     name: "Avg Daily Spend",
@@ -256,7 +256,7 @@ class ItDepartmentDetails extends Component {
             </Button>
           </Link>
           <Button className="light-btn p-l-15 p-r-15">
-            <i className="fas fa-calendar-minus m-r-2"></i> Last Month
+            <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
           </Button>
         </Box>
         <Box className="reports-tab-section m-t-3">
