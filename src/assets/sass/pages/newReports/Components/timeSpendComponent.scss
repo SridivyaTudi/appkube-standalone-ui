@@ -57,6 +57,9 @@
         font-weight: 500;
         color: #047857;
         margin-right: 8px;
+        &.red{
+          color: red;
+        }
       }
       p {
         font-size: 12px;
