@@ -121,11 +121,11 @@ class GaugeChart extends Component {
       var path = el.selectAll("path").each(function (r, i) {
         if (i === 1) {
           var centroidText = r.data.arc.centroid({
-            startAngle:0,
-            endAngle:0,
+            startAngle: 0,
+            endAngle: 0,
           });
           var lableObj = r.data;
-        
+
           let label = `${lableObj.name} $${lableObj.value}`;
           gText
             .append("text")

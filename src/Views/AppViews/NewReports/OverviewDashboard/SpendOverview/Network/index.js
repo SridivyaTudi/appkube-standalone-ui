@@ -133,10 +133,14 @@ class Network extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { accounts } = this.state;
-    let data = computeSpendingTable || [];
-    if (data?.length) {
+    const { accounts: accontsData } = this.manipluateData(
+      this.props.spendOverviewComputeDetailsData?.data.data || [],
+      1
+    );
+
+    if (accontsData?.length) {
       if (value) {
-        accounts = data.filter((tableData) => {
+        accounts = accontsData.filter((tableData) => {
           if (tableData?.name.toLowerCase().includes(value.toLowerCase())) {
             return tableData;
           } else {
@@ -144,7 +148,7 @@ class Network extends Component {
           }
         });
       } else {
-        accounts = data;
+        accounts = accontsData;
       }
       this.setState({ accounts, searchedKey: value });
     }
@@ -160,7 +164,7 @@ class Network extends Component {
   }
 
   //manipluate compute data
-  manipluateData = (data) => {
+  manipluateData = (data, isReturnData = 0) => {
     let { accounts, timerSpendData } = this.state;
     accounts = [];
     timerSpendData = [];
@@ -193,8 +197,12 @@ class Network extends Component {
         }
       });
     }
-
-    this.setState({ accounts, timerSpendData });
+    if (isReturnData) {
+      return { accounts, timerSpendData };
+    } else {
+      this.setState({ accounts, timerSpendData });
+    }
+   
   };
   render() {
     let { accounts, searchedKey, timerSpendData } = this.state;
@@ -218,7 +226,7 @@ class Network extends Component {
                   type="text"
                   className="input"
                   placeholder="Search Insatnce "
-                  //value={searchedKey}
+                  value={searchedKey}
                   onChange={this.handleSearchChange}
                   autoFocus="autoFocus"
                 />

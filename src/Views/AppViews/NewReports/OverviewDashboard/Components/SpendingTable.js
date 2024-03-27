@@ -80,7 +80,7 @@ export class SpendingTable extends Component {
                   >
                     {Math.abs(variance)}
                     {variance > 0 ? (
-                      <i className="fas fa-sort-up " />
+                      <i className="fas fa-sort-up p-l-5 " />
                     ) : (
                       <i className="fas fa-sort-down p-l-5" />
                     )}

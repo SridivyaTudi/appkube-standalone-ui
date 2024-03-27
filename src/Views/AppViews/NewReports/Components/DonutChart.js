@@ -147,6 +147,9 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
       } catch (error) {
         console.log(error.message);
       }
+    } else {
+      const svg = d3.select(svgRef.current);
+      svg.selectAll("*").remove();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

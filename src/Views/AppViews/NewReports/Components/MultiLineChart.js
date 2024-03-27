@@ -14,18 +14,31 @@ class MultiLineChart extends Component {
   }
 
   componentDidMount = () => {
-    this.renderChart();
+    if (this.props.data.length) {
+      this.renderChart();
+    }
   };
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.data !== this.props.data) {
-      this.renderChart();
+      if (this.props.data.length) {
+        this.renderChart();
+      }
     }
   }
 
   renderChart = async () => {
     let { data, labels } = this.props;
 
+    let svg = d3
+      .select(this.ref.current)
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("class", "multiline-content")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    svg.selectAll("*").remove();
+    
     let tooltip = d3
       .select("#root")
       .data(data)
@@ -80,14 +93,6 @@ class MultiLineChart extends Component {
       .y(function (d) {
         return y(d.forecasted_spend);
       });
-
-    let svg = d3
-      .select(this.ref.current)
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("class", "multiline-content")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     x.domain(
       d3.extent(data, function (d) {
         return d.date;

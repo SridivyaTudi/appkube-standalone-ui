@@ -132,10 +132,14 @@ class Database extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { accounts } = this.state;
-    let data = computeSpendingTable || [];
-    if (data?.length) {
+    const { accounts: accontsData } = this.manipluateData(
+      this.props.spendOverviewComputeDetailsData?.data.data || [],
+      1
+    );
+
+    if (accontsData?.length) {
       if (value) {
-        accounts = data.filter((tableData) => {
+        accounts = accontsData.filter((tableData) => {
           if (tableData?.name.toLowerCase().includes(value.toLowerCase())) {
             return tableData;
           } else {
@@ -143,7 +147,7 @@ class Database extends Component {
           }
         });
       } else {
-        accounts = data;
+        accounts = accontsData;
       }
       this.setState({ accounts, searchedKey: value });
     }
@@ -159,7 +163,7 @@ class Database extends Component {
   }
 
   //manipluate compute data
-  manipluateData = (data) => {
+  manipluateData = (data, isReturnData = 0) => {
     let { accounts, timerSpendData } = this.state;
     accounts = [];
     timerSpendData = [];
@@ -191,8 +195,11 @@ class Database extends Component {
         }
       });
     }
-
-    this.setState({ accounts, timerSpendData });
+    if (isReturnData) {
+      return { accounts, timerSpendData };
+    } else {
+      this.setState({ accounts, timerSpendData });
+    }
   };
   render() {
     let { accounts, searchedKey, timerSpendData } = this.state;
