@@ -9,6 +9,13 @@ import ServiceIcon5 from "assets/img/report/service-icon5.png";
 import ServiceIcon6 from "assets/img/report/service-icon6.png";
 import SpendingTable from "Views/AppViews/NewReports/OverviewDashboard/Components/SpendingTable";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { getCurrentOrgId } from "Utils";
+import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
+import { REPORT_PAGE_TYPE } from "CommonData";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { connect } from "react-redux";
+import { getSpendOverviewComputeDetails } from "Redux/Reports/ReportsThunk";
 
 let timeSpendData = [
   {
@@ -88,34 +95,152 @@ let computeSpendingTable = [
 ];
 
 class Network extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchedKey: "",
+      accounts: [],
+      timerSpendData: [],
+    };
+  }
+
+  componentDidMount = () => {
+    this.props.getSpendOverviewComputeDetails({
+      serviceCategory: "network",
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.spendOverviewComputeDetailsData.status !==
+        this.props.spendOverviewComputeDetailsData.status &&
+      this.props.spendOverviewComputeDetailsData.status === status.SUCCESS &&
+      this.props.spendOverviewComputeDetailsData?.data
+    ) {
+      const spendOverviewComputeDetailsData =
+        this.props.spendOverviewComputeDetailsData?.data.data || [];
+      if (spendOverviewComputeDetailsData.length) {
+        this.manipluateData(spendOverviewComputeDetailsData);
+      }
+    }
+  }
+
+  //  Serach
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { accounts } = this.state;
+    let data = computeSpendingTable || [];
+    if (data?.length) {
+      if (value) {
+        accounts = data.filter((tableData) => {
+          if (tableData?.name.toLowerCase().includes(value.toLowerCase())) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        accounts = data;
+      }
+      this.setState({ accounts, searchedKey: value });
+    }
+  };
+
+  // Render Loder
+  renderLoder() {
+    return (
+      <Box className="d-blck text-center w-100 h-100 p-t-20 p-b-20 ">
+        <Loader className="align-item-center justify-center w-100 h-100" />
+      </Box>
+    );
+  }
+
+  //manipluate compute data
+  manipluateData = (data) => {
+    let { accounts, timerSpendData } = this.state;
+    accounts = [];
+    timerSpendData = [];
+    if (data.length) {
+      data.forEach((details) => {
+        let isOverviewDetails = Object.keys(
+          REPORT_PAGE_TYPE.SERVICE_NAMES
+        ).includes(details.serviceName.toUpperCase());
+
+        if (isOverviewDetails) {
+          let name = REPORT_PAGE_TYPE.SERVICE_NAMES[
+            details.serviceName.toUpperCase()
+          ].replace("#granularity#", "Quarter");
+
+          timerSpendData.push({
+            name,
+            value: `$${details.total || 0}`,
+            percentage: details.variance,
+            subName: " vs Last Quarter",
+          });
+        } else {
+          accounts.push({
+            name: details.serviceName,
+            icon: ServiceIcon1,
+            last_month_spend: details.lastMonthSpend,
+            month_spend: details.thisMonthSpend,
+            variance: details.variance,
+            actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+          });
+        }
+      });
+    }
+
+    this.setState({ accounts, timerSpendData });
+  };
   render() {
+    let { accounts, searchedKey, timerSpendData } = this.state;
+    let { spendOverviewComputeDetailsData } = this.props;
     return (
       <>
-        {" "}
-        <TimeSpendComponent data={timeSpendData} />
-        <Box className="table-head" alignItems={"end"}>
-          <Box className="d-block">
-            <h3>COMPUTE SPENDINGS</h3>
-            <h4 className="m-t-3 m-b-0">Overview of the compute Services</h4>
-          </Box>
-          <Box className="search m-r-0">
-            <input
-              type="text"
-              className="input"
-              placeholder="Search Insatnce "
-              //value={searchedKey}
-              onChange={this.handleSearchChange}
-              autoFocus="autoFocus"
-            />
-            <button className="button">
-              <SearchOutlinedIcon />
-            </button>
-          </Box>
-        </Box>
-        <SpendingTable data={computeSpendingTable} />
+        {spendOverviewComputeDetailsData.status === status.IN_PROGRESS ? (
+          this.renderLoder()
+        ) : (
+          <>
+            <TimeSpendComponent data={timerSpendData} />
+            <Box className="table-head" alignItems={"end"}>
+              <Box className="d-block">
+                <h3>NETWORK SPENDINGS</h3>
+                <h4 className="m-t-3 m-b-0">
+                  Overview of the network Services
+                </h4>
+              </Box>
+              <Box className="search m-r-0">
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Search Insatnce "
+                  //value={searchedKey}
+                  onChange={this.handleSearchChange}
+                  autoFocus="autoFocus"
+                />
+                <button className="button">
+                  <SearchOutlinedIcon />
+                </button>
+              </Box>
+            </Box>
+            <SpendingTable data={accounts} />
+          </>
+        )}
       </>
     );
   }
 }
+function mapStateToProps(state) {
+  const { spendOverviewComputeDetailsData } = state.reports;
+  return { spendOverviewComputeDetailsData };
+}
 
-export default Network;
+const mapDispatchToProps = {
+  getSpendOverviewComputeDetails,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Network);

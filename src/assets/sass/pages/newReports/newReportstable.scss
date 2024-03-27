@@ -90,7 +90,7 @@
           }
           .variance-count {
             color: #00b929;
-            .red {
+            &.red {
               color: red;
               vertical-align: text-bottom !important;
             }

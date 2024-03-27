@@ -49,9 +49,17 @@ class TimeSpendComponent extends Component {
                     </HtmlTooltip>
                   </strong>
                   <Box className="d-flex align-items-center">
-                    <span className="parsent">
-                      <i class="fas fa-long-arrow-down"></i>{" "}
-                      {spendData.percentage} &#37;
+                    <span
+                      className={`parsent ${
+                        spendData.percentage > 0 ? "" : "red"
+                      }`}
+                    >
+                      {spendData.percentage > 0 ? (
+                        <i class="fas fa-long-arrow-up" />
+                      ) : (
+                        <i class="fas fa-long-arrow-down" />
+                      )}
+                      {Math.abs(spendData.percentage)} &#37;
                     </span>
                     <p className="m-b-0 m-t-0">
                       <HtmlTooltip

@@ -345,3 +345,9 @@ export const ADD_PRODUCT_ENUMS = {
   S3: "S3",
   CDN: "CDN",
 };
+
+export const ENVIRONMENTS = {
+  AWS: "AWS",
+  AZURE: "AZURE",
+  GCP: "GCP",
+};
