@@ -90,9 +90,10 @@
           }
           .variance-count {
             color: #00b929;
+            display: flex;
+            justify-content: center;
             &.red {
               color: red;
-              vertical-align: text-bottom !important;
             }
           }
           .list-icon {

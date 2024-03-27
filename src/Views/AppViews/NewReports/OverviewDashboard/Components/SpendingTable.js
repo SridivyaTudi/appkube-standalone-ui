@@ -78,14 +78,12 @@ export class SpendingTable extends Component {
                   <Box
                     className={`variance-count ${variance > 0 ? "" : "red"} `}
                   >
-                    <Box className="d-flex align-items-center">
-                      {Math.abs(variance)}
-                      {variance > 0 ? (
-                        <i className="fas fa-sort-up " />
-                      ) : (
-                        <i className="fas fa-sort-down p-l-5" />
-                      )}
-                    </Box>
+                    {Math.abs(variance)}
+                    {variance > 0 ? (
+                      <i className="fas fa-sort-up " />
+                    ) : (
+                      <i className="fas fa-sort-down p-l-5" />
+                    )}
                   </Box>
                 </TableCell>
                 <TableCell align="center">
