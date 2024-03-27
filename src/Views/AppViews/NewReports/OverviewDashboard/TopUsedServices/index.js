@@ -14,7 +14,12 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import SpendingTable from "../Components/SpendingTable";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-
+import status from "Redux/Constants/CommonDS";
+import { connect } from "react-redux";
+import { getTopUsedServiceDetails } from "Redux/Reports/ReportsThunk";
+import { getCurrentOrgId } from "Utils";
+import { REPORT_PAGE_TYPE } from "CommonData";
+import Loader from "Components/Loader";
 let timeSpendData = [
   {
     name: "Last Quarter Spend",
@@ -122,9 +127,70 @@ class TopUsedServices extends Component {
     this.state = {
       activeTab: 0,
       searchedKey: "",
-      accounts: computeSpendingTable,
+      accounts: [],
+      spendOverAllDetails: [],
     };
   }
+
+  componentDidMount = () => {
+    this.props.getTopUsedServiceDetails({
+      serviceCategory: "all",
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.topUsedServiceDetailsData.status !==
+        this.props.topUsedServiceDetailsData.status &&
+      this.props.topUsedServiceDetailsData.status === status.SUCCESS &&
+      this.props.topUsedServiceDetailsData?.data
+    ) {
+      const topUsedServiceDetailsData =
+        this.props.topUsedServiceDetailsData.data;
+      if (topUsedServiceDetailsData) {
+        this.maniplatetopUsedServiceDetailsData(topUsedServiceDetailsData.data);
+      }
+    }
+  }
+
+  //Maniplate top used service details data
+  maniplatetopUsedServiceDetailsData = (data) => {
+    let { accounts, spendOverAllDetails } = this.state;
+    if (data.length) {
+      data.forEach((details) => {
+        let isOverviewDetails = Object.keys(
+          REPORT_PAGE_TYPE.SERVICE_NAMES
+        ).includes(details.serviceName.toUpperCase());
+
+        if (isOverviewDetails) {
+          let name = REPORT_PAGE_TYPE.SERVICE_NAMES[
+            details.serviceName.toUpperCase()
+          ].replace("#granularity#", "Quarter");
+          spendOverAllDetails.push({
+            name,
+            value: `$${details.total || 0}`,
+            percentage: details.variance,
+            subName: " vs Last Quarter",
+          });
+        } else {
+          accounts.push({
+            name: details.serviceName,
+            icon: ServiceIcon7,
+            last_month_spend: details.lastMonthSpend,
+            month_spend: details.thisMonthSpend,
+            variance: details.variance,
+            actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
+          });
+        }
+      });
+    }
+
+    this.setState({ accounts, spendOverAllDetails });
+  };
   //  Serach
   handleSearchChange = (e) => {
     let value = e.target.value;
@@ -145,8 +211,18 @@ class TopUsedServices extends Component {
       this.setState({ accounts, searchedKey: value });
     }
   };
+
+  // Render Loder
+  renderLoder() {
+    return (
+      <Box className="d-blck text-center w-100 h-100 p-t-20 p-b-20 ">
+        <Loader className="align-item-center justify-center w-100 h-100" />
+      </Box>
+    );
+  }
   render() {
-    let { accounts, searchedKey } = this.state;
+    let { accounts, searchedKey, spendOverAllDetails } = this.state;
+    let { topUsedServiceDetailsData } = this.props;
     return (
       <Box className="new-reports-container">
         <Box className="list-heading">
@@ -175,32 +251,48 @@ class TopUsedServices extends Component {
             <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
           </Button>
         </Box>
-
-        <Box className="reports-tab-section m-t-4">
-          <TimeSpendComponent data={timeSpendData} />
-          <Box className="table-head" alignItems={"end"}>
-            <Box className="d-block">
-              <h3>Spendings Of Top Used Services</h3>
-              <h4 className="m-t-3 m-b-0">Overview of Top 10 Services</h4>
+        {topUsedServiceDetailsData.status === status.IN_PROGRESS ? (
+          this.renderLoder()
+        ) : (
+          <Box className="reports-tab-section m-t-4">
+            <TimeSpendComponent data={spendOverAllDetails} />
+            <Box className="table-head" alignItems={"end"}>
+              <Box className="d-block">
+                <h3>Spendings Of Top Used Services</h3>
+                <h4 className="m-t-3 m-b-0">Overview of Top 10 Services</h4>
+              </Box>
+              <Box className="search m-r-0">
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Search Insatnce "
+                  value={searchedKey}
+                  onChange={this.handleSearchChange}
+                  autoFocus="autoFocus"
+                />
+                <button className="button">
+                  <SearchOutlinedIcon />
+                </button>
+              </Box>
             </Box>
-            <Box className="search m-r-0">
-              <input
-                type="text"
-                className="input"
-                placeholder="Search Insatnce "
-                value={searchedKey}
-                onChange={this.handleSearchChange}
-                autoFocus="autoFocus"
-              />
-              <button className="button">
-                <SearchOutlinedIcon />
-              </button>
-            </Box>
+            <SpendingTable data={accounts} />
           </Box>
-          <SpendingTable data={accounts} />
-        </Box>
+        )}
       </Box>
     );
   }
 }
-export default navigateRouter(TopUsedServices);
+
+function mapStateToProps(state) {
+  const { topUsedServiceDetailsData } = state.reports;
+  return { topUsedServiceDetailsData };
+}
+
+const mapDispatchToProps = {
+  getTopUsedServiceDetails,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(TopUsedServices));

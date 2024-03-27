@@ -16,11 +16,14 @@ import {
 } from "@mui/material";
 import { getEnvironmentsApplicationTableData } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { connect } from "react-redux";
-import { getCurrentOrgId,setActiveTabInEnvironmentData } from "Utils";
+import {
+  getCurrentOrgId,
+  setActiveTabInEnvironmentData,
+  PRODUCT_CATEGORY_ENUM,
+} from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
-import {APPLICATION_TYPE} from 'CommonData';
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -91,13 +94,16 @@ class Application extends Component {
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
     let JSX = [];
     applicationTableData.forEach((item) => {
-      let type = item.appType.toUpperCase() === APPLICATION_TYPE.THREE_TIER ? "3tier" : "soa";
+      let type =
+        item.appType.toUpperCase() === PRODUCT_CATEGORY_ENUM.THREE_TIER
+          ? "3tier"
+          : "soa";
       JSX.push(
         <TableRow key={v4()}>
           <TableCell align="left" className="p-l-15">
             <Link
               to={`${APP_PREFIX_PATH}/environments/${type}/topology?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&productName=${item.application}&departmentName=${item.lob}&environmentName=${item.environment}`}
-              onClick={() => setActiveTabInEnvironmentData('application')}
+              onClick={() => setActiveTabInEnvironmentData("application")}
             >
               <HtmlTooltip className="table-tooltip" title={item.application}>
                 <span>{item.application}</span>

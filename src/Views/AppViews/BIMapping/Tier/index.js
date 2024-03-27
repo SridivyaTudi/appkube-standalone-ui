@@ -7,7 +7,6 @@ import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import RightArrow from "assets/img/assetmanager/right-arrow.png";
 import deployed1 from "assets/img/bimapping/deployed1.png";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Aws from "assets/img/aws.png";
 import { v4 } from "uuid";
 import LoadBalancerIcon from "assets/img/bimapping/load-balancer-icon.png";
 import IngressIcon from "assets/img/bimapping/ingress-icon.png";
@@ -38,6 +37,7 @@ import { styled } from "@mui/material/styles";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import InstanceListCards from "Views/AppViews/BIMapping/Components/InstanceListCards";
 import { ToastMessage } from "Toast/ToastMessage";
+import { LOGOS } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -322,6 +322,8 @@ class Tier extends Component {
   renderDeployedInstances = () => {
     let { cloudServices, selectedDeployedInstance } = this.state;
     let cloudStatus = this.props.cloudServices?.status;
+    let instanceStatus =
+      this.props.instancesServices?.status !== status.IN_PROGRESS;
     if (cloudStatus === status.IN_PROGRESS) {
       return this.renderLoder("deployed-cards-loader");
     } else {
@@ -336,10 +338,14 @@ class Tier extends Component {
             <VerticalTitleAndIconOfCard
               data={deployInstances}
               onClickCard={(title) =>
-                this.onClickDeployedCard(
-                  instance.id,
-                  instance.name,
-                  instance.elementType
+                instanceStatus ? (
+                  this.onClickDeployedCard(
+                    instance.id,
+                    instance.name,
+                    instance.elementType
+                  )
+                ) : (
+                  <></>
                 )
               }
             />
@@ -395,7 +401,7 @@ class Tier extends Component {
           ];
 
           let instanceData = {
-            image: Aws,
+            image: LOGOS[instance?.cloud?.toUpperCase()],
             title: instance.elementType,
             data,
             id: instance.id,
@@ -670,7 +676,7 @@ class Tier extends Component {
           id: +id,
           product: {
             name: productName,
-            type: "3 tier",
+            type: PRODUCT_CATEGORY_ENUM.THREE_TIER,
             productEnv: {
               name: environment,
               service: savedData.map((service) => {

@@ -13,7 +13,7 @@ import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
 import status from "Redux/Constants/CommonDS";
 import { createBiMapping } from "Redux/BIMapping/BIMappingThunk";
-import { getCurrentOrgId } from "Utils";
+import { PRODUCT_CATEGORY_ENUM, getCurrentOrgId } from "Utils";
 import AddNewModulePopup from "./Components/AddNewModulePopup";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
@@ -335,7 +335,7 @@ class ProductCategory extends Component {
           id: +id,
           product: {
             name: productName,
-            type: "SOA",
+            type: PRODUCT_CATEGORY_ENUM.SOA,
             productEnv: {
               name: environment,
               modules,

@@ -17,6 +17,7 @@ import {
 import status from "Redux/Constants/CommonDS";
 import { getCurrentOrgId } from "Utils";
 import Loader from "Components/Loader";
+import { GRANULARITY_TYPE } from "CommonData";
 
 const totalUsedServiceColor = {
   CDN: "#01f1e3",

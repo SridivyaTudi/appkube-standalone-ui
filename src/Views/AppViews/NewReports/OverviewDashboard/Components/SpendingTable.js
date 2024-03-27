@@ -22,7 +22,7 @@ export class SpendingTable extends Component {
   renderTable = () => {
     return (
       <TableContainer className="table">
-        <Table style={{width: 1210}}>
+        <Table style={{ width: 1210 }}>
           {this.renderTableHead()}
           {this.renderTableBody()}
         </Table>
@@ -63,17 +63,27 @@ export class SpendingTable extends Component {
             return (
               <TableRow>
                 <TableCell align="left">
-                  <Box className="service-image d-inline-block">
+                  {/* <Box className="service-image d-inline-block">
                     <img src={icon} alt="" />
-                  </Box>
+                  </Box> */}
                   {name}
                 </TableCell>
-                <TableCell align="center">{last_month_spend}</TableCell>
-                <TableCell align="center">{month_spend}</TableCell>
                 <TableCell align="center">
-                  <Box className="variance-count">
-                    {variance} <i className="fas fa-sort-down p-l-5"></i>{" "}
-                    <i className="fas fa-sort-up red"></i>
+                  {last_month_spend ? `$${last_month_spend}` : 0}
+                </TableCell>
+                <TableCell align="center">
+                  {month_spend ? `$${month_spend}` : 0}
+                </TableCell>
+                <TableCell align="center">
+                  <Box
+                    className={`variance-count ${variance > 0 ? "" : "red"} `}
+                  >
+                    {Math.abs(variance)}
+                    {variance > 0 ? (
+                      <i className="fas fa-sort-up " />
+                    ) : (
+                      <i className="fas fa-sort-down p-l-5" />
+                    )}
                   </Box>
                 </TableCell>
                 <TableCell align="center">

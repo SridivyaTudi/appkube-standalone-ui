@@ -6,6 +6,7 @@ import clusterIcon from "assets/img/assetmanager/cluster-icon.png";
 import { v4 } from "uuid";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { PRODUCT_CATEGORY_ENUM } from "Utils";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -32,12 +33,18 @@ class AssociateApp extends Component {
 
   handleTierTabToggle = (index, type) => {
     let { activeTierTabIndexes } = this.state;
-    if (activeTierTabIndexes.includes(index) && type !== "soa") {
+    if (
+      activeTierTabIndexes.includes(index) &&
+      type !== PRODUCT_CATEGORY_ENUM.SOA
+    ) {
       activeTierTabIndexes = activeTierTabIndexes.filter(
         (item) => item !== index
       );
     }
-    if (!activeTierTabIndexes.includes(index) && type !== "3Tier") {
+    if (
+      !activeTierTabIndexes.includes(index) &&
+      type !== PRODUCT_CATEGORY_ENUM.THREE_TIER
+    ) {
       activeTierTabIndexes.push(index);
     }
     this.setState({ activeTierTabIndexes });
@@ -66,7 +73,9 @@ class AssociateApp extends Component {
                 <img src={clusterIcon} alt="" />
               </p>
               <HtmlTooltip className="table-tooltip" title={data.instanceId}>
-                <span>{data.elementType} ID: {data.instanceId}</span>
+                <span>
+                  {data.elementType} ID: {data.instanceId}
+                </span>
               </HtmlTooltip>
             </h3>
             <Button
@@ -85,7 +94,12 @@ class AssociateApp extends Component {
                   className={
                     !activeTierTabIndexes.includes(index) ? "active" : ""
                   }
-                  onClick={() => this.handleTierTabToggle(index, "3Tier")}
+                  onClick={() =>
+                    this.handleTierTabToggle(
+                      index,
+                      PRODUCT_CATEGORY_ENUM.THREE_TIER
+                    )
+                  }
                 >
                   3 Tier
                 </Button>
@@ -93,7 +107,9 @@ class AssociateApp extends Component {
                   className={
                     activeTierTabIndexes.includes(index) ? "active" : ""
                   }
-                  onClick={() => this.handleTierTabToggle(index, "soa")}
+                  onClick={() =>
+                    this.handleTierTabToggle(index, PRODUCT_CATEGORY_ENUM.SOA)
+                  }
                 >
                   SOA
                 </Button>

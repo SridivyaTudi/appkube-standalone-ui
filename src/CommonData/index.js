@@ -16,8 +16,25 @@ export const LOGOS = {
   KUBERNETES: Kubernetes,
 };
 
+export const SERVICE_TYPE = {
+  BUSINESS: "BUSINESS",
+  COMMON: "COMMON",
+};
 
-export const APPLICATION_TYPE = {
-  SOA: "SOA",
-  THREE_TIER: "3 TIER"
+export const GRANULARITY_TYPE = {
+  DAILY: "DAILY",
+  WEEKLY: "WEEKLY",
+  MONTHLY: "MONTHLY",
+  QUARTERLY: "QUARTERLY",
+  HALF_YEARLY: "HALF YEARLY",
+  YEARLY: "YEARLY",
+};
+
+export const REPORT_PAGE_TYPE = {
+  SERVICE_NAMES: {
+    TOTAL_LAST_MONT_SPEND: "Last #granularity# Spend",
+    TOTAL_THIS_MONT_SPEND: "#granularity# to date spend",
+    FORECASTED_SPEND: "Forecasted Spend",
+    AVG_DAILY_SPEND: "Avg Daily Spend",
+  },
 };

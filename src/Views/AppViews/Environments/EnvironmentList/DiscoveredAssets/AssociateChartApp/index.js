@@ -25,6 +25,7 @@ import {
   setCurrentOrgName,
   getCurrentUser,
   deleteSelectedInfraTopologyView,
+  PRODUCT_CATEGORY_ENUM,
 } from "Utils";
 import ConfirmationPopup from "Components/ConfirmationPopup";
 import Loader from "Components/Loader";
@@ -41,7 +42,12 @@ const existingTagKeys = [
   "service",
 ];
 const productCategory = {
-  "3 Tier": ["Web Layer", "App Layer", "Data Layer", "Auxilary Layer"],
+  [`${PRODUCT_CATEGORY_ENUM.THREE_TIER}`]: [
+    "Web Layer",
+    "App Layer",
+    "Data Layer",
+    "Auxilary Layer",
+  ],
   SOA: ["BUSINESS", "COMMON"],
 };
 
@@ -289,7 +295,7 @@ export class AssociateChartApp extends Component {
       name: selectedLevel_3.label,
     };
 
-    if (type === "SOA") {
+    if (type?.toUpperCase() === PRODUCT_CATEGORY_ENUM.SOA) {
       typeJson = {
         ...typeJson,
         module: {
@@ -302,7 +308,7 @@ export class AssociateChartApp extends Component {
         },
       };
       serviceId = selectedLevel_5?.id;
-    } else if (type === "3 Tier") {
+    } else if (type?.toUpperCase() === PRODUCT_CATEGORY_ENUM.THREE_TIER) {
       typeJson = {
         ...typeJson,
         service: { id: selectedLevel_4?.id, name: selectedLevel_4?.label },
@@ -529,7 +535,7 @@ export class AssociateChartApp extends Component {
 
   // update ExistingTag If product is 3Tier
   filterExistingTagKeys = (type) => {
-    return type === "3 Tier"
+    return type?.toUpperCase() === PRODUCT_CATEGORY_ENUM.THREE_TIER
       ? existingTagKeys.filter((key) => key !== "module")
       : existingTagKeys;
   };
@@ -556,7 +562,7 @@ export class AssociateChartApp extends Component {
     const productName = selectedLevel_1?.label || "";
 
     const showBtn =
-      productType === "SOA"
+      productType?.toUpperCase() === PRODUCT_CATEGORY_ENUM.SOA
         ? selectedLevel_5?.id &&
           !existingTagServiceIds.includes(selectedLevel_5.id)
         : selectedLevel_4?.id &&

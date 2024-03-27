@@ -24,18 +24,14 @@ import {
   createDepartmentWithLandingZone,
 } from "Redux/BIMapping/BIMappingThunk";
 import { connect } from "react-redux";
-import { getCurrentOrgId, getCurrentUser } from "Utils";
+import { getCurrentOrgId, getCurrentUser, ENVIRONMENTS } from "Utils";
 import LoadingButton from "@mui/lab/LoadingButton";
 import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
 import Loader from "Components/Loader";
+import { LOGOS } from "CommonData";
 
 class AddDepartment extends Component {
-  ACCOUNTS_ICON = {
-    azure: Microsoftazure,
-    aws: Aws,
-    gcp: GoogleCloud,
-  };
   steps = {
     STEP1: 0,
     STEP2: 1,
@@ -45,6 +41,7 @@ class AddDepartment extends Component {
     ADMIN: "ADMIN",
     CMDB: "CMDB",
   };
+
   user = { cmdbOrgId: "" };
   constructor(props) {
     super(props);
@@ -428,7 +425,9 @@ class AddDepartment extends Component {
           <Box className="associate-boxs">
             <List>
               <ListItem
-                className={`${selectedLandingZone === "aws" ? "active" : ""}`}
+                className={`${
+                  selectedLandingZone === ENVIRONMENTS.AWS ? "active" : ""
+                }`}
               >
                 <Button
                   disabled={isCreateWithoutLandingZone}
@@ -436,7 +435,7 @@ class AddDepartment extends Component {
                     isCreateWithoutLandingZone ? "" : "secondary-btn"
                   } min-width `}
                   variant="contained"
-                  onClick={() => this.onClickLandingZone("aws")}
+                  onClick={() => this.onClickLandingZone(ENVIRONMENTS.AWS)}
                 >
                   <Box className="image-box">
                     <img src={Aws} alt="" />
@@ -445,7 +444,9 @@ class AddDepartment extends Component {
                 </Button>
               </ListItem>
               <ListItem
-                className={`${selectedLandingZone === "azure" ? "active" : ""}`}
+                className={`${
+                  selectedLandingZone === ENVIRONMENTS.AZURE ? "active" : ""
+                }`}
               >
                 <Button
                   disabled={isCreateWithoutLandingZone}
@@ -453,7 +454,7 @@ class AddDepartment extends Component {
                     isCreateWithoutLandingZone ? "" : "secondary-btn"
                   } min-width `}
                   variant="contained"
-                  onClick={() => this.onClickLandingZone("azure")}
+                  onClick={() => this.onClickLandingZone(ENVIRONMENTS.AZURE)}
                 >
                   <Box className="image-box">
                     <img src={Microsoftazure} alt="" />
@@ -462,7 +463,9 @@ class AddDepartment extends Component {
                 </Button>
               </ListItem>
               <ListItem
-                className={`${selectedLandingZone === "gcp" ? "active" : ""}`}
+                className={`${
+                  selectedLandingZone === ENVIRONMENTS.GCP ? "active" : ""
+                }`}
               >
                 <Button
                   disabled={isCreateWithoutLandingZone}
@@ -470,7 +473,7 @@ class AddDepartment extends Component {
                     isCreateWithoutLandingZone ? "" : "secondary-btn"
                   } min-width `}
                   variant="contained"
-                  onClick={() => this.onClickLandingZone("gcp")}
+                  onClick={() => this.onClickLandingZone(ENVIRONMENTS.GCP)}
                 >
                   <Box className="image-box">
                     <img src={GoogleCloud} alt="" />
@@ -548,11 +551,7 @@ class AddDepartment extends Component {
                                   <Box className="card-content text-center">
                                     <Box className="card-image">
                                       <img
-                                        src={
-                                          this.ACCOUNTS_ICON[
-                                            selectedLandingZone
-                                          ]
-                                        }
+                                        src={LOGOS[selectedLandingZone]}
                                         alt=""
                                       />
                                     </Box>

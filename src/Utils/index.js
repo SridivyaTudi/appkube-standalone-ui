@@ -306,7 +306,7 @@ export const isAlphabet = (str) => {
 };
 
 export const PRODUCT_CATEGORY_ENUM = {
-  THREE_TIER: "3 Tier",
+  THREE_TIER: "3 TIER",
   SOA: "SOA",
 };
 
@@ -344,4 +344,10 @@ export const ADD_PRODUCT_ENUMS = {
   LAMBDA: "LAMBDA",
   S3: "S3",
   CDN: "CDN",
+};
+
+export const ENVIRONMENTS = {
+  AWS: "AWS",
+  AZURE: "AZURE",
+  GCP: "GCP",
 };
