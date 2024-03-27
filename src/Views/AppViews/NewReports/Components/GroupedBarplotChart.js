@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
-import { convertDigitToThousand } from "Utils";
 import { Box } from "@mui/material";
 
 let data = [
@@ -18,6 +17,10 @@ let data = [
   { name: "Dec", value1: 2000, value2: 900 },
 ];
 
+let margin = { top: 0, right: 0, bottom: 0, left: 0 },
+width = 1200 - margin.left - margin.right,
+height = 300 - margin.top - margin.bottom;
+
 class GroupedBarplotChart extends Component {
   constructor(props) {
     super(props);
@@ -25,19 +28,27 @@ class GroupedBarplotChart extends Component {
     this.ref = React.createRef();
   }
 
-  componentDidMount = () => this.renderChart();
-
-  componentDidUpdate = () => {
-    d3.select(this.ref.current)
-      .selectAll("*")
-      .remove(); // Remove existing chart before rendering new one
+  componentDidMount = () => {
     this.renderChart();
   };
 
+  // componentDidUpdate = () => {
+  //   d3.select(this.ref.current)
+  //     .selectAll("*")
+  //     .remove(); // Remove existing chart before rendering new one
+  //   this.renderChart();
+  // };
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.data !== this.props.data) {
+      this.renderChart();
+    }
+  }
+
   renderChart = () => {
+    let { data } = this.props;
     const margin = { top: 20, right: 0, bottom: 20, left: 40 };
     const width = this.ref.current.parentElement.clientWidth; // Dynamically get parent container width
-    const height = 220;
+    const height = 300;
     const barPadding = 0.5;
     const axisTicks = { qty: 5, outerSize: 0, dateFormat: "%m-%d" };
 
@@ -127,8 +138,13 @@ class GroupedBarplotChart extends Component {
 
   render() {
     return (
-      <Box className="grouped-barplot-chart" ref={this.ref}>
-        {this.props.chardBeforeRenderHTML}
+      <Box className="grouped-barplot-chart">
+        <svg
+          ref={this.ref}
+          viewBox={`0 0 ${width} ${
+            height + margin.top + margin.bottom + margin.right + 0
+          }`}
+        />
       </Box>
     );
   }
