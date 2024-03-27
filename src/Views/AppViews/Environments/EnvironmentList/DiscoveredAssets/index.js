@@ -35,7 +35,7 @@ import {
 import LambdaTable from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/LambdaTable";
 import Loader from "Components/Loader";
 import GlobalServicesSummaryTable from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/GlobalServicesSummaryTable";
-import { getSelectedInfraTopologyView } from "Utils";
+import { PRODUCT_CATEGORY_ENUM, getSelectedInfraTopologyView } from "Utils";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 
@@ -65,7 +65,7 @@ class DiscoveredAssets extends Component {
       currentVPC: {},
       showMenu: null,
       cloudName,
-      activeTierTab: "3Tier",
+      activeTierTab: PRODUCT_CATEGORY_ENUM.THREE_TIER,
       isClusterShow: false,
       currentActiveNode: "",
       currentActiveNodeId: "",
@@ -626,27 +626,37 @@ class DiscoveredAssets extends Component {
                     <Box className="tier-buttons">
                       <Button
                         variant={
-                          activeTierTab === "3Tier" ? "contained" : "outlined"
+                          activeTierTab === PRODUCT_CATEGORY_ENUM.THREE_TIER
+                            ? "contained"
+                            : "outlined"
                         }
                         className={
-                          activeTierTab === "3Tier"
+                          activeTierTab === PRODUCT_CATEGORY_ENUM.THREE_TIER
                             ? "primary-btn min-width"
                             : "primary-outline-btn min-width"
                         }
-                        onClick={() => this.handleTierTabToggle("3Tier")}
+                        onClick={() =>
+                          this.handleTierTabToggle(
+                            PRODUCT_CATEGORY_ENUM.THREE_TIER
+                          )
+                        }
                       >
                         3 Tier
                       </Button>
                       <Button
                         variant={
-                          activeTierTab === "Soa" ? "contained" : "outlined"
+                          activeTierTab === PRODUCT_CATEGORY_ENUM.SOA
+                            ? "contained"
+                            : "outlined"
                         }
                         className={
-                          activeTierTab === "Soa"
+                          activeTierTab === PRODUCT_CATEGORY_ENUM.SOA
                             ? "primary-btn min-width"
                             : "primary-outline-btn min-width"
                         }
-                        onClick={() => this.handleTierTabToggle("Soa")}
+                        onClick={() =>
+                          this.handleTierTabToggle(PRODUCT_CATEGORY_ENUM.SOA)
+                        }
                       >
                         SOA
                       </Button>
@@ -683,9 +693,9 @@ class DiscoveredAssets extends Component {
                     </Box>
                   </Box>
                   {soa3TierBtnCondition ? (
-                    activeTierTab === "3Tier" ? (
+                    activeTierTab === PRODUCT_CATEGORY_ENUM.THREE_TIER ? (
                       this.render3TierTableData()
-                    ) : activeTierTab === "Soa" ? (
+                    ) : activeTierTab === PRODUCT_CATEGORY_ENUM.SOA ? (
                       this.renderSoaTableData()
                     ) : (
                       <></>
@@ -697,7 +707,7 @@ class DiscoveredAssets extends Component {
                     {isClusterShow ? (
                       <ClusterDetails
                         eksData={eksMetaData || {}}
-                        ecsData={ecsMetaData || {} }
+                        ecsData={ecsMetaData || {}}
                         setCategory={this.setCurrentTopologyCategory}
                       />
                     ) : (

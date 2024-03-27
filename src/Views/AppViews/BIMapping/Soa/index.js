@@ -48,6 +48,7 @@ import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import InstanceListCards from "Views/AppViews/BIMapping/Components/InstanceListCards";
 import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { LOGOS } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -318,6 +319,8 @@ class Soa extends Component {
   renderDeployedInstances = () => {
     let { deployedInstances, selectedDeployedInstance } = this.state;
     let cloudStatus = this.props.cloudServices?.status;
+    let instanceStatus =
+      this.props.instancesServices?.status !== status.IN_PROGRESS;
     if (cloudStatus === status.IN_PROGRESS) {
       return this.renderLoder("deployed-cards-loader");
     } else {
@@ -332,10 +335,14 @@ class Soa extends Component {
             <VerticalTitleAndIconOfCard
               data={deployInstances}
               onClickCard={(title) =>
-                this.onClickDeployedCard(
-                  instance.id,
-                  instance.name,
-                  instance.elementType
+                instanceStatus ? (
+                  this.onClickDeployedCard(
+                    instance.id,
+                    instance.name,
+                    instance.elementType
+                  )
+                ) : (
+                  <></>
                 )
               }
             />
@@ -397,7 +404,7 @@ class Soa extends Component {
             },
           ];
           let instanceData = {
-            image: Aws,
+            image: LOGOS[instance?.cloud?.toUpperCase()],
             title: instance.elementType,
             data,
             id: instance.id,

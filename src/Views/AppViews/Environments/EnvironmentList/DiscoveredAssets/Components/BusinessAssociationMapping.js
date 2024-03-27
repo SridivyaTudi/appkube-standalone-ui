@@ -8,7 +8,7 @@ import {
   getModuleElements,
   getModulesOf3Tier,
 } from "Redux/AssociateApp/AssociateAppThunk";
-import { getCurrentOrgId } from "Utils";
+import { getCurrentOrgId, PRODUCT_CATEGORY_ENUM } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import calendarMouseIcon from "assets/img/assetmanager/calendar-mouse-icon.png";
@@ -41,7 +41,12 @@ let drawArrow = {
 };
 
 const productCategory = {
-  "3 Tier": ["Web Layer", "App Layer", "Data Layer", "Auxilary Layer"],
+  [`${PRODUCT_CATEGORY_ENUM.THREE_TIER}`]: [
+    "Web Layer",
+    "App Layer",
+    "Data Layer",
+    "Auxilary Layer",
+  ],
   SOA: ["BUSINESS", "COMMON"],
 };
 let transformScale = 0;
@@ -297,7 +302,7 @@ class BusinessAssociationMapping extends Component {
           selectedLevel_5,
         } = propActiveLevels;
         const checkSameSelectedTag =
-          type === "3 Tier"
+          type?.toUpperCase() === PRODUCT_CATEGORY_ENUM.THREE_TIER
             ? selectedLevel_4?.id === activeLevels["selectedLevel_4"]?.id
             : selectedLevel_5?.id === activeLevels["selectedLevel_5"]?.id;
 
@@ -336,7 +341,7 @@ class BusinessAssociationMapping extends Component {
                         type: "Category",
                         productType: type || "",
                       }).then(() => {
-                        if (type === "SOA") {
+                        if (type?.toUpperCase() === PRODUCT_CATEGORY_ENUM.SOA) {
                           this.onClickModule({
                             selectedLevel: 4,
                             currentLevelIndex: selectedLevel_4.id,
@@ -352,7 +357,10 @@ class BusinessAssociationMapping extends Component {
                               productType: type || "",
                             });
                           });
-                        } else if (type === "3 Tier") {
+                        } else if (
+                          type?.toUpperCase() ===
+                          PRODUCT_CATEGORY_ENUM.THREE_TIER
+                        ) {
                           this.onClickThreeTierModule({
                             selectedLevel: 4,
                             currentLevelIndex: selectedLevel_4.id,
@@ -537,7 +545,10 @@ class BusinessAssociationMapping extends Component {
                   {level.type === "Product" ? (
                     <div
                       className={`box ${
-                        level.productType === "SOA" ? "orange" : "blue"
+                        level.productType?.toUpperCase() ===
+                        PRODUCT_CATEGORY_ENUM.SOA
+                          ? "orange"
+                          : "blue"
                       }`}
                     >
                       {level.productType}
@@ -769,14 +780,16 @@ class BusinessAssociationMapping extends Component {
 
     if (activeBAMLevel && activeBAMLevel?.id === categoryId) {
     } else {
-      if (selectedType === "SOA") {
+      if (selectedType?.toUpperCase() === PRODUCT_CATEGORY_ENUM.SOA) {
         this.props.getModules({
           departmentId: selectedLevel_0.id,
           productId: selectedLevel_1.id,
           productEnvId: selectedLevel_2.id,
           serviceNature: label?.toLowerCase(),
         });
-      } else if (selectedType === "3 Tier") {
+      } else if (
+        selectedType?.toUpperCase() === PRODUCT_CATEGORY_ENUM.THREE_TIER
+      ) {
         this.props.getModulesOf3Tier({
           departmentId: selectedLevel_0.id,
           productId: selectedLevel_1.id,
@@ -818,7 +831,7 @@ class BusinessAssociationMapping extends Component {
 
     if (activeBAMLevel && activeBAMLevel?.id === moduleId) {
     } else {
-      if (productType === "SOA") {
+      if (productType?.toUpperCase() === PRODUCT_CATEGORY_ENUM.SOA) {
         this.props.getModuleElements({
           departmentId: selectedLevel_0.id,
           productId: selectedLevel_1.id,
