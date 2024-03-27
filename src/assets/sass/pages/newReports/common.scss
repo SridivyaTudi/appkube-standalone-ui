@@ -24,11 +24,11 @@
     .fliter-button {
       position: relative;
     
-      button {
-        font-weight: 600;
-        font-size: 13px;
-        line-height: 18px;
-      }
+      // button {
+      //   font-weight: 600;
+      //   font-size: 13px;
+      //   line-height: 18px;
+      // }
     
       .fliter-toggel {
         display: flex;
@@ -47,9 +47,9 @@
         overflow: hidden;
         text-overflow: ellipsis;
     
-        .arrow-icon {
-          margin-left: 20px; 
-        }
+        // .arrow-icon {
+        //   margin-left: 20px; 
+        // }
       }
     
       .fliter-collapse {

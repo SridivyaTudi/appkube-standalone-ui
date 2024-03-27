@@ -67,7 +67,7 @@
     },
     {
       "link": "/new-reports/over-view-dashboard",
-      "icon": "setting",
+      "icon": "report",
       "name": "Reports"
     }
   ]
