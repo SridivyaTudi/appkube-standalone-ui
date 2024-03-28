@@ -243,7 +243,10 @@ class Compute extends Component {
                 </button>
               </Box>
             </Box>
-            <SpendingTable data={accounts} />
+            <SpendingTable
+              data={accounts}
+              selectedGranularity={this.props.selectedGranularity}
+            />
           </>
         )}
       </>

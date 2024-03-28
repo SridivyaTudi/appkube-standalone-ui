@@ -9,89 +9,13 @@ import ServiceIcon5 from "assets/img/report/service-icon5.png";
 import ServiceIcon6 from "assets/img/report/service-icon6.png";
 import SpendingTable from "Views/AppViews/NewReports/OverviewDashboard/Components/SpendingTable";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { getCurrentOrgId } from "Utils";
+import { getCurrentOrgId, ENVIRONMENTS } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { REPORT_PAGE_TYPE } from "CommonData";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { connect } from "react-redux";
 import { getSpendOverviewComputeDetails } from "Redux/Reports/ReportsThunk";
-let timeSpendData = [
-  {
-    name: "Last Quarter Spend",
-    value: "$90,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-  {
-    name: "Month to date spend ",
-    value: "$70,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-  {
-    name: "Forecasted Spend ",
-    value: "$90,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-  {
-    name: "Avg Daily Spend",
-    value: "$90,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-];
-let computeSpendingTable = [
-  {
-    name: "EC2",
-    icon: ServiceIcon1,
-    last_month_spend: "$2,000",
-    month_spend: "$1,800",
-    variance: "15% ",
-    actions: "",
-  },
-  {
-    name: "Lambda",
-    icon: ServiceIcon2,
-    last_month_spend: "$1,500",
-    month_spend: "$2,500",
-    variance: "20%",
-    actions: "",
-  },
-  {
-    name: "Light Sail",
-    icon: ServiceIcon3,
-    last_month_spend: "$2,000",
-    month_spend: "$2,000",
-    variance: "15%",
-    actions: "",
-  },
-  {
-    name: "ECS",
-    icon: ServiceIcon4,
-    last_month_spend: "$2,000",
-    month_spend: "$2,000",
-    variance: "15%",
-    actions: "",
-  },
-  {
-    name: "EKS",
-    icon: ServiceIcon5,
-    last_month_spend: "$2,000",
-    month_spend: "$2,000",
-    variance: "15%",
-    actions: "",
-  },
-  {
-    name: "Fargate",
-    icon: ServiceIcon6,
-    last_month_spend: "$2,000",
-    month_spend: "$2,000",
-    variance: "15%",
-    actions: "",
-  },
-];
 
 class Other extends Component {
   constructor(props) {
@@ -103,15 +27,7 @@ class Other extends Component {
     };
   }
 
-  componentDidMount = () => {
-    this.props.getSpendOverviewComputeDetails({
-      serviceCategory: "other",
-      cloud: "aws",
-      granularity: "quarterly",
-      compareTo: -1,
-      orgId: getCurrentOrgId(),
-    });
-  };
+  componentDidMount = () => this.apiCall();
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -126,6 +42,10 @@ class Other extends Component {
         this.manipluateData(spendOverviewComputeDetailsData);
       }
     }
+
+    if (prevProps.selectedGranularity !== this.props.selectedGranularity) {
+      this.apiCall();
+    }
   }
 
   //  Serach
@@ -133,7 +53,7 @@ class Other extends Component {
     let value = e.target.value;
     let { accounts } = this.state;
     const { accounts: accontsData } = this.manipluateData(
-      this.props.spendOverviewComputeDetailsData?.data.data || [],
+      this.props.spendOverviewComputeDetailsData?.data?.data || [],
       1
     );
 
@@ -176,13 +96,13 @@ class Other extends Component {
         if (isOverviewDetails) {
           let name = REPORT_PAGE_TYPE.SERVICE_NAMES[
             details.serviceName.toUpperCase()
-          ].replace("#granularity#", "Quarter");
+          ].replace("#granularity#", this.props.selectedGranularity);
 
           timerSpendData.push({
             name,
             value: `$${details.total || 0}`,
             percentage: details.variance,
-            subName: " vs Last Quarter",
+            subName: " vs Last " + this.props.selectedGranularity,
           });
         } else {
           accounts.push({
@@ -202,6 +122,18 @@ class Other extends Component {
     } else {
       this.setState({ accounts, timerSpendData });
     }
+  };
+
+  apiCall = () => {
+    let serviceCategory =
+      REPORT_PAGE_TYPE.SPEND_OVERVIEW_SERVICE_CATEGORY.OTHER.toLowerCase();
+    this.props.getSpendOverviewComputeDetails({
+      serviceCategory,
+      cloud: ENVIRONMENTS.AWS.toLowerCase(),
+      granularity: this.props.selectedGranularity,
+      compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
   };
   render() {
     let { accounts, searchedKey, timerSpendData } = this.state;
@@ -223,7 +155,7 @@ class Other extends Component {
                   type="text"
                   className="input"
                   placeholder="Search Insatnce "
-                  //value={searchedKey}
+                  value={searchedKey}
                   onChange={this.handleSearchChange}
                   autoFocus="autoFocus"
                 />
@@ -232,7 +164,7 @@ class Other extends Component {
                 </button>
               </Box>
             </Box>
-            <SpendingTable data={accounts} />
+            <SpendingTable data={accounts} selectedGranularity={this.props.selectedGranularity} />
           </>
         )}
       </>
