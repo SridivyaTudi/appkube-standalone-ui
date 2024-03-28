@@ -195,10 +195,10 @@ class Compute extends Component {
     };
   }
 
-  allAPICall = () => {
+  allAPICall = (granularity) => {
     this.props.getComputeSummary({
       cloud: "aws",
-      granularity: "quarterly",
+      granularity,
       compareTo: -1,
       serviceCategory: "all",
       orgId: getCurrentOrgId(),
@@ -206,14 +206,14 @@ class Compute extends Component {
 
     this.props.getPotentialTotalSaving({
       cloud: "aws",
-      granularity: "quarterly",
+      granularity,
       compareTo: -1,
       serviceCategory: "all",
       orgId: getCurrentOrgId(),
     });
     this.props.getPotentialMonthlySaving({
       cloud: "aws",
-      granularity: "quarterly",
+      granularity,
       compareTo: -1,
       serviceCategory: "all",
       orgId: getCurrentOrgId(),
@@ -221,7 +221,7 @@ class Compute extends Component {
 
     this.props.getTopRiRecommendations({
       cloud: "aws",
-      granularity: "quarterly",
+      granularity,
       compareTo: -1,
       serviceCategory: "all",
       orgId: getCurrentOrgId(),
@@ -232,6 +232,9 @@ class Compute extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
+    if (prevProps.selectedGranularity !== this.props.selectedGranularity) {
+      this.allAPICall(this.props.selectedGranularity);
+    }
     if (
       prevProps.computeSummaryData.status !==
         this.props.computeSummaryData.status &&
@@ -394,7 +397,9 @@ class Compute extends Component {
     let { topRiRecommendationsData } = this.state;
     return (
       <TableBody>
-        {topRiRecommendationsData?.length ? (
+        {this.props.topRiRecommendationsData.status === status.IN_PROGRESS ? (
+          this.renderLoder()
+        ) : topRiRecommendationsData?.length ? (
           topRiRecommendationsData.map((details) => {
             return (
               <TableRow>

@@ -5,6 +5,8 @@ import Storage from "./Storage";
 import Network from "./Network";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
+import { v4 } from "uuid";
 
 class PotentialSavings extends Component {
   tabMapping = [
@@ -30,6 +32,8 @@ class PotentialSavings extends Component {
     this.state = {
       activeTab: 0,
       showSelectFilterModal: false,
+      isSelectDepartmentOpen: false,
+      selectedGranularity: GRANULARITY_TYPE.QUARTERLY.toLowerCase(),
     };
   }
   setActiveTab = (activeTab) => {
@@ -57,15 +61,15 @@ class PotentialSavings extends Component {
 
   // Render active tab component
   renderActiveTabOfComponent = () => {
-    const { activeTab } = this.state;
+    const { activeTab, selectedGranularity } = this.state;
     return (
       <Box className="tabs-content">
         {activeTab === 0 ? (
-          <Compute />
+          <Compute selectedGranularity={selectedGranularity} />
         ) : activeTab === 1 ? (
-          <Storage />
+          <Storage selectedGranularity={selectedGranularity} />
         ) : activeTab === 2 ? (
-          <Network />
+          <Network selectedGranularity={selectedGranularity} />
         ) : (
           <></>
         )}
@@ -78,8 +82,43 @@ class PotentialSavings extends Component {
       showSelectFilterModal: !this.state.showSelectFilterModal,
     });
   };
+
+  toggleSelectDepartment = () => {
+    this.setState({
+      isSelectDepartmentOpen: !this.state.isSelectDepartmentOpen,
+    });
+  };
+
+  getSelectedGranularity = () => {
+    let { selectedGranularity } = this.state;
+    let findValue = GRANULARITY_DROPDOWN_DATA.find(
+      (data) => data.key === selectedGranularity
+    );
+
+    return findValue.value || "";
+  };
+  onClickDropDown = (selectedGranularity) => {
+    if (selectedGranularity !== this.state.selectedGranularity) {
+      this.setState({ selectedGranularity, isSelectDepartmentOpen: false });
+    }
+  };
+  renderDropDownData = () => {
+    let { selectedGranularity } = this.state;
+    return GRANULARITY_DROPDOWN_DATA.map((data) => {
+      return (
+        <ListItem
+          onClick={() => this.onClickDropDown(data.key)}
+          key={v4()}
+          className={`${data.key === selectedGranularity ? "active" : ""}`}
+        >
+          <i className="fa-solid fa-circle-dot"></i>
+          {data.value}
+        </ListItem>
+      );
+    });
+  };
   render() {
-    const { showSelectFilterModal } = this.state;
+    const { showSelectFilterModal, isSelectDepartmentOpen } = this.state;
     return (
       <Box className="new-reports-container">
         <Box className="list-heading">
@@ -111,10 +150,34 @@ class PotentialSavings extends Component {
                 <i className="fas fa-filter m-r-2"></i> Filter
               </Button>
               <Box className="fliter-button">
-              <Button className="light-btn p-l-15 p-r-15">
-                <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
-              </Button>
-            </Box>
+                <Button
+                  className="light-btn p-l-15 p-r-15"
+                  onClick={this.toggleSelectDepartment}
+                >
+                  <i class="fas fa-calendar-minus m-r-2"></i>{" "}
+                  {this.getSelectedGranularity()}
+                </Button>
+                {this.state.isSelectDepartmentOpen === true && (
+                  <div
+                    className={
+                      isSelectDepartmentOpen
+                        ? "fliter-collapse active"
+                        : "fliter-collapse"
+                    }
+                  >
+                    <List>{this.renderDropDownData()}</List>
+                  </div>
+                )}
+
+                <div
+                  className={
+                    isSelectDepartmentOpen
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
+                  onClick={this.toggleSelectDepartment}
+                />
+              </Box>
             </Box>
           </Box>
           {this.renderActiveTabOfComponent()}
