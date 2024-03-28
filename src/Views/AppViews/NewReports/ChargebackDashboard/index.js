@@ -91,10 +91,10 @@ class ChargebackDashboard extends Component {
         <Box className="list-heading">
           <h3>Chargeback Dashboard</h3>
           <Box className="fliter-button">
-              <Button className="light-btn p-l-15 p-r-15">
-                <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
-              </Button>
-            </Box>
+            <Button className="light-btn p-l-15 p-r-15">
+              <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
+            </Button>
+          </Box>
         </Box>
         <Box className="reports-tab-section">
           <Box className="tabs">{this.renderTabMenu()}</Box>
