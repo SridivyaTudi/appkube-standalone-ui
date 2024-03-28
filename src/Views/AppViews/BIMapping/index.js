@@ -27,6 +27,8 @@ import {
 import Loader from "Components/Loader";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import { getCloudWiseLandingZoneCount } from "Redux/Environments/EnvironmentsThunk";
+import CloudElementInstancePopup from "./Components/CloudElementInstancePopup";
+
 const orgId = getCurrentOrgId();
 
 let headers = [
@@ -102,6 +104,7 @@ class BIMapping extends Component {
       isSelectDepartmentOpen: false,
       organizationTableData: [],
       clickTableData: {},
+      serviceDetails: [],
     };
   }
 
@@ -208,6 +211,7 @@ class BIMapping extends Component {
         productId: exptraIds?.productId,
         productEnvId: exptraIds?.productEnvId,
         elementTypeId: exptraIds?.elementTypeId,
+        otherData: dataDetails,
       };
     });
   };
@@ -436,7 +440,8 @@ class BIMapping extends Component {
   // Click on organization element types
   onClickNode(data) {
     let { type, departmentId, productId, productEnvId, id, name } = data;
-    console.log(data);
+    let { serviceDetails } = this.state;
+
     if (type === this.TYPE.DEPARTMENT) {
       this.props.getProductList(id);
     } else if (type === this.TYPE.PRODUCT) {
@@ -450,8 +455,34 @@ class BIMapping extends Component {
         productEnvId,
         elementType: name,
       });
+    } else if (type === this.TYPE.ELEMENT_INSTANCE_TYPE) {
+      let { serviceCategory, serviceName, serviceNature, serviceType } =
+        data.otherData;
+      serviceDetails = [
+        {
+          label: "Service Category",
+          value: serviceCategory,
+        },
+        {
+          label: "Service Name",
+          value: serviceName,
+        },
+        {
+          label: "Service Nature",
+          value: serviceNature,
+        },
+        {
+          label: "Service Type",
+          value: serviceType,
+        },
+      ];
     }
-    this.setState({ clickTableData: data });
+
+    this.setState({ clickTableData: data, serviceDetails }, () => {
+      if (type === this.TYPE.ELEMENT_INSTANCE_TYPE) {
+        this.handleShowInstanceModal();
+      }
+    });
   }
 
   // Redirect to Add product
@@ -471,8 +502,18 @@ class BIMapping extends Component {
     );
   };
 
+  handleShowInstanceModal = () => {
+    this.setState({
+      showInstanceModal: !this.state.showInstanceModal,
+    });
+  };
   render() {
-    const { isSelectDepartmentOpen, organizationTableData } = this.state;
+    const {
+      isSelectDepartmentOpen,
+      organizationTableData,
+      showInstanceModal,
+      serviceDetails,
+    } = this.state;
     const {
       organizationWiseDepartments: organization,
       products,
@@ -536,6 +577,15 @@ class BIMapping extends Component {
             this.renderNoDataHtml("There are no data available.")
           )}
         </Box>
+        {showInstanceModal ? (
+          <CloudElementInstancePopup
+            showModal={showInstanceModal}
+            handleShowInstanceModal={this.handleShowInstanceModal}
+            data={serviceDetails}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }
