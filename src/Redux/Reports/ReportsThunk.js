@@ -193,7 +193,6 @@ export const getPotentialTotalSaving = createAsyncThunk(
   }
 );
 
-
 export const getPotentialMonthlySaving = createAsyncThunk(
   "Reports/getPotentialMonthlySaving",
   async (objIds) => {
@@ -212,7 +211,6 @@ export const getPotentialMonthlySaving = createAsyncThunk(
   }
 );
 
-
 export const getTopRiRecommendations = createAsyncThunk(
   "Reports/getTopRiRecommendations",
   async (objIds) => {
@@ -224,6 +222,74 @@ export const getTopRiRecommendations = createAsyncThunk(
         .replace("#compare-to#", compareTo)
         .replace("#service-category#", serviceCategory);
       const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getElementSummary = createAsyncThunk(
+  "Reports/getElementSummary",
+  async (objIds) => {
+    try {
+      let {
+        orgId,
+        cloud,
+        granularity,
+        compareTo,
+        serviceCategory,
+        elementType,
+      } = objIds;
+      let url = config.GET_ELEMENT_SUMMARY.replace("#org-id#", orgId)
+        .replace("#cloud-name#", cloud)
+        .replace("#granularity#", granularity)
+        .replace("#compare-to#", compareTo)
+        .replace("#service-category#", serviceCategory)
+        .replace("#element-type#", elementType);
+
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getElementDetails = createAsyncThunk(
+  "Reports/getElementDetails",
+  async (objIds) => {
+    try {
+      let {
+        orgId,
+        cloud,
+        granularity,
+        compareTo,
+        serviceCategory,
+        elementType,
+      } = objIds;
+      let url = config.GET_ELEMENT_DETAILS.replace("#org-id#", orgId)
+        .replace("#cloud-name#", cloud)
+        .replace("#granularity#", granularity)
+        .replace("#compare-to#", compareTo)
+        .replace("#service-category#", serviceCategory)
+        .replace("#element-type#", elementType);
+
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+export const getCostTopAccountsDetails = createAsyncThunk(
+  "Reports/getCostTopAccountsDetails",
+  async (params) => {
+    try {
+      const response = await postLoginService.get(
+        config.GET_COST_TOP_ACCOUNTS_DETAILS,
+        { params }
+      );
       return response;
     } catch (error) {
       console.log(error);

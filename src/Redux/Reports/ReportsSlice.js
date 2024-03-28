@@ -10,7 +10,9 @@ import {
   getComputeSummary,
   getPotentialTotalSaving,
   getPotentialMonthlySaving,
-  getTopRiRecommendations
+  getTopRiRecommendations,
+  getElementSummary,
+  getElementDetails,getCostTopAccountsDetails
 } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -59,6 +61,17 @@ export const ReportsSlice = createSlice({
     },
     topRiRecommendationsData: {
       status: null,
+      data: [],
+    },
+    elementSummaryData: {
+      status: null,
+      data: [],
+    },
+    elementDetailsData: {
+      status: null,
+      data: [],
+    },costTopAccountsDetailList: {
+      status: "",
       data: [],
     },
   },
@@ -345,6 +358,86 @@ export const ReportsSlice = createSlice({
         ...state,
         topRiRecommendationsData: {
           status: status.FAILURE,
+        },
+      };
+    },
+
+    [getElementSummary.pending]: (state) => {
+      return {
+        ...state,
+        elementSummaryData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getElementSummary.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        elementSummaryData: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getElementSummary.rejected]: (state) => {
+      return {
+        ...state,
+        elementSummaryData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getElementDetails.pending]: (state) => {
+      return {
+        ...state,
+        elementDetailsData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getElementDetails.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        elementDetailsData: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getElementDetails.rejected]: (state) => {
+      return {
+        ...state,
+        elementDetailsData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getCostTopAccountsDetails.pending]: (state) => {
+      return {
+        ...state,
+        costTopAccountsDetailList: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getCostTopAccountsDetails.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        costTopAccountsDetailList: {
+          status: status.SUCCESS,
+          data: action.payload.data,
+        },
+      };
+    },
+    [getCostTopAccountsDetails.rejected]: (state) => {
+      return {
+        ...state,
+        costTopAccountsDetailList: {
+          status: status.FAILURE,
+          data: [],
         },
       };
     },

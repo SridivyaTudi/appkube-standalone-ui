@@ -69,10 +69,14 @@ const config = {
   GET_POTENTIAL_SERVICES: `/reporting/organization/#org-id#/potential-savings?cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
   GET_COST_TOP_ACCOUNTS: `/reporting/organization/#org-id#/cost-top-accounts?cloud=#cloud-name#&account=#account#&granularity=#granularity#&compareTo=#compare-to#&noOfRecords=#no-of-records#&order=#order#`,
   GET_SPENDING_TREND: `/reporting/organization/#org-id#/spending-trend?cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#&forcast=#forcast#`,
-  GET_COMPUTE_SUMMARY:`/reporting/organization/#org-id#/potential-savings/detail/summary?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
-  GET_POTENTIAL_TOTAL_SAVING:`/reporting/organization/#org-id#/potential-savings/detail/total-savings?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
-  GET_POTENTIAL_MONTHLY_SAVING:`/reporting/organization/#org-id#/potential-savings/detail/monthly-savings?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
-  GET_TOP_RI_RECOMMENDATIONS:`/reporting/organization/#org-id#/potential-savings/detail/top-ri-recommendation?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`
+  GET_COMPUTE_SUMMARY: `/reporting/organization/#org-id#/potential-savings/detail/summary?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
+  GET_POTENTIAL_TOTAL_SAVING: `/reporting/organization/#org-id#/potential-savings/detail/total-savings?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
+  GET_POTENTIAL_MONTHLY_SAVING: `/reporting/organization/#org-id#/potential-savings/detail/monthly-savings?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
+  GET_TOP_RI_RECOMMENDATIONS: `/reporting/organization/#org-id#/potential-savings/detail/top-ri-recommendation?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
+  GET_ELEMENT_SUMMARY: `reporting/organization/#org-id#/spend-overview/element-summary?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#&elementType=#element-type#`,
+  GET_ELEMENT_DETAILS: `reporting/organization/#org-id#/spend-overview/element-detail?serviceCategory=#service-category#&elementType=#element-type#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
+  GET_COST_TOP_ACCOUNTS_DETAILS:
+    "/reporting/organization/1/cost-top-accounts/detail",
 };
 
 export default config;

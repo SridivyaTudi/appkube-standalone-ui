@@ -7,6 +7,8 @@ import Network from "./Network";
 import Other from "./Other";
 import { Link } from "react-router-dom";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { GRANULARITY_TYPE } from "CommonData";
+
 class SpendOverviewDetails extends Component {
   tabMapping = [
     {
@@ -39,6 +41,7 @@ class SpendOverviewDetails extends Component {
     super(props);
     this.state = {
       activeTab: 0,
+      selectedGranularity: GRANULARITY_TYPE.QUARTERLY.toLowerCase(),
     };
   }
   setActiveTab = (activeTab) => {
@@ -66,19 +69,19 @@ class SpendOverviewDetails extends Component {
 
   // Render active tab component
   renderActiveTabOfComponent = () => {
-    const { activeTab } = this.state;
+    const { activeTab,selectedGranularity } = this.state;
     return (
       <Box className="tabs-content">
         {activeTab === 0 ? (
-          <Compute />
+          <Compute selectedGranularity={selectedGranularity} />
         ) : activeTab === 1 ? (
-          <Storage />
+          <Storage selectedGranularity={selectedGranularity} />
         ) : activeTab === 2 ? (
-          <Database />
+          <Database selectedGranularity={selectedGranularity} />
         ) : activeTab === 3 ? (
-          <Network />
+          <Network selectedGranularity={selectedGranularity} />
         ) : activeTab === 4 ? (
-          <Other />
+          <Other selectedGranularity={selectedGranularity} />
         ) : (
           <></>
         )}
@@ -134,10 +137,10 @@ class SpendOverviewDetails extends Component {
                 <i className="fas fa-filter m-r-2"></i> Filter
               </Button>
               <Box className="fliter-button">
-              <Button className="light-btn p-l-15 p-r-15">
-                <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
-              </Button>
-            </Box>
+                <Button className="light-btn p-l-15 p-r-15">
+                  <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
+                </Button>
+              </Box>
             </Box>
           </Box>
           {this.renderActiveTabOfComponent()}
