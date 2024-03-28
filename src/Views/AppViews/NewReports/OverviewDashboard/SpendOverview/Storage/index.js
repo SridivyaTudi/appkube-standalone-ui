@@ -71,7 +71,7 @@ class Storage extends Component {
   // Render Loder
   renderLoder() {
     return (
-      <Box className="d-blck text-center w-100 h-100 p-t-20 p-b-20 ">
+      <Box className="reports-loader">
         <Loader className="align-item-center justify-center w-100 h-100" />
       </Box>
     );
