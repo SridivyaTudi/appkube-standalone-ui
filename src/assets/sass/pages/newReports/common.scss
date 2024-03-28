@@ -60,7 +60,7 @@
     //   .light-btn{
     //     width: 140px;
     //   }
-    
+
     //   .fliter-toggel {
     //     display: flex;
     //     align-items: center;
@@ -164,7 +164,7 @@
 }
 .fliter-button {
   position: relative;
-  .light-btn{
+  .light-btn {
     width: 140px;
   }
 
@@ -216,6 +216,48 @@
       margin: 0;
 
       li {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0;
+        margin-bottom: 0;
+        color: #383874;
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 500;
+        padding: 7px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+
+        span {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        &:hover {
+          color: #383874;
+          background-color: #dde1f8;
+        }
+
+        &.active {
+          color: #383874;
+          background-color: #dde1f8;
+        }
+
+        i {
+          margin-right: 7px;
+        }
+      }
+    }
+    > div {
+      display: block;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      .menuItem {
         width: 100%;
         display: flex;
         align-items: center;
