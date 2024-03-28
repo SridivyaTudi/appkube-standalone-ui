@@ -35,7 +35,14 @@ export const REPORT_PAGE_TYPE = {
     TOTAL_LAST_MONT_SPEND: "Last #granularity# Spend",
     TOTAL_THIS_MONT_SPEND: "#granularity# to date spend",
     FORECASTED_SPEND: "Forecasted Spend",
-    AVG_DAILY_SPEND: "Avg Daily Spend",
+    AVG_DAILY_SPEND: "Avg #granularity# Spend",
+  },
+  SPEND_OVERVIEW_SERVICE_CATEGORY: {
+    COMPUTE: "COMPUTE",
+    STORAGE: "STORAGE",
+    DATABASE: "DATABASE",
+    NETWORK: "NETWORK",
+    OTHER: "OTHER",
   },
 };
 
