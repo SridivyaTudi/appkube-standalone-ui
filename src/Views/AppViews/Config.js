@@ -71,7 +71,8 @@ const config = {
   GET_SPENDING_TREND: `/reporting/organization/#org-id#/spending-trend?cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#&forcast=#forcast#`,
   GET_COMPUTE_SUMMARY:`/reporting/organization/#org-id#/potential-savings/detail/summary?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
   GET_POTENTIAL_TOTAL_SAVING:`/reporting/organization/#org-id#/potential-savings/detail/total-savings?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
-  GET_POTENTIAL_MONTHLY_SAVING:`/reporting/organization/#org-id#/potential-savings/detail/monthly-savings?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`
+  GET_POTENTIAL_MONTHLY_SAVING:`/reporting/organization/#org-id#/potential-savings/detail/monthly-savings?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
+  GET_TOP_RI_RECOMMENDATIONS:`/reporting/organization/#org-id#/potential-savings/detail/top-ri-recommendation?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`
 };
 
 export default config;

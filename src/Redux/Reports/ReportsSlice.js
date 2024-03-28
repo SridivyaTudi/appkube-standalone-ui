@@ -9,7 +9,8 @@ import {
   getTopUsedServiceDetails,
   getComputeSummary,
   getPotentialTotalSaving,
-  getPotentialMonthlySaving
+  getPotentialMonthlySaving,
+  getTopRiRecommendations
 } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -44,18 +45,22 @@ export const ReportsSlice = createSlice({
       status: null,
       data: [],
     },
-    computeSummaryData:{
+    computeSummaryData: {
       status: null,
       data: [],
     },
-    potentialTotalSavingData:{
+    potentialTotalSavingData: {
       status: null,
       data: [],
     },
-    potentialMonthlySavingData:{
+    potentialMonthlySavingData: {
       status: null,
       data: [],
-    }
+    },
+    topRiRecommendationsData: {
+      status: null,
+      data: [],
+    },
   },
   extraReducers: {
     [getSpendOverview.pending]: (state) => {
@@ -266,7 +271,6 @@ export const ReportsSlice = createSlice({
       };
     },
 
-
     [getPotentialTotalSaving.pending]: (state) => {
       return {
         ...state,
@@ -293,8 +297,6 @@ export const ReportsSlice = createSlice({
       };
     },
 
-
-
     [getPotentialMonthlySaving.pending]: (state) => {
       return {
         ...state,
@@ -316,6 +318,32 @@ export const ReportsSlice = createSlice({
       return {
         ...state,
         potentialMonthlySavingData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getTopRiRecommendations.pending]: (state) => {
+      return {
+        ...state,
+        topRiRecommendationsData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getTopRiRecommendations.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        topRiRecommendationsData: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getTopRiRecommendations.rejected]: (state) => {
+      return {
+        ...state,
+        topRiRecommendationsData: {
           status: status.FAILURE,
         },
       };

@@ -19,6 +19,7 @@ import {
   getComputeSummary,
   getPotentialTotalSaving,
   getPotentialMonthlySaving,
+  getTopRiRecommendations,
 } from "Redux/Reports/ReportsThunk";
 import { getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
@@ -55,48 +56,48 @@ const totalUsedServiceColor = {
 //     population: 81489445,
 //   },
 // ];
-let verticalBarChartData = [
-  {
-    name: "Jun 23",
-    value: 4500,
-  },
-  {
-    name: "July 23",
-    value: 4000,
-  },
-  {
-    name: "August 23",
-    value: 4000,
-  },
-  {
-    name: "Sept 23",
-    value: 3800,
-  },
-  {
-    name: "Oct 23",
-    value: 3700,
-  },
-  {
-    name: "Nov 23",
-    value: 3700,
-  },
-  {
-    name: "Dec 23",
-    value: 3700,
-  },
-  {
-    name: "Jan 24",
-    value: 3700,
-  },
-  {
-    name: "Feb 24",
-    value: 3700,
-  },
-  {
-    name: "March 24",
-    value: 3700,
-  },
-];
+// let verticalBarChartData = [
+//   {
+//     name: "Jun 23",
+//     value: 4500,
+//   },
+//   {
+//     name: "July 23",
+//     value: 4000,
+//   },
+//   {
+//     name: "August 23",
+//     value: 4000,
+//   },
+//   {
+//     name: "Sept 23",
+//     value: 3800,
+//   },
+//   {
+//     name: "Oct 23",
+//     value: 3700,
+//   },
+//   {
+//     name: "Nov 23",
+//     value: 3700,
+//   },
+//   {
+//     name: "Dec 23",
+//     value: 3700,
+//   },
+//   {
+//     name: "Jan 24",
+//     value: 3700,
+//   },
+//   {
+//     name: "Feb 24",
+//     value: 3700,
+//   },
+//   {
+//     name: "March 24",
+//     value: 3700,
+//   },
+// ];
 
 // let computeSummaryData = [
 //   {
@@ -125,71 +126,72 @@ let verticalBarChartData = [
 //   },
 // ];
 
-let riData = [
-  {
-    resourceType: "EC2",
-    InstanceId: "i-0c1234dc",
-    recommendation: "RI",
-    currentInstance: "t4g.2xlarge",
-    recommendedInstance: "t2.2xlarge",
-    terms: "1yr RI",
-    paymentMode: "No Upfront",
-    UpfrontCost: "$0",
-    hrCost: "$0.2300",
-    estimatedSavings: "~$530",
-    totalSpend: "$196.22",
-  },
-  {
-    resourceType: "ECS",
-    InstanceId: "i-0c1234dc",
-    recommendation: "RI",
-    currentInstance: "t4g.2xlarge",
-    recommendedInstance: "t2.2xlarge",
-    terms: "1yr RI",
-    paymentMode: "No Upfront",
-    UpfrontCost: "$0",
-    hrCost: "$0.2300",
-    estimatedSavings: "~$530",
-    totalSpend: "$196.22",
-  },
-  {
-    resourceType: "LAMBDA",
-    InstanceId: "i-0c1234dc",
-    recommendation: "RI",
-    currentInstance: "t4g.2xlarge",
-    recommendedInstance: "t2.2xlarge",
-    terms: "1yr RI",
-    paymentMode: "No Upfront",
-    UpfrontCost: "$0",
-    hrCost: "$0.2300",
-    estimatedSavings: "~$530",
-    totalSpend: "$196.22",
-  },
-  {
-    resourceType: "EC2",
-    InstanceId: "i-0c1234dc",
-    recommendation: "RI",
-    currentInstance: "t4g.2xlarge",
-    recommendedInstance: "t2.2xlarge",
-    terms: "1yr RI",
-    paymentMode: "No Upfront",
-    UpfrontCost: "$0",
-    hrCost: "$0.2300",
-    estimatedSavings: "~$530",
-    totalSpend: "$196.22",
-  },
-];
+// let riData = [
+//   {
+//     resourceType: "EC2",
+//     InstanceId: "i-0c1234dc",
+//     recommendation: "RI",
+//     currentInstance: "t4g.2xlarge",
+//     recommendedInstance: "t2.2xlarge",
+//     terms: "1yr RI",
+//     paymentMode: "No Upfront",
+//     UpfrontCost: "$0",
+//     hrCost: "$0.2300",
+//     estimatedSavings: "~$530",
+//     totalSpend: "$196.22",
+//   },
+//   {
+//     resourceType: "ECS",
+//     InstanceId: "i-0c1234dc",
+//     recommendation: "RI",
+//     currentInstance: "t4g.2xlarge",
+//     recommendedInstance: "t2.2xlarge",
+//     terms: "1yr RI",
+//     paymentMode: "No Upfront",
+//     UpfrontCost: "$0",
+//     hrCost: "$0.2300",
+//     estimatedSavings: "~$530",
+//     totalSpend: "$196.22",
+//   },
+//   {
+//     resourceType: "LAMBDA",
+//     InstanceId: "i-0c1234dc",
+//     recommendation: "RI",
+//     currentInstance: "t4g.2xlarge",
+//     recommendedInstance: "t2.2xlarge",
+//     terms: "1yr RI",
+//     paymentMode: "No Upfront",
+//     UpfrontCost: "$0",
+//     hrCost: "$0.2300",
+//     estimatedSavings: "~$530",
+//     totalSpend: "$196.22",
+//   },
+//   {
+//     resourceType: "EC2",
+//     InstanceId: "i-0c1234dc",
+//     recommendation: "RI",
+//     currentInstance: "t4g.2xlarge",
+//     recommendedInstance: "t2.2xlarge",
+//     terms: "1yr RI",
+//     paymentMode: "No Upfront",
+//     UpfrontCost: "$0",
+//     hrCost: "$0.2300",
+//     estimatedSavings: "~$530",
+//     totalSpend: "$196.22",
+//   },
+// ];
 
 class Compute extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
-      accounts: riData,
+      // accounts: riData,
       showSelectFilterModal: false,
       updatedSummaryData: [],
       potentialTotalSavingData: [],
       spendPotentialSavingTotal: 0,
+      topRiRecommendationsData: [],
     };
   }
 
@@ -210,6 +212,14 @@ class Compute extends Component {
       orgId: getCurrentOrgId(),
     });
     this.props.getPotentialMonthlySaving({
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      serviceCategory: "all",
+      orgId: getCurrentOrgId(),
+    });
+
+    this.props.getTopRiRecommendations({
       cloud: "aws",
       granularity: "quarterly",
       compareTo: -1,
@@ -258,6 +268,18 @@ class Compute extends Component {
         this.maniplatepotentialMonthlySavingData(
           potentialMonthlySavingData.data
         );
+      }
+    }
+
+    if (
+      prevProps.topRiRecommendationsData.status !==
+        this.props.topRiRecommendationsData.status &&
+      this.props.topRiRecommendationsData.status === status.SUCCESS &&
+      this.props.topRiRecommendationsData?.data
+    ) {
+      const topRiRecommendationsData = this.props.topRiRecommendationsData.data;
+      if (topRiRecommendationsData) {
+        this.setState({ topRiRecommendationsData });
       }
     }
   }
@@ -311,7 +333,28 @@ class Compute extends Component {
     this.setState({ potentialMonthlySavingData });
   };
 
+  // maniplatetopRiRecommendationsData = (data) => {
+  //   const updatedtopRiRecommendationsData = data.map((item) => {
+  //     let name = item.label;
+  //     let value = `$${parseFloat(item.currentTotal).toFixed(2)}`;
+  //     let percentage = item.variance;
+  //     let subName = `vs Previous Month`;
+  //     return { name, value, percentage, subName };
+  //   });
+
+  //   this.setState({
+  //     topRiRecommendationsData: updatedtopRiRecommendationsData,
+  //   });
+  // };
   renderLoder = () => {
+    return (
+      <Box className="chart-loader">
+        <Loader />
+      </Box>
+    );
+  };
+
+  renderSummaryLoder = () => {
     return (
       <Box className="summary-loader">
         <Loader />
@@ -348,11 +391,11 @@ class Compute extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    let { accounts } = this.state;
+    let { topRiRecommendationsData } = this.state;
     return (
       <TableBody>
-        {accounts?.length ? (
-          accounts.map((details) => {
+        {topRiRecommendationsData?.length ? (
+          topRiRecommendationsData.map((details) => {
             return (
               <TableRow>
                 <TableCell align="left">{details.resourceType}</TableCell>
@@ -372,7 +415,7 @@ class Compute extends Component {
             );
           })
         ) : (
-          <Box className="d-blck text-center w-100 h-100 ">
+          <Box className="d-blck w-100 h-100 p-l-20">
             <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
               <h5 className="m-t-0 m-b-0">There are no data available.</h5>
             </Box>
@@ -385,11 +428,11 @@ class Compute extends Component {
   //  Serach
   handleSearchChange = (e) => {
     let value = e.target.value;
-    let { accounts } = this.state;
-    let data = riData || [];
+    let { topRiRecommendationsData } = this.state;
+    let data = this.props.topRiRecommendationsData.data || [];
     if (data?.length) {
       if (value) {
-        accounts = data.filter((tableData) => {
+        topRiRecommendationsData = data.filter((tableData) => {
           if (
             tableData?.resourceType.toLowerCase().includes(value.toLowerCase())
           ) {
@@ -399,9 +442,9 @@ class Compute extends Component {
           }
         });
       } else {
-        accounts = data;
+        topRiRecommendationsData = data;
       }
-      this.setState({ accounts, searchedKey: value });
+      this.setState({ topRiRecommendationsData, searchedKey: value });
     }
   };
   render() {
@@ -425,7 +468,7 @@ class Compute extends Component {
     return (
       <>
         {computeSummaryLoder ? (
-          this.renderLoder()
+          this.renderSummaryLoder()
         ) : (
           <TimeSpendComponent data={computeSummaryData} />
         )}
@@ -514,11 +557,13 @@ function mapStateToProps(state) {
     computeSummaryData,
     potentialTotalSavingData,
     potentialMonthlySavingData,
+    topRiRecommendationsData,
   } = state.reports;
   return {
     computeSummaryData,
     potentialTotalSavingData,
     potentialMonthlySavingData,
+    topRiRecommendationsData,
   };
 }
 
@@ -526,5 +571,6 @@ const mapDispatchToProps = {
   getComputeSummary,
   getPotentialTotalSaving,
   getPotentialMonthlySaving,
+  getTopRiRecommendations,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Compute);
