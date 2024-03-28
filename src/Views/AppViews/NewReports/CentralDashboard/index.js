@@ -31,7 +31,7 @@ class CentralDashboard extends Component {
   }
 
   componentWillUnmount() {
-    this.removeTooltipElement()
+    this.removeTooltipElement();
   }
 
   removeTooltipElement = () => {
@@ -91,9 +91,11 @@ class CentralDashboard extends Component {
       <Box className="new-reports-container">
         <Box className="list-heading">
           <h3>Cost Central Dashboard</h3>
-          <Button className="light-btn p-l-15 p-r-15">
-            <i class="fas fa-calendar-minus m-r-2"></i> Last Quarter
-          </Button>
+          <Box className="fliter-button">
+            <Button className="light-btn p-l-15 p-r-15">
+              <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
+            </Button>
+          </Box>
         </Box>
         <Box className="reports-tab-section">
           <Box className="tabs">{this.renderTabMenu()}</Box>
