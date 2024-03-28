@@ -91,13 +91,13 @@ class Network extends Component {
         if (isOverviewDetails) {
           let name = REPORT_PAGE_TYPE.SERVICE_NAMES[
             details.serviceName.toUpperCase()
-          ].replace("#granularity#", "Quarter");
+          ].replace("#granularity#", this.props.selectedGranularity);
 
           timerSpendData.push({
             name,
             value: `$${details.total || 0}`,
             percentage: details.variance,
-            subName: " vs Last ",
+            subName: " vs Last " + this.props.selectedGranularity,
           });
         } else {
           accounts.push({
@@ -160,7 +160,7 @@ class Network extends Component {
                 </button>
               </Box>
             </Box>
-            <SpendingTable data={accounts} />
+            <SpendingTable data={accounts} selectedGranularity={this.props.selectedGranularity} />
           </>
         )}
       </>

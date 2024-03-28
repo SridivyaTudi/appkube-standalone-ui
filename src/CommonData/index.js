@@ -64,10 +64,6 @@ export const GRANULARITY_DROPDOWN_DATA = [
     value: "Last Quarter",
   },
   {
-    key: GRANULARITY_TYPE.HALF_YEARLY.toLowerCase(),
-    value: "Last Half-Year",
-  },
-  {
     key: GRANULARITY_TYPE.YEARLY.toLowerCase(),
     value: "Last Year",
   },
