@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, ListItem, List } from "@mui/material";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import ServiceIcon7 from "assets/img/report/service-icon7.png";
 import ServiceIcon8 from "assets/img/report/service-icon8.png";
@@ -17,9 +17,15 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import { getTopUsedServiceDetails } from "Redux/Reports/ReportsThunk";
-import { getCurrentOrgId } from "Utils";
-import { REPORT_PAGE_TYPE } from "CommonData";
+import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
+import {
+  GRANULARITY_TYPE,
+  REPORT_PAGE_TYPE,
+  GRANULARITY_DROPDOWN_DATA,
+} from "CommonData";
 import Loader from "Components/Loader";
+import { v4 } from "uuid";
+
 let timeSpendData = [
   {
     name: "Last Quarter Spend",
@@ -129,18 +135,10 @@ class TopUsedServices extends Component {
       searchedKey: "",
       accounts: [],
       spendOverAllDetails: [],
+      selectedGranularity: GRANULARITY_TYPE.QUARTERLY.toLowerCase(),
     };
   }
-
-  componentDidMount = () => {
-    this.props.getTopUsedServiceDetails({
-      serviceCategory: "all",
-      cloud: "aws",
-      granularity: "quarterly",
-      compareTo: -1,
-      orgId: getCurrentOrgId(),
-    });
-  };
+  componentDidMount = () => this.apiCall();
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -158,8 +156,10 @@ class TopUsedServices extends Component {
   }
 
   //Maniplate top used service details data
-  maniplatetopUsedServiceDetailsData = (data) => {
-    let { accounts, spendOverAllDetails } = this.state;
+  maniplatetopUsedServiceDetailsData = (data, isReturnData = 0) => {
+    let { accounts, spendOverAllDetails, selectedGranularity } = this.state;
+    accounts = [];
+    spendOverAllDetails = [];
     if (data.length) {
       data.forEach((details) => {
         let isOverviewDetails = Object.keys(
@@ -169,12 +169,12 @@ class TopUsedServices extends Component {
         if (isOverviewDetails) {
           let name = REPORT_PAGE_TYPE.SERVICE_NAMES[
             details.serviceName.toUpperCase()
-          ].replace("#granularity#", "Quarter");
+          ].replace("#granularity#", selectedGranularity);
           spendOverAllDetails.push({
             name,
             value: `$${details.total || 0}`,
             percentage: details.variance,
-            subName: " vs Last Quarter",
+            subName: " vs Last " + selectedGranularity,
           });
         } else {
           accounts.push({
@@ -189,16 +189,26 @@ class TopUsedServices extends Component {
       });
     }
 
-    this.setState({ accounts, spendOverAllDetails });
+    if (isReturnData) {
+      return { accounts, spendOverAllDetails };
+    } else {
+      this.setState({ accounts, spendOverAllDetails });
+    }
   };
+
   //  Serach
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { accounts } = this.state;
-    let data = computeSpendingTable || [];
-    if (data?.length) {
+
+    const { accounts: accontsData } = this.maniplatetopUsedServiceDetailsData(
+      this.props.topUsedServiceDetailsData.data?.data || [],
+      1
+    );
+
+    if (accontsData?.length) {
       if (value) {
-        accounts = data.filter((tableData) => {
+        accounts = accontsData.filter((tableData) => {
           if (tableData?.name.toLowerCase().includes(value.toLowerCase())) {
             return tableData;
           } else {
@@ -206,10 +216,10 @@ class TopUsedServices extends Component {
           }
         });
       } else {
-        accounts = data;
+        accounts = accontsData;
       }
-      this.setState({ accounts, searchedKey: value });
     }
+    this.setState({ accounts, searchedKey: value });
   };
 
   // Render Loder
@@ -220,8 +230,67 @@ class TopUsedServices extends Component {
       </Box>
     );
   }
+
+  apiCall = () => {
+    this.props.getTopUsedServiceDetails({
+      serviceCategory: "all",
+      cloud: ENVIRONMENTS.AWS.toLowerCase(),
+      granularity: this.state.selectedGranularity,
+      compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
+  };
+
+  onClickDropDown = (selectedGranularity) => {
+    if (selectedGranularity !== this.state.selectedGranularity) {
+      this.setState({ selectedGranularity, isGranularityDropDownOpen: false },()=>{
+        this.apiCall()
+      });
+    }
+  };
+
+  renderDropDownData = () => {
+    let { selectedGranularity } = this.state;
+    return GRANULARITY_DROPDOWN_DATA.map((data) => {
+      return (
+        <ListItem
+          onClick={() => this.onClickDropDown(data.key)}
+          key={v4()}
+          className={`${data.key === selectedGranularity ? "active" : ""}`}
+        >
+          <i className="fa-solid fa-circle-dot"></i>
+          {data.value}
+        </ListItem>
+      );
+    });
+  };
+
+  toggleGranularity = () => {
+    this.setState({
+      isGranularityDropDownOpen: !this.state.isGranularityDropDownOpen,
+    });
+  };
+
+  getSelectedGranularity = () => {
+    let { selectedGranularity } = this.state;
+    let findValue = GRANULARITY_DROPDOWN_DATA.find(
+      (data) => data.key === selectedGranularity
+    );
+
+    return findValue.value || "";
+  };
+  toggleGranularity = () => {
+    this.setState({
+      isGranularityDropDownOpen: !this.state.isGranularityDropDownOpen,
+    });
+  };
   render() {
-    let { accounts, searchedKey, spendOverAllDetails } = this.state;
+    let {
+      accounts,
+      searchedKey,
+      spendOverAllDetails,
+      isGranularityDropDownOpen,
+    } = this.state;
     let { topUsedServiceDetailsData } = this.props;
     return (
       <Box className="new-reports-container">
@@ -248,10 +317,34 @@ class TopUsedServices extends Component {
             <i className="fas fa-filter m-r-2"></i> Filter
           </Button>
           <Box className="fliter-button">
-              <Button className="light-btn p-l-15 p-r-15">
-                <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
-              </Button>
-            </Box>
+            <Button
+              className="light-btn p-l-15 p-r-15"
+              onClick={this.toggleGranularity}
+            >
+              <i className="fas fa-calendar-minus m-r-2"></i>{" "}
+              {this.getSelectedGranularity()}
+            </Button>
+            {isGranularityDropDownOpen && (
+              <div
+                className={
+                  isGranularityDropDownOpen
+                    ? "fliter-collapse active"
+                    : "fliter-collapse"
+                }
+              >
+                <List>{this.renderDropDownData()}</List>
+              </div>
+            )}
+
+            <div
+              className={
+                isGranularityDropDownOpen
+                  ? "fliters-collapse-bg active"
+                  : "fliters-collapse-bg"
+              }
+              onClick={this.toggleGranularity}
+            />
+          </Box>
         </Box>
         {topUsedServiceDetailsData.status === status.IN_PROGRESS ? (
           this.renderLoder()
@@ -277,7 +370,10 @@ class TopUsedServices extends Component {
                 </button>
               </Box>
             </Box>
-            <SpendingTable data={accounts} />
+            <SpendingTable
+              data={accounts}
+              selectedGranularity={this.state.selectedGranularity}
+            />
           </Box>
         )}
       </Box>

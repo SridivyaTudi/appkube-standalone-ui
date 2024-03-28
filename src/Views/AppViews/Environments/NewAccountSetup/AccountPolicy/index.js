@@ -82,8 +82,9 @@ class AccountPolicy extends Component {
     let isValid = true;
     let errors = {};
 
-    let regex = /arn:aws:iam::([0-9]+(:user)+)\/[A-Za-z0-9]+/i;
-
+    // let regex = /arn:aws:iam::([0-9]+(:user)+)\/[A-Za-z0-9]+/i;
+    let regex = /arn:aws:iam::([0-9]+(:user|:role)+)\/[A-Za-z0-9]+/i;
+    // arn:aws:iam::([0-9]+(:user|:role))\/[A-Za-z0-9]+/i
     if (isSubmit) {
       if (!displayName) {
         errors = { ...errors, displayName: "Display name is required!" };
