@@ -3,8 +3,42 @@
   display: block;
   padding: 30px 40px;
   background-color: #f6f7fb;
+  .breadcrumbs {
+    display: flex;
+    width: 100%;
+    margin-left: 0;
+    justify-content: flex-end;
+    ul {
+      list-style: none;
+      display: flex;
+
+      li {
+        display: inline-flex;
+        padding-left: 3px;
+        padding-right: 3px;
+        line-height: 32px;
+        align-items: center;
+        font-size: 12px;
+        color: #8676ff;
+        font-weight: 400;
+        &.active {
+          font-weight: 600;
+          cursor: auto;
+          color: #414d55;
+        }
+
+        a {
+          color: #8676ff;
+        }
+
+        i {
+          font-size: 10px;
+          color: #414d55;
+        }
+      }
+    }
+  }
   .list-heading {
-    margin-bottom: 20;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -23,11 +57,8 @@
     }
     .fliter-button {
       position: relative;
-    
-      button {
-        font-weight: 600;
-        font-size: 13px;
-        line-height: 18px;
+      .light-btn{
+        width: 140px;
       }
     
       .fliter-toggel {
@@ -46,12 +77,12 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    
+
         .arrow-icon {
-          margin-left: 20px; 
+          margin-left: 20px;
         }
       }
-    
+
       .fliter-collapse {
         background-color: #ffffff;
         border-radius: 5px;
@@ -66,17 +97,17 @@
         overflow-y: auto;
         max-height: 200px;
         box-shadow: 0px 4px 32px 0px #00103d29;
-    
+
         &.active {
           display: block;
         }
-    
-        ul {
+
+        > ul {
           display: block;
           list-style: none;
           padding: 0;
           margin: 0;
-    
+
           li {
             width: 100%;
             display: flex;
@@ -91,30 +122,30 @@
             padding: 7px 10px;
             border-radius: 3px;
             cursor: pointer;
-    
+
             span {
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
             }
-    
+
             &:hover {
               color: #383874;
               background-color: #dde1f8;
             }
-    
+
             &.active {
               color: #383874;
               background-color: #dde1f8;
             }
-    
+
             i {
               margin-right: 7px;
             }
           }
         }
       }
-    
+
       .fliters-collapse-bg {
         position: fixed;
         width: 100%;
@@ -123,7 +154,7 @@
         top: 0;
         z-index: 1;
         display: none;
-    
+
         &.active {
           display: block;
         }
@@ -322,15 +353,14 @@
 @media only screen and (max-width: 767px) {
   .table-head {
     flex-wrap: wrap;
-    .check-box-group{
+    .check-box-group {
       margin-top: 8px;
     }
     .search {
       margin-top: 20px;
     }
-    .light-btn{
+    .light-btn {
       margin-top: 20px;
     }
-    
   }
 }

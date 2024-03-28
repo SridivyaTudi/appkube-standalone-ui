@@ -156,3 +156,39 @@ export const getSpendingTrend = createAsyncThunk(
     }
   }
 );
+
+export const getComputeSummary = createAsyncThunk(
+  "Reports/getComputeSummary",
+  async (objIds) => {
+    try {
+      let { orgId, cloud, granularity, compareTo, serviceCategory } = objIds;
+      let url = config.GET_COMPUTE_SUMMARY.replace("#org-id#", orgId)
+        .replace("#cloud-name#", cloud)
+        .replace("#granularity#", granularity)
+        .replace("#compare-to#", compareTo)
+        .replace("#service-category#", serviceCategory);
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getPotentialTotalSaving = createAsyncThunk(
+  "Reports/getPotentialTotalSaving",
+  async (objIds) => {
+    try {
+      let { orgId, cloud, granularity, compareTo, serviceCategory } = objIds;
+      let url = config.GET_POTENTIAL_TOTAL_SAVING.replace("#org-id#", orgId)
+        .replace("#cloud-name#", cloud)
+        .replace("#granularity#", granularity)
+        .replace("#compare-to#", compareTo)
+        .replace("#service-category#", serviceCategory);
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

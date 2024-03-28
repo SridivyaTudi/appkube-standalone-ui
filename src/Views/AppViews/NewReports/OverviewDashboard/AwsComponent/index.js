@@ -46,47 +46,14 @@ class AwsComponent extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getSpendOverview({
-      serviceCategory: "all",
-      cloud: "aws",
-      granularity: "quarterly",
-      compareTo: -1,
-      orgId: getCurrentOrgId(),
-    });
-    this.props.getTopUsedService({
-      serviceCategory: "all",
-      cloud: "aws",
-      granularity: "quarterly",
-      compareTo: -1,
-      noOfRecords: 10,
-      order: "top",
-      orgId: getCurrentOrgId(),
-    });
-    this.props.getPotentialSavings({
-      cloud: "aws",
-      granularity: "quarterly",
-      compareTo: -1,
-      orgId: getCurrentOrgId(),
-    });
-    this.props.getCostTopAccounts({
-      cloud: "aws",
-      account: "all",
-      granularity: "quarterly",
-      compareTo: -1,
-      noOfRecords: 10,
-      order: "top",
-      orgId: getCurrentOrgId(),
-    });
-    this.props.getSpendingTrend({
-      cloud: "aws",
-      granularity: "monthly",
-      compareTo: -1,
-      forcast: true,
-      orgId: getCurrentOrgId(),
-    });
+    this.allAPICall(this.props.selectedGranularity);
   };
 
   componentDidUpdate(prevProps, prevState) {
+    if (prevProps.selectedGranularity !== this.props.selectedGranularity) {
+      this.allAPICall(this.props.selectedGranularity);
+    }
+
     if (
       prevProps.spendOverviewData.status !==
         this.props.spendOverviewData.status &&
@@ -98,6 +65,7 @@ class AwsComponent extends Component {
         this.maniplateSpendOverviewData(spendOverviewData.data);
       }
     }
+
     if (
       prevProps.topUsedServiceData.status !==
         this.props.topUsedServiceData.status &&
@@ -109,6 +77,7 @@ class AwsComponent extends Component {
         this.maniplateTopUsedServiceData(topUsedServiceData.data);
       }
     }
+
     if (
       prevProps.potentialSavingsData.status !==
         this.props.potentialSavingsData.status &&
@@ -131,6 +100,7 @@ class AwsComponent extends Component {
         this.maniplateCostTopAccountsData(costTopAccountsData.data);
       }
     }
+
     if (
       prevProps.spendingTrendData.status !==
         this.props.spendingTrendData.status &&
@@ -297,6 +267,53 @@ class AwsComponent extends Component {
     );
   };
 
+  allAPICall = (granularity) => {
+    this.props.getSpendOverview({
+      serviceCategory: "all",
+      cloud: "aws",
+      granularity,
+      compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getTopUsedService({
+      serviceCategory: "all",
+      cloud: "aws",
+      granularity,
+      compareTo: -1,
+      noOfRecords: 10,
+      order: "top",
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getPotentialSavings({
+      cloud: "aws",
+      granularity,
+      compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getCostTopAccounts({
+      cloud: "aws",
+      account: "all",
+      granularity,
+      compareTo: -1,
+      noOfRecords: 10,
+      order: "top",
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getSpendingTrend({
+      cloud: "aws",
+      granularity,
+      compareTo: -1,
+      forcast: true,
+      orgId: getCurrentOrgId(),
+    });
+  };
+  renderNoDataHtml = () => {
+    return (
+      <Box className="chart-loader">
+        <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+      </Box>
+    );
+  };
   render() {
     let {
       spendOverviewData,
@@ -335,7 +352,7 @@ class AwsComponent extends Component {
                 ChartComponent={
                   spendOverviewLoder ? (
                     this.renderLoder()
-                  ) : (
+                  ) : spendOverviewData.length ? (
                     <DonutChart
                       data={spendOverviewData}
                       width={250}
@@ -344,6 +361,8 @@ class AwsComponent extends Component {
                         centerValue: `$${spendOverviewTotal}`,
                       }}
                     />
+                  ) : (
+                    this.renderNoDataHtml()
                   )
                 }
               />
@@ -359,22 +378,23 @@ class AwsComponent extends Component {
                 ChartComponent={
                   topUsedServiceLoder ? (
                     this.renderLoder()
-                  ) : (
+                  ) : topUsedServiceData.length ? (
                     <HorizontalBarChart
                       data={topUsedServiceData}
                       chardBeforeRenderHTML={
                         <Box className="total-cost-incurred">
-                          <p>
-                            {" "}
-                            90,579{" "}
+                          {/* <p>
+                            90,579
                             <span>
                               {" "}
                               <i class="fas fa-sort-up p-l-5"></i> 10 &#37;
                             </span>
-                          </p>
+                          </p> */}
                         </Box>
                       }
                     />
+                  ) : (
+                    this.renderNoDataHtml()
                   )
                 }
               />
@@ -389,13 +409,15 @@ class AwsComponent extends Component {
                 ChartComponent={
                   potentialSavingsLoder ? (
                     this.renderLoder()
-                  ) : (
+                  ) : potentialSavingsData.length ? (
                     <GaugeChart
                       data={potentialSavingsData}
                       otherData={{
                         centerValue: `${potentialSavingsPercentage}%`,
                       }}
                     />
+                  ) : (
+                    this.renderNoDataHtml()
                   )
                 }
               />
@@ -410,11 +432,13 @@ class AwsComponent extends Component {
                 ChartComponent={
                   costTopAccountsLoder ? (
                     this.renderLoder()
-                  ) : (
+                  ) : costTopAccountsData?.length ? (
                     <VerticalBarchart
                       data={costTopAccountsData}
                       style={{ width: "100%", height: "350" }}
                     />
+                  ) : (
+                    this.renderNoDataHtml()
                   )
                 }
               />
@@ -424,15 +448,26 @@ class AwsComponent extends Component {
                 ChartComponent={
                   spendingTrendLoder ? (
                     this.renderLoder()
-                  ) : (
+                  ) : spendingTrendData.length ? (
                     <MultiLineChart
                       data={spendingTrendData}
                       labels={[
-                        { name: "Last Quarter", color: "orange" },
-                        { name: "Current Quarter", color: "steelblue" },
-                        { name: "Forecasted Spend", color: "pink" },
+                        {
+                          name: `Last ${this.props.selectedGranularity}`,
+                          color: "orange",
+                        },
+                        {
+                          name: `Current ${this.props.selectedGranularity}`,
+                          color: "steelblue",
+                        },
+                        {
+                          name: `Forecasted ${this.props.selectedGranularity}`,
+                          color: "pink",
+                        },
                       ]}
                     />
+                  ) : (
+                    this.renderNoDataHtml()
                   )
                 }
                 data={{

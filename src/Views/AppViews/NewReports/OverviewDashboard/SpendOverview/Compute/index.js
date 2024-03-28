@@ -13,86 +13,86 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import { getSpendOverviewComputeDetails } from "Redux/Reports/ReportsThunk";
-import { getCurrentOrgId } from "Utils";
+import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
 import Loader from "Components/Loader";
 import { REPORT_PAGE_TYPE } from "CommonData";
 
-let timeSpendData = [
-  {
-    name: "Last Quarter Spend",
-    value: "$90,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-  {
-    name: "Quarter to date spend ",
-    value: "$70,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-  {
-    name: "Forecasted Spend ",
-    value: "$90,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-  {
-    name: "Avg Daily Spend",
-    value: "$90,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-];
-let computeSpendingTable = [
-  {
-    name: "EC2",
-    icon: ServiceIcon1,
-    last_month_spend: "$2,000",
-    month_spend: "$1,800",
-    variance: "15% ",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
-  },
-  {
-    name: "Lambda",
-    icon: ServiceIcon2,
-    last_month_spend: "$1,500",
-    month_spend: "$2,500",
-    variance: "20%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
-  },
-  {
-    name: "Light Sail",
-    icon: ServiceIcon3,
-    last_month_spend: "$2,000",
-    month_spend: "$2,000",
-    variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
-  },
-  {
-    name: "ECS",
-    icon: ServiceIcon4,
-    last_month_spend: "$2,000",
-    month_spend: "$2,000",
-    variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
-  },
-  {
-    name: "EKS",
-    icon: ServiceIcon5,
-    last_month_spend: "$2,000",
-    month_spend: "$2,000",
-    variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
-  },
-  {
-    name: "Fargate",
-    icon: ServiceIcon6,
-    last_month_spend: "$2,000",
-    month_spend: "$2,000",
-    variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
-  },
-];
+// let timeSpendData = [
+//   {
+//     name: "Last Quarter Spend",
+//     value: "$90,000",
+//     percentage: "5",
+//     subName: " vs Last Quarter",
+//   },
+//   {
+//     name: "Quarter to date spend ",
+//     value: "$70,000",
+//     percentage: "5",
+//     subName: " vs Last Quarter",
+//   },
+//   {
+//     name: "Forecasted Spend ",
+//     value: "$90,000",
+//     percentage: "5",
+//     subName: " vs Last Quarter",
+//   },
+//   {
+//     name: "Avg Daily Spend",
+//     value: "$90,000",
+//     percentage: "5",
+//     subName: " vs Last Quarter",
+//   },
+// ];
+// let computeSpendingTable = [
+//   {
+//     name: "EC2",
+//     icon: ServiceIcon1,
+//     last_month_spend: "$2,000",
+//     month_spend: "$1,800",
+//     variance: "15% ",
+//     actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+//   },
+//   {
+//     name: "Lambda",
+//     icon: ServiceIcon2,
+//     last_month_spend: "$1,500",
+//     month_spend: "$2,500",
+//     variance: "20%",
+//     actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+//   },
+//   {
+//     name: "Light Sail",
+//     icon: ServiceIcon3,
+//     last_month_spend: "$2,000",
+//     month_spend: "$2,000",
+//     variance: "15%",
+//     actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+//   },
+//   {
+//     name: "ECS",
+//     icon: ServiceIcon4,
+//     last_month_spend: "$2,000",
+//     month_spend: "$2,000",
+//     variance: "15%",
+//     actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+//   },
+//   {
+//     name: "EKS",
+//     icon: ServiceIcon5,
+//     last_month_spend: "$2,000",
+//     month_spend: "$2,000",
+//     variance: "15%",
+//     actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+//   },
+//   {
+//     name: "Fargate",
+//     icon: ServiceIcon6,
+//     last_month_spend: "$2,000",
+//     month_spend: "$2,000",
+//     variance: "15%",
+//     actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+//   },
+// ];
 
 class Compute extends Component {
   constructor(props) {
@@ -104,15 +104,7 @@ class Compute extends Component {
     };
   }
 
-  componentDidMount = () => {
-    this.props.getSpendOverviewComputeDetails({
-      serviceCategory: "compute",
-      cloud: "aws",
-      granularity: "quarterly",
-      compareTo: -1,
-      orgId: getCurrentOrgId(),
-    });
-  };
+  componentDidMount = () => this.apiCall();
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -127,16 +119,24 @@ class Compute extends Component {
         this.manipluateData(spendOverviewComputeDetailsData);
       }
     }
+
+    if (prevProps.selectedGranularity !== this.props.selectedGranularity) {
+      this.apiCall();
+    }
   }
 
   //  Serach
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { accounts } = this.state;
-    let data = computeSpendingTable || [];
-    if (data?.length) {
+    const { accounts: accontsData } = this.manipluateData(
+      this.props.spendOverviewComputeDetailsData?.data.data || [],
+      1
+    );
+
+    if (accontsData?.length) {
       if (value) {
-        accounts = data.filter((tableData) => {
+        accounts = accontsData.filter((tableData) => {
           if (tableData?.name.toLowerCase().includes(value.toLowerCase())) {
             return tableData;
           } else {
@@ -144,7 +144,7 @@ class Compute extends Component {
           }
         });
       } else {
-        accounts = data;
+        accounts = accontsData;
       }
       this.setState({ accounts, searchedKey: value });
     }
@@ -160,7 +160,7 @@ class Compute extends Component {
   }
 
   //manipluate compute data
-  manipluateData = (data) => {
+  manipluateData = (data, isReturnData = 0) => {
     let { accounts, timerSpendData } = this.state;
     accounts = [];
     timerSpendData = [];
@@ -173,13 +173,13 @@ class Compute extends Component {
         if (isOverviewDetails) {
           let name = REPORT_PAGE_TYPE.SERVICE_NAMES[
             details.serviceName.toUpperCase()
-          ].replace("#granularity#", "Quarter");
+          ].replace("#granularity#", this.props.selectedGranularity);
 
           timerSpendData.push({
             name,
             value: "$0",
             percentage: details.variance,
-            subName: " vs Last Quarter",
+            subName: " vs Last " + this.props.selectedGranularity,
           });
         } else {
           accounts.push({
@@ -193,8 +193,23 @@ class Compute extends Component {
         }
       });
     }
+    if (isReturnData) {
+      return { accounts, timerSpendData };
+    } else {
+      this.setState({ accounts, timerSpendData });
+    }
+  };
 
-    this.setState({ accounts, timerSpendData });
+  apiCall = () => {
+    let serviceCategory =
+      REPORT_PAGE_TYPE.SPEND_OVERVIEW_SERVICE_CATEGORY.COMPUTE.toLowerCase();
+    this.props.getSpendOverviewComputeDetails({
+      serviceCategory,
+      cloud: ENVIRONMENTS.AWS.toLowerCase(),
+      granularity: this.props.selectedGranularity,
+      compareTo: -1,
+      orgId: getCurrentOrgId(),
+    });
   };
 
   render() {
@@ -228,7 +243,10 @@ class Compute extends Component {
                 </button>
               </Box>
             </Box>
-            <SpendingTable data={accounts} />
+            <SpendingTable
+              data={accounts}
+              selectedGranularity={this.props.selectedGranularity}
+            />
           </>
         )}
       </>

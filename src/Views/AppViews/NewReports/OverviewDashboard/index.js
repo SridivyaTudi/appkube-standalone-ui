@@ -5,6 +5,8 @@ import AzureComponent from "./AzureComponent";
 import GcpComponent from "./GcpComponent";
 import { connect } from "react-redux";
 import { getSpendOverview } from "Redux/Reports/ReportsThunk";
+import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
+import { v4 } from "uuid";
 
 export class OverviewDashboard extends Component {
   tabMapping = [
@@ -30,6 +32,7 @@ export class OverviewDashboard extends Component {
     this.state = {
       activeTab: 0,
       isSelectDepartmentOpen: false,
+      selectedGranularity: GRANULARITY_TYPE.QUARTERLY.toLowerCase(),
     };
   }
   componentWillUnmount() {
@@ -72,15 +75,15 @@ export class OverviewDashboard extends Component {
 
   // Render active tab component
   renderActiveTabOfComponent = () => {
-    const { activeTab } = this.state;
+    const { activeTab, selectedGranularity } = this.state;
     return (
       <Box className="tabs-content">
         {activeTab === 0 ? (
-          <AwsComponent />
+          <AwsComponent selectedGranularity={selectedGranularity} />
         ) : activeTab === 1 ? (
-          <AzureComponent />
+          <AzureComponent selectedGranularity={selectedGranularity} />
         ) : activeTab === 2 ? (
-          <GcpComponent />
+          <GcpComponent selectedGranularity={selectedGranularity} />
         ) : (
           <></>
         )}
@@ -94,6 +97,37 @@ export class OverviewDashboard extends Component {
     });
   };
 
+  renderDropDownData = () => {
+    let { selectedGranularity } = this.state;
+    return GRANULARITY_DROPDOWN_DATA.map((data) => {
+      return (
+        <ListItem
+          onClick={() => this.onClickDropDown(data.key)}
+          key={v4()}
+          className={`${data.key === selectedGranularity ? "active" : ""}`}
+        >
+          <i className="fa-solid fa-circle-dot"></i>
+          {data.value}
+        </ListItem>
+      );
+    });
+  };
+
+  onClickDropDown = (selectedGranularity) => {
+    if (selectedGranularity !== this.state.selectedGranularity) {
+      this.setState({ selectedGranularity, isSelectDepartmentOpen: false });
+    }
+  };
+
+  getSelectedGranularity = () => {
+    let { selectedGranularity } = this.state;
+    let findValue = GRANULARITY_DROPDOWN_DATA.find(
+      (data) => data.key === selectedGranularity
+    );
+
+    return findValue.value || ''
+  };
+
   render() {
     const { isSelectDepartmentOpen, organizationTableData } = this.state;
     return (
@@ -105,7 +139,8 @@ export class OverviewDashboard extends Component {
               className="light-btn p-l-15 p-r-15"
               onClick={this.toggleSelectDepartment}
             >
-              <i class="fas fa-calendar-minus m-r-2"></i> Last Quarter
+              <i class="fas fa-calendar-minus m-r-2"></i>{" "}
+              {this.getSelectedGranularity()}
             </Button>
             {this.state.isSelectDepartmentOpen === true && (
               <div
@@ -115,26 +150,7 @@ export class OverviewDashboard extends Component {
                     : "fliter-collapse"
                 }
               >
-                <List>
-                  <ListItem>
-                    <i className="fa-solid fa-circle-dot"></i>daily
-                  </ListItem>
-                  <ListItem>
-                    <i className="fa-solid fa-circle-dot"></i>weekly
-                  </ListItem>
-                  <ListItem>
-                    <i className="fa-solid fa-circle-dot"></i>monthly
-                  </ListItem>
-                  <ListItem>
-                    <i className="fa-solid fa-circle-dot"></i>quarterly
-                  </ListItem>
-                  <ListItem>
-                    <i className="fa-solid fa-circle-dot"></i>half-yearly
-                  </ListItem>
-                  <ListItem>
-                    <i className="fa-solid fa-circle-dot"></i>yearly
-                  </ListItem>
-                </List>
+                <List>{this.renderDropDownData()}</List>
               </div>
             )}
 

@@ -166,10 +166,11 @@ class ItDepartment extends Component {
               <i class="fas fa-plus-circle m-r-2"></i> Create Invoice
             </Button>
           </Link>
-
-          <Button className="light-btn p-l-15 p-r-15">
-            <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
-          </Button>
+          <Box className="fliter-button">
+              <Button className="light-btn p-l-15 p-r-15">
+                <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
+              </Button>
+            </Box>
         </Box>
         <Box className="reports-tab-section m-t-3">
           <TimeSpendComponent data={timeSpendData} />

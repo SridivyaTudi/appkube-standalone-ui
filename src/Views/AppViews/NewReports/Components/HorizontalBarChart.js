@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
 import { Box } from "@mui/material";
+import { convertDigitToThousand } from "Utils";
 
 class HorizontalBarChart extends Component {
   constructor(props) {
@@ -29,6 +30,16 @@ class HorizontalBarChart extends Component {
     const width = 800;
     const height =
       Math.ceil(data.length * barHeight) + marginTop + marginBottom;
+
+    // Create the SVG container.
+    const svg = d3
+      .select(this.ref.current)
+      .attr("width", width)
+      .attr("height", height)
+      .attr("viewBox", [0, 10, width, height])
+      .attr("style", "max-width: 100%;  font: 12px sans-serif; ");
+    svg.selectAll("*").remove();
+
     let tooltip = d3
       .select("#root")
       .data(data)
@@ -56,13 +67,6 @@ class HorizontalBarChart extends Component {
     const yAxis = (g) =>
       g.call((g_local) => g_local.select(".domain").remove());
 
-    // Create the SVG container.
-    const svg = d3
-      .select(this.ref.current)
-      .attr("width", width)
-      .attr("height", height)
-      .attr("viewBox", [0, 10, width, height])
-      .attr("style", "max-width: 100%;  font: 12px sans-serif; ");
     svg
       .append("g")
       .attr("class", "x grid")
@@ -128,7 +132,7 @@ class HorizontalBarChart extends Component {
       .call(
         d3
           .axisTop(x)
-          .tickFormat((d, index) => `$${d}`)
+          .tickFormat((d, index) => `$${convertDigitToThousand(d)}`)
           .tickSize(0)
       )
       .call((g) => g.select(".domain").remove());

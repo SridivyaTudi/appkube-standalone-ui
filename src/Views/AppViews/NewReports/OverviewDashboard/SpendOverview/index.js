@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button, List, ListItem, } from "@mui/material";
+import { Box, Button, List, ListItem } from "@mui/material";
 import Compute from "./Compute";
 import Storage from "./Storage";
 import Database from "./Database";
@@ -7,6 +7,8 @@ import Network from "./Network";
 import Other from "./Other";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
+import { v4 } from "uuid";
 class SpendOverview extends Component {
   tabMapping = [
     {
@@ -40,6 +42,8 @@ class SpendOverview extends Component {
     this.state = {
       activeTab: 0,
       showSelectFilterModal: false,
+      isGranularityDropDownOpen: false,
+      selectedGranularity: GRANULARITY_TYPE.QUARTERLY.toLowerCase(),
     };
   }
   setActiveTab = (activeTab) => {
@@ -67,19 +71,19 @@ class SpendOverview extends Component {
 
   // Render active tab component
   renderActiveTabOfComponent = () => {
-    const { activeTab } = this.state;
+    const { activeTab, selectedGranularity } = this.state;
     return (
       <Box className="tabs-content">
         {activeTab === 0 ? (
-          <Compute />
+          <Compute selectedGranularity={selectedGranularity} />
         ) : activeTab === 1 ? (
-          <Storage />
+          <Storage selectedGranularity={selectedGranularity} />
         ) : activeTab === 2 ? (
-          <Database />
+          <Database selectedGranularity={selectedGranularity} />
         ) : activeTab === 3 ? (
-          <Network />
+          <Network selectedGranularity={selectedGranularity} />
         ) : activeTab === 4 ? (
-          <Other />
+          <Other selectedGranularity={selectedGranularity} />
         ) : (
           <></>
         )}
@@ -93,8 +97,44 @@ class SpendOverview extends Component {
     });
   };
 
+  renderDropDownData = () => {
+    let { selectedGranularity } = this.state;
+    return GRANULARITY_DROPDOWN_DATA.map((data) => {
+      return (
+        <ListItem
+          onClick={() => this.onClickDropDown(data.key)}
+          key={v4()}
+          className={`${data.key === selectedGranularity ? "active" : ""}`}
+        >
+          <i className="fa-solid fa-circle-dot"></i>
+          {data.value}
+        </ListItem>
+      );
+    });
+  };
+
+  toggleGranularity = () => {
+    this.setState({
+      isGranularityDropDownOpen: !this.state.isGranularityDropDownOpen,
+    });
+  };
+
+  getSelectedGranularity = () => {
+    let { selectedGranularity } = this.state;
+    let findValue = GRANULARITY_DROPDOWN_DATA.find(
+      (data) => data.key === selectedGranularity
+    );
+
+    return findValue.value || "";
+  };
+
+  onClickDropDown = (selectedGranularity) => {
+    if (selectedGranularity !== this.state.selectedGranularity) {
+      this.setState({ selectedGranularity, isGranularityDropDownOpen: false });
+    }
+  };
   render() {
-    const { showSelectFilterModal } = this.state;
+    const { showSelectFilterModal, isGranularityDropDownOpen } = this.state;
 
     return (
       <>
@@ -127,9 +167,35 @@ class SpendOverview extends Component {
                 >
                   <i className="fas fa-filter m-r-2"></i> Filter
                 </Button>
-                <Button className="light-btn p-l-15 p-r-15">
-                  <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
-                </Button>
+                <Box className="fliter-button">
+                  <Button
+                    className="light-btn p-l-15 p-r-15"
+                    onClick={this.toggleGranularity}
+                  >
+                    <i className="fas fa-calendar-minus m-r-2"></i>{" "}
+                    {this.getSelectedGranularity()}
+                  </Button>
+                  {isGranularityDropDownOpen && (
+                    <div
+                      className={
+                        isGranularityDropDownOpen
+                          ? "fliter-collapse active"
+                          : "fliter-collapse"
+                      }
+                    >
+                      <List>{this.renderDropDownData()}</List>
+                    </div>
+                  )}
+
+                  <div
+                    className={
+                      isGranularityDropDownOpen
+                        ? "fliters-collapse-bg active"
+                        : "fliters-collapse-bg"
+                    }
+                    onClick={this.toggleGranularity}
+                  />
+                </Box>
               </Box>
             </Box>
             {this.renderActiveTabOfComponent()}

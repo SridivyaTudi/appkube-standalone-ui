@@ -36,8 +36,12 @@ export class SpendingTable extends Component {
       <TableHead>
         <TableRow>
           <TableCell align="left">Service name</TableCell>
-          <TableCell align="center">Last quarter spend </TableCell>
-          <TableCell align="center">This quarter spend</TableCell>
+          <TableCell align="center">
+            Last {this.props.selectedGranularity} spend{" "}
+          </TableCell>
+          <TableCell align="center">
+            This {this.props.selectedGranularity} spend
+          </TableCell>
           <TableCell align="center">Variance</TableCell>
           <TableCell align="center">Actions</TableCell>
         </TableRow>
@@ -80,7 +84,7 @@ export class SpendingTable extends Component {
                   >
                     {Math.abs(variance)}
                     {variance > 0 ? (
-                      <i className="fas fa-sort-up " />
+                      <i className="fas fa-sort-up p-l-5 " />
                     ) : (
                       <i className="fas fa-sort-down p-l-5" />
                     )}

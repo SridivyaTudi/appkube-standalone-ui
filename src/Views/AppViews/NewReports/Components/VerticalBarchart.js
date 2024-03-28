@@ -16,16 +16,21 @@ class VerticalBarchart extends Component {
     this.ref = React.createRef();
   }
 
-  componentDidMount = () => this.renderChart();
+  componentDidMount = () => (this.props.data?.length ? this.renderChart() : []);
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.data !== this.props.data) {
-      this.renderChart();
+      if (this.props.data?.length) {
+        this.renderChart();
+      }
     }
   }
 
   renderChart = () => {
     let { data } = this.props;
+
+    const svg = d3.select(this.ref.current);
+    svg.selectAll("*").remove();
     let tooltip = d3
       .select("#root")
       .data(data)
@@ -34,7 +39,6 @@ class VerticalBarchart extends Component {
       .style("position", "absolute")
       .style("z-index", "10")
       .style("visibility", "hidden");
-    const svg = d3.select(this.ref.current);
     const xScale = d3
       .scaleBand()
       .range([margin.left, width - margin.right])

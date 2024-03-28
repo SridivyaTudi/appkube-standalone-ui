@@ -26,7 +26,7 @@ export const GRANULARITY_TYPE = {
   WEEKLY: "WEEKLY",
   MONTHLY: "MONTHLY",
   QUARTERLY: "QUARTERLY",
-  HALF_YEARLY: "HALF YEARLY",
+  HALF_YEARLY: "HALF-YEARLY",
   YEARLY: "YEARLY",
 };
 
@@ -35,6 +35,36 @@ export const REPORT_PAGE_TYPE = {
     TOTAL_LAST_MONT_SPEND: "Last #granularity# Spend",
     TOTAL_THIS_MONT_SPEND: "#granularity# to date spend",
     FORECASTED_SPEND: "Forecasted Spend",
-    AVG_DAILY_SPEND: "Avg Daily Spend",
+    AVG_DAILY_SPEND: "Avg #granularity# Spend",
+  },
+  SPEND_OVERVIEW_SERVICE_CATEGORY: {
+    COMPUTE: "COMPUTE",
+    STORAGE: "STORAGE",
+    DATABASE: "DATABASE",
+    NETWORK: "NETWORK",
+    OTHER: "OTHER",
   },
 };
+
+export const GRANULARITY_DROPDOWN_DATA = [
+  {
+    key: GRANULARITY_TYPE.DAILY.toLowerCase(),
+    value: "Last Day",
+  },
+  {
+    key: GRANULARITY_TYPE.WEEKLY.toLowerCase(),
+    value: "Last Week",
+  },
+  {
+    key: GRANULARITY_TYPE.MONTHLY.toLowerCase(),
+    value: "Last Month",
+  },
+  {
+    key: GRANULARITY_TYPE.QUARTERLY.toLowerCase(),
+    value: "Last Quarter",
+  },
+  {
+    key: GRANULARITY_TYPE.YEARLY.toLowerCase(),
+    value: "Last Year",
+  },
+];
