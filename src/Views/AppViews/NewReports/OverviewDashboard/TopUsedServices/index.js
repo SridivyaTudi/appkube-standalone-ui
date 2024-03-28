@@ -243,9 +243,12 @@ class TopUsedServices extends Component {
 
   onClickDropDown = (selectedGranularity) => {
     if (selectedGranularity !== this.state.selectedGranularity) {
-      this.setState({ selectedGranularity, isGranularityDropDownOpen: false },()=>{
-        this.apiCall()
-      });
+      this.setState(
+        { selectedGranularity, isGranularityDropDownOpen: false },
+        () => {
+          this.apiCall();
+        }
+      );
     }
   };
 
@@ -373,6 +376,7 @@ class TopUsedServices extends Component {
             <SpendingTable
               data={accounts}
               selectedGranularity={this.state.selectedGranularity}
+              page={"top-use-service"}
             />
           </Box>
         )}

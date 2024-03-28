@@ -93,7 +93,9 @@ class SpendOverviewDetails extends Component {
   /** Get url details. */
   getUrlDetails = () => {
     const name = this.props.params.name;
-    return { name };
+    const page = this.props.params.page;
+
+    return { name, page };
   };
   renderDropDownData = () => {
     let { selectedGranularity } = this.state;
@@ -132,7 +134,7 @@ class SpendOverviewDetails extends Component {
     }
   };
   render() {
-    let { name } = this.getUrlDetails();
+    let { name, page } = this.getUrlDetails();
     const { isGranularityDropDownOpen } = this.state;
     return (
       <Box className="new-reports-container spend-overview-container">
@@ -153,11 +155,17 @@ class SpendOverviewDetails extends Component {
               <li
                 onClick={() =>
                   this.props.navigate(
-                    "/app/new-reports/over-view-dashboard/spend-overview"
+                    `/app/new-reports/over-view-dashboard/${
+                      page === "spend-overview"
+                        ? "spend-overview"
+                        : "top-use-services"
+                    }`
                   )
                 }
               >
-                Spend Overview
+               { page === "spend-overview"
+                        ? "Spend Overview"
+                        : "Top Used Services"} 
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -175,7 +183,8 @@ class SpendOverviewDetails extends Component {
               </Button>
               <Box className="fliter-button" onClick={this.toggleGranularity}>
                 <Button className="light-btn p-l-15 p-r-15">
-                  <i className="fas fa-calendar-minus m-r-2"></i>   {this.getSelectedGranularity()}
+                  <i className="fas fa-calendar-minus m-r-2"></i>{" "}
+                  {this.getSelectedGranularity()}
                 </Button>
                 {isGranularityDropDownOpen && (
                   <div
