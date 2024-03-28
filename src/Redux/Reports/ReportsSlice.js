@@ -8,7 +8,8 @@ import {
   getSpendingTrend,
   getTopUsedServiceDetails,
   getComputeSummary,
-  getPotentialTotalSaving
+  getPotentialTotalSaving,
+  getPotentialMonthlySaving
 } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -48,6 +49,10 @@ export const ReportsSlice = createSlice({
       data: [],
     },
     potentialTotalSavingData:{
+      status: null,
+      data: [],
+    },
+    potentialMonthlySavingData:{
       status: null,
       data: [],
     }
@@ -283,6 +288,34 @@ export const ReportsSlice = createSlice({
       return {
         ...state,
         potentialTotalSavingData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+
+
+    [getPotentialMonthlySaving.pending]: (state) => {
+      return {
+        ...state,
+        potentialMonthlySavingData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getPotentialMonthlySaving.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        potentialMonthlySavingData: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getPotentialMonthlySaving.rejected]: (state) => {
+      return {
+        ...state,
+        potentialMonthlySavingData: {
           status: status.FAILURE,
         },
       };

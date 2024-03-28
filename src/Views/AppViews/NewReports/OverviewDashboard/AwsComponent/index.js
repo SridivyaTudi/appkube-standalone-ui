@@ -309,7 +309,7 @@ class AwsComponent extends Component {
   };
   renderNoDataHtml = () => {
     return (
-      <Box className="chart-loader">
+      <Box className="environment-loader text-center  align-item-center justify-center p-t-20 p-b-20 ">
         <h5 className="m-t-0 m-b-0">There are no data available.</h5>
       </Box>
     );

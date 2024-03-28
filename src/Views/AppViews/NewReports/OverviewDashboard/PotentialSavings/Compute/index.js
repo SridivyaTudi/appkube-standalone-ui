@@ -18,33 +18,43 @@ import { connect } from "react-redux";
 import {
   getComputeSummary,
   getPotentialTotalSaving,
+  getPotentialMonthlySaving,
 } from "Redux/Reports/ReportsThunk";
 import { getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 
-let donutData = [
-  {
-    age_group: "Reserved Instance",
-    population: 110011100,
-  },
-  {
-    age_group: "Savings Plan",
-    population: 40267984,
-  },
-  {
-    age_group: "RightSizing",
-    population: 30672088,
-  },
-  {
-    age_group: "Spot Instances",
-    population: 53980105,
-  },
-  {
-    age_group: "Others",
-    population: 81489445,
-  },
-];
+const totalUsedServiceColor = {
+  SPOT: "#01f1e3",
+  RESERVED: "#fa71a3",
+  OTHERS: "#f9d33d",
+  RIGHTSIZE: "#ffba69",
+  SAVING_PLAN: "#8676ff",
+  CURRENT_TOTAL: "#2b5aff",
+};
+
+// let donutData = [
+//   {
+//     age_group: "Reserved Instance",
+//     population: 110011100,
+//   },
+//   {
+//     age_group: "Savings Plan",
+//     population: 40267984,
+//   },
+//   {
+//     age_group: "RightSizing",
+//     population: 30672088,
+//   },
+//   {
+//     age_group: "Spot Instances",
+//     population: 53980105,
+//   },
+//   {
+//     age_group: "Others",
+//     population: 81489445,
+//   },
+// ];
 let verticalBarChartData = [
   {
     name: "Jun 23",
@@ -179,6 +189,7 @@ class Compute extends Component {
       showSelectFilterModal: false,
       updatedSummaryData: [],
       potentialTotalSavingData: [],
+      spendPotentialSavingTotal: 0,
     };
   }
 
@@ -192,6 +203,13 @@ class Compute extends Component {
     });
 
     this.props.getPotentialTotalSaving({
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      serviceCategory: "all",
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getPotentialMonthlySaving({
       cloud: "aws",
       granularity: "quarterly",
       compareTo: -1,
@@ -215,6 +233,33 @@ class Compute extends Component {
         this.maniplatecomputeSummaryData(computeSummaryData.data);
       }
     }
+
+    if (
+      prevProps.potentialTotalSavingData.status !==
+        this.props.potentialTotalSavingData.status &&
+      this.props.potentialTotalSavingData.status === status.SUCCESS &&
+      this.props.potentialTotalSavingData?.data
+    ) {
+      const potentialTotalSavingData = this.props.potentialTotalSavingData.data;
+      if (potentialTotalSavingData) {
+        this.maniplatePotentialTotalSavingData(potentialTotalSavingData.data);
+      }
+    }
+
+    if (
+      prevProps.potentialMonthlySavingData.status !==
+        this.props.potentialMonthlySavingData.status &&
+      this.props.potentialMonthlySavingData.status === status.SUCCESS &&
+      this.props.potentialMonthlySavingData?.data
+    ) {
+      const potentialMonthlySavingData =
+        this.props.potentialMonthlySavingData.data;
+      if (potentialMonthlySavingData) {
+        this.maniplatepotentialMonthlySavingData(
+          potentialMonthlySavingData.data
+        );
+      }
+    }
   }
 
   maniplatecomputeSummaryData = (data) => {
@@ -229,6 +274,43 @@ class Compute extends Component {
     this.setState({ computeSummaryData: updatedSummaryData });
   };
 
+  maniplatePotentialTotalSavingData = (data) => {
+    let { potentialTotalSavingData, spendPotentialSavingTotal } = this.state;
+    spendPotentialSavingTotal = 0;
+    potentialTotalSavingData = [];
+    if (data?.length) {
+      const totalValue = data
+        .filter((e) => e.instanceType !== "CURRENT_TOTAL")
+        .reduce((acc, crr) => (acc += +crr.total), 0);
+      data.forEach((obj) => {
+        if (!["CURRENT_TOTAL"].includes(obj.instanceType)) {
+          potentialTotalSavingData.push({
+            age_group: obj.instanceType,
+            population: obj.total,
+            percentage: ((obj.total * 100) / totalValue).toFixed(2),
+          });
+        } else {
+          spendPotentialSavingTotal = parseInt(obj.total);
+        }
+      });
+    }
+    this.setState({ potentialTotalSavingData, spendPotentialSavingTotal });
+  };
+
+  maniplatepotentialMonthlySavingData = (data) => {
+    let { potentialMonthlySavingData } = this.state;
+    potentialMonthlySavingData = [];
+    if (data?.length) {
+      potentialMonthlySavingData = data.map((obj) => {
+        return {
+          name: obj.date,
+          value: obj.total,
+        };
+      });
+    }
+    this.setState({ potentialMonthlySavingData });
+  };
+
   renderLoder = () => {
     return (
       <Box className="summary-loader">
@@ -236,7 +318,13 @@ class Compute extends Component {
       </Box>
     );
   };
-
+  renderNoDataHtml = () => {
+    return (
+      <Box className="chart-loader">
+        <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+      </Box>
+    );
+  };
   //  Render table head
   renderTableHead = () => {
     return (
@@ -317,15 +405,29 @@ class Compute extends Component {
     }
   };
   render() {
-    let { searchedKey, computeSummaryData } = this.state;
-    let { computeSummaryData: computeSummaryProps } = this.props;
+    let {
+      searchedKey,
+      computeSummaryData,
+      potentialTotalSavingData,
+      spendPotentialSavingTotal,
+      potentialMonthlySavingData,
+    } = this.state;
+    let {
+      computeSummaryData: computeSummaryProps,
+      potentialMonthlySavingData: potentialMonthlySavingProps,
+      potentialTotalSavingData: potentialTotalSavingProps,
+    } = this.props;
     let computeSummaryLoder = computeSummaryProps.status === status.IN_PROGRESS;
+    let potentialMonthlySavingLoder =
+      potentialMonthlySavingProps.status === status.IN_PROGRESS;
+    let potentialTotalSavingLoder =
+      potentialTotalSavingProps.status === status.IN_PROGRESS;
     return (
       <>
         {computeSummaryLoder ? (
           this.renderLoder()
         ) : (
-          <TimeSpendComponent data={this.state.computeSummaryData} />
+          <TimeSpendComponent data={computeSummaryData} />
         )}
         <Box className="reports-charts">
           <Grid container spacing={3}>
@@ -336,26 +438,38 @@ class Compute extends Component {
                   labelOfBtn: " View Details",
                 }}
                 ChartComponent={
-                  <DonutChart
-                    data={donutData}
-                    width={250}
-                    height={300}
-                    otherData={{
-                      centerValue: "$65,690",
-                    }}
-                  />
+                  potentialTotalSavingLoder ? (
+                    this.renderLoder()
+                  ) : potentialTotalSavingData.length ? (
+                    <DonutChart
+                      data={potentialTotalSavingData}
+                      width={250}
+                      height={300}
+                      otherData={{
+                        centerValue: `$${spendPotentialSavingTotal}`,
+                      }}
+                    />
+                  ) : (
+                    this.renderNoDataHtml()
+                  )
                 }
               />
             </Grid>
             <Grid item xs={12} md={6} lg={8}>
               <ChartWrapper
                 ChartComponent={
-                  <VerticalBarchart
-                    data={verticalBarChartData}
-                    styleProp={{
-                      color: "#53CA43",
-                    }}
-                  />
+                  potentialMonthlySavingLoder ? (
+                    this.renderLoder()
+                  ) : potentialMonthlySavingData?.length ? (
+                    <VerticalBarchart
+                      data={potentialMonthlySavingData}
+                      styleProp={{
+                        color: "#53CA43",
+                      }}
+                    />
+                  ) : (
+                    this.renderNoDataHtml()
+                  )
                 }
                 data={{
                   title: "Monthly Savings",
@@ -396,12 +510,21 @@ class Compute extends Component {
   }
 }
 function mapStateToProps(state) {
-  const { computeSummaryData, potentialTotalSavingData } = state.reports;
-  return { computeSummaryData, potentialTotalSavingData };
+  const {
+    computeSummaryData,
+    potentialTotalSavingData,
+    potentialMonthlySavingData,
+  } = state.reports;
+  return {
+    computeSummaryData,
+    potentialTotalSavingData,
+    potentialMonthlySavingData,
+  };
 }
 
 const mapDispatchToProps = {
   getComputeSummary,
   getPotentialTotalSaving,
+  getPotentialMonthlySaving,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Compute);
