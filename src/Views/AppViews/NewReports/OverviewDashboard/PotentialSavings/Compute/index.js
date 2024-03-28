@@ -14,6 +14,14 @@ import DonutChart from "../../../Components/DonutChart";
 import TimeSpendComponent from "../../../Components/TimeSpendComponent";
 import VerticalBarchart from "../../../Components/VerticalBarchart";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { connect } from "react-redux";
+import {
+  getComputeSummary,
+  getPotentialTotalSaving,
+} from "Redux/Reports/ReportsThunk";
+import { getCurrentOrgId } from "Utils";
+import status from "Redux/Constants/CommonDS";
+import Loader from "Components/Loader";
 
 let donutData = [
   {
@@ -80,32 +88,32 @@ let verticalBarChartData = [
   },
 ];
 
-let timeSpendData = [
-  {
-    name: "This Quarter Savings ",
-    value: "$85,000",
-    percentage: "15",
-    subName: "vs Last Quarter",
-  },
-  {
-    name: "Forecasting Savings",
-    value: "$90,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-  {
-    name: "Last Quarter savings ",
-    value: "$80,000",
-    percentage: "5",
-    subName: "vs Previous Month",
-  },
-  {
-    name: "Total Savings ",
-    value: "$110,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-];
+// let computeSummaryData = [
+//   {
+//     name: "This Quarter Savings ",
+//     value: "$85,000",
+//     percentage: "15",
+//     subName: "vs Last Quarter",
+//   },
+//   {
+//     name: "Forecasting Savings",
+//     value: "$90,000",
+//     percentage: "5",
+//     subName: " vs Last Quarter",
+//   },
+//   {
+//     name: "Last Quarter savings ",
+//     value: "$80,000",
+//     percentage: "5",
+//     subName: "vs Previous Month",
+//   },
+//   {
+//     name: "Total Savings ",
+//     value: "$110,000",
+//     percentage: "5",
+//     subName: " vs Last Quarter",
+//   },
+// ];
 
 let riData = [
   {
@@ -161,6 +169,7 @@ let riData = [
     totalSpend: "$196.22",
   },
 ];
+
 class Compute extends Component {
   constructor(props) {
     super(props);
@@ -168,8 +177,66 @@ class Compute extends Component {
       activeTab: 0,
       accounts: riData,
       showSelectFilterModal: false,
+      updatedSummaryData: [],
+      potentialTotalSavingData: [],
     };
   }
+
+  allAPICall = () => {
+    this.props.getComputeSummary({
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      serviceCategory: "all",
+      orgId: getCurrentOrgId(),
+    });
+
+    this.props.getPotentialTotalSaving({
+      cloud: "aws",
+      granularity: "quarterly",
+      compareTo: -1,
+      serviceCategory: "all",
+      orgId: getCurrentOrgId(),
+    });
+  };
+  componentDidMount = () => {
+    this.allAPICall(this.props.selectedGranularity);
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.computeSummaryData.status !==
+        this.props.computeSummaryData.status &&
+      this.props.computeSummaryData.status === status.SUCCESS &&
+      this.props.computeSummaryData?.data
+    ) {
+      const computeSummaryData = this.props.computeSummaryData.data;
+      if (computeSummaryData) {
+        this.maniplatecomputeSummaryData(computeSummaryData.data);
+      }
+    }
+  }
+
+  maniplatecomputeSummaryData = (data) => {
+    const updatedSummaryData = data.map((item) => {
+      let name = item.label;
+      let value = `$${parseFloat(item.currentTotal).toFixed(2)}`;
+      let percentage = item.variance;
+      let subName = `vs Previous Month`;
+      return { name, value, percentage, subName };
+    });
+
+    this.setState({ computeSummaryData: updatedSummaryData });
+  };
+
+  renderLoder = () => {
+    return (
+      <Box className="summary-loader">
+        <Loader />
+      </Box>
+    );
+  };
+
   //  Render table head
   renderTableHead = () => {
     return (
@@ -250,10 +317,16 @@ class Compute extends Component {
     }
   };
   render() {
-    let { searchedKey } = this.state;
+    let { searchedKey, computeSummaryData } = this.state;
+    let { computeSummaryData: computeSummaryProps } = this.props;
+    let computeSummaryLoder = computeSummaryProps.status === status.IN_PROGRESS;
     return (
       <>
-        <TimeSpendComponent data={timeSpendData} />
+        {computeSummaryLoder ? (
+          this.renderLoder()
+        ) : (
+          <TimeSpendComponent data={this.state.computeSummaryData} />
+        )}
         <Box className="reports-charts">
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
@@ -322,5 +395,13 @@ class Compute extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  const { computeSummaryData, potentialTotalSavingData } = state.reports;
+  return { computeSummaryData, potentialTotalSavingData };
+}
 
-export default Compute;
+const mapDispatchToProps = {
+  getComputeSummary,
+  getPotentialTotalSaving,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Compute);
