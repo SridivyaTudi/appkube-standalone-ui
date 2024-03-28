@@ -183,7 +183,7 @@ class TopUsedServices extends Component {
             last_month_spend: details.lastMonthSpend,
             month_spend: details.thisMonthSpend,
             variance: details.variance,
-            actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services/top-use-services-details/`,
+            actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
           });
         }
       });
