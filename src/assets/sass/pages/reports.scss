@@ -33,6 +33,7 @@
       border-radius: 50%;
       background: #ffffff;
       overflow: hidden;
+
       img {
         max-width: 750px;
         margin-top: 65px;
@@ -83,17 +84,20 @@
         justify-content: center;
         align-items: center;
       }
+
       .contents {
         width: calc(100% - 150px);
         display: inline-flex;
         margin-left: 0px;
         flex-wrap: wrap;
+
         span {
           display: flex;
           width: 100%;
           font-size: 14px;
           color: #383874;
         }
+
         strong {
           display: flex;
           width: 100%;
@@ -110,6 +114,7 @@
     width: 100%;
     position: relative;
     z-index: 1;
+
     .chart-box {
       display: block;
       width: 100%;
@@ -123,6 +128,7 @@
         0px 12.5216px 10.0172px rgba(108, 73, 172, 0.035),
         0px 6.6501px 5.32008px rgba(108, 73, 172, 0.0282725),
         0px 2.76726px 2.21381px rgba(108, 73, 172, 0.0196802);
+
       .heading {
         display: block;
         width: 100%;
@@ -130,7 +136,8 @@
         line-height: 18px;
         font-weight: 600;
         color: #383874;
-        p{
+
+        p {
           margin: 3px 0 0 0;
           font-size: 12px;
           color: #383874;
@@ -143,6 +150,7 @@
           padding-bottom: 5px;
           margin-bottom: 20px;
           margin-top: 10px;
+
           li {
             display: inline-block;
             list-style: none;
@@ -152,6 +160,7 @@
             font-weight: 400;
             margin-left: 5px;
             margin-right: 5px;
+
             span {
               display: inline-block;
               vertical-align: middle;
@@ -172,17 +181,20 @@
       &.department-chart {
         padding-top: 30px;
         padding-bottom: 40px;
+
         .heading {
           display: flex;
           align-items: center;
           justify-content: space-between;
           margin-bottom: 30px;
           position: relative;
+
           span {
             font-size: 22px;
             line-height: 26px;
             font-weight: 500;
           }
+
           .chart-fliter {
             display: inline-block;
             width: auto;
@@ -301,6 +313,7 @@
           .chart-contant {
             margin: 5px 0 0px 0;
             text-align: -webkit-center;
+
             .chart {
               justify-content: center;
             }
@@ -405,6 +418,7 @@
     font-size: 12px;
     line-height: 16px;
     font-weight: 400;
+
     &::before {
       position: absolute;
       left: 15px;
@@ -434,6 +448,7 @@
     font-size: 12px;
     line-height: 20px;
     font-weight: 400;
+
     span {
       color: #5cef8b;
       font-size: 14px;
@@ -450,4 +465,11 @@
     font-weight: 400;
     border-top: 1px solid #2c2e36;
   }
+}
+
+.summary-loader {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
 }
