@@ -158,6 +158,12 @@
     width: 100%;
     display: block;
     padding-top: 25px;
+    .reports-loader{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 420px;
+    }
     .reports-charts {
     }
   }
