@@ -271,7 +271,8 @@ class Compute extends Component {
       this.props.topRiRecommendationsData.status === status.SUCCESS &&
       this.props.topRiRecommendationsData?.data
     ) {
-      const topRiRecommendationsData = this.props.topRiRecommendationsData.data;
+      const topRiRecommendationsData =
+        this.props.topRiRecommendationsData.data?.data || [];
       if (topRiRecommendationsData) {
         this.setState({ topRiRecommendationsData });
       }
@@ -384,22 +385,20 @@ class Compute extends Component {
         {this.props.topRiRecommendationsData.status === status.IN_PROGRESS ? (
           <div className="p-t-15">{this.renderLoder()}</div>
         ) : topRiRecommendationsData?.length ? (
-          topRiRecommendationsData.map((details) => {
+          topRiRecommendationsData.map((obj) => {
             return (
-              <TableRow>
-                <TableCell align="left">{details.resourceType}</TableCell>
-                <TableCell align="center">{details.InstanceId}</TableCell>
-                <TableCell align="center">{details.recommendation} </TableCell>
-                <TableCell align="center">{details.currentInstance}</TableCell>
-                <TableCell align="center">
-                  {details.recommendedInstance}
-                </TableCell>
-                <TableCell align="center">{details.terms} </TableCell>
-                <TableCell align="center">{details.paymentMode}</TableCell>
-                <TableCell align="center">{details.UpfrontCost}</TableCell>
-                <TableCell align="center">{details.hrCost}</TableCell>
-                <TableCell align="center">{details.estimatedSavings}</TableCell>
-                <TableCell align="center">{details.totalSpend}</TableCell>
+              <TableRow key={obj.id}>
+                <TableCell align="left">{obj.elementType}</TableCell>
+                <TableCell align="center">{obj.instanceId}</TableCell>
+                <TableCell align="center">{obj.recommendation} </TableCell>
+                <TableCell align="center">{obj.currentInstance}</TableCell>
+                <TableCell align="center">{obj.recommendedInstance}</TableCell>
+                <TableCell align="center">{obj.terms} </TableCell>
+                <TableCell align="center">{obj.paymentMode}</TableCell>
+                <TableCell align="center">{obj.upfrontCost}</TableCell>
+                <TableCell align="center">{obj.perHourCost}</TableCell>
+                <TableCell align="center">{obj.estimatedSavings}</TableCell>
+                <TableCell align="center">{obj.totalSpend}</TableCell>
               </TableRow>
             );
           })

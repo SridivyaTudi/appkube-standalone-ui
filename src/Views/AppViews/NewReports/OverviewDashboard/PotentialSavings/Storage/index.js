@@ -271,7 +271,8 @@ class Storage extends Component {
       this.props.topRiRecommendationsData.status === status.SUCCESS &&
       this.props.topRiRecommendationsData?.data
     ) {
-      const topRiRecommendationsData = this.props.topRiRecommendationsData.data;
+      const topRiRecommendationsData =
+        this.props.topRiRecommendationsData.data?.data || [];
       if (topRiRecommendationsData) {
         this.setState({ topRiRecommendationsData });
       }
@@ -376,41 +377,39 @@ class Storage extends Component {
     );
   };
 
-  //  Render table body
-  renderTableBody = () => {
-    let { topRiRecommendationsData } = this.state;
-    return (
-      <TableBody>
-        {this.props.topRiRecommendationsData.status === status.IN_PROGRESS ? (
-          <div className="p-t-15">{this.renderLoder()}</div>
-        ) : topRiRecommendationsData?.length ? (
-          topRiRecommendationsData.map((details) => {
-            return (
-              <TableRow>
-                <TableCell align="left">{details.resourceType}</TableCell>
-                <TableCell align="center">{details.InstanceId}</TableCell>
-                <TableCell align="center">{details.recommendation} </TableCell>
-                <TableCell align="center">{details.currentInstance}</TableCell>
-                <TableCell align="center">
-                  {details.recommendedInstance}
-                </TableCell>
-                <TableCell align="center">{details.terms} </TableCell>
-                <TableCell align="center">{details.paymentMode}</TableCell>
-                <TableCell align="center">{details.UpfrontCost}</TableCell>
-                <TableCell align="center">{details.hrCost}</TableCell>
-                <TableCell align="center">{details.estimatedSavings}</TableCell>
-                <TableCell align="center">{details.totalSpend}</TableCell>
-              </TableRow>
-            );
-          })
-        ) : (
-          <Box className="environment-loader text-center  align-item-center justify-center p-t-15 p-b-15">
-            <h5 className="m-t-0 m-b-0">There are no data available.</h5>
-          </Box>
-        )}
-      </TableBody>
-    );
-  };
+ //  Render table body
+ renderTableBody = () => {
+  let { topRiRecommendationsData } = this.state;
+  return (
+    <TableBody>
+      {this.props.topRiRecommendationsData.status === status.IN_PROGRESS ? (
+        <div className="p-t-15">{this.renderLoder()}</div>
+      ) : topRiRecommendationsData?.length ? (
+        topRiRecommendationsData.map((obj) => {
+          return (
+            <TableRow key={obj.id}>
+              <TableCell align="left">{obj.elementType}</TableCell>
+              <TableCell align="center">{obj.instanceId}</TableCell>
+              <TableCell align="center">{obj.recommendation} </TableCell>
+              <TableCell align="center">{obj.currentInstance}</TableCell>
+              <TableCell align="center">{obj.recommendedInstance}</TableCell>
+              <TableCell align="center">{obj.terms} </TableCell>
+              <TableCell align="center">{obj.paymentMode}</TableCell>
+              <TableCell align="center">{obj.upfrontCost}</TableCell>
+              <TableCell align="center">{obj.perHourCost}</TableCell>
+              <TableCell align="center">{obj.estimatedSavings}</TableCell>
+              <TableCell align="center">{obj.totalSpend}</TableCell>
+            </TableRow>
+          );
+        })
+      ) : (
+        <Box className="environment-loader text-center  align-item-center justify-center p-t-15 p-b-15">
+          <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+        </Box>
+      )}
+    </TableBody>
+  );
+};
 
   //  Serach
   handleSearchChange = (e) => {
