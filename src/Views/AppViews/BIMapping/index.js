@@ -211,7 +211,7 @@ class BIMapping extends Component {
   manipulateDepartMentData = (organization) => {
     if (organization) {
       let { name, id, departments } = organization;
-      let { organizationTableData,landingZoneCounts } = this.state;
+      let { organizationTableData, landingZoneCounts } = this.state;
       let chlidren = [];
       if (departments?.length) {
         chlidren = this.manipulateChildrenData(
@@ -219,10 +219,9 @@ class BIMapping extends Component {
           this.TYPE.DEPARTMENT
         );
       }
-     
-      if (landingZoneCounts?.length) {
-        let environments = Object.keys(ENVIRONMENTS);
 
+      let environments = Object.keys(ENVIRONMENTS);
+      if (landingZoneCounts?.length) {
         landingZoneCounts = landingZoneCounts.map((count) => {
           if (environments.includes(count.cloud)) {
             environments.splice(environments.indexOf(environments), 1);
@@ -230,11 +229,12 @@ class BIMapping extends Component {
           return { name: "" + count.totalAccounts };
         });
         if (environments.length) {
-          landingZoneCounts = [
-            ...landingZoneCounts,
-            { name: 0 },
-          ];
+          landingZoneCounts = [...landingZoneCounts, { name: 0 }];
         }
+      } else {
+        landingZoneCounts = environments.map((count) => {
+          return { name: 0 };
+        });
       }
 
       organizationTableData = [
