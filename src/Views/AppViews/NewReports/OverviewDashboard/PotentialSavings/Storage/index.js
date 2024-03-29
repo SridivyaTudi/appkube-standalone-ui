@@ -415,12 +415,12 @@ class Storage extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { topRiRecommendationsData } = this.state;
-    let data = this.props.topRiRecommendationsData.data || [];
+    let data = this.props.topRiRecommendationsData.data.data || [];
     if (data?.length) {
       if (value) {
         topRiRecommendationsData = data.filter((tableData) => {
           if (
-            tableData?.resourceType.toLowerCase().includes(value.toLowerCase())
+            tableData?.elementType.toLowerCase().includes(value.toLowerCase())
           ) {
             return tableData;
           } else {
