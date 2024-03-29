@@ -276,6 +276,7 @@ class AddDepartment extends Component {
           let params = {
             name: departmentName,
             organizationId: +this.user.cmdbOrgId,
+            description: departmentDescription,
           };
           this.props.createDepartment(params);
         } else {
