@@ -206,11 +206,7 @@ class AddDepartment extends Component {
 
   // Render buttons
   renderBtns = () => {
-    let {
-      activeStep,
-      isCreateWithoutLandingZone,
-      step2FormData: { selectedChildLandingZone, selectedLandingZone },
-    } = this.state;
+    let { activeStep, isCreateWithoutLandingZone } = this.state;
     let { creationDepartmentWithLandingZone, creationDepartment } = this.props;
     let departmentStatus = [
       creationDepartment?.status,
@@ -271,7 +267,7 @@ class AddDepartment extends Component {
       if (isValid) {
         let { name: departmentName, description: departmentDescription } =
           this.state.step1FormData;
-        let { step2FormData, landingZones, selectedLandingZone } = this.state;
+        let { step2FormData, landingZones } = this.state;
         if (isCreateWithoutLandingZone) {
           let params = {
             name: departmentName,
@@ -307,12 +303,7 @@ class AddDepartment extends Component {
 
   // Click on the landing zone
   onClickLandingZone(selectedAccount) {
-    let {
-      step2FormData,
-      activeStep,
-      isCreateWithoutLandingZone,
-      isIncludeLandingZone,
-    } = this.state;
+    let { step2FormData, activeStep, isCreateWithoutLandingZone } = this.state;
     let isSameSelectLandingZone =
       step2FormData.selectedLandingZone === selectedAccount;
 
@@ -394,7 +385,6 @@ class AddDepartment extends Component {
   renderStep2Form = () => {
     const {
       step2FormData: { selectedLandingZone, selectedChildLandingZone },
-      activeStep,
       isCreateWithoutLandingZone,
       isSubmit,
       landingZones,
@@ -615,7 +605,7 @@ class AddDepartment extends Component {
   };
 
   onClickCheckBox = (e, isIncludeLandingZoneAction = 0) => {
-    let { id, checked } = e.target;
+    let { checked } = e.target;
     let {
       isCreateWithoutLandingZone,
       step2FormData,

@@ -8,6 +8,7 @@ import { getSpendingTrend } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 import { getCurrentOrgId } from "Utils";
 import Loader from "Components/Loader";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 let verticalBarChartData = [
   {
@@ -339,4 +340,4 @@ const mapDispatchToProps = {
   getSpendingTrend,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SpendingTrend);
+export default connect(mapStateToProps, mapDispatchToProps)(navigateRouter(SpendingTrend));
