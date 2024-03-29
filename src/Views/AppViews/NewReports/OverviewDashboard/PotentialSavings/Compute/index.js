@@ -25,15 +25,6 @@ import { getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 
-const totalUsedServiceColor = {
-  SPOT: "#01f1e3",
-  RESERVED: "#fa71a3",
-  OTHERS: "#f9d33d",
-  RIGHTSIZE: "#ffba69",
-  SAVING_PLAN: "#8676ff",
-  CURRENT_TOTAL: "#2b5aff",
-};
-
 // let donutData = [
 //   {
 //     age_group: "Reserved Instance",
@@ -200,7 +191,7 @@ class Compute extends Component {
       cloud: "aws",
       granularity,
       compareTo: -1,
-      serviceCategory: "all",
+      serviceCategory: "compute",
       orgId: getCurrentOrgId(),
     });
 
@@ -208,14 +199,14 @@ class Compute extends Component {
       cloud: "aws",
       granularity,
       compareTo: -1,
-      serviceCategory: "all",
+      serviceCategory: "compute",
       orgId: getCurrentOrgId(),
     });
     this.props.getPotentialMonthlySaving({
       cloud: "aws",
       granularity,
       compareTo: -1,
-      serviceCategory: "all",
+      serviceCategory: "compute",
       orgId: getCurrentOrgId(),
     });
 
@@ -223,7 +214,7 @@ class Compute extends Component {
       cloud: "aws",
       granularity,
       compareTo: -1,
-      serviceCategory: "all",
+      serviceCategory: "compute",
       orgId: getCurrentOrgId(),
     });
   };
