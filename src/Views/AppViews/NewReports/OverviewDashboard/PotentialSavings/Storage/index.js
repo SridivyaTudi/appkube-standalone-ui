@@ -24,6 +24,8 @@ import {
 import { getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
+import { styled } from "@mui/material/styles";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 // let donutData = [
 //   {
@@ -171,6 +173,21 @@ import Loader from "Components/Loader";
 //     totalSpend: "$196.22",
 //   },
 // ];
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#000000",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#000000",
+    color: "#ffffff",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 class Storage extends Component {
   constructor(props) {
@@ -377,39 +394,43 @@ class Storage extends Component {
     );
   };
 
- //  Render table body
- renderTableBody = () => {
-  let { topRiRecommendationsData } = this.state;
-  return (
-    <TableBody>
-      {this.props.topRiRecommendationsData.status === status.IN_PROGRESS ? (
-        <div className="p-t-15">{this.renderLoder()}</div>
-      ) : topRiRecommendationsData?.length ? (
-        topRiRecommendationsData.map((obj) => {
-          return (
-            <TableRow key={obj.id}>
-              <TableCell align="left">{obj.elementType}</TableCell>
-              <TableCell align="center">{obj.instanceId}</TableCell>
-              <TableCell align="center">{obj.recommendation} </TableCell>
-              <TableCell align="center">{obj.currentInstance}</TableCell>
-              <TableCell align="center">{obj.recommendedInstance}</TableCell>
-              <TableCell align="center">{obj.terms} </TableCell>
-              <TableCell align="center">{obj.paymentMode}</TableCell>
-              <TableCell align="center">{obj.upfrontCost}</TableCell>
-              <TableCell align="center">{obj.perHourCost}</TableCell>
-              <TableCell align="center">{obj.estimatedSavings}</TableCell>
-              <TableCell align="center">{obj.totalSpend}</TableCell>
-            </TableRow>
-          );
-        })
-      ) : (
-        <Box className="environment-loader text-center  align-item-center justify-center p-t-15 p-b-15">
-          <h5 className="m-t-0 m-b-0">There are no data available.</h5>
-        </Box>
-      )}
-    </TableBody>
-  );
-};
+  //  Render table body
+  renderTableBody = () => {
+    let { topRiRecommendationsData } = this.state;
+    return (
+      <TableBody>
+        {this.props.topRiRecommendationsData.status === status.IN_PROGRESS ? (
+          <div className="p-t-15">{this.renderLoder()}</div>
+        ) : topRiRecommendationsData?.length ? (
+          topRiRecommendationsData.map((obj) => {
+            return (
+              <TableRow key={obj.id}>
+                <TableCell align="left">{obj.elementType}</TableCell>
+                <TableCell align="center">
+                  <HtmlTooltip className="table-tooltip" title={obj.instanceId}>
+                    {obj.instanceId}{" "}
+                  </HtmlTooltip>
+                </TableCell>
+                <TableCell align="center">{obj.recommendation} </TableCell>
+                <TableCell align="center">{obj.currentInstance}</TableCell>
+                <TableCell align="center">{obj.recommendedInstance}</TableCell>
+                <TableCell align="center">{obj.terms} </TableCell>
+                <TableCell align="center">{obj.paymentMode}</TableCell>
+                <TableCell align="center">{obj.upfrontCost}</TableCell>
+                <TableCell align="center">{obj.perHourCost}</TableCell>
+                <TableCell align="center">{obj.estimatedSavings}</TableCell>
+                <TableCell align="center">{obj.totalSpend}</TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <Box className="environment-loader text-center  align-item-center justify-center p-t-15 p-b-15">
+            <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+          </Box>
+        )}
+      </TableBody>
+    );
+  };
 
   //  Serach
   handleSearchChange = (e) => {

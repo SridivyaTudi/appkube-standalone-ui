@@ -24,6 +24,8 @@ import {
 import { getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
+import { styled } from "@mui/material/styles";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 // let donutData = [
 //   {
@@ -171,6 +173,21 @@ import Loader from "Components/Loader";
 //     totalSpend: "$196.22",
 //   },
 // ];
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#000000",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#000000",
+    color: "#ffffff",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 class Network extends Component {
   constructor(props) {
@@ -389,7 +406,11 @@ class Network extends Component {
             return (
               <TableRow key={obj.id}>
                 <TableCell align="left">{obj.elementType}</TableCell>
-                <TableCell align="center">{obj.instanceId}</TableCell>
+                <TableCell align="center">
+                  <HtmlTooltip className="table-tooltip" title={obj.instanceId}>
+                    {obj.instanceId}{" "}
+                  </HtmlTooltip>
+                </TableCell>
                 <TableCell align="center">{obj.recommendation} </TableCell>
                 <TableCell align="center">{obj.currentInstance}</TableCell>
                 <TableCell align="center">{obj.recommendedInstance}</TableCell>
