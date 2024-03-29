@@ -126,7 +126,7 @@ class CostTopAccounts extends Component {
               <TableRow key={v4()}>
                 <TableCell>
                   <Link
-                     to={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/cost-top-accounts/${details.accountId}`}
+                    to={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/cost-top-accounts/${details.accountId}`}
                   >
                     {details.accountId}
                   </Link>
@@ -231,12 +231,8 @@ class CostTopAccounts extends Component {
   };
 
   render() {
-    let {
-      accounts,
-      searchedKey,
-      showSelectFilterModal,
-      isSelectDepartmentOpen,
-    } = this.state;
+    let { searchedKey, showSelectFilterModal, isSelectDepartmentOpen } =
+      this.state;
     return (
       <Box className="new-reports-container">
         <Box className="list-heading">

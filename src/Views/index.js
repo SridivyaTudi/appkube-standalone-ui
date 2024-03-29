@@ -31,7 +31,7 @@ import ThreeTierTopology from "./AppViews/Environments/EnvironmentList/ThreeTier
 import ApplicationStatusDashboard from "./AppViews/Dashboard/ApplicationStatusDashboard";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { getCurrentUser, LOCAL_STORAGE_CONSTANTS } from "Utils";
+import { getCurrentUser } from "Utils";
 import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
@@ -54,8 +54,6 @@ import LoginEvents from "./AppViews/DiscoveredAssets/LoginEvents";
 import Eventhistory from "./AppViews/DiscoveredAssets/Eventhistory";
 import OverviewDashboard from "./AppViews/NewReports/OverviewDashboard";
 import SpendOverview from "./AppViews/NewReports/OverviewDashboard/SpendOverview";
-import status from "Redux/Constants/CommonDS";
-import { useDispatch, useSelector } from "react-redux";
 import TopUsedServices from "./AppViews/NewReports/OverviewDashboard/TopUsedServices";
 import SpendingTrend from "./AppViews/NewReports/OverviewDashboard/SpendingTrend";
 import CostTopAccounts from "./AppViews/NewReports/OverviewDashboard/CostTopAccounts";
@@ -92,10 +90,6 @@ export function withRouter(Component) {
 
 export const Views = (props) => {
   const location = useLocation();
-  let disptch = useDispatch();
-  let cloudWiseLandingZoneCount = useSelector(
-    (state) => state.environments.cloudWiseLandingZoneCount
-  );
 
   useEffect(() => {
     setTitle();

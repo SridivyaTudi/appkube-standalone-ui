@@ -9,7 +9,6 @@ import {
   TableRow,
   TableBody,
   TableCell,
-  IconButton,
 } from "@mui/material";
 import ChartWrapper from "../../Components/ChartWrapper";
 import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarchart";
@@ -17,13 +16,13 @@ import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 import TimeSpendComponent from "Views/AppViews/NewReports/Components/TimeSpendComponent";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { Link } from "react-router-dom";
-const totalUsedServiceData = [
-  { label: "EC2", value: 4700, color: "#A145FF" },
-  { label: "RDS", value: 4500, color: "#FA6298" },
-  { label: "S3", value: 4300, color: "#FAA24B" },
-  { label: "EKS", value: 4000, color: "#F9D33D" },
-  { label: "Lambda", value: 3800, color: "#F9D33D" },
-];
+// const totalUsedServiceData = [
+//   { label: "EC2", value: 4700, color: "#A145FF" },
+//   { label: "RDS", value: 4500, color: "#FA6298" },
+//   { label: "S3", value: 4300, color: "#FAA24B" },
+//   { label: "EKS", value: 4000, color: "#F9D33D" },
+//   { label: "Lambda", value: 3800, color: "#F9D33D" },
+// ];
 let verticalBarChartData = [
   {
     name: "Jun 23",
@@ -86,86 +85,86 @@ let donutData = [
   },
 ];
 
-const spendTrendData = [
-  {
-    date: "1-05-12",
-    last_quarter: 30000,
-    current_quarter: 35000,
-    forecasted_spend: 13000,
-  },
-  {
-    date: "30-04-12",
-    last_quarter: 35000,
-    current_quarter: 40000,
-    forecasted_spend: 23000,
-  },
-  {
-    date: "27-04-12",
-    last_quarter: 60000,
-    current_quarter: 38000,
-    forecasted_spend: 33000,
-  },
-  {
-    date: "26-04-12",
-    last_quarter: 34000,
-    current_quarter: 33000,
-    forecasted_spend: 44000,
-  },
-  {
-    date: "25-04-12",
-    last_quarter: 45000,
-    current_quarter: 20000,
-    forecasted_spend: 27000,
-  },
-  {
-    date: "24-04-12",
-    last_quarter: 33333,
-    current_quarter: 22222,
-    forecasted_spend: 11000,
-  },
-  {
-    date: "23-04-12",
-    last_quarter: 11111,
-    current_quarter: 33333,
-    forecasted_spend: 44000,
-  },
-  {
-    date: "20-04-12",
-    last_quarter: 34000,
-    current_quarter: 44000,
-    forecasted_spend: 40000,
-  },
-  {
-    date: "19-04-12",
-    last_quarter: 44000,
-    current_quarter: 38888,
-    forecasted_spend: 38000,
-  },
-  {
-    date: "18-04-12",
-    last_quarter: 33333,
-    current_quarter: 11111,
-    forecasted_spend: 34000,
-  },
-  {
-    date: "17-04-12",
-    last_quarter: 28000,
-    current_quarter: 38000,
-    forecasted_spend: 32000,
-  },
-  {
-    date: "16-04-12",
-    last_quarter: 29000,
-    current_quarter: 39000,
-    forecasted_spend: 30000,
-  },
-  {
-    date: "13-04-12",
-    last_quarter: 22000,
-    current_quarter: 38000,
-    forecasted_spend: 22000,
-  },
-];
+// const spendTrendData = [
+//   {
+//     date: "1-05-12",
+//     last_quarter: 30000,
+//     current_quarter: 35000,
+//     forecasted_spend: 13000,
+//   },
+//   {
+//     date: "30-04-12",
+//     last_quarter: 35000,
+//     current_quarter: 40000,
+//     forecasted_spend: 23000,
+//   },
+//   {
+//     date: "27-04-12",
+//     last_quarter: 60000,
+//     current_quarter: 38000,
+//     forecasted_spend: 33000,
+//   },
+//   {
+//     date: "26-04-12",
+//     last_quarter: 34000,
+//     current_quarter: 33000,
+//     forecasted_spend: 44000,
+//   },
+//   {
+//     date: "25-04-12",
+//     last_quarter: 45000,
+//     current_quarter: 20000,
+//     forecasted_spend: 27000,
+//   },
+//   {
+//     date: "24-04-12",
+//     last_quarter: 33333,
+//     current_quarter: 22222,
+//     forecasted_spend: 11000,
+//   },
+//   {
+//     date: "23-04-12",
+//     last_quarter: 11111,
+//     current_quarter: 33333,
+//     forecasted_spend: 44000,
+//   },
+//   {
+//     date: "20-04-12",
+//     last_quarter: 34000,
+//     current_quarter: 44000,
+//     forecasted_spend: 40000,
+//   },
+//   {
+//     date: "19-04-12",
+//     last_quarter: 44000,
+//     current_quarter: 38888,
+//     forecasted_spend: 38000,
+//   },
+//   {
+//     date: "18-04-12",
+//     last_quarter: 33333,
+//     current_quarter: 11111,
+//     forecasted_spend: 34000,
+//   },
+//   {
+//     date: "17-04-12",
+//     last_quarter: 28000,
+//     current_quarter: 38000,
+//     forecasted_spend: 32000,
+//   },
+//   {
+//     date: "16-04-12",
+//     last_quarter: 29000,
+//     current_quarter: 39000,
+//     forecasted_spend: 30000,
+//   },
+//   {
+//     date: "13-04-12",
+//     last_quarter: 22000,
+//     current_quarter: 38000,
+//     forecasted_spend: 22000,
+//   },
+// ];
 let timeSpendData = [
   {
     name: "This Quarter Savings ",
@@ -186,7 +185,7 @@ let timeSpendData = [
     subName: "vs Previous Month",
   },
 ];
-var potentialSavingData = [45, 33, 66, 50, 90];
+// var potentialSavingData = [45, 33, 66, 50, 90];
 let data = [
   {
     month: "January, 2023",

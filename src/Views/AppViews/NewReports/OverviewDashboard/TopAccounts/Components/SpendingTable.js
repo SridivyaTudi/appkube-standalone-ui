@@ -43,7 +43,9 @@ export class SpendingTable extends Component {
             This {this.props.selectedGranularity} spend
           </TableCell>
           <TableCell align="center">Variance</TableCell>
-          <TableCell align="center">Avg {this.props.selectedGranularity} spend</TableCell>
+          <TableCell align="center">
+            Avg {this.props.selectedGranularity} spend
+          </TableCell>
           <TableCell align="center">Actions</TableCell>
         </TableRow>
       </TableHead>
@@ -60,7 +62,6 @@ export class SpendingTable extends Component {
           data.map((details) => {
             let {
               name,
-              icon,
               last_month_spend,
               month_spend,
               variance,

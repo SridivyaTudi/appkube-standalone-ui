@@ -157,18 +157,6 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, height, width]);
 
-  function getTotalValues() {
-    return data?.length
-      ? data.reduce((accumulator, item) => {
-          return (accumulator += item.population);
-        }, 0)
-      : 0;
-  }
-  function calculatePercentage(value) {
-    let total = getTotalValues();
-    let percentage = parseInt((value / total) * 100);
-    return percentage || 0;
-  }
   return (
     <Box
       className="spend-overview-chart"

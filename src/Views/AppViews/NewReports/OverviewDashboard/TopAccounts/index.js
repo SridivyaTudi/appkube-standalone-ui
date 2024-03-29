@@ -1,20 +1,8 @@
 import React, { Component } from "react";
-import {
-  Box,
-  Button,
-  TableHead,
-  TableRow,
-  TableBody,
-  TableCell,
-  List,
-  ListItem,
-} from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Button, List, ListItem } from "@mui/material";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
-import SelectFilterModal from "../../Components/SelectFilterModal";
 import { v4 } from "uuid";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
-import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { getCostTopAccountsByAccountId } from "Redux/Reports/ReportsThunk";
 import APIstatus from "Redux/Constants/CommonDS";
@@ -59,62 +47,62 @@ let timeSpendData = [
     subName: " vs Last Quarter",
   },
 ];
-let computeSpendingTable = [
-  {
-    name: "EC2",
-    icon: "ServiceIcon1",
-    last_month_spend: "$2,000",
-    month_spend: "$1,800",
-    variance: "15% ",
-    avg_daily_spend: "$1,800",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
-  },
-  {
-    name: "Lambda",
-    icon: "ServiceIcon2",
-    last_month_spend: "$1,500",
-    month_spend: "$2,500",
-    variance: "20%",
-    avg_daily_spend: "$1,800",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
-  },
-  {
-    name: "Light Sail",
-    icon: "ServiceIcon3",
-    last_month_spend: "$2,000",
-    month_spend: "$2,000",
-    variance: "15%",
-    avg_daily_spend: "$1,800",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
-  },
-  {
-    name: "ECS",
-    icon: "ServiceIcon4",
-    avg_daily_spend: "$1,800",
-    last_month_spend: "$2,000",
-    month_spend: "$2,000",
-    variance: "15%",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
-  },
-  {
-    name: "EKS",
-    icon: "ServiceIcon5",
-    last_month_spend: "$2,000",
-    month_spend: "$2,000",
-    variance: "15%",
-    avg_daily_spend: "$1,800",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
-  },
-  {
-    name: "Fargate",
-    icon: "ServiceIcon6",
-    last_month_spend: "$2,000",
-    month_spend: "$2,000",
-    variance: "15%",
-    avg_daily_spend: "$1,800",
-    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
-  },
-];
+// let computeSpendingTable = [
+//   {
+//     name: "EC2",
+//     icon: "ServiceIcon1",
+//     last_month_spend: "$2,000",
+//     month_spend: "$1,800",
+//     variance: "15% ",
+//     avg_daily_spend: "$1,800",
+//     actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+//   },
+//   {
+//     name: "Lambda",
+//     icon: "ServiceIcon2",
+//     last_month_spend: "$1,500",
+//     month_spend: "$2,500",
+//     variance: "20%",
+//     avg_daily_spend: "$1,800",
+//     actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+//   },
+//   {
+//     name: "Light Sail",
+//     icon: "ServiceIcon3",
+//     last_month_spend: "$2,000",
+//     month_spend: "$2,000",
+//     variance: "15%",
+//     avg_daily_spend: "$1,800",
+//     actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+//   },
+//   {
+//     name: "ECS",
+//     icon: "ServiceIcon4",
+//     avg_daily_spend: "$1,800",
+//     last_month_spend: "$2,000",
+//     month_spend: "$2,000",
+//     variance: "15%",
+//     actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+//   },
+//   {
+//     name: "EKS",
+//     icon: "ServiceIcon5",
+//     last_month_spend: "$2,000",
+//     month_spend: "$2,000",
+//     variance: "15%",
+//     avg_daily_spend: "$1,800",
+//     actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+//   },
+//   {
+//     name: "Fargate",
+//     icon: "ServiceIcon6",
+//     last_month_spend: "$2,000",
+//     month_spend: "$2,000",
+//     variance: "15%",
+//     avg_daily_spend: "$1,800",
+//     actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+//   },
+// ];
 
 class TopAccounts extends Component {
   constructor(props) {
@@ -258,7 +246,6 @@ class TopAccounts extends Component {
     let {
       accounts,
       searchedKey,
-      showSelectFilterModal,
       isSelectDepartmentOpen,
       selectedGranularity,
     } = this.state;

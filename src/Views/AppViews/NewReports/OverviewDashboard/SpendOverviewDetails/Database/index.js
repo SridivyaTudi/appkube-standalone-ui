@@ -13,7 +13,6 @@ import {
 import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
 import Loader from "Components/Loader";
 import { REPORT_PAGE_TYPE } from "CommonData";
-import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class Database extends Component {
   constructor(props) {
@@ -62,9 +61,10 @@ class Database extends Component {
   //  Serach
   handleSearchChange = (e) => {
     let value = e.target.value;
-    let { elementDetails, searchedKey } = this.state;
+    let { elementDetails } = this.state;
     let data = this.manipluateElementDetailsData(
-      this.props.elementDetailsData?.data.data || [],1
+      this.props.elementDetailsData?.data.data || [],
+      1
     );
     if (data?.length) {
       if (value) {
@@ -166,7 +166,7 @@ class Database extends Component {
   };
   render() {
     const { name } = this.getUrlDetails();
-    let { searchedKey, elementDetails, elementSummary, } = this.state;
+    let { searchedKey, elementDetails, elementSummary } = this.state;
     let { elementSummaryData, elementDetailsData } = this.props;
     return (
       <>

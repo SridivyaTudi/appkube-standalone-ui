@@ -7,7 +7,7 @@ import Kubernetes from "../../../assets/img/kubernetes.png";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { Link } from "react-router-dom";
 import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
-import { getCurrentOrgId, LOCAL_STORAGE_CONSTANTS, ENVIRONMENTS } from "Utils";
+import { getCurrentOrgId, ENVIRONMENTS } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import {

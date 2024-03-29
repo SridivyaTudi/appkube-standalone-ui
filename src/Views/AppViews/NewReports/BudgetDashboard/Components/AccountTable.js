@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import {
   Box,
   TableContainer,
@@ -8,7 +7,6 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Button,
 } from "@mui/material";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { Link } from "react-router-dom";
@@ -38,9 +36,7 @@ export class AccountTable extends Component {
       <TableHead>
         <TableRow>
           {headers.map((header, index) => (
-            <TableCell>
-              {header}
-            </TableCell>
+            <TableCell>{header}</TableCell>
           ))}
         </TableRow>
       </TableHead>
@@ -58,7 +54,12 @@ export class AccountTable extends Component {
               <TableRow>
                 <TableCell>
                   {details.nameImageShow ? details.nameImageShow : <></>}
-                  <Link to={`/app/new-reports/budget-dashboard/budget-services-account`}> {details.id}</Link>
+                  <Link
+                    to={`/app/new-reports/budget-dashboard/budget-services-account`}
+                  >
+                    {" "}
+                    {details.id}
+                  </Link>
                 </TableCell>
                 {this.props?.notShowingField?.includes("id") ? (
                   <></>
@@ -86,7 +87,9 @@ export class AccountTable extends Component {
                     <i className="fas fa-sort-down p-l-5 m-r-1"></i>
                   </Box>
                 </TableCell>
-                <TableCell><strong>{details.budget}</strong></TableCell>
+                <TableCell>
+                  <strong>{details.budget}</strong>
+                </TableCell>
               </TableRow>
             );
           })

@@ -49,7 +49,7 @@ export class OverviewDashboard extends Component {
       console.log(error);
     }
   };
-  
+
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
@@ -126,11 +126,11 @@ export class OverviewDashboard extends Component {
       (data) => data.key === selectedGranularity
     );
 
-    return findValue.value || ''
+    return findValue.value || "";
   };
 
   render() {
-    const { isSelectDepartmentOpen, organizationTableData } = this.state;
+    const { isSelectDepartmentOpen } = this.state;
     return (
       <Box className="new-reports-container">
         <Box className="list-heading">
@@ -175,7 +175,6 @@ export class OverviewDashboard extends Component {
 }
 
 function mapStateToProps(state) {
-  const {} = state.reports;
   return {};
 }
 
