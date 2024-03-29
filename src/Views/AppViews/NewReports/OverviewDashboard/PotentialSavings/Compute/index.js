@@ -342,19 +342,12 @@ class Compute extends Component {
   // };
   renderLoder = () => {
     return (
-      <Box className="chart-loader  text-center  align-item-center justify-center p-t-15 p-b-15">
+      <Box className="chart-loader  text-center  align-item-center justify-center p-b-15">
         <Loader />
       </Box>
     );
   };
 
-  renderSummaryLoder = () => {
-    return (
-      <Box className="summary-loader">
-        <Loader />
-      </Box>
-    );
-  };
   renderNoDataHtml = () => {
     return (
       <Box className="chart-loader">
@@ -389,7 +382,7 @@ class Compute extends Component {
     return (
       <TableBody>
         {this.props.topRiRecommendationsData.status === status.IN_PROGRESS ? (
-          this.renderLoder()
+          <div className="p-t-15">{this.renderLoder()}</div>
         ) : topRiRecommendationsData?.length ? (
           topRiRecommendationsData.map((details) => {
             return (
@@ -412,8 +405,8 @@ class Compute extends Component {
           })
         ) : (
           <Box className="environment-loader text-center  align-item-center justify-center p-t-15 p-b-15">
-              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
-            </Box>
+            <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+          </Box>
         )}
       </TableBody>
     );
@@ -462,7 +455,7 @@ class Compute extends Component {
     return (
       <>
         {computeSummaryLoder ? (
-          this.renderSummaryLoder()
+          this.renderLoder()
         ) : (
           <TimeSpendComponent data={computeSummaryData} />
         )}
