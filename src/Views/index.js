@@ -285,7 +285,7 @@ export const Views = (props) => {
             element={<SpendOverview />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/:name`}
+            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/:name/:page`}
             element={<SpendOverviewDetails />}
           />
 

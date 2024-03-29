@@ -18,75 +18,77 @@ import { connect } from "react-redux";
 import {
   getComputeSummary,
   getPotentialTotalSaving,
+  getPotentialMonthlySaving,
+  getTopRiRecommendations,
 } from "Redux/Reports/ReportsThunk";
 import { getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 
-let donutData = [
-  {
-    age_group: "Reserved Instance",
-    population: 110011100,
-  },
-  {
-    age_group: "Savings Plan",
-    population: 40267984,
-  },
-  {
-    age_group: "RightSizing",
-    population: 30672088,
-  },
-  {
-    age_group: "Spot Instances",
-    population: 53980105,
-  },
-  {
-    age_group: "Others",
-    population: 81489445,
-  },
-];
-let verticalBarChartData = [
-  {
-    name: "Jun 23",
-    value: 4500,
-  },
-  {
-    name: "July 23",
-    value: 4000,
-  },
-  {
-    name: "August 23",
-    value: 4000,
-  },
-  {
-    name: "Sept 23",
-    value: 3800,
-  },
-  {
-    name: "Oct 23",
-    value: 3700,
-  },
-  {
-    name: "Nov 23",
-    value: 3700,
-  },
-  {
-    name: "Dec 23",
-    value: 3700,
-  },
-  {
-    name: "Jan 24",
-    value: 3700,
-  },
-  {
-    name: "Feb 24",
-    value: 3700,
-  },
-  {
-    name: "March 24",
-    value: 3700,
-  },
-];
+// let donutData = [
+//   {
+//     age_group: "Reserved Instance",
+//     population: 110011100,
+//   },
+//   {
+//     age_group: "Savings Plan",
+//     population: 40267984,
+//   },
+//   {
+//     age_group: "RightSizing",
+//     population: 30672088,
+//   },
+//   {
+//     age_group: "Spot Instances",
+//     population: 53980105,
+//   },
+//   {
+//     age_group: "Others",
+//     population: 81489445,
+//   },
+// ];
+// let verticalBarChartData = [
+//   {
+//     name: "Jun 23",
+//     value: 4500,
+//   },
+//   {
+//     name: "July 23",
+//     value: 4000,
+//   },
+//   {
+//     name: "August 23",
+//     value: 4000,
+//   },
+//   {
+//     name: "Sept 23",
+//     value: 3800,
+//   },
+//   {
+//     name: "Oct 23",
+//     value: 3700,
+//   },
+//   {
+//     name: "Nov 23",
+//     value: 3700,
+//   },
+//   {
+//     name: "Dec 23",
+//     value: 3700,
+//   },
+//   {
+//     name: "Jan 24",
+//     value: 3700,
+//   },
+//   {
+//     name: "Feb 24",
+//     value: 3700,
+//   },
+//   {
+//     name: "March 24",
+//     value: 3700,
+//   },
+// ];
 
 // let computeSummaryData = [
 //   {
@@ -115,87 +117,104 @@ let verticalBarChartData = [
 //   },
 // ];
 
-let riData = [
-  {
-    resourceType: "EC2",
-    InstanceId: "i-0c1234dc",
-    recommendation: "RI",
-    currentInstance: "t4g.2xlarge",
-    recommendedInstance: "t2.2xlarge",
-    terms: "1yr RI",
-    paymentMode: "No Upfront",
-    UpfrontCost: "$0",
-    hrCost: "$0.2300",
-    estimatedSavings: "~$530",
-    totalSpend: "$196.22",
-  },
-  {
-    resourceType: "ECS",
-    InstanceId: "i-0c1234dc",
-    recommendation: "RI",
-    currentInstance: "t4g.2xlarge",
-    recommendedInstance: "t2.2xlarge",
-    terms: "1yr RI",
-    paymentMode: "No Upfront",
-    UpfrontCost: "$0",
-    hrCost: "$0.2300",
-    estimatedSavings: "~$530",
-    totalSpend: "$196.22",
-  },
-  {
-    resourceType: "LAMBDA",
-    InstanceId: "i-0c1234dc",
-    recommendation: "RI",
-    currentInstance: "t4g.2xlarge",
-    recommendedInstance: "t2.2xlarge",
-    terms: "1yr RI",
-    paymentMode: "No Upfront",
-    UpfrontCost: "$0",
-    hrCost: "$0.2300",
-    estimatedSavings: "~$530",
-    totalSpend: "$196.22",
-  },
-  {
-    resourceType: "EC2",
-    InstanceId: "i-0c1234dc",
-    recommendation: "RI",
-    currentInstance: "t4g.2xlarge",
-    recommendedInstance: "t2.2xlarge",
-    terms: "1yr RI",
-    paymentMode: "No Upfront",
-    UpfrontCost: "$0",
-    hrCost: "$0.2300",
-    estimatedSavings: "~$530",
-    totalSpend: "$196.22",
-  },
-];
+// let riData = [
+//   {
+//     resourceType: "EC2",
+//     InstanceId: "i-0c1234dc",
+//     recommendation: "RI",
+//     currentInstance: "t4g.2xlarge",
+//     recommendedInstance: "t2.2xlarge",
+//     terms: "1yr RI",
+//     paymentMode: "No Upfront",
+//     UpfrontCost: "$0",
+//     hrCost: "$0.2300",
+//     estimatedSavings: "~$530",
+//     totalSpend: "$196.22",
+//   },
+//   {
+//     resourceType: "ECS",
+//     InstanceId: "i-0c1234dc",
+//     recommendation: "RI",
+//     currentInstance: "t4g.2xlarge",
+//     recommendedInstance: "t2.2xlarge",
+//     terms: "1yr RI",
+//     paymentMode: "No Upfront",
+//     UpfrontCost: "$0",
+//     hrCost: "$0.2300",
+//     estimatedSavings: "~$530",
+//     totalSpend: "$196.22",
+//   },
+//   {
+//     resourceType: "LAMBDA",
+//     InstanceId: "i-0c1234dc",
+//     recommendation: "RI",
+//     currentInstance: "t4g.2xlarge",
+//     recommendedInstance: "t2.2xlarge",
+//     terms: "1yr RI",
+//     paymentMode: "No Upfront",
+//     UpfrontCost: "$0",
+//     hrCost: "$0.2300",
+//     estimatedSavings: "~$530",
+//     totalSpend: "$196.22",
+//   },
+//   {
+//     resourceType: "EC2",
+//     InstanceId: "i-0c1234dc",
+//     recommendation: "RI",
+//     currentInstance: "t4g.2xlarge",
+//     recommendedInstance: "t2.2xlarge",
+//     terms: "1yr RI",
+//     paymentMode: "No Upfront",
+//     UpfrontCost: "$0",
+//     hrCost: "$0.2300",
+//     estimatedSavings: "~$530",
+//     totalSpend: "$196.22",
+//   },
+// ];
 
 class Compute extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
-      accounts: riData,
+      // accounts: riData,
       showSelectFilterModal: false,
       updatedSummaryData: [],
       potentialTotalSavingData: [],
+      spendPotentialSavingTotal: 0,
+      topRiRecommendationsData: [],
     };
   }
 
-  allAPICall = () => {
+  allAPICall = (granularity) => {
     this.props.getComputeSummary({
       cloud: "aws",
-      granularity: "quarterly",
+      granularity,
       compareTo: -1,
-      serviceCategory: "all",
+      serviceCategory: "compute",
       orgId: getCurrentOrgId(),
     });
 
     this.props.getPotentialTotalSaving({
       cloud: "aws",
-      granularity: "quarterly",
+      granularity,
       compareTo: -1,
-      serviceCategory: "all",
+      serviceCategory: "compute",
+      orgId: getCurrentOrgId(),
+    });
+    this.props.getPotentialMonthlySaving({
+      cloud: "aws",
+      granularity,
+      compareTo: -1,
+      serviceCategory: "compute",
+      orgId: getCurrentOrgId(),
+    });
+
+    this.props.getTopRiRecommendations({
+      cloud: "aws",
+      granularity,
+      compareTo: -1,
+      serviceCategory: "compute",
       orgId: getCurrentOrgId(),
     });
   };
@@ -204,6 +223,9 @@ class Compute extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
+    if (prevProps.selectedGranularity !== this.props.selectedGranularity) {
+      this.allAPICall(this.props.selectedGranularity);
+    }
     if (
       prevProps.computeSummaryData.status !==
         this.props.computeSummaryData.status &&
@@ -213,6 +235,45 @@ class Compute extends Component {
       const computeSummaryData = this.props.computeSummaryData.data;
       if (computeSummaryData) {
         this.maniplatecomputeSummaryData(computeSummaryData.data);
+      }
+    }
+
+    if (
+      prevProps.potentialTotalSavingData.status !==
+        this.props.potentialTotalSavingData.status &&
+      this.props.potentialTotalSavingData.status === status.SUCCESS &&
+      this.props.potentialTotalSavingData?.data
+    ) {
+      const potentialTotalSavingData = this.props.potentialTotalSavingData.data;
+      if (potentialTotalSavingData) {
+        this.maniplatePotentialTotalSavingData(potentialTotalSavingData.data);
+      }
+    }
+
+    if (
+      prevProps.potentialMonthlySavingData.status !==
+        this.props.potentialMonthlySavingData.status &&
+      this.props.potentialMonthlySavingData.status === status.SUCCESS &&
+      this.props.potentialMonthlySavingData?.data
+    ) {
+      const potentialMonthlySavingData =
+        this.props.potentialMonthlySavingData.data;
+      if (potentialMonthlySavingData) {
+        this.maniplatepotentialMonthlySavingData(
+          potentialMonthlySavingData.data
+        );
+      }
+    }
+
+    if (
+      prevProps.topRiRecommendationsData.status !==
+        this.props.topRiRecommendationsData.status &&
+      this.props.topRiRecommendationsData.status === status.SUCCESS &&
+      this.props.topRiRecommendationsData?.data
+    ) {
+      const topRiRecommendationsData = this.props.topRiRecommendationsData.data;
+      if (topRiRecommendationsData) {
+        this.setState({ topRiRecommendationsData });
       }
     }
   }
@@ -229,14 +290,78 @@ class Compute extends Component {
     this.setState({ computeSummaryData: updatedSummaryData });
   };
 
+  maniplatePotentialTotalSavingData = (data) => {
+    let { potentialTotalSavingData, spendPotentialSavingTotal } = this.state;
+    spendPotentialSavingTotal = 0;
+    potentialTotalSavingData = [];
+    if (data?.length) {
+      const totalValue = data
+        .filter((e) => e.instanceType !== "CURRENT_TOTAL")
+        .reduce((acc, crr) => (acc += +crr.total), 0);
+      data.forEach((obj) => {
+        if (!["CURRENT_TOTAL"].includes(obj.instanceType)) {
+          potentialTotalSavingData.push({
+            age_group: obj.instanceType,
+            population: obj.total,
+            percentage: ((obj.total * 100) / totalValue).toFixed(2),
+          });
+        } else {
+          spendPotentialSavingTotal = parseInt(obj.total);
+        }
+      });
+    }
+    this.setState({ potentialTotalSavingData, spendPotentialSavingTotal });
+  };
+
+  maniplatepotentialMonthlySavingData = (data) => {
+    let { potentialMonthlySavingData } = this.state;
+    potentialMonthlySavingData = [];
+    if (data?.length) {
+      potentialMonthlySavingData = data.map((obj) => {
+        return {
+          name: obj.date,
+          value: obj.total,
+        };
+      });
+    }
+    this.setState({ potentialMonthlySavingData });
+  };
+
+  // maniplatetopRiRecommendationsData = (data) => {
+  //   const updatedtopRiRecommendationsData = data.map((item) => {
+  //     let name = item.label;
+  //     let value = `$${parseFloat(item.currentTotal).toFixed(2)}`;
+  //     let percentage = item.variance;
+  //     let subName = `vs Previous Month`;
+  //     return { name, value, percentage, subName };
+  //   });
+
+  //   this.setState({
+  //     topRiRecommendationsData: updatedtopRiRecommendationsData,
+  //   });
+  // };
   renderLoder = () => {
+    return (
+      <Box className="chart-loader  text-center  align-item-center justify-center p-t-15 p-b-15">
+        <Loader />
+      </Box>
+    );
+  };
+
+  renderSummaryLoder = () => {
     return (
       <Box className="summary-loader">
         <Loader />
       </Box>
     );
   };
-
+  renderNoDataHtml = () => {
+    return (
+      <Box className="chart-loader">
+        <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+      </Box>
+    );
+  };
   //  Render table head
   renderTableHead = () => {
     return (
@@ -260,11 +385,13 @@ class Compute extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    let { accounts } = this.state;
+    let { topRiRecommendationsData } = this.state;
     return (
       <TableBody>
-        {accounts?.length ? (
-          accounts.map((details) => {
+        {this.props.topRiRecommendationsData.status === status.IN_PROGRESS ? (
+          this.renderLoder()
+        ) : topRiRecommendationsData?.length ? (
+          topRiRecommendationsData.map((details) => {
             return (
               <TableRow>
                 <TableCell align="left">{details.resourceType}</TableCell>
@@ -284,11 +411,9 @@ class Compute extends Component {
             );
           })
         ) : (
-          <Box className="d-blck text-center w-100 h-100 ">
-            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+          <Box className="environment-loader text-center  align-item-center justify-center p-t-15 p-b-15">
               <h5 className="m-t-0 m-b-0">There are no data available.</h5>
             </Box>
-          </Box>
         )}
       </TableBody>
     );
@@ -297,11 +422,11 @@ class Compute extends Component {
   //  Serach
   handleSearchChange = (e) => {
     let value = e.target.value;
-    let { accounts } = this.state;
-    let data = riData || [];
+    let { topRiRecommendationsData } = this.state;
+    let data = this.props.topRiRecommendationsData.data || [];
     if (data?.length) {
       if (value) {
-        accounts = data.filter((tableData) => {
+        topRiRecommendationsData = data.filter((tableData) => {
           if (
             tableData?.resourceType.toLowerCase().includes(value.toLowerCase())
           ) {
@@ -311,21 +436,35 @@ class Compute extends Component {
           }
         });
       } else {
-        accounts = data;
+        topRiRecommendationsData = data;
       }
-      this.setState({ accounts, searchedKey: value });
+      this.setState({ topRiRecommendationsData, searchedKey: value });
     }
   };
   render() {
-    let { searchedKey, computeSummaryData } = this.state;
-    let { computeSummaryData: computeSummaryProps } = this.props;
+    let {
+      searchedKey,
+      computeSummaryData,
+      potentialTotalSavingData,
+      spendPotentialSavingTotal,
+      potentialMonthlySavingData,
+    } = this.state;
+    let {
+      computeSummaryData: computeSummaryProps,
+      potentialMonthlySavingData: potentialMonthlySavingProps,
+      potentialTotalSavingData: potentialTotalSavingProps,
+    } = this.props;
     let computeSummaryLoder = computeSummaryProps.status === status.IN_PROGRESS;
+    let potentialMonthlySavingLoder =
+      potentialMonthlySavingProps.status === status.IN_PROGRESS;
+    let potentialTotalSavingLoder =
+      potentialTotalSavingProps.status === status.IN_PROGRESS;
     return (
       <>
         {computeSummaryLoder ? (
-          this.renderLoder()
+          this.renderSummaryLoder()
         ) : (
-          <TimeSpendComponent data={this.state.computeSummaryData} />
+          <TimeSpendComponent data={computeSummaryData} />
         )}
         <Box className="reports-charts">
           <Grid container spacing={3}>
@@ -336,26 +475,38 @@ class Compute extends Component {
                   labelOfBtn: " View Details",
                 }}
                 ChartComponent={
-                  <DonutChart
-                    data={donutData}
-                    width={250}
-                    height={300}
-                    otherData={{
-                      centerValue: "$65,690",
-                    }}
-                  />
+                  potentialTotalSavingLoder ? (
+                    this.renderLoder()
+                  ) : potentialTotalSavingData.length ? (
+                    <DonutChart
+                      data={potentialTotalSavingData}
+                      width={250}
+                      height={300}
+                      otherData={{
+                        centerValue: `$${spendPotentialSavingTotal}`,
+                      }}
+                    />
+                  ) : (
+                    this.renderNoDataHtml()
+                  )
                 }
               />
             </Grid>
             <Grid item xs={12} md={6} lg={8}>
               <ChartWrapper
                 ChartComponent={
-                  <VerticalBarchart
-                    data={verticalBarChartData}
-                    styleProp={{
-                      color: "#53CA43",
-                    }}
-                  />
+                  potentialMonthlySavingLoder ? (
+                    this.renderLoder()
+                  ) : potentialMonthlySavingData?.length ? (
+                    <VerticalBarchart
+                      data={potentialMonthlySavingData}
+                      styleProp={{
+                        color: "#53CA43",
+                      }}
+                    />
+                  ) : (
+                    this.renderNoDataHtml()
+                  )
                 }
                 data={{
                   title: "Monthly Savings",
@@ -396,12 +547,24 @@ class Compute extends Component {
   }
 }
 function mapStateToProps(state) {
-  const { computeSummaryData, potentialTotalSavingData } = state.reports;
-  return { computeSummaryData, potentialTotalSavingData };
+  const {
+    computeSummaryData,
+    potentialTotalSavingData,
+    potentialMonthlySavingData,
+    topRiRecommendationsData,
+  } = state.reports;
+  return {
+    computeSummaryData,
+    potentialTotalSavingData,
+    potentialMonthlySavingData,
+    topRiRecommendationsData,
+  };
 }
 
 const mapDispatchToProps = {
   getComputeSummary,
   getPotentialTotalSaving,
+  getPotentialMonthlySaving,
+  getTopRiRecommendations,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Compute);

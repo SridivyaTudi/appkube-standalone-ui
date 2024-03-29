@@ -49,6 +49,7 @@ export class OverviewDashboard extends Component {
       console.log(error);
     }
   };
+  
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };

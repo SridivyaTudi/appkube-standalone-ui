@@ -82,7 +82,7 @@ class SpendingTrend extends Component {
     ) {
       const spendingTrendData = this.props.spendingTrendData.data;
       if (spendingTrendData) {
-        console.log(spendingTrendData);
+        // console.log(spendingTrendData);
         this.maniplateSpendingTrendData(spendingTrendData.data);
       }
     }
@@ -102,7 +102,7 @@ class SpendingTrend extends Component {
     this.setState({ spendingTrendData });
   };
 
-  getMonthDays(dates) {
+  getMonthDays = (dates) => {
     const month = [
       "Jan",
       "Feb",
@@ -120,12 +120,43 @@ class SpendingTrend extends Component {
     const d = new Date(dates);
     let name = month[d.getMonth()];
     return name;
-  }
+  };
 
   manipulateDateWiseData = (data) => {
     let spendTrendData = [];
     if (data?.length) {
       let allData = JSON.parse(JSON.stringify(data));
+      let currentSum = 0;
+      let previousSum = 0;
+      let forcastSum = 0;
+      let currentMonth = [];
+      let previousMonth = [];
+      data.forEach((obj) => {
+        if (obj.tenure === "current") {
+          currentMonth.push(this.getMonthDays(obj.dates));
+        } else if (obj.tenure === "previous") {
+          previousMonth.push(this.getMonthDays(obj.dates));
+        }
+      });
+      console.log(currentMonth);
+
+      data.forEach((obj) => {
+        if (obj.tenure === "current") {
+          currentSum += obj.total;
+        }
+      });
+
+      data.forEach((obj) => {
+        if (obj.tenure === "previous") {
+          previousSum += obj.total;
+        }
+      });
+
+      data.forEach((obj) => {
+        if (obj.tenure === "forcast") {
+          forcastSum += obj.total;
+        }
+      });
 
       data.forEach((obj) => {
         // Find data date wise
@@ -136,19 +167,10 @@ class SpendingTrend extends Component {
         if (sameDateData.length) {
           let pushData = {
             name: this.getMonthDays(obj.dates),
-            value1: obj.total,
-            value2: obj.total,
+            value1: currentSum,
+            value2: previousSum,
+            value3: forcastSum,
           };
-
-          sameDateData.forEach((sameDate) => {
-            if (sameDate.tenure === "current") {
-              pushData["current_quarter"] = sameDate.total;
-            } else if (sameDate.tenure === "forcast") {
-              pushData["forecasted_spend"] = sameDate.total;
-            } else if (sameDate.tenure === "previous") {
-              pushData["last_quarter"] = sameDate.total;
-            }
-          });
 
           spendTrendData.push(pushData);
 

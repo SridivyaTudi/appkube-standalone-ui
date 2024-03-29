@@ -52,6 +52,7 @@ export class SpendingTable extends Component {
   //  Render table body
   renderTableBody = () => {
     let { data } = this.props;
+   
     return (
       <TableBody>
         {data?.length ? (
@@ -92,7 +93,13 @@ export class SpendingTable extends Component {
                 </TableCell>
                 <TableCell align="center">
                   <Button
-                    onClick={() => this.props.navigate(`${actions}${name}`)}
+                    onClick={() =>
+                      this.props.navigate(
+                        `${actions}${name}/${
+                          this.props.page || "spend-overview"
+                        }`
+                      )
+                    }
                     className="light-btn p-l-15 p-r-15 "
                   >
                     view more <OpenInNewIcon className="p-l-5" />

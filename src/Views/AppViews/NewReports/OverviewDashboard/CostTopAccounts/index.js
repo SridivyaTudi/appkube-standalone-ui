@@ -8,6 +8,8 @@ import {
   TableRow,
   TableBody,
   TableCell,
+  List,
+  ListItem,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
@@ -16,6 +18,20 @@ import { v4 } from "uuid";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { getCostTopAccountsDetails } from "Redux/Reports/ReportsThunk";
+import APIstatus from "Redux/Constants/CommonDS";
+import { connect } from "react-redux";
+import Loader from "Components/Loader";
+import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
+import { getCurrentOrgId } from "Utils";
+
+const renderLoader = () => {
+  return (
+    <Box className={`d-blck text-center deployed-cards-loader p-t-15 p-b-15`}>
+      <Loader className="align-item-center justify-center w-100 h-100 " />
+    </Box>
+  );
+};
 
 let timeSpendData = [
   {
@@ -44,67 +60,38 @@ let timeSpendData = [
   },
 ];
 
-let topFiveAccounts = [
-  {
-    accountId: "160079380622",
-    deparment: "Central Operations",
-    vpc: "vpc-d24664bb",
-    serviceCount: "22",
-    region: "US-East (N.virginia)",
-    spending: "$20,000",
-    variance: "15%",
-    budget: "$30,000",
-  },
-  {
-    accountId: "160079380622",
-    deparment: "Central Operations",
-    vpc: "vpc-d24664bb",
-    serviceCount: "22",
-    region: "US-East (N.virginia)",
-    spending: "$20,000",
-    variance: "15%",
-    budget: "$30,000",
-  },
-  {
-    accountId: "160079380622",
-    deparment: "Central Operations",
-    vpc: "vpc-d24664bb",
-    serviceCount: "22",
-    region: "US-East (N.virginia)",
-    spending: "$20,000",
-    variance: "15%",
-    budget: "$30,000",
-  },
-  {
-    accountId: "160079380622",
-    deparment: "Central Operations",
-    vpc: "vpc-d24664bb",
-    serviceCount: "22",
-    region: "US-East (N.virginia)",
-    spending: "$20,000",
-    variance: "15%",
-    budget: "$30,000",
-  },
-  {
-    accountId: "160079380622",
-    deparment: "Central Operations",
-    vpc: "vpc-d24664bb",
-    serviceCount: "22",
-    region: "US-East (N.virginia)",
-    spending: "$20,000",
-    variance: "15%",
-    budget: "$30,000",
-  },
-];
-
 class CostTopAccounts extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
-      accounts: topFiveAccounts,
+      accounts: [],
       showSelectFilterModal: false,
+      selectedGranularity: GRANULARITY_TYPE.QUARTERLY.toLowerCase(),
+      isSelectDepartmentOpen: false,
     };
+  }
+
+  componentDidMount() {
+    this.props.getCostTopAccountsDetails({
+      params: {
+        cloud: "aws",
+        granularity: this.state.selectedGranularity,
+        compareTo: "-1",
+      },
+      orgId: getCurrentOrgId(),
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.costTopAccountsDetailList.status !==
+      this.props.costTopAccountsDetailList.status
+    ) {
+      if (this.props.costTopAccountsDetailList.status === APIstatus.SUCCESS) {
+        this.setState({ accounts: this.props.costTopAccountsDetailList?.data });
+      }
+    }
   }
 
   //  Render table head
@@ -130,7 +117,10 @@ class CostTopAccounts extends Component {
     let { accounts } = this.state;
     return (
       <TableBody>
-        {accounts?.length ? (
+        {this.props.costTopAccountsDetailList.status ===
+        APIstatus.IN_PROGRESS ? (
+          renderLoader()
+        ) : accounts?.length ? (
           accounts.map((details) => {
             return (
               <TableRow key={v4()}>
@@ -141,10 +131,10 @@ class CostTopAccounts extends Component {
                     {details.accountId}
                   </Link>
                 </TableCell>
-                <TableCell>{details.deparment}</TableCell>
+                <TableCell>{details.department}</TableCell>
                 <TableCell>{details.vpc}</TableCell>
                 <TableCell align="center">{details.serviceCount}</TableCell>
-                <TableCell>{details.region}</TableCell>
+                <TableCell>{details.highSpendingRegion}</TableCell>
                 <TableCell align="center">{details.spending}</TableCell>
                 <TableCell align="center">
                   <Box className="variance-count">
@@ -176,7 +166,7 @@ class CostTopAccounts extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { accounts } = this.state;
-    let data = topFiveAccounts || [];
+    let data = this.props.costTopAccountsDetailList.data || [];
     if (data?.length) {
       if (value) {
         accounts = data.filter((tableData) => {
@@ -194,8 +184,59 @@ class CostTopAccounts extends Component {
       this.setState({ accounts, searchedKey: value });
     }
   };
+
+  getSelectedGranularity = () => {
+    let { selectedGranularity } = this.state;
+    let findValue = GRANULARITY_DROPDOWN_DATA.find(
+      (data) => data.key === selectedGranularity
+    );
+
+    return findValue.value || "";
+  };
+
+  toggleSelectDepartment = () => {
+    this.setState({
+      isSelectDepartmentOpen: !this.state.isSelectDepartmentOpen,
+    });
+  };
+
+  renderDropDownData = () => {
+    let { selectedGranularity } = this.state;
+    return GRANULARITY_DROPDOWN_DATA.map((data) => {
+      return (
+        <ListItem
+          onClick={() => this.onClickDropDown(data.key)}
+          key={v4()}
+          className={`${data.key === selectedGranularity ? "active" : ""}`}
+        >
+          <i className="fa-solid fa-circle-dot"></i>
+          {data.value}
+        </ListItem>
+      );
+    });
+  };
+
+  onClickDropDown = (selectedGranularity) => {
+    if (selectedGranularity !== this.state.selectedGranularity) {
+      this.props.getCostTopAccountsDetails({
+        params: {
+          cloud: "aws",
+          granularity: this.state.selectedGranularity,
+          compareTo: "-1",
+        },
+        orgId: getCurrentOrgId(),
+      });
+      this.setState({ selectedGranularity, isSelectDepartmentOpen: false });
+    }
+  };
+
   render() {
-    let { accounts, searchedKey, showSelectFilterModal } = this.state;
+    let {
+      accounts,
+      searchedKey,
+      showSelectFilterModal,
+      isSelectDepartmentOpen,
+    } = this.state;
     return (
       <Box className="new-reports-container">
         <Box className="list-heading">
@@ -224,10 +265,34 @@ class CostTopAccounts extends Component {
             <i className="fas fa-filter m-r-2"></i> Filter
           </Button>
           <Box className="fliter-button">
-              <Button className="light-btn p-l-15 p-r-15">
-                <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
-              </Button>
-            </Box>
+            <Button
+              className="light-btn p-l-15 p-r-15"
+              onClick={this.toggleSelectDepartment}
+            >
+              <i class="fas fa-calendar-minus m-r-2"></i>{" "}
+              {this.getSelectedGranularity()}
+            </Button>
+            {this.state.isSelectDepartmentOpen === true && (
+              <div
+                className={
+                  isSelectDepartmentOpen
+                    ? "fliter-collapse active"
+                    : "fliter-collapse"
+                }
+              >
+                <List>{this.renderDropDownData()}</List>
+              </div>
+            )}
+
+            <div
+              className={
+                isSelectDepartmentOpen
+                  ? "fliters-collapse-bg active"
+                  : "fliters-collapse-bg"
+              }
+              onClick={this.toggleSelectDepartment}
+            />
+          </Box>
         </Box>
         <Box className="reports-tab-section m-t-4">
           <TimeSpendComponent data={timeSpendData} />
@@ -268,5 +333,16 @@ class CostTopAccounts extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  const { costTopAccountsDetailList } = state.reports;
+  return { costTopAccountsDetailList };
+}
 
-export default navigateRouter(CostTopAccounts);
+const mapDispatchToProps = {
+  getCostTopAccountsDetails,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(CostTopAccounts));
