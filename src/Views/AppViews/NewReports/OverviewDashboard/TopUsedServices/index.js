@@ -225,7 +225,7 @@ class TopUsedServices extends Component {
   // Render Loder
   renderLoder() {
     return (
-      <Box className="d-blck text-center w-100 h-100 p-t-20 p-b-20 ">
+      <Box className="d-flex align-items-center" justifyContent={"center"} style={{height:420}}>
         <Loader className="align-item-center justify-center w-100 h-100" />
       </Box>
     );

@@ -184,7 +184,7 @@ class Storage extends Component {
       spendPotentialSavingTotal: 0,
       topRiRecommendationsData: [],
     };
-  } 
+  }
 
   allAPICall = (granularity) => {
     this.props.getComputeSummary({
@@ -342,7 +342,7 @@ class Storage extends Component {
   // };
   renderLoder = () => {
     return (
-      <Box className="chart-loader">
+      <Box className="chart-loader  text-center  align-item-center justify-center p-t-15 p-b-15">
         <Loader />
       </Box>
     );
@@ -411,10 +411,8 @@ class Storage extends Component {
             );
           })
         ) : (
-          <Box className="d-blck w-100 h-100 p-l-20">
-            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
-            </Box>
+          <Box className="environment-loader text-center  align-item-center justify-center p-t-15 p-b-15">
+            <h5 className="m-t-0 m-b-0">There are no data available.</h5>
           </Box>
         )}
       </TableBody>
