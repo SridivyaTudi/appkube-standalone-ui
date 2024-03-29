@@ -163,9 +163,9 @@ class SpendOverviewDetails extends Component {
                   )
                 }
               >
-               { page === "spend-overview"
-                        ? "Spend Overview"
-                        : "Top Used Services"} 
+                {page === "spend-overview"
+                  ? "Spend Overview"
+                  : "Top Used Services"}
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>

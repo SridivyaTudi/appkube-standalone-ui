@@ -286,8 +286,9 @@ class Compute extends Component {
     let value = e.target.value;
     let { elementDetails, searchedKey } = this.state;
     let data = this.manipluateElementDetailsData(
-      this.props.elementDetailsData?.data.data || []
+      this.props.elementDetailsData?.data.data || [],1
     );
+    console.log(data)
     if (data?.length) {
       if (value) {
         elementDetails = data.filter((tableData) => {
@@ -302,6 +303,7 @@ class Compute extends Component {
       } else {
         elementDetails = data;
       }
+     
       this.setState({ elementDetails, searchedKey: value });
     }
   };

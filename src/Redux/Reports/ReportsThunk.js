@@ -284,11 +284,11 @@ export const getElementDetails = createAsyncThunk(
 );
 export const getCostTopAccountsDetails = createAsyncThunk(
   "Reports/getCostTopAccountsDetails",
-  async (params) => {
+  async (param) => {
     try {
       const response = await postLoginService.get(
-        config.GET_COST_TOP_ACCOUNTS_DETAILS,
-        { params }
+        config.GET_COST_TOP_ACCOUNTS_DETAILS.replace("#org-id#", param.orgId),
+        { params: param.params }
       );
       return response;
     } catch (error) {

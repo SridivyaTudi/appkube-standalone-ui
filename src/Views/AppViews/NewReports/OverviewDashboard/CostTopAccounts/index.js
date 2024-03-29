@@ -23,6 +23,7 @@ import APIstatus from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import Loader from "Components/Loader";
 import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
+import { getCurrentOrgId } from "Utils";
 
 const renderLoader = () => {
   return (
@@ -73,9 +74,12 @@ class CostTopAccounts extends Component {
 
   componentDidMount() {
     this.props.getCostTopAccountsDetails({
-      cloud: "aws",
-      granularity: this.state.selectedGranularity,
-      compareTo: "-1",
+      params: {
+        cloud: "aws",
+        granularity: this.state.selectedGranularity,
+        compareTo: "-1",
+      },
+      orgId: getCurrentOrgId(),
     });
   }
 
@@ -85,7 +89,7 @@ class CostTopAccounts extends Component {
       this.props.costTopAccountsDetailList.status
     ) {
       if (this.props.costTopAccountsDetailList.status === APIstatus.SUCCESS) {
-        this.setState({ accounts: this.props.costTopAccountsDetailList.data });
+        this.setState({ accounts: this.props.costTopAccountsDetailList?.data });
       }
     }
   }
@@ -215,9 +219,12 @@ class CostTopAccounts extends Component {
   onClickDropDown = (selectedGranularity) => {
     if (selectedGranularity !== this.state.selectedGranularity) {
       this.props.getCostTopAccountsDetails({
-        cloud: "aws",
-        granularity: selectedGranularity,
-        compareTo: "-1",
+        params: {
+          cloud: "aws",
+          granularity: this.state.selectedGranularity,
+          compareTo: "-1",
+        },
+        orgId: getCurrentOrgId(),
       });
       this.setState({ selectedGranularity, isSelectDepartmentOpen: false });
     }

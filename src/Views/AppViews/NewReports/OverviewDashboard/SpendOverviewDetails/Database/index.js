@@ -64,7 +64,7 @@ class Database extends Component {
     let value = e.target.value;
     let { elementDetails, searchedKey } = this.state;
     let data = this.manipluateElementDetailsData(
-      this.props.elementDetailsData?.data.data || []
+      this.props.elementDetailsData?.data.data || [],1
     );
     if (data?.length) {
       if (value) {

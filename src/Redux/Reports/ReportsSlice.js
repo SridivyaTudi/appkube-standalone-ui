@@ -428,7 +428,7 @@ export const ReportsSlice = createSlice({
         ...state,
         costTopAccountsDetailList: {
           status: status.SUCCESS,
-          data: action.payload.data,
+          data: action.payload?.data || [],
         },
       };
     },
