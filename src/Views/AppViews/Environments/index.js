@@ -308,6 +308,7 @@ class Environments extends Component {
                 <TableCell align="center">
                   {account.productEnclave} VPC
                 </TableCell>
+                <TableCell align="center">{account.totalDepartment}</TableCell>
                 <TableCell align="center">{account.totalProduct}</TableCell>
                 <TableCell align="center">
                   {account.totalProductProdEnv}
@@ -428,6 +429,7 @@ class Environments extends Component {
                         <strong>{item?.cloud}</strong>
                       </TableCell>
                       <TableCell align="center">Product Enclave</TableCell>
+                      <TableCell align="center">Departments</TableCell>
                       <TableCell align="center">Products</TableCell>
                       <TableCell align="center">Production Env</TableCell>
                       <TableCell align="center">Overall Cost</TableCell>
