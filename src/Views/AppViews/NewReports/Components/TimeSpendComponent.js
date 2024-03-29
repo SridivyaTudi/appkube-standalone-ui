@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import DollerIcon from "assets/img/report/doller-icon.png";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { v4 } from "uuid";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -35,7 +36,7 @@ class TimeSpendComponent extends Component {
         {data?.length
           ? data.map((spendData) => {
               return (
-                <Box className="time-spend-card">
+                <Box className="time-spend-card" key={v4()}>
                   <Box className="spend-icon">
                     <img src={DollerIcon} alt="" />
                   </Box>

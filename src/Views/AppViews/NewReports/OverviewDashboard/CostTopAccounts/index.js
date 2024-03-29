@@ -221,7 +221,7 @@ class CostTopAccounts extends Component {
       this.props.getCostTopAccountsDetails({
         params: {
           cloud: "aws",
-          granularity: this.state.selectedGranularity,
+          granularity: selectedGranularity,
           compareTo: "-1",
         },
         orgId: getCurrentOrgId(),

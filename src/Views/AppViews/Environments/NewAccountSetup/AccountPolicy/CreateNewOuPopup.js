@@ -36,6 +36,7 @@ class CreateNewOuPopup extends Component {
       let postData = {
         name: formData.name,
         organizationId: Number(organizationId),
+        description: formData.description,
       };
       this.props.createNewOU(postData);
     }
@@ -43,12 +44,14 @@ class CreateNewOuPopup extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.createOu.status !== this.props.createOu.status) {
-      if (this.props.createOu.status === status.SUCCESS && this.props.createOu.data) {
-        
+      if (
+        this.props.createOu.status === status.SUCCESS &&
+        this.props.createOu.data
+      ) {
         ToastMessage.success("Organizational Unit Successfully created!");
         this.props.newDepartmentAppend(
           this.props.createOu.data,
-          this.state.description
+          this.state.formData.description
         );
         this.props.toggleCreateNewOuPopup();
         this.setState({

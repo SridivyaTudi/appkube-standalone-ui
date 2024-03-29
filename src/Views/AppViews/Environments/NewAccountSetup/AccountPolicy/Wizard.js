@@ -66,7 +66,8 @@ class Wizard extends Component {
           <div
             className={`wizard-step-component ${
               currentStep === i ? "" : "d-none"
-            }`} key={i}
+            }`}
+            key={i}
           >
             {step.component()}
           </div>
@@ -97,8 +98,9 @@ class Wizard extends Component {
       formData: { displayName, roleArn, externalId },
     } = this.props;
     let accountId = roleArn
-      .match(/arn:aws:iam::([0-9]+(:user)+)\/[A-Za-z0-9]+/i)[1]
-      .replace(":user", "");
+      .match(/arn:aws:iam::([0-9]+(:user|:role)+)\/[A-Za-z0-9]+/i)[1]
+      .replace(":user", "")
+      .replace(":role", "");
     let sendData = {
       cloud: "AWS",
       displayName,

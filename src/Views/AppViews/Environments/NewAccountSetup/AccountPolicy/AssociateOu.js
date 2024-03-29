@@ -53,10 +53,11 @@ class AssociateOu extends Component {
     }
   };
 
-  getDepartmentName = (id) => {
-    return this.state.departments.filter(
+  getDepartmentDetails = (id) => {
+    let details = this.state.departments.filter(
       (department) => department.id === Number(id)
-    )[0].name;
+    )[0];
+    return { name: details.name, description: details.description };
   };
 
   toggleSelectAccountPopup = (clear) => {
@@ -88,7 +89,7 @@ class AssociateOu extends Component {
       createNewOuPopupShow,
     } = this.state;
     const {
-      roleDetails: { departmentName },
+      roleDetails: { departmentName, description: depDescription },
     } = this.props;
     return (
       <>
@@ -145,7 +146,7 @@ class AssociateOu extends Component {
               </Box>
               <Box className="contents">
                 <label>Description</label>
-                <p>{description}</p>
+                <p>{depDescription || description}</p>
               </Box>
               <Box
                 className="d-flex width-100 align-items-center"
@@ -186,10 +187,14 @@ class AssociateOu extends Component {
             checkedId={checkedId}
             setID={(checkedId) => {
               this.setState({ checkedId });
-              this.props.setDepartment(
-                checkedId,
-                checkedId ? this.getDepartmentName(checkedId) : ""
-              );
+              let details = this.getDepartmentDetails(checkedId);
+              let name = "";
+              let description = "";
+              if (checkedId) {
+                name = details.name;
+                description = details.description;
+              }
+              this.props.setDepartment(checkedId, name, description);
             }}
           />
         ) : (
