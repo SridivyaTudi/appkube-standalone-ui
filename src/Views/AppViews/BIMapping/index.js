@@ -7,12 +7,7 @@ import Kubernetes from "../../../assets/img/kubernetes.png";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { Link } from "react-router-dom";
 import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
-import {
-  getCurrentOrgId,
-  getCloudWiseLandingZoneCount as getLandingZoneCount,
-  LOCAL_STORAGE_CONSTANTS,
-  setCloudWiseLandingZoneCount,
-} from "Utils";
+import { getCurrentOrgId, LOCAL_STORAGE_CONSTANTS, ENVIRONMENTS } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import {
@@ -105,16 +100,12 @@ class BIMapping extends Component {
       organizationTableData: [],
       clickTableData: {},
       serviceDetails: [],
+      landingZoneCounts: [],
     };
   }
 
   componentDidMount = () => {
-    let isExistLandingZoneCounts = localStorage.getItem(
-      LOCAL_STORAGE_CONSTANTS.CLOUD_WISE_LANDINGZONE_COUNT
-    );
-    if (!isExistLandingZoneCounts) {
-      this.props.getCloudWiseLandingZoneCount();
-    }
+    this.props.getCloudWiseLandingZoneCount();
     this.props.getOrgWiseDepartments(orgId);
   };
 
@@ -127,7 +118,7 @@ class BIMapping extends Component {
     ) {
       const landingZoneCounts = this.props.cloudWiseLandingZoneCount.data;
       if (landingZoneCounts?.length) {
-        setCloudWiseLandingZoneCount(landingZoneCounts);
+        this.setState({ landingZoneCounts });
       }
     }
 
@@ -220,7 +211,7 @@ class BIMapping extends Component {
   manipulateDepartMentData = (organization) => {
     if (organization) {
       let { name, id, departments } = organization;
-      let { organizationTableData } = this.state;
+      let { organizationTableData,landingZoneCounts } = this.state;
       let chlidren = [];
       if (departments?.length) {
         chlidren = this.manipulateChildrenData(
@@ -228,18 +219,19 @@ class BIMapping extends Component {
           this.TYPE.DEPARTMENT
         );
       }
-      let cloudWiseLandingZoneCount = getLandingZoneCount();
-      if (cloudWiseLandingZoneCount?.length) {
-        let environments = ["AWS", "AZURE", "GCP", "KUBEENETES"];
-        cloudWiseLandingZoneCount = cloudWiseLandingZoneCount.map((count) => {
+     
+      if (landingZoneCounts?.length) {
+        let environments = Object.keys(ENVIRONMENTS);
+
+        landingZoneCounts = landingZoneCounts.map((count) => {
           if (environments.includes(count.cloud)) {
             environments.splice(environments.indexOf(environments), 1);
           }
           return { name: "" + count.totalAccounts };
         });
         if (environments.length) {
-          cloudWiseLandingZoneCount = [
-            ...cloudWiseLandingZoneCount,
+          landingZoneCounts = [
+            ...landingZoneCounts,
             { name: 0 },
           ];
         }
@@ -250,7 +242,7 @@ class BIMapping extends Component {
           name,
           id,
           isMutipleCell: true,
-          multipeCellData: cloudWiseLandingZoneCount,
+          multipeCellData: landingZoneCounts,
           type: this.TYPE.ORGANIZATION,
           chlidren,
         },

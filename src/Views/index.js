@@ -31,11 +31,7 @@ import ThreeTierTopology from "./AppViews/Environments/EnvironmentList/ThreeTier
 import ApplicationStatusDashboard from "./AppViews/Dashboard/ApplicationStatusDashboard";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import {
-  getCurrentUser,
-  setCloudWiseLandingZoneCount,
-  LOCAL_STORAGE_CONSTANTS,
-} from "Utils";
+import { getCurrentUser, LOCAL_STORAGE_CONSTANTS } from "Utils";
 import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
@@ -58,7 +54,6 @@ import LoginEvents from "./AppViews/DiscoveredAssets/LoginEvents";
 import Eventhistory from "./AppViews/DiscoveredAssets/Eventhistory";
 import OverviewDashboard from "./AppViews/NewReports/OverviewDashboard";
 import SpendOverview from "./AppViews/NewReports/OverviewDashboard/SpendOverview";
-import { getCloudWiseLandingZoneCount } from "Redux/Environments/EnvironmentsThunk";
 import status from "Redux/Constants/CommonDS";
 import { useDispatch, useSelector } from "react-redux";
 import TopUsedServices from "./AppViews/NewReports/OverviewDashboard/TopUsedServices";
@@ -84,7 +79,6 @@ import BudgetProducts from "./AppViews/NewReports/BudgetDashboard/BudgetProducts
 import BudgetDepartments from "./AppViews/NewReports/BudgetDashboard/BudgetDepartments";
 import TopAccounts from "./AppViews/NewReports/OverviewDashboard/TopAccounts";
 
-
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
     const location = useLocation();
@@ -108,28 +102,6 @@ export const Views = (props) => {
   });
 
   const user = getCurrentUser();
-
-  useEffect(() => {
-    let isExistLandingZoneCounts = localStorage.getItem(
-      LOCAL_STORAGE_CONSTANTS.CLOUD_WISE_LANDINGZONE_COUNT
-    );
-    if (user && !isExistLandingZoneCounts) {
-      disptch(getCloudWiseLandingZoneCount());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      if (cloudWiseLandingZoneCount.status === status.SUCCESS) {
-        let landingZoneCounts = cloudWiseLandingZoneCount.data;
-        if (landingZoneCounts?.length) {
-          setCloudWiseLandingZoneCount(landingZoneCounts);
-        }
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cloudWiseLandingZoneCount]);
 
   const setTitle = () => {
     if (location) {
@@ -308,7 +280,7 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/cost-top-accounts`}
             element={<CostTopAccounts />}
           />
-           <Route
+          <Route
             path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/cost-top-accounts/:accountId`}
             element={<TopAccounts />}
           />

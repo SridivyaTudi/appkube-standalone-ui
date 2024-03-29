@@ -273,28 +273,6 @@ export const RbacPermissionsDataManipulation = {
   },
 };
 
-export const setCloudWiseLandingZoneCount = (data) => {
-  if (data) {
-    localStorage.setItem(
-      LOCAL_STORAGE_CONSTANTS.CLOUD_WISE_LANDINGZONE_COUNT,
-      JSON.stringify(data)
-    );
-  }
-};
-
-export const getCloudWiseLandingZoneCount = () => {
-  try {
-    const counts = JSON.parse(
-      localStorage.getItem(
-        LOCAL_STORAGE_CONSTANTS.CLOUD_WISE_LANDINGZONE_COUNT
-      ) || []
-    );
-    return counts;
-  } catch (e) {
-    return [];
-  }
-};
-
 export const isAlphaNumeric = (str) => {
   var alphaNumericRegex = /^[a-zA-Z0-9]+$/;
   return alphaNumericRegex.test(str);
@@ -350,4 +328,5 @@ export const ENVIRONMENTS = {
   AWS: "AWS",
   AZURE: "AZURE",
   GCP: "GCP",
+  KUBERNETES: "KUBERNETES",
 };

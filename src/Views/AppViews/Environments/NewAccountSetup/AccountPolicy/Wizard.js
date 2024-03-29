@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Box from "@mui/material/Box";
 import { v4 } from "uuid";
+import { getCurrentOrgId } from "Utils";
 
 class Wizard extends Component {
   constructor(props) {
@@ -109,6 +110,7 @@ class Wizard extends Component {
       status: "active",
       accountId,
       departmentId: Number(this.props.departmentId),
+      organizationId: Number(getCurrentOrgId()),
     };
     this.props.addLandingZone(sendData);
   };
