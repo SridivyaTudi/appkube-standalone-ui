@@ -82,6 +82,8 @@ import BudgetServicesAccount from "./AppViews/NewReports/BudgetDashboard/BudgetS
 import BudgetAccountDetails from "./AppViews/NewReports/BudgetDashboard/BudgetAccountDetails";
 import BudgetProducts from "./AppViews/NewReports/BudgetDashboard/BudgetProducts";
 import BudgetDepartments from "./AppViews/NewReports/BudgetDashboard/BudgetDepartments";
+import TopAccounts from "./AppViews/NewReports/OverviewDashboard/TopAccounts";
+
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -305,6 +307,10 @@ export const Views = (props) => {
           <Route
             path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/cost-top-accounts`}
             element={<CostTopAccounts />}
+          />
+           <Route
+            path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/cost-top-accounts/:accountId`}
+            element={<TopAccounts />}
           />
           <Route
             path={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/potential-sevings`}

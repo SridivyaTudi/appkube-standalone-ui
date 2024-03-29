@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import {
   Box,
   Button,
-  TableContainer,
-  Table,
   TableHead,
   TableRow,
   TableBody,
@@ -18,12 +16,14 @@ import { v4 } from "uuid";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { getCostTopAccountsDetails } from "Redux/Reports/ReportsThunk";
+import { getCostTopAccountsByAccountId } from "Redux/Reports/ReportsThunk";
 import APIstatus from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import Loader from "Components/Loader";
 import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
 import { getCurrentOrgId } from "Utils";
+import SpendingTable from "./Components/SpendingTable";
+import status from "Redux/Constants/CommonDS";
 
 const renderLoader = () => {
   return (
@@ -59,8 +59,64 @@ let timeSpendData = [
     subName: " vs Last Quarter",
   },
 ];
+let computeSpendingTable = [
+  {
+    name: "EC2",
+    icon: "ServiceIcon1",
+    last_month_spend: "$2,000",
+    month_spend: "$1,800",
+    variance: "15% ",
+    avg_daily_spend: "$1,800",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+  },
+  {
+    name: "Lambda",
+    icon: "ServiceIcon2",
+    last_month_spend: "$1,500",
+    month_spend: "$2,500",
+    variance: "20%",
+    avg_daily_spend: "$1,800",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+  },
+  {
+    name: "Light Sail",
+    icon: "ServiceIcon3",
+    last_month_spend: "$2,000",
+    month_spend: "$2,000",
+    variance: "15%",
+    avg_daily_spend: "$1,800",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+  },
+  {
+    name: "ECS",
+    icon: "ServiceIcon4",
+    avg_daily_spend: "$1,800",
+    last_month_spend: "$2,000",
+    month_spend: "$2,000",
+    variance: "15%",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+  },
+  {
+    name: "EKS",
+    icon: "ServiceIcon5",
+    last_month_spend: "$2,000",
+    month_spend: "$2,000",
+    variance: "15%",
+    avg_daily_spend: "$1,800",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+  },
+  {
+    name: "Fargate",
+    icon: "ServiceIcon6",
+    last_month_spend: "$2,000",
+    month_spend: "$2,000",
+    variance: "15%",
+    avg_daily_spend: "$1,800",
+    actions: `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/spend-overview-details/`,
+  },
+];
 
-class CostTopAccounts extends Component {
+class TopAccounts extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -73,11 +129,13 @@ class CostTopAccounts extends Component {
   }
 
   componentDidMount() {
-    this.props.getCostTopAccountsDetails({
+    let { accountId: account } = this.getUrlDetails();
+    this.props.getCostTopAccountsByAccountId({
       params: {
         cloud: "aws",
         granularity: this.state.selectedGranularity,
         compareTo: "-1",
+        account,
       },
       orgId: getCurrentOrgId(),
     });
@@ -85,76 +143,13 @@ class CostTopAccounts extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.costTopAccountsDetailList.status !==
-      this.props.costTopAccountsDetailList.status
+      prevProps.topAccountsById.status !== this.props.topAccountsById.status
     ) {
-      if (this.props.costTopAccountsDetailList.status === APIstatus.SUCCESS) {
-        this.setState({ accounts: this.props.costTopAccountsDetailList?.data });
+      if (this.props.topAccountsById.status === APIstatus.SUCCESS) {
+        this.manipluateData(this.props.topAccountsById?.data || []);
       }
     }
   }
-
-  //  Render table head
-  renderTableHead = () => {
-    return (
-      <TableHead>
-        <TableRow>
-          <TableCell>Account ID</TableCell>
-          <TableCell>Department </TableCell>
-          <TableCell>Vpc</TableCell>
-          <TableCell align="center">Service count</TableCell>
-          <TableCell>High spending region</TableCell>
-          <TableCell align="center">Spending</TableCell>
-          <TableCell align="center">Variance</TableCell>
-          <TableCell align="center">Budget</TableCell>
-        </TableRow>
-      </TableHead>
-    );
-  };
-
-  //  Render table body
-  renderTableBody = () => {
-    let { accounts } = this.state;
-    return (
-      <TableBody>
-        {this.props.costTopAccountsDetailList.status ===
-        APIstatus.IN_PROGRESS ? (
-          renderLoader()
-        ) : accounts?.length ? (
-          accounts.map((details) => {
-            return (
-              <TableRow key={v4()}>
-                <TableCell>
-                  <Link
-                     to={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/cost-top-accounts/${details.accountId}`}
-                  >
-                    {details.accountId}
-                  </Link>
-                </TableCell>
-                <TableCell>{details.department}</TableCell>
-                <TableCell>{details.vpc}</TableCell>
-                <TableCell align="center">{details.serviceCount}</TableCell>
-                <TableCell>{details.highSpendingRegion}</TableCell>
-                <TableCell align="center">{details.spending}</TableCell>
-                <TableCell align="center">
-                  <Box className="variance-count">
-                    {details.variance} <i class="fas fa-sort-down p-l-5"></i>
-                  </Box>
-                </TableCell>
-                <TableCell align="center">{details.budget}</TableCell>
-              </TableRow>
-            );
-          })
-        ) : (
-          <Box className="d-blck text-center w-100 h-100 ">
-            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
-            </Box>
-          </Box>
-        )}
-      </TableBody>
-    );
-  };
 
   handleSelectFilterModal = () => {
     this.setState({
@@ -166,13 +161,11 @@ class CostTopAccounts extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { accounts } = this.state;
-    let data = this.props.costTopAccountsDetailList.data || [];
+    let data = this.manipluateData(this.props.topAccountsById.data || [], 1);
     if (data?.length) {
       if (value) {
         accounts = data.filter((tableData) => {
-          if (
-            tableData?.accountId.toLowerCase().includes(value.toLowerCase())
-          ) {
+          if (tableData?.name.toLowerCase().includes(value.toLowerCase())) {
             return tableData;
           } else {
             return null;
@@ -218,29 +211,63 @@ class CostTopAccounts extends Component {
 
   onClickDropDown = (selectedGranularity) => {
     if (selectedGranularity !== this.state.selectedGranularity) {
-      this.props.getCostTopAccountsDetails({
+      let { accountId: account } = this.getUrlDetails();
+      this.props.getCostTopAccountsByAccountId({
         params: {
           cloud: "aws",
-          granularity: this.state.selectedGranularity,
+          granularity: selectedGranularity,
           compareTo: "-1",
+          account,
         },
         orgId: getCurrentOrgId(),
       });
       this.setState({ selectedGranularity, isSelectDepartmentOpen: false });
     }
   };
+  /** Get url details. */
+  getUrlDetails() {
+    let accountId = this.props.params.accountId;
 
+    return { accountId };
+  }
+
+  //manipluate compute data
+  manipluateData = (data, isReturnData = 0) => {
+    let { accounts } = this.state;
+    accounts = [];
+
+    if (data.length) {
+      data.forEach((details) => {
+        accounts.push({
+          name: details.serviceName,
+          last_month_spend: details.lastMonthSpend,
+          month_spend: details.thisMonthSpend,
+          variance: details.variance,
+          avg_daily_spend: details.avgDailySpend,
+          actions: `#`,
+        });
+      });
+    }
+    if (isReturnData) {
+      return accounts;
+    } else {
+      this.setState({ accounts });
+    }
+  };
   render() {
     let {
       accounts,
       searchedKey,
       showSelectFilterModal,
       isSelectDepartmentOpen,
+      selectedGranularity,
     } = this.state;
+    let { topAccountsById } = this.props;
+    let { accountId } = this.getUrlDetails();
     return (
       <Box className="new-reports-container">
         <Box className="list-heading">
-          <h3> Cost Of Top Accounts</h3>
+          <h3> Top Accounts</h3>
           <Box className="breadcrumbs">
             <ul>
               <li
@@ -253,7 +280,19 @@ class CostTopAccounts extends Component {
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
-              <li className="active"> Cost Of Top Accounts</li>
+              <li
+                onClick={() =>
+                  this.props.navigate(
+                    `/app/new-reports/over-view-dashboard/cost-top-accounts`
+                  )
+                }
+              >
+                Cost Of Top Accounts
+              </li>
+              <li>
+                <i className="fa-solid fa-chevron-right"></i>
+              </li>
+              <li className="active"> Top Accounts</li>
             </ul>
           </Box>
         </Box>
@@ -297,7 +336,13 @@ class CostTopAccounts extends Component {
         <Box className="reports-tab-section m-t-4">
           <TimeSpendComponent data={timeSpendData} />
           <Box className="table-head">
-            <h4 className="m-t-0 m-b-0">Overview of Top 5 Accounts</h4>
+            <Box className="d-block">
+              <h3 className="m-t-0 m-b-0">Spendings Of Top Used Services</h3>
+              <h4 className="m-t-3 m-b-0">
+                {" "}
+                Top Services in Account {accountId}
+              </h4>
+            </Box>
             <Box className="search m-r-0">
               <input
                 type="text"
@@ -312,37 +357,29 @@ class CostTopAccounts extends Component {
               </button>
             </Box>
           </Box>
-          <Box className="new-reports-table">
-            <TableContainer className="table">
-              <Table style={{ width: 1500 }}>
-                {this.renderTableHead()}
-                {this.renderTableBody()}
-              </Table>
-            </TableContainer>
-          </Box>
+          {topAccountsById.status === status.IN_PROGRESS ? (
+            renderLoader()
+          ) : (
+            <SpendingTable
+              data={accounts}
+              selectedGranularity={selectedGranularity}
+            />
+          )}
         </Box>
-        {showSelectFilterModal ? (
-          <SelectFilterModal
-            showModal={showSelectFilterModal}
-            handleSelectFilterModal={this.handleSelectFilterModal}
-          />
-        ) : (
-          <></>
-        )}
       </Box>
     );
   }
 }
 function mapStateToProps(state) {
-  const { costTopAccountsDetailList } = state.reports;
-  return { costTopAccountsDetailList };
+  const { topAccountsById } = state.reports;
+  return { topAccountsById };
 }
 
 const mapDispatchToProps = {
-  getCostTopAccountsDetails,
+  getCostTopAccountsByAccountId,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(navigateRouter(CostTopAccounts));
+)(navigateRouter(TopAccounts));

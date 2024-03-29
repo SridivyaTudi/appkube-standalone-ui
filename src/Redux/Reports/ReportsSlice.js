@@ -12,7 +12,9 @@ import {
   getPotentialMonthlySaving,
   getTopRiRecommendations,
   getElementSummary,
-  getElementDetails,getCostTopAccountsDetails
+  getElementDetails,
+  getCostTopAccountsDetails,
+  getCostTopAccountsByAccountId,
 } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -70,7 +72,12 @@ export const ReportsSlice = createSlice({
     elementDetailsData: {
       status: null,
       data: [],
-    },costTopAccountsDetailList: {
+    },
+    costTopAccountsDetailList: {
+      status: "",
+      data: [],
+    },
+    topAccountsById: {
       status: "",
       data: [],
     },
@@ -436,6 +443,34 @@ export const ReportsSlice = createSlice({
       return {
         ...state,
         costTopAccountsDetailList: {
+          status: status.FAILURE,
+          data: [],
+        },
+      };
+    },
+
+    [getCostTopAccountsByAccountId.pending]: (state) => {
+      return {
+        ...state,
+        topAccountsById: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getCostTopAccountsByAccountId.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        topAccountsById: {
+          status: status.SUCCESS,
+          data: action.payload?.data || [],
+        },
+      };
+    },
+    [getCostTopAccountsByAccountId.rejected]: (state) => {
+      return {
+        ...state,
+        topAccountsById: {
           status: status.FAILURE,
           data: [],
         },

@@ -77,6 +77,8 @@ const config = {
   GET_ELEMENT_DETAILS: `reporting/organization/#org-id#/spend-overview/element-detail?serviceCategory=#service-category#&elementType=#element-type#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
   GET_COST_TOP_ACCOUNTS_DETAILS:
     "/reporting/organization/#org-id#/cost-top-accounts/detail",
+    GET_TOP_ACCOUNTS_BY_ACCOUNT_ID:
+    "/reporting/organization/#org-id#/cost-top-accounts",
 };
 
 export default config;

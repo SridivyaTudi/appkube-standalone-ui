@@ -282,12 +282,28 @@ export const getElementDetails = createAsyncThunk(
     }
   }
 );
+
 export const getCostTopAccountsDetails = createAsyncThunk(
   "Reports/getCostTopAccountsDetails",
   async (param) => {
     try {
       const response = await postLoginService.get(
         config.GET_COST_TOP_ACCOUNTS_DETAILS.replace("#org-id#", param.orgId),
+        { params: param.params }
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getCostTopAccountsByAccountId = createAsyncThunk(
+  "Reports/getCostTopAccountsByAccountId",
+  async (param) => {
+    try {
+      const response = await postLoginService.get(
+        config.GET_TOP_ACCOUNTS_BY_ACCOUNT_ID.replace("#org-id#", param.orgId),
         { params: param.params }
       );
       return response;
