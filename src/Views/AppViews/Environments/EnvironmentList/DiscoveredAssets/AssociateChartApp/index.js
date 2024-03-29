@@ -488,7 +488,7 @@ export class AssociateChartApp extends Component {
 
   // Type -(BUSINESS,COMMON) return id
   getTypeId = (name, type) => {
-    return productCategory[type].findIndex(
+    return productCategory[type?.toUpperCase()].findIndex(
       (label) =>
         label.replace(" Layer", "")?.toLowerCase() ===
         name.replace(" Layer", "")?.toLowerCase()
