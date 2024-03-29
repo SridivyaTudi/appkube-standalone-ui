@@ -139,7 +139,7 @@ class HistoryDepartments extends Component {
                       <strong>$12,800</strong>
                     </TableCell>
                     <TableCell align="center">
-                      <Box className="variance-count d-inline-block">
+                      <Box className="variance-count red d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
                       </Box>
                       <strong> $2,800</strong>
@@ -158,7 +158,7 @@ class HistoryDepartments extends Component {
                       <strong>$12,800</strong>
                     </TableCell>
                     <TableCell align="center">
-                      <Box className="variance-count d-inline-block">
+                      <Box className="variance-count red d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
                       </Box>
                       <strong> $2,800</strong>
@@ -177,7 +177,7 @@ class HistoryDepartments extends Component {
                       <strong>$12,800</strong>
                     </TableCell>
                     <TableCell align="center">
-                      <Box className="variance-count d-inline-block">
+                      <Box className="variance-count red d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
                       </Box>
                       <strong> $2,800</strong>
@@ -196,7 +196,7 @@ class HistoryDepartments extends Component {
                       <strong>$12,800</strong>
                     </TableCell>
                     <TableCell align="center">
-                      <Box className="variance-count d-inline-block">
+                      <Box className="variance-count red d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
                       </Box>
                       <strong> $2,800</strong>
@@ -215,7 +215,7 @@ class HistoryDepartments extends Component {
                       <strong>$12,800</strong>
                     </TableCell>
                     <TableCell align="center">
-                      <Box className="variance-count d-inline-block">
+                      <Box className="variance-countred d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
                       </Box>
                       <strong> $2,800</strong>
@@ -234,7 +234,7 @@ class HistoryDepartments extends Component {
                       <strong>$12,800</strong>
                     </TableCell>
                     <TableCell align="center">
-                      <Box className="variance-count d-inline-block">
+                      <Box className="variance-count red d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
                       </Box>
                       <strong> $2,800</strong>
@@ -253,7 +253,7 @@ class HistoryDepartments extends Component {
                       <strong>$12,800</strong>
                     </TableCell>
                     <TableCell align="center">
-                      <Box className="variance-count d-inline-block">
+                      <Box className="variance-count red d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
                       </Box>
                       <strong> $2,800</strong>
@@ -272,7 +272,7 @@ class HistoryDepartments extends Component {
                       <strong>$12,800</strong>
                     </TableCell>
                     <TableCell align="center">
-                      <Box className="variance-count d-inline-block">
+                      <Box className="variance-count red d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
                       </Box>
                       <strong> $2,800</strong>
@@ -291,7 +291,7 @@ class HistoryDepartments extends Component {
                       <strong>$12,800</strong>
                     </TableCell>
                     <TableCell align="center">
-                      <Box className="variance-count d-inline-block">
+                      <Box className="variance-count red d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
                       </Box>
                       <strong> $2,800</strong>
@@ -310,7 +310,7 @@ class HistoryDepartments extends Component {
                       <strong>$12,800</strong>
                     </TableCell>
                     <TableCell align="center">
-                      <Box className="variance-count d-inline-block">
+                      <Box className="variance-count red d-inline-block">
                         <i class="fas fa-sort-down p-r-5"></i>
                       </Box>
                       <strong> $2,800</strong>

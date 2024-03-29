@@ -137,7 +137,7 @@ class CostTopAccounts extends Component {
                 <TableCell>{details.highSpendingRegion}</TableCell>
                 <TableCell align="center">{details.spending}</TableCell>
                 <TableCell align="center">
-                  <Box className="variance-count">
+                  <Box className="variance-count red">
                     {details.variance} <i class="fas fa-sort-down p-l-5"></i>
                   </Box>
                 </TableCell>

@@ -335,7 +335,7 @@ class TopAccounts extends Component {
         </Box>
         <Box className="reports-tab-section m-t-4">
           <TimeSpendComponent data={timeSpendData} />
-          <Box className="table-head">
+          <Box className="table-head" alignItems={"end"}>
             <Box className="d-block">
               <h3 className="m-t-0 m-b-0">Spendings Of Top Used Services</h3>
               <h4 className="m-t-3 m-b-0">

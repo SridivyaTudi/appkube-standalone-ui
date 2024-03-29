@@ -344,7 +344,7 @@ class AwsComponent extends Component {
                   {details.currentMonthSpend}
                 </TableCell>
                 <TableCell align="center">
-                  <Box className="variance-count d-inline-block">
+                  <Box className="variance-count red d-inline-block">
                     <i class="fas fa-sort-down p-r-5"></i> 
                   </Box>
                   <strong>{details.difference}</strong>
