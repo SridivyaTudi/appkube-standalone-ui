@@ -372,8 +372,12 @@ export class AssociateChartApp extends Component {
         <ul
           key={v4()}
           onClick={(e) => {
+            let type =
+              PRODUCT_CATEGORY_ENUM.THREE_TIER === tag.tag.type?.toUpperCase()
+                ? PRODUCT_CATEGORY_ENUM.THREE_TIER
+                : PRODUCT_CATEGORY_ENUM.SOA;
             e.target?.attributes?.name?.value !== "deleteBtn" &&
-              this.onClickExistingTag(tag.tag, tag.tag.type);
+              this.onClickExistingTag(tag.tag, type);
           }}
         >
           {this.renderTags(tag.tag, tag.tag.type)}

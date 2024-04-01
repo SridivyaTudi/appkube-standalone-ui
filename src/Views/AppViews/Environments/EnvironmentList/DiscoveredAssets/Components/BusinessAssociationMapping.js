@@ -736,6 +736,7 @@ class BusinessAssociationMapping extends Component {
 
     if (activeBAMLevel && activeBAMLevel?.id === envId) {
     } else {
+      
       levelsData[selectedLevel + 1] = productCategory[productType]
         ? productCategory[productType].map((name, index) => {
             return {

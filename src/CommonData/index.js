@@ -36,6 +36,8 @@ export const REPORT_PAGE_TYPE = {
     TOTAL_THIS_MONT_SPEND: "#granularity# to date spend",
     FORECASTED_SPEND: "Forecasted Spend",
     AVG_DAILY_SPEND: "Avg #granularity# Spend",
+    LAST_MONTH_SPEND: "Last #granularity# Spend",
+    MONTH_TO_DATE_SPEND: "#granularity# to date spend",
   },
   SPEND_OVERVIEW_SERVICE_CATEGORY: {
     COMPUTE: "COMPUTE",

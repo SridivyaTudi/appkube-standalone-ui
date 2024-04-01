@@ -15,7 +15,7 @@ import {
   getSpendingTrend,
 } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
-import { getCurrentOrgId } from "Utils";
+import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
 import Loader from "Components/Loader";
 
 const totalUsedServiceColor = {
@@ -267,16 +267,17 @@ class AwsComponent extends Component {
   };
 
   allAPICall = (granularity) => {
+    const cloud = ENVIRONMENTS.AWS.toLowerCase();
     this.props.getSpendOverview({
       serviceCategory: "all",
-      cloud: "aws",
+      cloud,
       granularity,
       compareTo: -1,
       orgId: getCurrentOrgId(),
     });
     this.props.getTopUsedService({
       serviceCategory: "all",
-      cloud: "aws",
+      cloud,
       granularity,
       compareTo: -1,
       noOfRecords: 10,
@@ -284,13 +285,13 @@ class AwsComponent extends Component {
       orgId: getCurrentOrgId(),
     });
     this.props.getPotentialSavings({
-      cloud: "aws",
+      cloud,
       granularity,
       compareTo: -1,
       orgId: getCurrentOrgId(),
     });
     this.props.getCostTopAccounts({
-      cloud: "aws",
+      cloud,
       account: "all",
       granularity,
       compareTo: -1,
@@ -299,7 +300,7 @@ class AwsComponent extends Component {
       orgId: getCurrentOrgId(),
     });
     this.props.getSpendingTrend({
-      cloud: "aws",
+      cloud,
       granularity,
       compareTo: -1,
       forcast: true,
