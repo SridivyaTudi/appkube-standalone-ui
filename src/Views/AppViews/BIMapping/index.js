@@ -23,6 +23,8 @@ import Loader from "Components/Loader";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import { getCloudWiseLandingZoneCount } from "Redux/Environments/EnvironmentsThunk";
 import CloudElementInstancePopup from "./Components/CloudElementInstancePopup";
+import SelectLendingZonePopup from "./Components/SelectLendingZonePopup";
+
 
 const orgId = getCurrentOrgId();
 
@@ -499,11 +501,17 @@ class BIMapping extends Component {
       showInstanceModal: !this.state.showInstanceModal,
     });
   };
+  handleShowSelectLendingModal = () => {
+    this.setState({
+      showSelectLendingModal: !this.state.showSelectLendingModal,
+    });
+  };
   render() {
     const {
       isSelectDepartmentOpen,
       organizationTableData,
       showInstanceModal,
+      showSelectLendingModal,
       serviceDetails,
     } = this.state;
     const {
@@ -525,6 +533,13 @@ class BIMapping extends Component {
       <Box className="bimapping-container">
         <Box className="list-heading">
           <h3>Organization Unit</h3>
+          <Button
+            className="primary-outline-btn min-width"
+            variant="outlined"
+            onClick={this.handleShowSelectLendingModal}
+          >
+            Select Lending Zone
+          </Button>
           <Box className="mapping-fliter">
             <Button
               onClick={this.toggleSelectDepartment}
@@ -574,6 +589,15 @@ class BIMapping extends Component {
             showModal={showInstanceModal}
             handleShowInstanceModal={this.handleShowInstanceModal}
             data={serviceDetails}
+          />
+        ) : (
+          <></>
+        )}
+         {showSelectLendingModal ? (
+          <SelectLendingZonePopup
+            showModal={showSelectLendingModal}
+            handleSelectLendingModal={this.handleShowSelectLendingModal}
+           
           />
         ) : (
           <></>
