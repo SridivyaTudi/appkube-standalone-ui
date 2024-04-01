@@ -18,6 +18,7 @@ import { getOrgWiseDepartments } from "Redux/Environments/EnvironmentsThunk";
 import {
   getElementType,
   getElementInstancesOfGivenType,
+  getLandingzoneByDepartment,
 } from "Redux/BIMapping/BIMappingThunk";
 import Loader from "Components/Loader";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
@@ -95,6 +96,7 @@ class BIMapping extends Component {
     ELEMENT_TYPE: "elementType",
     ELEMENT_INSTANCE_TYPE: "elementInstanceType",
   };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -103,6 +105,10 @@ class BIMapping extends Component {
       clickTableData: {},
       serviceDetails: [],
       landingZoneCounts: [],
+      isDepartmentLandingzoneDataStatus: {
+        department: false,
+        landingZoneCount: false,
+      },
     };
   }
 
@@ -118,10 +124,11 @@ class BIMapping extends Component {
       this.props.cloudWiseLandingZoneCount.status === status.SUCCESS &&
       this.props.cloudWiseLandingZoneCount?.data
     ) {
-      const landingZoneCounts = this.props.cloudWiseLandingZoneCount.data;
-      if (landingZoneCounts?.length) {
-        this.setState({ landingZoneCounts });
-      }
+      const landingZoneCounts =
+        this.props.cloudWiseLandingZoneCount?.data || [];
+      let { isDepartmentLandingzoneDataStatus } = this.state;
+      isDepartmentLandingzoneDataStatus.landingZoneCount = true;
+      this.setState({ landingZoneCounts, isDepartmentLandingzoneDataStatus });
     }
 
     if (
@@ -130,8 +137,9 @@ class BIMapping extends Component {
       this.props.organizationWiseDepartments.status === status.SUCCESS &&
       this.props.organizationWiseDepartments?.data
     ) {
-      const organization = this.props.organizationWiseDepartments.data;
-      this.manipulateDepartMentData(organization);
+      let { isDepartmentLandingzoneDataStatus } = this.state;
+      isDepartmentLandingzoneDataStatus.department = true;
+      this.setState({ isDepartmentLandingzoneDataStatus });
     }
 
     if (
@@ -173,7 +181,21 @@ class BIMapping extends Component {
         elementInstancesOfGivenTypeData
       );
     }
+    const {
+      isDepartmentLandingzoneDataStatus: { department, landingZoneCount },
+    } = this.state;
+    if (department && landingZoneCount) {
+      const organization = this.props.organizationWiseDepartments.data || [];
+      this.manipulateDepartMentData(organization);
+      this.setState({
+        isDepartmentLandingzoneDataStatus: {
+          department: false,
+          landingZoneCount: false,
+        },
+      });
+    }
   }
+
   toggleSelectDepartment = () => {
     this.setState({
       isSelectDepartmentOpen: !this.state.isSelectDepartmentOpen,
@@ -520,6 +542,7 @@ class BIMapping extends Component {
       productEnv,
       elementTypeData,
       elementInstancesOfGivenType,
+      cloudWiseLandingZoneCount,
     } = this.props;
     const inprogressStatus = status.IN_PROGRESS;
     let loderStatus = [
@@ -570,7 +593,9 @@ class BIMapping extends Component {
           </Box>
         </Box>
         <Box className="bimapping-table">
-          {organization.status === inprogressStatus ? (
+          {[organization.status, cloudWiseLandingZoneCount.status].includes(
+            inprogressStatus
+          ) ? (
             this.renderLoder()
           ) : organizationTableData?.length ? (
             <AccordionView
@@ -611,7 +636,11 @@ function mapStateToProps(state) {
   const { products, productEnv } = state.associateApp;
   const { organizationWiseDepartments, cloudWiseLandingZoneCount } =
     state.environments;
-  const { elementTypeData, elementInstancesOfGivenType } = state.biMapping;
+  const {
+    elementTypeData,
+    elementInstancesOfGivenType,
+    landingZonesByDepartment,
+  } = state.biMapping;
   return {
     organizationWiseDepartments,
     products,
@@ -619,6 +648,7 @@ function mapStateToProps(state) {
     elementTypeData,
     elementInstancesOfGivenType,
     cloudWiseLandingZoneCount,
+    landingZonesByDepartment,
   };
 }
 
@@ -630,6 +660,7 @@ const mapDispatchToProps = {
   getElementInstancesOfGivenType,
   setProductIntoDepartment,
   getCloudWiseLandingZoneCount,
+  getLandingzoneByDepartment,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BIMapping);

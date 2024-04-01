@@ -9,6 +9,7 @@ import {
   createDepartment,
   createDepartmentWithLandingZone,
   getLandingzone,
+  getLandingzoneByDepartment,
 } from "Redux/BIMapping/BIMappingThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -57,6 +58,10 @@ export const BIMappingSlice = createSlice({
     creationDepartmentWithLandingZone: {
       status: null,
       data: "",
+    },
+    landingZonesByDepartment: {
+      status: null,
+      data: [],
     },
   },
   reducers: {
@@ -298,6 +303,32 @@ export const BIMappingSlice = createSlice({
       return {
         ...state,
         creationDepartmentWithLandingZone: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getLandingzoneByDepartment.pending]: (state) => {
+      return {
+        ...state,
+        landingZonesByDepartment: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getLandingzoneByDepartment.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        landingZonesByDepartment: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getLandingzoneByDepartment.rejected]: (state) => {
+      return {
+        ...state,
+        landingZonesByDepartment: {
           status: status.FAILURE,
         },
       };
