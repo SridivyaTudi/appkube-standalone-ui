@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import { Box } from "@mui/material";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 class AssociateOu extends Component {
   constructor(props) {
@@ -24,6 +25,20 @@ class AssociateOu extends Component {
       createNewOuPopupShow: false,
     };
   }
+
+  componentDidMount = () => {
+    let { departmentId } = this.getUrlDetails();
+    let productData = this.props.createProductFormData;
+    console.log(productData, departmentId);
+    if (departmentId > 0 && productData) {
+      this.setState({ checkedId: departmentId });
+      this.props.setDepartment(
+        departmentId,
+        productData.departmentName,
+        productData.departmentDescription
+      );
+    }
+  };
 
   componentDidUpdate = (prevProps) => {
     if (
@@ -80,6 +95,12 @@ class AssociateOu extends Component {
     });
   };
 
+  /** Get url details. */
+  getUrlDetails() {
+    let departmentId = this.props.params?.departmentId || 0;
+    return { departmentId };
+  }
+
   render() {
     const {
       selectAccountPopupShow,
@@ -91,6 +112,7 @@ class AssociateOu extends Component {
     const {
       roleDetails: { departmentName, description: depDescription },
     } = this.props;
+    let { departmentId } = this.getUrlDetails();
     return (
       <>
         <Link className="close-btn" to={`${APP_PREFIX_PATH}/environments`}>
@@ -148,26 +170,30 @@ class AssociateOu extends Component {
                 <label>Description</label>
                 <p>{depDescription || description}</p>
               </Box>
-              <Box
-                className="d-flex width-100 align-items-center"
-                style={{ justifyContent: "space-between" }}
-              >
-                <Button
-                  className="primary-text-btn min-width"
-                  variant="contained"
-                  style={{ paddingLeft: 0, textDecoration: "underline" }}
-                  onClick={this.toggleSelectAccountPopup}
+              {departmentId > 0 ? (
+                <></>
+              ) : (
+                <Box
+                  className="d-flex width-100 align-items-center"
+                  style={{ justifyContent: "space-between" }}
                 >
-                  Change ou
-                </Button>
-                <Button
-                  className="primary-btn min-width"
-                  variant="contained"
-                  onClick={this.toggleCreateNewOuPopup}
-                >
-                  Create OU
-                </Button>
-              </Box>
+                  <Button
+                    className="primary-text-btn min-width"
+                    variant="contained"
+                    style={{ paddingLeft: 0, textDecoration: "underline" }}
+                    onClick={this.toggleSelectAccountPopup}
+                  >
+                    Change ou
+                  </Button>
+                  <Button
+                    className="primary-btn min-width"
+                    variant="contained"
+                    onClick={this.toggleCreateNewOuPopup}
+                  >
+                    Create OU
+                  </Button>
+                </Box>
+              )}
             </Box>
           </Box>
         )}
@@ -206,10 +232,14 @@ class AssociateOu extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { environments } = state;
-  return environments;
+  const { organizationWiseDepartments } = state.environments;
+  const { createProductFormData } = state.biMapping;
+  return { createProductFormData, organizationWiseDepartments };
 };
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssociateOu);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(AssociateOu));

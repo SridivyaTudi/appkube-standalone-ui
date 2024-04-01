@@ -147,7 +147,7 @@ export const Views = (props) => {
             element={<Dashboard />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup`}
+            path={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup/:departmentId?`}
             element={<NewAccountSetup />}
           />
           <Route
@@ -361,7 +361,7 @@ export const Views = (props) => {
             element={<AddDepartment />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId`}
             element={<AddProduct />}
           />
           <Route

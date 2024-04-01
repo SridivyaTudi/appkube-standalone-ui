@@ -152,11 +152,11 @@ export const getLandingzoneByDepartment = createAsyncThunk(
   "BIMapping/getLandingzoneByDepartment",
   async (params) => {
     try {
-      let { orgId, depmenentId } = params;
+      let { orgId, departmentId } = params;
       let url = config.GET_LANDINGZONE_DEPARTMENT.replace(
         "#org-id#",
         orgId
-      ).replace("#department-id#", depmenentId);
+      ).replace("#department-id#", departmentId);
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {

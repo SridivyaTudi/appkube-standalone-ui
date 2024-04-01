@@ -123,6 +123,23 @@
         overflow-y: auto;
         max-height: 330px;
         padding: 0 5px;
+        p{
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 400;
+          color: #000000;
+        }
+        a{
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 500;
+          color: #383874;
+         cursor: pointer;
+          text-decoration: underline;
+          &:hover{
+            color: #023AFF;
+          }
+        }
         .select-landing-card {
           width: 100%;
           padding: 10px 5px;
