@@ -77,11 +77,20 @@ class Other extends Component {
   renderLoder() {
     return (
       <Box className="reports-loader">
-      <Loader className="align-item-center justify-center w-100 h-100" />
-    </Box>
+        <Loader className="align-item-center justify-center w-100 h-100" />
+      </Box>
     );
   }
 
+  getTotalKey = (key) => {
+    let obj = {
+      TOTAL_LAST_MONT_SPEND: "lastMonthSpend",
+      TOTAL_THIS_MONT_SPEND: "thisMonthSpend",
+      FORECASTED_SPEND: "forecastedSpend",
+      AVG_DAILY_SPEND: "avgDailySpend",
+    };
+    return obj[key] || "";
+  };
   //manipluate compute data
   manipluateData = (data, isReturnData = 0) => {
     let { accounts, timerSpendData } = this.state;
@@ -98,9 +107,12 @@ class Other extends Component {
             details.serviceName.toUpperCase()
           ].replace("#granularity#", this.props.selectedGranularity);
 
+          let key = this.getTotalKey(details.serviceName.toUpperCase());
+          let value = details[key];
+
           timerSpendData.push({
             name,
-            value: `$${details.total || 0}`,
+            value: `$${value > 0 ? value : 0}`,
             percentage: details.variance,
             subName: " vs Last " + this.props.selectedGranularity,
           });
@@ -164,7 +176,10 @@ class Other extends Component {
                 </button>
               </Box>
             </Box>
-            <SpendingTable data={accounts} selectedGranularity={this.props.selectedGranularity} />
+            <SpendingTable
+              data={accounts}
+              selectedGranularity={this.props.selectedGranularity}
+            />
           </>
         )}
       </>
