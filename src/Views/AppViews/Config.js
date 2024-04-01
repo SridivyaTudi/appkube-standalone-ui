@@ -60,6 +60,7 @@ const config = {
   ADD_DEPARTMENT: `department`,
   ADD_DEPARTMENT_WITH_LANDINGZONE: `/department/add-department-with-landing-zone`,
   GET_LANDINGZONE: `/landingzone/search?organizationId=#org-id#&cloud=#cloud#`,
+  GET_LANDINGZONE_DEPARTMENT: `/landingzone/search?departmentId=#department-id#&organizationId=#org-id#`,
 
   /* Reporting */
   GET_SPEND_OVERVIEW: `/reporting/organization/#org-id#/spend-overview?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
@@ -77,7 +78,7 @@ const config = {
   GET_ELEMENT_DETAILS: `reporting/organization/#org-id#/spend-overview/element-detail?serviceCategory=#service-category#&elementType=#element-type#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
   GET_COST_TOP_ACCOUNTS_DETAILS:
     "/reporting/organization/#org-id#/cost-top-accounts/detail",
-    GET_TOP_ACCOUNTS_BY_ACCOUNT_ID:
+  GET_TOP_ACCOUNTS_BY_ACCOUNT_ID:
     "/reporting/organization/#org-id#/cost-top-accounts",
 };
 

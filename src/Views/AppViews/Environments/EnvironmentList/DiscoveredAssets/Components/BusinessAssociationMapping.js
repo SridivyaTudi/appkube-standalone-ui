@@ -729,6 +729,7 @@ class BusinessAssociationMapping extends Component {
       selectedLevel,
       type,
     } = data;
+
     let { levelsData, activeLevels, serviceName } = this.state;
     let activeBAMLevel = activeLevels[`selectedLevel_2`];
     levelsData.length = isClickBreadCrumb ? 4 : 3;
@@ -736,9 +737,10 @@ class BusinessAssociationMapping extends Component {
 
     if (activeBAMLevel && activeBAMLevel?.id === envId) {
     } else {
-      
-      levelsData[selectedLevel + 1] = productCategory[productType]
-        ? productCategory[productType].map((name, index) => {
+      levelsData[selectedLevel + 1] = productCategory[
+        productType?.toUpperCase()
+      ]
+        ? productCategory[productType?.toUpperCase()].map((name, index) => {
             return {
               label: name,
               id: index,
