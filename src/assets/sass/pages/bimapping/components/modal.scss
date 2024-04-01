@@ -81,7 +81,6 @@
 
 .select-lendingzone-modal-container {
   width: 800px !important;
- height: 100%;
  max-height: 500px;
   box-shadow: 0px 0px 16px rgba(59, 72, 89, 0.2392156863);
   border-radius: 10px;
@@ -122,7 +121,8 @@
       .select-landing-cards {
         overflow: hidden;
         overflow-y: auto;
-        height: 100%;
+        max-height: 330px;
+        padding: 0 5px;
         .select-landing-card {
           width: 100%;
           padding: 10px 5px;
