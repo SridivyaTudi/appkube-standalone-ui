@@ -21,12 +21,13 @@ import {
   getPotentialMonthlySaving,
   getTopRiRecommendations,
 } from "Redux/Reports/ReportsThunk";
-import { getCurrentOrgId } from "Utils";
+import { getCurrentOrgId, ENVIRONMENTS } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-
+import { REPORT_PAGE_TYPE, SUMMARY_INSTANCE_TYPE } from "CommonData";
+const { CURRENT_TOTAL } = SUMMARY_INSTANCE_TYPE;
 // let donutData = [
 //   {
 //     age_group: "Reserved Instance",
@@ -204,34 +205,37 @@ class Storage extends Component {
   }
 
   allAPICall = (granularity) => {
+    const serviceCategory =
+      REPORT_PAGE_TYPE.SPEND_OVERVIEW_SERVICE_CATEGORY.STORAGE.toLowerCase();
+    const cloud = ENVIRONMENTS.AWS.toLowerCase();
     this.props.getComputeSummary({
-      cloud: "aws",
+      cloud,
       granularity,
       compareTo: -1,
-      serviceCategory: "storage",
+      serviceCategory,
       orgId: getCurrentOrgId(),
     });
 
     this.props.getPotentialTotalSaving({
-      cloud: "aws",
+      cloud,
       granularity,
       compareTo: -1,
-      serviceCategory: "storage",
+      serviceCategory,
       orgId: getCurrentOrgId(),
     });
     this.props.getPotentialMonthlySaving({
-      cloud: "aws",
+      cloud,
       granularity,
       compareTo: -1,
-      serviceCategory: "storage",
+      serviceCategory,
       orgId: getCurrentOrgId(),
     });
 
     this.props.getTopRiRecommendations({
-      cloud: "aws",
+      cloud,
       granularity,
       compareTo: -1,
-      serviceCategory: "storage",
+      serviceCategory,
       orgId: getCurrentOrgId(),
     });
   };
@@ -314,10 +318,10 @@ class Storage extends Component {
     potentialTotalSavingData = [];
     if (data?.length) {
       const totalValue = data
-        .filter((e) => e.instanceType !== "CURRENT_TOTAL")
+        .filter((e) => e.instanceType !== CURRENT_TOTAL)
         .reduce((acc, crr) => (acc += +crr.total), 0);
       data.forEach((obj) => {
-        if (!["CURRENT_TOTAL"].includes(obj.instanceType)) {
+        if (![CURRENT_TOTAL].includes(obj.instanceType)) {
           potentialTotalSavingData.push({
             age_group: obj.instanceType,
             population: obj.total,
@@ -345,19 +349,6 @@ class Storage extends Component {
     this.setState({ potentialMonthlySavingData });
   };
 
-  // maniplatetopRiRecommendationsData = (data) => {
-  //   const updatedtopRiRecommendationsData = data.map((item) => {
-  //     let name = item.label;
-  //     let value = `$${parseFloat(item.currentTotal).toFixed(2)}`;
-  //     let percentage = item.variance;
-  //     let subName = `vs Previous Month`;
-  //     return { name, value, percentage, subName };
-  //   });
-
-  //   this.setState({
-  //     topRiRecommendationsData: updatedtopRiRecommendationsData,
-  //   });
-  // };
   renderLoder = () => {
     return (
       <Box className="chart-loader  text-center  align-item-center justify-center p-b-15">

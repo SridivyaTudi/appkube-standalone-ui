@@ -70,3 +70,15 @@ export const GRANULARITY_DROPDOWN_DATA = [
     value: "Last Year",
   },
 ];
+
+export const TENURE_TYPE = {
+  CURRENT: "CURRENT",
+  FORCAST: "FORCAST",
+  PREVIOUS: "PREVIOUS",
+};
+
+export const SUMMARY_INSTANCE_TYPE = {
+  PREVIOUS_TOTAL: "PREVIOUS_TOTAL",
+  CURRENT_TOTAL: "CURRENT_TOTAL",
+  PERCENTAGE: "PERCENTAGE",
+};

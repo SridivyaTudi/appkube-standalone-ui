@@ -44,24 +44,6 @@ const renderLoader = () => {
 //     percentage: "5",
 //     subName: " vs Last Quarter",
 //   },
-//   {
-//     name: "Quarter to date spend ",
-//     value: "$70,000",
-//     percentage: "5",
-//     subName: " vs Last Quarter",
-//   },
-//   {
-//     name: "Forecasted Spend ",
-//     value: "$90,000",
-//     percentage: "5",
-//     subName: " vs Last Quarter",
-//   },
-//   {
-//     name: "Avg Daily Spend",
-//     value: "$90,000",
-//     percentage: "5",
-//     subName: " vs Last Quarter",
-//   },
 // ];
 
 class CostTopAccounts extends Component {

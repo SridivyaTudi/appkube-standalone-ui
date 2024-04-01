@@ -17,6 +17,7 @@ import {
 import status from "Redux/Constants/CommonDS";
 import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
 import Loader from "Components/Loader";
+import { SUMMARY_INSTANCE_TYPE, TENURE_TYPE } from "CommonData";
 
 const totalUsedServiceColor = {
   CDN: "#01f1e3",
@@ -29,7 +30,8 @@ const totalUsedServiceColor = {
   RDS: "#fa6298",
   S3: "#53ca43",
 };
-
+const { CURRENT_TOTAL, PREVIOUS_TOTAL, PERCENTAGE } = SUMMARY_INSTANCE_TYPE;
+const SUMMARY_INSTANCES = [CURRENT_TOTAL, PREVIOUS_TOTAL, PERCENTAGE];
 class AwsComponent extends Component {
   constructor(props) {
     super(props);
@@ -140,11 +142,7 @@ class AwsComponent extends Component {
     topUsedServiceData = [];
     if (data?.length) {
       data.forEach((obj) => {
-        if (
-          !["PREVIOUS_TOTAL", "PERCENTAGE", "CURRENT_TOTAL"].includes(
-            obj.elementType
-          )
-        ) {
+        if (!SUMMARY_INSTANCES.includes(obj.elementType)) {
           topUsedServiceData.push({
             label: obj.elementType,
             value: obj.total,
@@ -169,11 +167,7 @@ class AwsComponent extends Component {
       potentialSavingsData = [];
       potentialSavingsPercentage = 0;
       data.forEach((obj, index) => {
-        if (
-          !["PREVIOUS_TOTAL", "CURRENT_TOTAL", "PERCENTAGE"].includes(
-            obj.instanceType
-          )
-        ) {
+        if (!SUMMARY_INSTANCES.includes(obj.instanceType)) {
           potentialSavingsData.push({
             name: obj.instanceType,
             value: obj.total,
@@ -181,7 +175,7 @@ class AwsComponent extends Component {
               ((parseInt(obj.total) / total) * 100).toFixed(0)
             ),
           });
-        } else if (obj.instanceType === "PERCENTAGE") {
+        } else if (obj.instanceType === PERCENTAGE) {
           potentialSavingsPercentage = obj.total;
         }
       });
@@ -218,6 +212,7 @@ class AwsComponent extends Component {
     this.setState({ spendingTrendData });
   };
 
+  // Maniplate Spending Trend Data Date Wise
   manipulateDateWiseData = (data) => {
     let spendTrendData = [];
     if (data?.length) {
@@ -238,11 +233,12 @@ class AwsComponent extends Component {
           };
 
           sameDateData.forEach((sameDate) => {
-            if (sameDate.tenure === "current") {
+            let tenure = sameDate.tenure.toUpperCase();
+            if (tenure === TENURE_TYPE.CURRENT) {
               pushData["current_quarter"] = sameDate.total;
-            } else if (sameDate.tenure === "forcast") {
+            } else if (tenure === TENURE_TYPE.FORCAST) {
               pushData["forecasted_spend"] = sameDate.total;
-            } else if (sameDate.tenure === "previous") {
+            } else if (tenure === TENURE_TYPE.PREVIOUS) {
               pushData["last_quarter"] = sameDate.total;
             }
           });
@@ -257,6 +253,7 @@ class AwsComponent extends Component {
 
     return spendTrendData;
   };
+
   // Render loder
   renderLoder = () => {
     return (
@@ -266,6 +263,7 @@ class AwsComponent extends Component {
     );
   };
 
+  // All API Call
   allAPICall = (granularity) => {
     const cloud = ENVIRONMENTS.AWS.toLowerCase();
     this.props.getSpendOverview({
@@ -307,6 +305,8 @@ class AwsComponent extends Component {
       orgId: getCurrentOrgId(),
     });
   };
+
+  // Render no data html
   renderNoDataHtml = () => {
     return (
       <Box className="chart-loader">
@@ -314,6 +314,7 @@ class AwsComponent extends Component {
       </Box>
     );
   };
+
   render() {
     let {
       spendOverviewData,

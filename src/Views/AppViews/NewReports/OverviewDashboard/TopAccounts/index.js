@@ -9,7 +9,7 @@ import APIstatus from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import Loader from "Components/Loader";
 import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
-import { getCurrentOrgId } from "Utils";
+import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
 import SpendingTable from "./Components/SpendingTable";
 import status from "Redux/Constants/CommonDS";
 
@@ -200,9 +200,10 @@ class TopAccounts extends Component {
   onClickDropDown = (selectedGranularity) => {
     if (selectedGranularity !== this.state.selectedGranularity) {
       let { accountId: account } = this.getUrlDetails();
+      let cloud = ENVIRONMENTS.AWS.toLowerCase();
       this.props.getCostTopAccountsByAccountId({
         params: {
-          cloud: "aws",
+          cloud,
           granularity: selectedGranularity,
           compareTo: "-1",
           account,
@@ -243,12 +244,8 @@ class TopAccounts extends Component {
     }
   };
   render() {
-    let {
-      accounts,
-      searchedKey,
-      isSelectDepartmentOpen,
-      selectedGranularity,
-    } = this.state;
+    let { accounts, searchedKey, isSelectDepartmentOpen, selectedGranularity } =
+      this.state;
     let { topAccountsById } = this.props;
     let { accountId } = this.getUrlDetails();
     return (

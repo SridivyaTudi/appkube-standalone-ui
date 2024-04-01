@@ -164,6 +164,7 @@ class Database extends Component {
       elementType,
     });
   };
+  
   render() {
     const { name } = this.getUrlDetails();
     let { searchedKey, elementDetails, elementSummary } = this.state;
