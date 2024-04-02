@@ -184,7 +184,7 @@ class SelectLendingZonePopup extends Component {
             >
               {this.renderLandingZone()}
               {errorMessage ? (
-                <span className="red">{errorMessage}</span>
+                <span className="d-block width-100 p-l-10 p-t-5 red">{errorMessage}</span>
               ) : (
                 <></>
               )}
