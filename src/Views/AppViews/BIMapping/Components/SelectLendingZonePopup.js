@@ -166,7 +166,7 @@ class SelectLendingZonePopup extends Component {
       <Modal
         isOpen={this.props.showModal}
         toggle={this.handleCloseModal}
-        className="select-lendingzone-modal-container "
+        className="select-lendingzone-modal-container"
       >
         <ModalHeader tag="div">
           <h5>

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Button, Box, List, ListItem } from "@mui/material";
+import { Button, Box, List, ListItem, IconButton } from "@mui/material";
 import AccountStepsPopup from "./AccountStepsPopup";
+import CloseIcon from "@mui/icons-material/Close";
+
 
 class StepsStartedPopup extends Component {
   constructor(props) {
@@ -33,16 +35,17 @@ class StepsStartedPopup extends Component {
         >
           <ModalHeader className="m-b-1 border-bottom">
             Steps to getting started
-            <button
-              type="button"
-              className="close"
-              aria-label="Close"
+            <IconButton
+              variant="outlined"
+              aria-label="delete"
+              size="small"
+              className="close-btn"
               onClick={() => {
                 this.props.toggleStepsStartedPopup();
               }}
             >
-              <i className="fa-solid fa-xmark"></i>
-            </button>
+             <CloseIcon fontSize="inherit" />
+            </IconButton>
           </ModalHeader>
           <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
             <List>

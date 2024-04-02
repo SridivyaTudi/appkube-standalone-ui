@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Grid, Button, Box } from "@mui/material";
+import { Grid, Button, Box, IconButton  } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import profileImg from "assets/img/assetmanager/profile-img.png";
@@ -113,14 +114,16 @@ class CreateFailoverPopup extends Component {
         >
           <ModalHeader className="m-b-1 border-bottom">
             Create Request for Failover
-            <button
-              type="button"
-              className="close"
-              aria-label="Close"
+            <IconButton
+             variant="outlined"
+             aria-label="delete"
+             size="small"
+             className="close-btn"
+             
               onClick={this.props.toggleCreateFailoverPopup}
             >
-              <i className="fa-solid fa-xmark"></i>
-            </button>
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
           </ModalHeader>
           <ModalBody style={{ overflowY: "auto", overflowX: "hidden" }}>
             <div className="account-form">
