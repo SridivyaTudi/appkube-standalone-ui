@@ -83,13 +83,15 @@ class ProductCategory extends Component {
   getUrlDetails() {
     let name = this.props.params.name;
     let id = this.props.params.id;
-    return { name, id };
+    let landingZoneId = this.props.params.landingZoneId;
+
+    return { name, id, landingZoneId };
   }
 
   // Move to next page
   moveToNextPage = (serviceType) => {
     let { createProductFormData } = this.props;
-    let { name: departMentName, id } = this.getUrlDetails();
+    let { name: departMentName, id, landingZoneId } = this.getUrlDetails();
     let { activeCommonService } = this.state;
 
     if (serviceType === "business") {
@@ -104,7 +106,7 @@ class ProductCategory extends Component {
     }
 
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/product-category/${createProductFormData?.category
+      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}/product-category/${createProductFormData?.category
         ?.toLowerCase()
         ?.replace(" ", "-")}`
     );
@@ -171,9 +173,9 @@ class ProductCategory extends Component {
       })
     );
     this.props.setProductIntoDepartment(passData);
-    let { name, id } = this.getUrlDetails();
+    let { name, id, landingZoneId } = this.getUrlDetails();
     this.props.navigate(
-      `/app/bim/add-product/${name}/${id}/product-category/soa`
+      `/app/bim/add-product/${name}/${id}/${landingZoneId}/product-category/soa`
     );
   };
 
@@ -190,9 +192,9 @@ class ProductCategory extends Component {
     );
 
     this.props.setProductIntoDepartment(passData);
-    let { name, id } = this.getUrlDetails();
+    let { name, id, landingZoneId } = this.getUrlDetails();
     this.props.navigate(
-      `/app/bim/add-product/${name}/${id}/product-category/soa`
+      `/app/bim/add-product/${name}/${id}/${landingZoneId}/product-category/soa`
     );
   };
 
@@ -344,7 +346,7 @@ class ProductCategory extends Component {
         },
       },
     };
-  
+
     this.props.createBiMapping(params);
   };
 
@@ -379,11 +381,11 @@ class ProductCategory extends Component {
 
   onClickAddModule = (moduleName) => {
     let { createProductFormData } = this.props;
-    let { name: departMentName, id } = this.getUrlDetails();
+    let { name: departMentName, id, landingZoneId } = this.getUrlDetails();
     let { activeCommonService } = this.state;
 
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/product-category/${createProductFormData?.category
+      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}/product-category/${createProductFormData?.category
         ?.toLowerCase()
         ?.replace(" ", "-")}`
     );
@@ -401,8 +403,8 @@ class ProductCategory extends Component {
     const { showServiceModal, activeCommonService, showCreateModuleModal } =
       this.state;
     let { createProductFormData, creationBiMapping } = this.props;
-    
-    let { name: departMentName, id } = this.getUrlDetails();
+
+    let { name: departMentName, id, landingZoneId } = this.getUrlDetails();
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -418,7 +420,7 @@ class ProductCategory extends Component {
               <li
                 onClick={() =>
                   this.props.navigate(
-                    `/app/bim/add-product/${departMentName}/${id}`
+                    `/app/bim/add-product/${departMentName}/${id}/${landingZoneId}`
                   )
                 }
               >

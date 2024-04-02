@@ -25,9 +25,10 @@ import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import { getCloudWiseLandingZoneCount } from "Redux/Environments/EnvironmentsThunk";
 import CloudElementInstancePopup from "./Components/CloudElementInstancePopup";
 import SelectLendingZonePopup from "./Components/SelectLendingZonePopup";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 const orgId = getCurrentOrgId();
-
 let headers = [
   { name: "Organization Name", styled: {} },
   {
@@ -180,6 +181,7 @@ class BIMapping extends Component {
         elementInstancesOfGivenTypeData
       );
     }
+
     const {
       isDepartmentLandingzoneDataStatus: { department, landingZoneCount },
     } = this.state;
@@ -192,6 +194,25 @@ class BIMapping extends Component {
           landingZoneCount: false,
         },
       });
+    }
+
+    if (
+      prevProps.landingZonesByDepartment.status !==
+        this.props.landingZonesByDepartment.status &&
+      this.props.landingZonesByDepartment.status === status.SUCCESS &&
+      this.props.landingZonesByDepartment?.data
+    ) {
+      let landingZones = this.props.landingZonesByDepartment?.data || [];
+      let { createProductFormData } = this.props;
+      if (landingZones.length === 1) {
+        this.props.navigate(
+          `${APP_PREFIX_PATH}/bim/add-product/${makeStringForUrl(
+            createProductFormData?.departmentName
+          )}/${createProductFormData?.departmentId}/${landingZones[0]?.id}`
+        );
+      } else {
+        this.setState({ showSelectLendingModal: true });
+      }
     }
   }
 
@@ -505,13 +526,11 @@ class BIMapping extends Component {
     const departmentId = data.id;
     const departmentName = data.name;
     const departmentDescription = data.otherData?.description;
-    this.setState({ showSelectLendingModal: true }, () => {
-      this.props.getLandingzoneByDepartment({ orgId, departmentId });
-      this.props.setProductIntoDepartment({
-        departmentName,
-        departmentId,
-        departmentDescription,
-      });
+    this.props.getLandingzoneByDepartment({ orgId, departmentId });
+    this.props.setProductIntoDepartment({
+      departmentName,
+      departmentId,
+      departmentDescription,
     });
   };
 
@@ -549,6 +568,7 @@ class BIMapping extends Component {
       elementTypeData,
       elementInstancesOfGivenType,
       cloudWiseLandingZoneCount,
+      landingZonesByDepartment,
     } = this.props;
     const inprogressStatus = status.IN_PROGRESS;
     let loderStatus = [
@@ -639,6 +659,7 @@ function mapStateToProps(state) {
     elementTypeData,
     elementInstancesOfGivenType,
     landingZonesByDepartment,
+    createProductFormData,
   } = state.biMapping;
   return {
     organizationWiseDepartments,
@@ -648,6 +669,7 @@ function mapStateToProps(state) {
     elementInstancesOfGivenType,
     cloudWiseLandingZoneCount,
     landingZonesByDepartment,
+    createProductFormData,
   };
 }
 
@@ -661,5 +683,7 @@ const mapDispatchToProps = {
   getCloudWiseLandingZoneCount,
   getLandingzoneByDepartment,
 };
-
-export default connect(mapStateToProps, mapDispatchToProps)(BIMapping);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(BIMapping));

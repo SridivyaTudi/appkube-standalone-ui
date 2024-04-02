@@ -53,8 +53,11 @@ class AddProduct extends Component {
         let { isValid } = this.validateForm();
 
         if (isValid) {
-          let { name: departmentName, id: depanrtmentId } =
-            this.getUrlDetails();
+          let {
+            name: departmentName,
+            id: depanrtmentId,
+            landingZoneId,
+          } = this.getUrlDetails();
           let { createProductFormData } = this.props;
           let productData = {
             ...createProductFormData,
@@ -69,11 +72,14 @@ class AddProduct extends Component {
           this.props.setProductIntoDepartment(productData);
           if (formData.category === PRODUCT_CATEGORY_ENUM.THREE_TIER) {
             this.props.navigate(
-              `/app/bim/add-product/${departmentName}/${depanrtmentId}/product-category/3-tier`
+              `/app/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/product-category/${PRODUCT_CATEGORY_ENUM.THREE_TIER.toLowerCase().replace(
+                " ",
+                "-"
+              )}`
             );
           } else {
             this.props.navigate(
-              `/app/bim/add-product/${departmentName}/${depanrtmentId}/product-category`
+              `/app/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/product-category`
             );
           }
         }
@@ -193,8 +199,9 @@ class AddProduct extends Component {
   getUrlDetails() {
     let name = this.props.params.name;
     let id = this.props.params.id;
+    let landingZoneId = this.props.params.landingZoneId;
     name = name?.replaceAll("-", " ");
-    return { name, id };
+    return { name, id, landingZoneId };
   }
 
   render() {

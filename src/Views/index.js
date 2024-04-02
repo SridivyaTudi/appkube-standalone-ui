@@ -31,7 +31,7 @@ import ThreeTierTopology from "./AppViews/Environments/EnvironmentList/ThreeTier
 import ApplicationStatusDashboard from "./AppViews/Dashboard/ApplicationStatusDashboard";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { getCurrentUser } from "Utils";
+import { PRODUCT_CATEGORY_ENUM, getCurrentUser } from "Utils";
 import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
@@ -345,15 +345,19 @@ export const Views = (props) => {
 
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/product-category`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category`}
             element={<ProductCategory />}
           />
+
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/product-category/3-Tier`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category/${PRODUCT_CATEGORY_ENUM.THREE_TIER.toLowerCase().replace(
+              " ",
+              "-"
+            )}`}
             element={<Tier />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/product-category/soa`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category/soa`}
             element={<Soa />}
           />
           <Route

@@ -32,6 +32,10 @@ class SelectLendingZonePopup extends Component {
       errorMessage: "",
     };
   }
+  componentDidMount() {
+    let landingZones = this.props.landingZonesByDepartment?.data || [];
+    this.setState({ landingZones });
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -49,11 +53,12 @@ class SelectLendingZonePopup extends Component {
   handleCloseModal = () => {
     this.props.handleSelectLendingModal();
   };
+
   onClickCard = (selectedLandingzone) => {
     if (this.state.selectedLandingzone === selectedLandingzone) {
       this.setState({ selectedLandingzone: 0 });
     } else {
-      this.setState({ selectedLandingzone,errorMessage:'' });
+      this.setState({ selectedLandingzone, errorMessage: "" });
     }
   };
 
@@ -112,13 +117,9 @@ class SelectLendingZonePopup extends Component {
             create a landing zone and associate it with this department.
           </p>
           <Link
-            onClick={() => {
-              this.props.navigate(
-                `${APP_PREFIX_PATH}/environments/${ENVIRONMENTS.AWS?.toLowerCase()}/newaccountsetup/${
-                  createProductFormData.departmentId
-                }`
-              );
-            }}
+            to={`${APP_PREFIX_PATH}/environments/${ENVIRONMENTS.AWS?.toLowerCase()}/newaccountsetup/${
+              createProductFormData.departmentId
+            }`}
           >
             Click here to create and associate the landing zone
           </Link>
@@ -151,7 +152,6 @@ class SelectLendingZonePopup extends Component {
 
   render() {
     let { landingZones, errorMessage } = this.state;
-
     return (
       <Modal
         isOpen={this.props.showModal}
@@ -160,7 +160,7 @@ class SelectLendingZonePopup extends Component {
       >
         <ModalHeader tag="div">
           <h5>
-            Select Landingzone Zone
+            Select Landingzone
             <IconButton
               onClick={this.handleCloseModal}
               variant="outlined"
@@ -183,7 +183,11 @@ class SelectLendingZonePopup extends Component {
               className="p-b-10"
             >
               {this.renderLandingZone()}
-              {errorMessage ? <span className="red">{errorMessage}</span> : <></>}
+              {errorMessage ? (
+                <span className="red">{errorMessage}</span>
+              ) : (
+                <></>
+              )}
             </Grid>
           </Box>
         </ModalBody>

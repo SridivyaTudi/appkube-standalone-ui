@@ -202,8 +202,10 @@ class Soa extends Component {
 
   // Redirect page
   redirectPage = () => {
-    let { name, id } = this.getUrlDetails();
-    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${name}/${id}`);
+    let { name, id, landingZoneId } = this.getUrlDetails();
+    this.props.navigate(
+      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}`
+    );
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -688,9 +690,9 @@ class Soa extends Component {
         })
       );
       this.props.setProductIntoDepartment(passData);
-      let { name, id } = this.getUrlDetails();
+      let { name, id, landingZoneId } = this.getUrlDetails();
       this.props.navigate(
-        `/app/bim/add-product/${name}/${id}/product-category`
+        `/app/bim/add-product/${name}/${id}/${landingZoneId}/product-category`
       );
     }
   };
@@ -785,12 +787,13 @@ class Soa extends Component {
   getUrlDetails() {
     let name = this.props.params.name;
     let id = this.props.params.id;
-    return { name, id };
+    let landingZoneId = this.props.params.landingZoneId;
+    return { name, id, landingZoneId };
   }
 
   // Render heading
   renderHeading = () => {
-    let { name, id } = this.getUrlDetails();
+    let { name, id, landingZoneId } = this.getUrlDetails();
     return (
       <Box className="list-heading">
         <h3>Soa</h3>
@@ -802,7 +805,9 @@ class Soa extends Component {
             </li>
             <li
               onClick={() =>
-                this.props.navigate(`/app/bim/add-product/${name}/${id}`)
+                this.props.navigate(
+                  `/app/bim/add-product/${name}/${id}/${landingZoneId}`
+                )
               }
             >
               Add Product
@@ -813,7 +818,7 @@ class Soa extends Component {
             <li
               onClick={() =>
                 this.props.navigate(
-                  `/app/bim/add-product/${name}/${id}/product-category`
+                  `/app/bim/add-product/${name}/${id}/${landingZoneId}/product-category`
                 )
               }
             >

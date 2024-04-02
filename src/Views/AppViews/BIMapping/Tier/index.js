@@ -615,7 +615,8 @@ class Tier extends Component {
   getUrlDetails() {
     let name = this.props.params.name;
     let id = this.props.params.id;
-    return { name, id };
+    let landingZoneId = this.props.params.landingZoneId;
+    return { name, id, landingZoneId };
   }
 
   // Click on edit btn.
@@ -722,7 +723,7 @@ class Tier extends Component {
 
   // Render heading
   renderHeading = () => {
-    let { name, id } = this.getUrlDetails();
+    let { name, id, landingZoneId } = this.getUrlDetails();
     return (
       <Box className="list-heading">
         <h3>3 Tier</h3>
@@ -734,7 +735,9 @@ class Tier extends Component {
             </li>
             <li
               onClick={() =>
-                this.props.navigate(`/app/bim/add-product/${name}/${id}`)
+                this.props.navigate(
+                  `/app/bim/add-product/${name}/${id}/${landingZoneId}`
+                )
               }
             >
               Add Product
