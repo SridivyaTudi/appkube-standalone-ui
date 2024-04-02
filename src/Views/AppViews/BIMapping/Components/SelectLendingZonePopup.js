@@ -87,7 +87,8 @@ class SelectLendingZonePopup extends Component {
               md={4}
               sm={4}
               xs={6}
-              onClick={() => this.onClickCard(data.id)} key={v4()}
+              onClick={() => this.onClickCard(data.id)}
+              key={v4()}
             >
               <Card
                 className={` select-landing-card ${
@@ -121,17 +122,17 @@ class SelectLendingZonePopup extends Component {
       ) : (
         <Grid item xl={12} lg={12} md={12} xs={12}>
           <p>
-            {" "}
-            There is no landing zone associated with this department. Please
-            create a landing zone and associate it with this department.
+            
+            No landing-zone associated with department {' '}
+            {createProductFormData.departmentName}.{' '}
+            <Link
+              to={`${APP_PREFIX_PATH}/environments/${ENVIRONMENTS.AWS?.toLowerCase()}/newaccountsetup/${
+                createProductFormData.departmentId
+              }`}
+            >
+             {' '} Click here to create and associate the landing zone
+            </Link>
           </p>
-          <Link
-            to={`${APP_PREFIX_PATH}/environments/${ENVIRONMENTS.AWS?.toLowerCase()}/newaccountsetup/${
-              createProductFormData.departmentId
-            }`}
-          >
-            Click here to create and associate the landing zone
-          </Link>
         </Grid>
       );
     }
@@ -193,7 +194,9 @@ class SelectLendingZonePopup extends Component {
             >
               {this.renderLandingZone()}
               {errorMessage ? (
-                <span className="d-block width-100 p-l-10 p-t-5 red">{errorMessage}</span>
+                <span className="d-block width-100 p-l-10 p-t-5 red">
+                  {errorMessage}
+                </span>
               ) : (
                 <></>
               )}

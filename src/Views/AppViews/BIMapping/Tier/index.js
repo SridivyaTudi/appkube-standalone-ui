@@ -198,8 +198,10 @@ class Tier extends Component {
 
   // Redirect of the page
   redirectPage = () => {
-    let { name, id } = this.getUrlDetails();
-    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${name}/${id}`);
+    let { name, id, landingZoneId } = this.getUrlDetails();
+    this.props.navigate(
+      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}`
+    );
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -359,7 +361,8 @@ class Tier extends Component {
 
   // Click on deployed card
   onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
-    this.props.getInstancesServices({ cloudName, elementType });
+    let { landingZoneId } = this.getUrlDetails();
+    this.props.getInstancesServices({ cloudName, elementType, landingZoneId });
     this.setState({
       selectedDeployedInstance,
       selectedInstance: -1,

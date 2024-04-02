@@ -33,6 +33,7 @@ import {
   getCloudServices,
   getInstancesServices,
   createBiMapping,
+  getServicesFromServiceModule,
 } from "Redux/BIMapping/BIMappingThunk";
 import {
   PRODUCT_CATEGORY_ENUM,
@@ -48,7 +49,7 @@ import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import InstanceListCards from "Views/AppViews/BIMapping/Components/InstanceListCards";
 import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { LOGOS } from "CommonData";
+import { LOGOS, SERVICE_TYPE } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -190,14 +191,19 @@ class Soa extends Component {
   }
 
   componentDidMount = () => {
-    
     window.addEventListener("load", this.redirectPage);
-    this.props.getBiServicesFromProductCategory({
-      productCategory: PRODUCT_CATEGORY_ENUM.SOA,
-    });
+    let { serviceType, moduleName } = this.props.createProductFormData;
+    if (serviceType === SERVICE_TYPE.COMMON.toLowerCase()) {
+      this.props.getServicesFromServiceModule({ serviceType, moduleName });
+    } else {
+      this.props.getBiServicesFromProductCategory({
+        productCategory: PRODUCT_CATEGORY_ENUM.SOA,
+      });
+    }
+
     this.manipulateCommonServiceData(
       this.props.commonServiceModulesData?.data || []
-    ).then(()=>this.previousDataView())
+    ).then(() => this.previousDataView());
   };
 
   componentWillUnmount() {
@@ -220,6 +226,16 @@ class Soa extends Component {
       this.props.biServicesFromProductCategory?.data
     ) {
       let data = this.props.biServicesFromProductCategory?.data || [];
+      this.manipulateServiceData(data);
+    }
+
+    if (
+      prevProps.servicesFromServiceModuleData.status !==
+        this.props.servicesFromServiceModuleData.status &&
+      this.props.servicesFromServiceModuleData.status === status.SUCCESS &&
+      this.props.servicesFromServiceModuleData?.data
+    ) {
+      let data = this.props.servicesFromServiceModuleData?.data || [];
       this.manipulateServiceData(data);
     }
 
@@ -722,7 +738,8 @@ class Soa extends Component {
 
   // Click on deployed card
   onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
-    this.props.getInstancesServices({ cloudName, elementType });
+    let { landingZoneId } = this.getUrlDetails();
+    this.props.getInstancesServices({ cloudName, elementType,landingZoneId });
     this.setState({
       selectedDeployedInstance,
       selectedInstance: -1,
@@ -1357,6 +1374,7 @@ function mapStateToProps(state) {
     instancesServices,
     creationBiMapping,
     commonServiceModulesData,
+    servicesFromServiceModuleData,
   } = state.biMapping;
   return {
     biServicesFromProductCategory,
@@ -1365,6 +1383,7 @@ function mapStateToProps(state) {
     instancesServices,
     creationBiMapping,
     commonServiceModulesData,
+    servicesFromServiceModuleData,
   };
 }
 
@@ -1374,6 +1393,7 @@ const mapDispatchToProps = {
   getInstancesServices,
   setProductIntoDepartment,
   createBiMapping,
+  getServicesFromServiceModule,
 };
 
 export default connect(

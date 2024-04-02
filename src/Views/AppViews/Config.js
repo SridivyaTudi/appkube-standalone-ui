@@ -55,13 +55,14 @@ const config = {
   GET_ELEMENT_INSTANCES_TYPE: `/query/organization/#org-id#/bi-mapping/cloud-element-instance?departmentId=#department-id#&productId=#product-id#&productEnvId=#product-env-id#&elementType=#element-type#`,
   GET_BI_SERVICES_FROM_PRODUCT_CATEGORY: `/bi-service/search?productCategory=#product-category#`,
   GET_CLOUD_SERVICES: `/cloud-service/search?productCategory=#product-category#&serviceCategory=#service-category#&status=ACTIVE`,
-  GET_INSTANCES_SERVICES: `/cloud-element/search?cloud=#cloud-name#&elementType=#element-type#`,
+  GET_INSTANCES_SERVICES: `/cloud-element/search?cloud=#cloud-name#&elementType=#element-type#&landingzoneId=#landingzone-id#`,
   ADD_BI_MAPPING: `/bi-mapping/add`,
   ADD_DEPARTMENT: `department`,
   ADD_DEPARTMENT_WITH_LANDINGZONE: `/department/add-department-with-landing-zone`,
   GET_LANDINGZONE: `/landingzone/search?organizationId=#org-id#&cloud=#cloud#`,
   GET_LANDINGZONE_DEPARTMENT: `/landingzone/search?departmentId=#department-id#&organizationId=#org-id#`,
   GET_COMMON_SERVICE_MODULES: `/bi-service/search?serviceType=#service-type#`,
+  GET_SERVICES_FROM_SERVICE_MODULE: `/bi-service/search?serviceType=#service-type#&serviceModule=#service-module#`,
 
   /* Reporting */
   GET_SPEND_OVERVIEW: `/reporting/organization/#org-id#/spend-overview?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,

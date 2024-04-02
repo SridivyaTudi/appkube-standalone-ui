@@ -11,6 +11,7 @@ import {
   getLandingzone,
   getLandingzoneByDepartment,
   getCommonServiceModules,
+  getServicesFromServiceModule,
 } from "Redux/BIMapping/BIMappingThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -65,6 +66,10 @@ export const BIMappingSlice = createSlice({
       data: [],
     },
     commonServiceModulesData: {
+      status: null,
+      data: [],
+    },
+    servicesFromServiceModuleData: {
       status: null,
       data: [],
     },
@@ -360,6 +365,32 @@ export const BIMappingSlice = createSlice({
       return {
         ...state,
         commonServiceModulesData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getServicesFromServiceModule.pending]: (state) => {
+      return {
+        ...state,
+        servicesFromServiceModuleData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getServicesFromServiceModule.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        servicesFromServiceModuleData: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getServicesFromServiceModule.rejected]: (state) => {
+      return {
+        ...state,
+        servicesFromServiceModuleData: {
           status: status.FAILURE,
         },
       };
