@@ -164,3 +164,20 @@ export const getLandingzoneByDepartment = createAsyncThunk(
     }
   }
 );
+
+export const getCommonServiceModules = createAsyncThunk(
+  "BIMapping/getCommonServiceModules",
+  async (params) => {
+    try {
+      let { serviceType } = params;
+      let url = config.GET_COMMON_SERVICE_MODULES.replace(
+        "#service-type#",
+        serviceType
+      );
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
