@@ -129,7 +129,7 @@ class SelectLendingZonePopup extends Component {
   // Render Loder
   renderLoder(widthClass) {
     return (
-      <Box className="chart-loader">
+      <Box className="p-t-20 p-b-20 text-center width-100" >
         <Loader />
       </Box>
     );
