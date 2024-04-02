@@ -82,3 +82,12 @@ export const SUMMARY_INSTANCE_TYPE = {
   CURRENT_TOTAL: "CURRENT_TOTAL",
   PERCENTAGE: "PERCENTAGE",
 };
+
+export const BI_MAPPING_TYPE = {
+  ORGANIZATION: "organization",
+  DEPARTMENT: "department",
+  PRODUCT: "product",
+  PRODUCT_ENVS: "productEnvs",
+  ELEMENT_TYPE: "elementType",
+  ELEMENT_INSTANCE_TYPE: "elementInstanceType",
+};

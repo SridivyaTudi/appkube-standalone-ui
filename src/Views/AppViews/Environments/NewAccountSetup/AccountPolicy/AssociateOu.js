@@ -212,15 +212,17 @@ class AssociateOu extends Component {
             toggleSelectAccountPopup={this.toggleSelectAccountPopup}
             checkedId={checkedId}
             setID={(checkedId) => {
-              this.setState({ checkedId });
-              let details = this.getDepartmentDetails(checkedId);
-              let name = "";
-              let description = "";
               if (checkedId) {
-                name = details.name;
-                description = details.description;
+                this.setState({ checkedId });
+                let details = this.getDepartmentDetails(checkedId);
+                let name = "";
+                let description = "";
+                if (checkedId) {
+                  name = details.name;
+                  description = details.description;
+                }
+                this.props.setDepartment(checkedId, name, description);
               }
-              this.props.setDepartment(checkedId, name, description);
             }}
           />
         ) : (

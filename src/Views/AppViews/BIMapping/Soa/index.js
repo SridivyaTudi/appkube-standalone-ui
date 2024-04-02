@@ -739,7 +739,7 @@ class Soa extends Component {
   // Click on deployed card
   onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
     let { landingZoneId } = this.getUrlDetails();
-    this.props.getInstancesServices({ cloudName, elementType,landingZoneId });
+    this.props.getInstancesServices({ cloudName, elementType, landingZoneId });
     this.setState({
       selectedDeployedInstance,
       selectedInstance: -1,

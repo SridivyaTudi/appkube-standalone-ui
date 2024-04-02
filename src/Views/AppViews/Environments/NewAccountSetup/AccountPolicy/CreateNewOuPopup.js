@@ -121,7 +121,15 @@ class CreateNewOuPopup extends Component {
             type="button"
             className="close"
             aria-label="Close"
-            onClick={this.props.toggleCreateNewOuPopup}
+            onClick={() => {
+              this.props.toggleCreateNewOuPopup();
+              this.setState({
+                formData: {
+                  name: "",
+                  description: "",
+                },
+              });
+            }}
           >
             <i className="fa-solid fa-xmark"></i>
           </button>
@@ -164,7 +172,15 @@ class CreateNewOuPopup extends Component {
             <Button
               className="secondary-text-btn m-r-2"
               variant="contained"
-              onClick={this.props.toggleCreateNewOuPopup}
+              onClick={() => {
+                this.props.toggleCreateNewOuPopup();
+                this.setState({
+                  formData: {
+                    name: "",
+                    description: "",
+                  },
+                });
+              }}
             >
               Cancel
             </Button>

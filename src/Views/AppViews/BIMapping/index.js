@@ -25,8 +25,8 @@ import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import { getCloudWiseLandingZoneCount } from "Redux/Environments/EnvironmentsThunk";
 import CloudElementInstancePopup from "./Components/CloudElementInstancePopup";
 import SelectLendingZonePopup from "./Components/SelectLendingZonePopup";
-import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { BI_MAPPING_TYPE } from "CommonData";
 
 const orgId = getCurrentOrgId();
 let headers = [
@@ -88,15 +88,6 @@ function makeStringForUrl(str) {
   }
 }
 class BIMapping extends Component {
-  TYPE = {
-    ORGANIZATION: "organization",
-    DEPARTMENT: "department",
-    PRODUCT: "product",
-    PRODUCT_ENVS: "productEnvs",
-    ELEMENT_TYPE: "elementType",
-    ELEMENT_INSTANCE_TYPE: "elementInstanceType",
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -205,7 +196,7 @@ class BIMapping extends Component {
 
   // Manipulation of new API data
   manipulateChildrenData = (data, type, exptraIds, isArrOfObj = 0) => {
-    let isTypeDepartment = type === this.TYPE.DEPARTMENT;
+    let isTypeDepartment = type === BI_MAPPING_TYPE.DEPARTMENT;
     return data.map((dataDetails, index) => {
       let { name, id, instanceName } = dataDetails;
       name = isArrOfObj ? dataDetails : instanceName || name;
@@ -214,7 +205,7 @@ class BIMapping extends Component {
       return {
         name,
         id,
-        isLink: type === this.TYPE.DEPARTMENT,
+        isLink: type === BI_MAPPING_TYPE.DEPARTMENT,
         url: isTypeDepartment
           ? `/app/bim/add-product/${makeStringForUrl(dataDetails?.name)}/${
               dataDetails?.id
@@ -241,7 +232,7 @@ class BIMapping extends Component {
       if (departments?.length) {
         chlidren = this.manipulateChildrenData(
           departments,
-          this.TYPE.DEPARTMENT
+          BI_MAPPING_TYPE.DEPARTMENT
         );
       }
 
@@ -266,7 +257,7 @@ class BIMapping extends Component {
           id,
           isMutipleCell: true,
           multipeCellData: landingZoneCounts,
-          type: this.TYPE.ORGANIZATION,
+          type: BI_MAPPING_TYPE.ORGANIZATION,
           chlidren,
         },
       ];
@@ -289,7 +280,7 @@ class BIMapping extends Component {
               if (department.id === clickTableData.id) {
                 department.chlidren = this.manipulateChildrenData(
                   products,
-                  this.TYPE.PRODUCT,
+                  BI_MAPPING_TYPE.PRODUCT,
                   {
                     departmentId: department.id,
                   }
@@ -323,7 +314,7 @@ class BIMapping extends Component {
                   if (product.id === clickTableData.id) {
                     product.chlidren = this.manipulateChildrenData(
                       productEnvs,
-                      this.TYPE.PRODUCT_ENVS,
+                      BI_MAPPING_TYPE.PRODUCT_ENVS,
                       {
                         departmentId: clickTableData.departmentId,
                         productId: product.id,
@@ -363,7 +354,7 @@ class BIMapping extends Component {
                       if (productEnv.id === clickTableData.id) {
                         productEnv.chlidren = this.manipulateChildrenData(
                           elemntTypes,
-                          this.TYPE.ELEMENT_TYPE,
+                          BI_MAPPING_TYPE.ELEMENT_TYPE,
                           {
                             departmentId: clickTableData.departmentId,
                             productId: clickTableData.productId,
@@ -412,7 +403,7 @@ class BIMapping extends Component {
                               elementType.chlidren =
                                 this.manipulateChildrenData(
                                   elemntInstanceTypes,
-                                  this.TYPE.ELEMENT_INSTANCE_TYPE,
+                                  BI_MAPPING_TYPE.ELEMENT_INSTANCE_TYPE,
                                   {
                                     departmentId: clickTableData.departmentId,
                                     productId: clickTableData.productId,
@@ -457,20 +448,20 @@ class BIMapping extends Component {
     let { type, departmentId, productId, productEnvId, id, name } = data;
     let { serviceDetails } = this.state;
 
-    if (type === this.TYPE.DEPARTMENT) {
+    if (type === BI_MAPPING_TYPE.DEPARTMENT) {
       this.props.getProductList(id);
-    } else if (type === this.TYPE.PRODUCT) {
+    } else if (type === BI_MAPPING_TYPE.PRODUCT) {
       this.props.getProductEnv(id);
-    } else if (type === this.TYPE.PRODUCT_ENVS) {
+    } else if (type === BI_MAPPING_TYPE.PRODUCT_ENVS) {
       this.props.getElementType({ productId, departmentId, productEnvId: id });
-    } else if (type === this.TYPE.ELEMENT_TYPE) {
+    } else if (type === BI_MAPPING_TYPE.ELEMENT_TYPE) {
       this.props.getElementInstancesOfGivenType({
         productId,
         departmentId,
         productEnvId,
         elementType: name,
       });
-    } else if (type === this.TYPE.ELEMENT_INSTANCE_TYPE) {
+    } else if (type === BI_MAPPING_TYPE.ELEMENT_INSTANCE_TYPE) {
       let { serviceCategory, serviceName, serviceNature, serviceType } =
         data.otherData;
       serviceDetails = [
@@ -494,7 +485,7 @@ class BIMapping extends Component {
     }
 
     this.setState({ clickTableData: data, serviceDetails }, () => {
-      if (type === this.TYPE.ELEMENT_INSTANCE_TYPE) {
+      if (type === BI_MAPPING_TYPE.ELEMENT_INSTANCE_TYPE) {
         this.handleShowInstanceModal();
       }
     });
