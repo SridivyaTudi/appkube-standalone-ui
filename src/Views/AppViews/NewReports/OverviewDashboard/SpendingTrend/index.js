@@ -11,6 +11,7 @@ import Loader from "Components/Loader";
 import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
 import { v4 } from "uuid";
 import { getDateInWeek } from "Utils";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 let verticalBarChartData = [
   {
@@ -353,4 +354,4 @@ const mapDispatchToProps = {
   getSpendingTrend,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SpendingTrend);
+export default connect(mapStateToProps, mapDispatchToProps)(navigateRouter(SpendingTrend));
