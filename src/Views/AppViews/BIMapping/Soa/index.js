@@ -185,15 +185,19 @@ class Soa extends Component {
       managementInfo: [],
       tempSoaData: [],
       activeServiceCategory: "",
+      commonServiceModules: [],
     };
   }
 
   componentDidMount = () => {
+    
     window.addEventListener("load", this.redirectPage);
     this.props.getBiServicesFromProductCategory({
       productCategory: PRODUCT_CATEGORY_ENUM.SOA,
     });
-    this.previousDataView();
+    this.manipulateCommonServiceData(
+      this.props.commonServiceModulesData?.data || []
+    ).then(()=>this.previousDataView())
   };
 
   componentWillUnmount() {
@@ -251,6 +255,18 @@ class Soa extends Component {
         );
       } else {
         ToastMessage.error("Creation Of Add BI-mapping Failed.");
+      }
+    }
+
+    if (
+      prevProps.commonServiceModulesData.status !==
+        this.props.commonServiceModulesData.status &&
+      this.props.commonServiceModulesData.status === status.SUCCESS
+    ) {
+      if (this.props.commonServiceModulesData?.data) {
+        this.manipulateCommonServiceData(
+          this.props.commonServiceModulesData?.data
+        );
       }
     }
   }
@@ -539,11 +555,12 @@ class Soa extends Component {
   // Redux data view
   previousDataView = () => {
     let { createProductFormData } = this.props;
+    let { commonServiceModules } = this.state;
 
     let editId = createProductFormData["editServiceId"];
     let soaData = createProductFormData["soaData"];
 
-    if (["search", "security"].includes(editId)) {
+    if (commonServiceModules.includes(editId)) {
       soaData.forEach((soa, index) => {
         if (soa.currentCommonService === editId) {
           editId = index;
@@ -583,6 +600,7 @@ class Soa extends Component {
       configInfo,
       managementInfo,
       editStatus,
+      commonServiceModules,
     } = this.state;
     let { createProductFormData } = this.props;
     let serviceName = "";
@@ -646,7 +664,7 @@ class Soa extends Component {
         JSON.stringify(createProductFormData.soaData || [])
       );
       let editId = createProductFormData["editServiceId"];
-      if (["search", "security"].includes(editId)) {
+      if (commonServiceModules.includes(editId)) {
         soaData.forEach((soa, index) => {
           if (soa.currentCommonService === editId) {
             editId = index;
@@ -1153,6 +1171,19 @@ class Soa extends Component {
     );
   };
 
+  manipulateCommonServiceData = async (data) => {
+    let commonServiceModules = [];
+    if (data?.length) {
+      data.forEach((details) => {
+        if (!commonServiceModules.includes(details.serviceModule)) {
+          commonServiceModules.push(details.serviceModule);
+        }
+      });
+    }
+
+    this.setState({ commonServiceModules });
+  };
+
   render() {
     let {
       selectedInstance,
@@ -1170,7 +1201,7 @@ class Soa extends Component {
       createProductFormData,
       creationBiMapping,
     } = this.props;
-
+    console.log(createProductFormData);
     return (
       <Box className="bimapping-container">
         {this.renderHeading()}
@@ -1325,6 +1356,7 @@ function mapStateToProps(state) {
     cloudServices,
     instancesServices,
     creationBiMapping,
+    commonServiceModulesData,
   } = state.biMapping;
   return {
     biServicesFromProductCategory,
@@ -1332,6 +1364,7 @@ function mapStateToProps(state) {
     cloudServices,
     instancesServices,
     creationBiMapping,
+    commonServiceModulesData,
   };
 }
 

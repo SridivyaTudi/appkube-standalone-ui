@@ -61,6 +61,7 @@ const config = {
   ADD_DEPARTMENT_WITH_LANDINGZONE: `/department/add-department-with-landing-zone`,
   GET_LANDINGZONE: `/landingzone/search?organizationId=#org-id#&cloud=#cloud#`,
   GET_LANDINGZONE_DEPARTMENT: `/landingzone/search?departmentId=#department-id#&organizationId=#org-id#`,
+  GET_COMMON_SERVICE_MODULES: `/bi-service/search?serviceType=#service-type#`,
 
   /* Reporting */
   GET_SPEND_OVERVIEW: `/reporting/organization/#org-id#/spend-overview?serviceCategory=#service-category#&cloud=#cloud-name#&granularity=#granularity#&compareTo=#compare-to#`,
