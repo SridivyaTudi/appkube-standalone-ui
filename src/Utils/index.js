@@ -330,3 +330,16 @@ export const ENVIRONMENTS = {
   GCP: "GCP",
   KUBERNETES: "KUBERNETES",
 };
+
+export const getDateInWeek = (date) => {
+  // Create a new Date object for the target date
+  const targetDate = new Date(date); // Use your desired date here
+
+  // Calculate the day of the month
+  const dayOfMonth = targetDate.getDate();
+
+  // Calculate the week number (1 for the first week, 2 for the second week, and so on)
+  const weekNumber = Math.ceil(dayOfMonth / 7);
+
+  return weekNumber;
+};
