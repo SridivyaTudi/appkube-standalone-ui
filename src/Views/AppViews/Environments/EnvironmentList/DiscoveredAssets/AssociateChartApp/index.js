@@ -472,6 +472,7 @@ export class AssociateChartApp extends Component {
           if (tag === "service") {
             selectedServiceId = tempTag?.id;
           }
+
           activeLevels[`selectedLevel_${index - 1}`] = {
             label: tempTag?.name,
             id:
@@ -483,7 +484,7 @@ export class AssociateChartApp extends Component {
         }
       });
     }
-
+   
     this.setState({
       selectedExistingTag: { activeLevels, type },
       selectedServiceId,
@@ -492,11 +493,12 @@ export class AssociateChartApp extends Component {
 
   // Type -(BUSINESS,COMMON) return id
   getTypeId = (name, type) => {
-    return productCategory[type?.toUpperCase()].findIndex(
-      (label) =>
-        label.replace(" Layer", "")?.toLowerCase() ===
-        name.replace(" Layer", "")?.toLowerCase()
-    );
+    return productCategory[type?.toUpperCase()].findIndex((label) => {
+      let labelformat = label.replace(" Layer", "")?.toLowerCase();
+      let nameformat = name.replace(" Layer", "")?.toLowerCase();
+
+      return labelformat === nameformat || labelformat.startsWith(nameformat);
+    });
   };
 
   // Find active tag and return active class

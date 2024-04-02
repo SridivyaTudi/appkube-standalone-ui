@@ -246,16 +246,14 @@ class BIMapping extends Component {
       }
 
       let environments = Object.keys(ENVIRONMENTS);
+
       if (landingZoneCounts?.length) {
-        landingZoneCounts = landingZoneCounts.map((count) => {
-          if (environments.includes(count.cloud)) {
-            environments.splice(environments.indexOf(environments), 1);
-          }
-          return { name: "" + count.totalAccounts };
+        landingZoneCounts = environments.map((cloud) => {
+          let details = landingZoneCounts.find(
+            (landingZone) => landingZone.cloud.toUpperCase() === cloud
+          );
+          return { name: details?.totalAccounts || 0 };
         });
-        if (environments.length) {
-          landingZoneCounts = [...landingZoneCounts, { name: 0 }];
-        }
       } else {
         landingZoneCounts = environments.map((count) => {
           return { name: 0 };
