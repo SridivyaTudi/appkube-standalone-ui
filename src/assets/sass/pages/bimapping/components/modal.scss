@@ -10,7 +10,7 @@
 
     .modal-header {
       margin: 0 -20px;
-      padding:  0 20px 10px;
+      padding: 0 20px 10px;
       .modal-title {
         text-align: left !important;
         justify-content: flex-start;
@@ -46,7 +46,7 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid #ebebf0;
-           padding: 10px 0;
+            padding: 10px 0;
             label {
               font-size: 14px;
               line-height: 20px;
@@ -60,7 +60,7 @@
               width: 40%;
             }
             span {
-                text-align: end;
+              text-align: end;
               font-size: 14px;
               line-height: 20px;
               font-weight: 400;
@@ -81,7 +81,7 @@
 
 .select-lendingzone-modal-container {
   width: 800px !important;
- max-height: 500px;
+  max-height: 500px;
   box-shadow: 0px 0px 16px rgba(59, 72, 89, 0.2392156863);
   border-radius: 10px;
   background: white;
@@ -93,7 +93,7 @@
 
     .modal-header {
       margin: 0 -20px;
-      padding:  0 20px 10px;
+      padding: 0 20px 10px;
       .modal-title {
         text-align: left !important;
         justify-content: flex-start;
@@ -123,21 +123,26 @@
         overflow-y: auto;
         max-height: 330px;
         padding: 0 5px;
-        p{
+        p {
           font-size: 14px;
           line-height: 20px;
           font-weight: 400;
           color: #000000;
         }
-        a{
+        span {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 18px;
+        }
+        a {
           font-size: 14px;
           line-height: 20px;
           font-weight: 500;
           color: #383874;
-         cursor: pointer;
+          cursor: pointer;
           text-decoration: underline;
-          &:hover{
-            color: #023AFF;
+          &:hover {
+            color: #023aff;
           }
         }
         .select-landing-card {
