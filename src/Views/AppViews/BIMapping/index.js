@@ -195,25 +195,6 @@ class BIMapping extends Component {
         },
       });
     }
-
-    if (
-      prevProps.landingZonesByDepartment.status !==
-        this.props.landingZonesByDepartment.status &&
-      this.props.landingZonesByDepartment.status === status.SUCCESS &&
-      this.props.landingZonesByDepartment?.data
-    ) {
-      let landingZones = this.props.landingZonesByDepartment?.data || [];
-      let { createProductFormData } = this.props;
-      if (landingZones.length === 1) {
-        this.props.navigate(
-          `${APP_PREFIX_PATH}/bim/add-product/${makeStringForUrl(
-            createProductFormData?.departmentName
-          )}/${createProductFormData?.departmentId}/${landingZones[0]?.id}`
-        );
-      } else {
-        this.setState({ showSelectLendingModal: true });
-      }
-    }
   }
 
   toggleSelectDepartment = () => {
@@ -526,6 +507,7 @@ class BIMapping extends Component {
     const departmentId = data.id;
     const departmentName = data.name;
     const departmentDescription = data.otherData?.description;
+    this.setState({ showSelectLendingModal: true });
     this.props.getLandingzoneByDepartment({ orgId, departmentId });
     this.props.setProductIntoDepartment({
       departmentName,

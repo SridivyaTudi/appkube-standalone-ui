@@ -45,7 +45,16 @@ class SelectLendingZonePopup extends Component {
       this.props.landingZonesByDepartment?.data
     ) {
       let landingZones = this.props.landingZonesByDepartment?.data || [];
-      this.setState({ landingZones });
+      let { createProductFormData } = this.props;
+      if (landingZones.length === 1) {
+        this.props.navigate(
+          `${APP_PREFIX_PATH}/bim/add-product/${makeStringForUrl(
+            createProductFormData?.departmentName
+          )}/${createProductFormData?.departmentId}/${landingZones[0]?.id}`
+        );
+      } else {
+        this.setState({ landingZones });
+      }
     }
   }
 
@@ -78,7 +87,7 @@ class SelectLendingZonePopup extends Component {
               md={4}
               sm={4}
               xs={6}
-              onClick={() => this.onClickCard(data.id)}
+              onClick={() => this.onClickCard(data.id)} key={v4()}
             >
               <Card
                 className={` select-landing-card ${
@@ -130,7 +139,7 @@ class SelectLendingZonePopup extends Component {
   // Render Loder
   renderLoder(widthClass) {
     return (
-      <Box className="p-t-20 p-b-20 text-center width-100" >
+      <Box className="p-t-20 p-b-20 text-center width-100">
         <Loader />
       </Box>
     );
