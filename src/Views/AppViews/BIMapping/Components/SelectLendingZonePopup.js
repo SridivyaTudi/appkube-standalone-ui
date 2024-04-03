@@ -114,7 +114,7 @@ class SelectLendingZonePopup extends Component {
             No landing-zone associated with department{" "}
             <strong> {createProductFormData.departmentName}. </strong>
             <Link
-              to={`${APP_PREFIX_PATH}/environments/${ENVIRONMENTS.AWS?.toLowerCase()}/newaccountsetup/${
+              to={`${APP_PREFIX_PATH}/assets/environments/${ENVIRONMENTS.AWS?.toLowerCase()}/newaccountsetup/${
                 createProductFormData.departmentId
               }`}
             >

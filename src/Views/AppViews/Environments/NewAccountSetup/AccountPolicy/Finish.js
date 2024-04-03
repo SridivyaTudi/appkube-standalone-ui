@@ -25,7 +25,7 @@ class Finish extends Component {
   render() {
     return (
       <>
-        <Link className="close-btn" to={`${APP_PREFIX_PATH}/environments`}>
+        <Link className="close-btn" to={`${APP_PREFIX_PATH}/assets/environments`}>
           <i className="fa-solid fa-xmark"></i>
         </Link>
         <Box className="d-inline-block width-100 new-account-setup-tab-contents">

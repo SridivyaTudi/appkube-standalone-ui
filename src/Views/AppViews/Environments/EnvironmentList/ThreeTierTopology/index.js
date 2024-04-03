@@ -95,7 +95,7 @@ class ThreeTierTopology extends Component {
             <ul>
               <li>
                 <Link
-                  to={`${APP_PREFIX_PATH}/environments`}
+                  to={`${APP_PREFIX_PATH}/assets/environments`}
                   onClick={() => removeActiveTabInEnvironmentData()}
                 >
                   <HtmlTooltip className="table-tooltip" title={`Environments`}>
@@ -108,7 +108,7 @@ class ThreeTierTopology extends Component {
               </li>
               <li>
                 <Link
-                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+                  to={`${APP_PREFIX_PATH}/assets/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
                 >
                   <HtmlTooltip
                     className="table-tooltip"

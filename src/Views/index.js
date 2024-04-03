@@ -127,11 +127,11 @@ export const Views = (props) => {
             element={<Navigate to={`${APP_PREFIX_PATH}/dashboard`} />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments`}
+            path={`${APP_PREFIX_PATH}/assets/environments`}
             element={<Environments />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/environmentlist`}
+            path={`${APP_PREFIX_PATH}/assets/environments/environmentlist`}
             element={<EnvironmentList />}
           />
           <Route
@@ -147,39 +147,39 @@ export const Views = (props) => {
             element={<Dashboard />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup/:departmentId?`}
+            path={`${APP_PREFIX_PATH}/assets/environments/aws/newaccountsetup/:departmentId?`}
             element={<NewAccountSetup />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/azure/newaccountsetup`}
+            path={`${APP_PREFIX_PATH}/assets/environments/azure/newaccountsetup`}
             element={<NewAccountSetup />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/gcp/newaccountsetup`}
+            path={`${APP_PREFIX_PATH}/assets/environments/gcp/newaccountsetup`}
             element={<NewAccountSetup />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/kubernetes/newaccountsetup`}
+            path={`${APP_PREFIX_PATH}/assets/environments/kubernetes/newaccountsetup`}
             element={<NewAccountSetup />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
+            path={`${APP_PREFIX_PATH}/assets/environments/procurifylogisticstools`}
             element={<ProcurifyLogisticsTools />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/deployproject`}
+            path={`${APP_PREFIX_PATH}/assets/environments/deployproject`}
             element={<DeployProject />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/configuretopology`}
+            path={`${APP_PREFIX_PATH}/assets/environments/configuretopology`}
             element={<ConfigureTopology />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/createscratch`}
+            path={`${APP_PREFIX_PATH}/assets/environments/createscratch`}
             element={<CreateScratch />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/SelectYourTemplate`}
+            path={`${APP_PREFIX_PATH}/assets/environments/SelectYourTemplate`}
             element={<SelectYourTemplate />}
           />
           <Route path={`${APP_PREFIX_PATH}/setting`} element={<Setting />} />
@@ -217,19 +217,19 @@ export const Views = (props) => {
           />
 
           <Route
-            path={`${APP_PREFIX_PATH}/environments/ecscluster`}
+            path={`${APP_PREFIX_PATH}/assets/environments/ecscluster`}
             element={<EcsCluster />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/associatechartapp`}
+            path={`${APP_PREFIX_PATH}/assets/environments/associatechartapp`}
             element={<AssociateChartApp />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/3tier/topology`}
+            path={`${APP_PREFIX_PATH}/assets/environments/3tier/topology`}
             element={<ThreeTierTopology />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/soa/topology`}
+            path={`${APP_PREFIX_PATH}/assets/environments/soa/topology`}
             element={<SOATopology />}
           />
           {/* <Route
@@ -369,7 +369,7 @@ export const Views = (props) => {
             element={<AddProduct />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/discovered-assets`}
+            path={`${APP_PREFIX_PATH}/assets/discovered-assets`}
             element={<DiscoveredAssets />}
           />
           <Route

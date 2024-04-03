@@ -80,7 +80,7 @@ class Wizard extends Component {
       this.props.addCloudEnvState.status === status.SUCCESS
     ) {
       ToastMessage.success("Successfully new account created");
-      this.props.navigate("/app/environments");
+      this.props.navigate("/app/assets/environments");
     }
     if (this.props.finishPrevious && this.state.currentStep === 3) {
       this.onClickStepButton(this.state.currentStep - 1);

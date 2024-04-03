@@ -336,7 +336,7 @@ class SOATopology extends Component {
                   title={<span>Environments</span>}
                 >
                   <Link
-                    to={`${APP_PREFIX_PATH}/environments`}
+                    to={`${APP_PREFIX_PATH}/assets/environments`}
                     onClick={() => removeActiveTabInEnvironmentData()}
                   >
                     Environments
@@ -357,7 +357,7 @@ class SOATopology extends Component {
                   }
                 >
                   <Link
-                    to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+                    to={`${APP_PREFIX_PATH}/assets/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
                   >
                     {cloudName} &nbsp;(
                     {landingZone})
