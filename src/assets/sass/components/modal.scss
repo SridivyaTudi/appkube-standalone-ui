@@ -55,17 +55,18 @@
         align-items: center;
         justify-content: center;
         width: 100%;
+        .close-btn {
+          position: absolute;
+          right: 10px;
+          top: -5px;
+          cursor: pointer;
+          opacity: 1;
+          border: none;
+          
+        }
        
       }
-      .close-btn {
-        position: absolute;
-        right: 10px;
-        top: 0px;
-        cursor: pointer;
-        opacity: 1;
-        border: none;
-        
-      }
+      
 
       // button {
       //   position: absolute;

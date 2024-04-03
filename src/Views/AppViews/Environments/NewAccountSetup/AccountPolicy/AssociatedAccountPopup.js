@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import featuredIcon from "assets/img/featured-icon.png";
 import Button from "@mui/material/Button";
+import { IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 class AssociatedAccountPopup extends Component {
   constructor(props) {
@@ -32,14 +34,15 @@ class AssociatedAccountPopup extends Component {
           className="select-account-modal-container"
         >
           <ModalHeader>
-            <button
-              type="button"
-              className="close"
-              aria-label="Close"
+            <IconButton
+             variant="outlined"
+             aria-label="delete"
+             size="small"
+             className="close-btn"
               onClick={this.toggle}
             >
-              <i className="fa-solid fa-xmark"></i>
-            </button>
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
           </ModalHeader>
           <ModalBody>
             <p className="text-center m-b-0" style={{ marginTop: "-30px" }}>

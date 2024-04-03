@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import Box from "@mui/material/Box";
+import {Box, IconButton} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { ToastMessage } from "Toast/ToastMessage";
 import Button from "@mui/material/Button";
@@ -8,6 +8,8 @@ import { getOrgWiseDepartments } from "Redux/Environments/EnvironmentsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
+import {  } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 class SelectAccountPopup extends Component {
   constructor(props) {
@@ -84,14 +86,15 @@ class SelectAccountPopup extends Component {
       >
         <ModalHeader>
           Select From Existing OU
-          <button
-            type="button"
-            className="close"
-            aria-label="Close"
+          <IconButton
+            variant="outlined"
+            aria-label="delete"
+            size="small"
+            className="close-btn"
             onClick={this.props.toggleSelectAccountPopup}
           >
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+           <CloseIcon fontSize="inherit" />
+          </IconButton>
         </ModalHeader>
         <ModalBody
           style={{
