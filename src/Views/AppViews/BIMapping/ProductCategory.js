@@ -114,7 +114,7 @@ class ProductCategory extends Component {
     let { name: departMentName, id, landingZoneId } = this.getUrlDetails();
     let { activeCommonService } = this.state;
 
-    if (serviceType === "business") {
+    if (serviceType === SERVICE_TYPE.BUSINESS.toLowerCase()) {
       this.setState({ showCreateModuleModal: true });
       return 1;
     } else if (
@@ -265,7 +265,7 @@ class ProductCategory extends Component {
       if (soaData?.length) {
         for (let index = 0; index < soaData.length; index++) {
           const service = soaData[index];
-          if (service.service === "business") {
+          if (service.service === SERVICE_TYPE.BUSINESS.toLowerCase()) {
             return true;
           }
         }
@@ -358,7 +358,7 @@ class ProductCategory extends Component {
               }),
             },
           };
-          if (serviceCategory === "business") {
+          if (serviceCategory === SERVICE_TYPE.BUSINESS.toLowerCase()) {
             module.service.business.push(appendData);
           } else {
             module.service.common.push(appendData);
@@ -429,7 +429,7 @@ class ProductCategory extends Component {
     );
     this.props.setProductIntoDepartment({
       ...createProductFormData,
-      serviceType: "business",
+      serviceType: SERVICE_TYPE.BUSINESS.toLowerCase(),
       editServiceId: -1,
       activeCommonService,
       moduleName,
@@ -551,7 +551,7 @@ class ProductCategory extends Component {
                 <LoadingButton
                   className="primary-btn"
                   variant="contained"
-                  onClick={() => this.moveToNextPage("business")}
+                  onClick={() => this.moveToNextPage(SERVICE_TYPE.BUSINESS.toLowerCase())}
                 >
                   Add
                 </LoadingButton>

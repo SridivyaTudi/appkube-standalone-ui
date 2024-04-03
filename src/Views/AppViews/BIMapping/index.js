@@ -226,7 +226,12 @@ class BIMapping extends Component {
         );
       }
 
-      let environments = Object.keys(ENVIRONMENTS);
+      let environments = [
+        ENVIRONMENTS.AWS,
+        ENVIRONMENTS.AZURE,
+        ENVIRONMENTS.GCP,
+        ENVIRONMENTS.KUBERNETES,
+      ];
 
       if (landingZoneCounts?.length) {
         landingZoneCounts = environments.map((cloud) => {

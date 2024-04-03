@@ -11,8 +11,13 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { deleteSelectedInfraTopologyView, deleteActiveTab, deleteUrlDetailsOfPage } from "Utils";
+import {
+  deleteSelectedInfraTopologyView,
+  deleteActiveTab,
+  deleteUrlDetailsOfPage,
+} from "Utils";
 import { v4 } from "uuid";
+import { CleaningServices } from "@mui/icons-material";
 function SideBar() {
   let location = useLocation();
   let currentLocation = location.pathname;
@@ -28,6 +33,13 @@ function SideBar() {
     setActiveSubMenu(!isActiveSubMenu);
   };
 
+  const isSubMenuActive = (link) => {
+    if (location) {
+      let pageName = "/" + location.pathname.split("/").pop();
+      return pageName === link;
+    }
+    return false;
+  };
   return (
     <Box className={`sidebar ${isActive ? "open" : "close"}`}>
       <IconButton
@@ -57,7 +69,7 @@ function SideBar() {
                   onClick={() => {
                     deleteSelectedInfraTopologyView();
                     deleteActiveTab();
-                    deleteUrlDetailsOfPage()
+                    deleteUrlDetailsOfPage();
                   }}
                 >
                   <span className={`icon ${Parser(item.icon)}`}></span>
@@ -93,12 +105,17 @@ function SideBar() {
                           <ListItem
                             key={v4()}
                             className={`${
-                              currentLocation.includes(subItem.link)
-                                ? "active"
-                                : ""
+                              isSubMenuActive(subItem.link) ? "active" : ""
                             }`}
                           >
-                            <Link to={`${APP_PREFIX_PATH + subItem.link}`}>
+                            <Link
+                              to={`${APP_PREFIX_PATH}${
+                                subItem.link === '#' ? '/#': item.link === subItem.link
+                                  ? subItem.link
+                                  : `${item.link + subItem.link}` 
+                              }  
+                              `}
+                            >
                               {Parser(subItem.name)}
                               <span>
                                 <KeyboardArrowRightIcon fontSize="inherit" />

@@ -100,3 +100,10 @@ export const REGEX_TYPE = {
   PASSWORD: /([!,%,&,@,#,$,^,*,?,_,~])/,
   CAPITAL_LETTER: /([A-Z])/g,
 };
+
+export const THREE_TIER_LAYERS = {
+  WEB_LAYER: "Web Layer",
+  APP_LAYER: "App Layer",
+  DATA_LAYER: "Data Layer",
+  AUXILARY_LAYER: "Auxilary Layer",
+};

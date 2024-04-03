@@ -369,7 +369,7 @@ export const Views = (props) => {
             element={<AddProduct />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/discovered-assets`}
+            path={`${APP_PREFIX_PATH}/environments/discovered-assets`}
             element={<DiscoveredAssets />}
           />
           <Route

@@ -31,6 +31,7 @@ import ConfirmationPopup from "Components/ConfirmationPopup";
 import Loader from "Components/Loader";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { SERVICE_TYPE, THREE_TIER_LAYERS } from "CommonData";
 
 const existingTagKeys = [
   "org",
@@ -43,12 +44,12 @@ const existingTagKeys = [
 ];
 const productCategory = {
   [`${PRODUCT_CATEGORY_ENUM.THREE_TIER}`]: [
-    "Web Layer",
-    "App Layer",
-    "Data Layer",
-    "Auxilary Layer",
+    THREE_TIER_LAYERS.WEB_LAYER,
+    THREE_TIER_LAYERS.APP_LAYER,
+    THREE_TIER_LAYERS.DATA_LAYER,
+    THREE_TIER_LAYERS.AUXILARY_LAYER,
   ],
-  SOA: ["BUSINESS", "COMMON"],
+  SOA: [SERVICE_TYPE.BUSINESS, SERVICE_TYPE.COMMON],
 };
 
 const HtmlTooltip = styled(({ className, ...props }) => (
@@ -484,7 +485,7 @@ export class AssociateChartApp extends Component {
         }
       });
     }
-   
+
     this.setState({
       selectedExistingTag: { activeLevels, type },
       selectedServiceId,
