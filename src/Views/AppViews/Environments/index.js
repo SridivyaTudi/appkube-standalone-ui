@@ -403,7 +403,7 @@ class Environments extends Component {
           retData.push(
             <div className="environment-table" key={v4()}>
               <TableContainer className="table">
-                <Table>
+                <Table style={{ minWidth: 1220 }}>
                   <TableHead
                     className={
                       collapsedTableIndex.indexOf(envIndex) === -1
