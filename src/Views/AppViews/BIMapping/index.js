@@ -7,7 +7,7 @@ import Kubernetes from "../../../assets/img/kubernetes.png";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { Link } from "react-router-dom";
 import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
-import { getCurrentOrgId, ENVIRONMENTS } from "Utils";
+import { getCurrentOrgId, ENVIRONMENTS, makeSlugForString } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import {
@@ -77,16 +77,6 @@ let headers = [
   },
 ];
 
-function makeStringForUrl(str) {
-  try {
-    return str
-      .replace(/[^a-zA-Z0-9 ]/g, "")
-      .replace(/\s+/g, "-")
-      .toLowerCase();
-  } catch (error) {
-    return str;
-  }
-}
 class BIMapping extends Component {
   constructor(props) {
     super(props);
@@ -207,7 +197,7 @@ class BIMapping extends Component {
         id,
         isLink: type === BI_MAPPING_TYPE.DEPARTMENT,
         url: isTypeDepartment
-          ? `/app/bim/add-product/${makeStringForUrl(dataDetails?.name)}/${
+          ? `/app/bim/add-product/${makeSlugForString(dataDetails?.name)}/${
               dataDetails?.id
             }`
           : "",
@@ -539,7 +529,6 @@ class BIMapping extends Component {
       elementTypeData,
       elementInstancesOfGivenType,
       cloudWiseLandingZoneCount,
-      landingZonesByDepartment,
     } = this.props;
     const inprogressStatus = status.IN_PROGRESS;
     let loderStatus = [

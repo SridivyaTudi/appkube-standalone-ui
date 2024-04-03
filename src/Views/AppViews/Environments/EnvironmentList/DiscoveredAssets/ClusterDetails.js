@@ -4,6 +4,7 @@ import GlobalIcon4 from "assets/img/assetmanager/global-icon4.png";
 import GlobalIcon5 from "assets/img/assetmanager/global-icon5.png";
 import { v4 } from "uuid";
 import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
+import { REGEX_TYPE } from "CommonData";
 const backgroundColor = [
   "#ff9900",
   "#0089d6",
@@ -46,7 +47,7 @@ class ClusterDetails extends React.Component {
   };
 
   convertToCapitalCase = (text) => {
-    const result = text.replace(/([A-Z])/g, " $1");
+    const result = text.replace(REGEX_TYPE.CAPITAL_LETTER, " $1");
     const finalResult = result.charAt(0).toUpperCase() + result.slice(1);
     return finalResult;
   };

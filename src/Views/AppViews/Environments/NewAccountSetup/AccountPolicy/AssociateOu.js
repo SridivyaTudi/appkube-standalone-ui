@@ -29,7 +29,7 @@ class AssociateOu extends Component {
   componentDidMount = () => {
     let { departmentId } = this.getUrlDetails();
     let productData = this.props.createProductFormData;
-    console.log(productData, departmentId);
+
     if (departmentId > 0 && productData) {
       this.setState({ checkedId: departmentId });
       this.props.setDepartment(

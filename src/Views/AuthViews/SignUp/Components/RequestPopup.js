@@ -9,6 +9,7 @@ import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
 import { AUTH_PREFIX_PATH } from "Configs/AppConfig";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { REGEX_TYPE } from "CommonData";
 class RequestPopup extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +48,7 @@ class RequestPopup extends Component {
   validateForm = () => {
     const { email, isSubmit } = this.state;
     let isValid = true;
-    let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
+    let emailRegex = REGEX_TYPE.EMAIL;
     let errors = {
       email: "",
     };

@@ -7,6 +7,7 @@ import { v4 } from "uuid";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { PRODUCT_CATEGORY_ENUM } from "Utils";
+import { REGEX_TYPE } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -51,7 +52,7 @@ class AssociateApp extends Component {
   };
 
   convertStringToCapCase = (string) => {
-    const result = string.replace(/([A-Z])/g, " $1");
+    const result = string.replace(REGEX_TYPE.CAPITAL_LETTER, " $1");
     const finalResult = result.charAt(0).toUpperCase() + result.slice(1);
     return finalResult;
   };

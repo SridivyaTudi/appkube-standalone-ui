@@ -1,3 +1,5 @@
+import { REGEX_TYPE } from "CommonData";
+
 export const LOCAL_STORAGE_CONSTANTS = {
   CURRENT_USER: "currentUser",
   CURRENT_ORG_ID: "currentOrgId",
@@ -274,12 +276,12 @@ export const RbacPermissionsDataManipulation = {
 };
 
 export const isAlphaNumeric = (str) => {
-  var alphaNumericRegex = /^[a-zA-Z0-9]+$/;
+  var alphaNumericRegex = REGEX_TYPE.ALPHA_NUMERIC;
   return alphaNumericRegex.test(str);
 };
 
 export const isAlphabet = (str) => {
-  var alphabetRegex = /^[A-Za-z]+$/;
+  var alphabetRegex = REGEX_TYPE.ALPHABET;
   return alphabetRegex.test(str);
 };
 
@@ -342,4 +344,16 @@ export const getDateInWeek = (date) => {
   const weekNumber = Math.ceil(dayOfMonth / 7);
 
   return weekNumber;
+};
+
+export const makeSlugForString = (str) => {
+  try {
+    return str
+      .trim()
+      .replace(/[^a-zA-Z0-9 ]/g, "")
+      .replace(/\s+/g, "-")
+      .toLowerCase();
+  } catch (error) {
+    return str;
+  }
 };

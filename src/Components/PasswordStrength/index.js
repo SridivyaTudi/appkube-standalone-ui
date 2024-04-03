@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Box } from "@mui/material/";
 import Grid from "@mui/material/Grid";
 import { upperCaseLengthInStr, lowerCaseLengthInStr } from "Utils";
+import { REGEX_TYPE } from "CommonData";
 
 const steps = {
   STEP_1: 1,
@@ -56,7 +57,7 @@ class PasswordStrength extends Component {
       pwdStrength = this.removePasswordStrength(steps.STEP_3, pwdStrength);
     }
 
-    if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) {
+    if (password.match(REGEX_TYPE.PASSWORD)) {
       if (pwdStrength.indexOf(steps.STEP_4) === -1) {
         pwdStrength.push(steps.STEP_4);
       }
@@ -90,41 +91,25 @@ class PasswordStrength extends Component {
           <Box className="password-must-include-contents">
             <label className="d-block"> Password Must Include:</label>
             <ul>
-              <li
-                className={`${
-                  pwdStrength.includes(STEP_1) ? "green" : ""
-                } `}
-              >
+              <li className={`${pwdStrength.includes(STEP_1) ? "green" : ""} `}>
                 <span>
                   <i className="fa-solid fa-check"></i>
                 </span>{" "}
                 {"between 8 and 20 charaters"}
               </li>
-              <li
-                className={`${
-                  pwdStrength.includes(STEP_2) ? "green" : ""
-                } `}
-              >
+              <li className={`${pwdStrength.includes(STEP_2) ? "green" : ""} `}>
                 <span>
                   <i className="fa-solid fa-check"></i>
                 </span>{" "}
                 {"1 lowercase letter(s)"}
               </li>
-              <li
-                className={`${
-                  pwdStrength.includes(STEP_3) ? "green" : ""
-                } `}
-              >
+              <li className={`${pwdStrength.includes(STEP_3) ? "green" : ""} `}>
                 <span>
                   <i className="fa-solid fa-check"></i>
                 </span>{" "}
                 {"1 uppercase letter(s)"}
               </li>
-              <li
-                className={`${
-                  pwdStrength.includes(STEP_4) ? "green" : ""
-                } `}
-              >
+              <li className={`${pwdStrength.includes(STEP_4) ? "green" : ""} `}>
                 <span>
                   <i className="fa-solid fa-check"></i>
                 </span>{" "}

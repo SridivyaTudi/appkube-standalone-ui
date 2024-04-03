@@ -1,28 +1,17 @@
-import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, IconButton, Button, ListItem, Grid, Card } from "@mui/material/";
+import { Box, IconButton, Button, Grid, Card } from "@mui/material/";
 import { Component } from "react";
-import { List, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import CloseIcon from "@mui/icons-material/Close";
-import Aws from "assets/img/aws.png";
 import { v4 } from "uuid";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import { LOGOS } from "CommonData";
 import Loader from "Components/Loader";
-import { ENVIRONMENTS } from "Utils";
+import { ENVIRONMENTS, makeSlugForString } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { Link } from "react-router-dom";
-function makeStringForUrl(str) {
-  try {
-    return str
-      .replace(/[^a-zA-Z0-9 ]/g, "")
-      .replace(/\s+/g, "-")
-      .toLowerCase();
-  } catch (error) {
-    return str;
-  }
-}
+
 class SelectLendingZonePopup extends Component {
   constructor(props) {
     super(props);
@@ -48,7 +37,7 @@ class SelectLendingZonePopup extends Component {
       let { createProductFormData } = this.props;
       if (landingZones.length === 1) {
         this.props.navigate(
-          `${APP_PREFIX_PATH}/bim/add-product/${makeStringForUrl(
+          `${APP_PREFIX_PATH}/bim/add-product/${makeSlugForString(
             createProductFormData?.departmentName
           )}/${createProductFormData?.departmentId}/${landingZones[0]?.id}`
         );
@@ -122,15 +111,15 @@ class SelectLendingZonePopup extends Component {
       ) : (
         <Grid item xl={12} lg={12} md={12} xs={12}>
           <p>
-            
-            No landing-zone associated with department {' '}
-           <strong> {createProductFormData.departmentName}.{' '}</strong>
+            No landing-zone associated with department{" "}
+            <strong> {createProductFormData.departmentName}. </strong>
             <Link
               to={`${APP_PREFIX_PATH}/environments/${ENVIRONMENTS.AWS?.toLowerCase()}/newaccountsetup/${
                 createProductFormData.departmentId
               }`}
             >
-             {' '} Click here to create and associate the landing zone
+              {" "}
+              Click here to create and associate the landing zone
             </Link>
           </p>
         </Grid>
@@ -153,7 +142,7 @@ class SelectLendingZonePopup extends Component {
     } else {
       let { createProductFormData } = this.props;
       this.props.navigate(
-        `${APP_PREFIX_PATH}/bim/add-product/${makeStringForUrl(
+        `${APP_PREFIX_PATH}/bim/add-product/${makeSlugForString(
           createProductFormData?.departmentName
         )}/${createProductFormData?.departmentId}/${selectedLandingzone}`
       );

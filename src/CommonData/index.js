@@ -91,3 +91,12 @@ export const BI_MAPPING_TYPE = {
   ELEMENT_TYPE: "elementType",
   ELEMENT_INSTANCE_TYPE: "elementInstanceType",
 };
+
+export const REGEX_TYPE = {
+  ROLE_ARN: /arn:aws:iam::([0-9]+(:user|:role)+)\/[A-Za-z0-9]+/i,
+  EMAIL: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, // eslint-disable-line
+  ALPHA_NUMERIC: /^[a-zA-Z0-9]+$/,
+  ALPHABET: /^[A-Za-z]+$/,
+  PASSWORD: /([!,%,&,@,#,$,^,*,?,_,~])/,
+  CAPITAL_LETTER: /([A-Z])/g,
+};
