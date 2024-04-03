@@ -83,7 +83,7 @@ class AssociateApp extends Component {
               className="primary-text-btn min-width"
               component={Link}
               variant="contained"
-              to={`${APP_PREFIX_PATH}/environments/associatechartapp?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&elementType=${data.elementType}&instanceId=${data.instanceId}`}
+              to={`${APP_PREFIX_PATH}/assets/environments/associatechartapp?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&elementType=${data.elementType}&instanceId=${data.instanceId}`}
             >
               Associate App
             </Button>
@@ -153,7 +153,7 @@ class AssociateApp extends Component {
               className="primary-outline-btn min-width"
               component={Link}
               variant="contained"
-              to={`${APP_PREFIX_PATH}/environments/ecscluster?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+              to={`${APP_PREFIX_PATH}/assets/environments/ecscluster?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
             >
               View Services
             </Button>

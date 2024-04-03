@@ -40,6 +40,7 @@ function SideBar() {
     }
     return false;
   };
+
   return (
     <Box className={`sidebar ${isActive ? "open" : "close"}`}>
       <IconButton
@@ -65,7 +66,9 @@ function SideBar() {
                 key={v4()}
               >
                 <Link
-                  to={`${APP_PREFIX_PATH + item.link}`}
+                  to={`${APP_PREFIX_PATH}${
+                    item?.subMenu?.[0]?.link ? item?.subMenu[0]?.link : item.link
+                  } `}
                   onClick={() => {
                     deleteSelectedInfraTopologyView();
                     deleteActiveTab();
@@ -105,17 +108,12 @@ function SideBar() {
                           <ListItem
                             key={v4()}
                             className={`${
-                              isSubMenuActive(subItem.link) ? "active" : ""
+                              currentLocation.includes(subItem.link)
+                                ? "active"
+                                : ""
                             }`}
                           >
-                            <Link
-                              to={`${APP_PREFIX_PATH}${
-                                subItem.link === '#' ? '/#': item.link === subItem.link
-                                  ? subItem.link
-                                  : `${item.link + subItem.link}` 
-                              }  
-                              `}
-                            >
+                            <Link to={`${APP_PREFIX_PATH}${subItem.link}`}>
                               {Parser(subItem.name)}
                               <span>
                                 <KeyboardArrowRightIcon fontSize="inherit" />

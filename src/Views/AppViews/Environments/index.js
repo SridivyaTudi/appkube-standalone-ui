@@ -291,7 +291,7 @@ class Environments extends Component {
                     title={account.landingZone}
                   >
                     <Link
-                      to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}&landingZoneId=${account.landingZoneId}`}
+                      to={`${APP_PREFIX_PATH}/assets/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}&landingZoneId=${account.landingZoneId}`}
                       onClick={() => {
                         this.addAccountToRecentlyVisited({
                           accountType: account.cloud,
@@ -525,7 +525,7 @@ class Environments extends Component {
         return (
           <ListItem key={v4()}>
             <Link
-              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}&landingZoneId=${item.landingZoneId}`}
+              to={`${APP_PREFIX_PATH}/assets/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}&landingZoneId=${item.landingZoneId}`}
               onClick={() => this.addAccountToRecentlyVisited(item)}
             >
               <span>
@@ -553,7 +553,7 @@ class Environments extends Component {
     return (
       <>
         <ListItem>
-          <Link to={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup`}>
+          <Link to={`${APP_PREFIX_PATH}/assets/environments/aws/newaccountsetup`}>
             <span className="image-box">
               <img src={AWS} alt="AWS" />
             </span>
@@ -561,7 +561,7 @@ class Environments extends Component {
           </Link>
         </ListItem>
         <ListItem>
-          <Link to={`${APP_PREFIX_PATH}/environments/azure/newaccountsetup`}>
+          <Link to={`${APP_PREFIX_PATH}/assets/environments/azure/newaccountsetup`}>
             <span className="image-box">
               <img src={AZURE} alt="AZURE" />
             </span>
@@ -569,7 +569,7 @@ class Environments extends Component {
           </Link>
         </ListItem>
         <ListItem>
-          <Link to={`${APP_PREFIX_PATH}/environments/gcp/newaccountsetup`}>
+          <Link to={`${APP_PREFIX_PATH}/assets/environments/gcp/newaccountsetup`}>
             <span className="image-box">
               <img src={GCP} alt="GCP" />
             </span>
@@ -578,7 +578,7 @@ class Environments extends Component {
         </ListItem>
         <ListItem>
           <Link
-            to={`${APP_PREFIX_PATH}/environments/kubernetes/newaccountsetup`}
+            to={`${APP_PREFIX_PATH}/assets/environments/kubernetes/newaccountsetup`}
           >
             <span className="image-box">
               <img src={Kubernetes} alt="Kubernetes" />

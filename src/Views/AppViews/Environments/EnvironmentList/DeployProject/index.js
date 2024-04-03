@@ -29,7 +29,7 @@ class DeployProject extends Component {
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
               <Grid item xs={6}>
-                <Link to={`${APP_PREFIX_PATH}/environments/SelectYourTemplate`}>
+                <Link to={`${APP_PREFIX_PATH}/assets/environments/SelectYourTemplate`}>
                   <Box className="opration-card">
                     <Box className="card-images">
                       <img src={DeploymentImg1} alt="opration" />
@@ -42,7 +42,7 @@ class DeployProject extends Component {
                 </Link>
               </Grid>
               <Grid item xs={6}>
-                <Link to={`${APP_PREFIX_PATH}/environments/configurtopology`}>
+                <Link to={`${APP_PREFIX_PATH}/assets/environments/configurtopology`}>
                   <Box className="opration-card">
                     <Box className="card-images">
                       <img src={DeploymentImg2} alt="opration" />

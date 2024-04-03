@@ -11,16 +11,16 @@
       "name": "BIMapping"
     },
     {
-      "link": "/environments",
+      "link": "/assets",
       "icon": "asset",
-      "name": "Asset",
+      "name": "Assets",
       "subMenu": [
         {
-          "link": "/environments",
+          "link": "/assets/environments",
           "name": "Environments"
         },
         {
-          "link": "/discovered-assets",
+          "link": "/assets/discovered-assets",
           "name": "Discovered Assets"
         },
         {

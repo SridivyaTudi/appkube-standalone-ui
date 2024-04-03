@@ -30,7 +30,10 @@ export class NewAccountSetup extends Component {
       <Box className="new-account-container">
         <Box className="page-heading">
           <h3>New AWS Acoount Setup</h3>
-          <Link className="close-btn" to={`${APP_PREFIX_PATH}/environments`}>
+          <Link
+            className="close-btn"
+            to={`${APP_PREFIX_PATH}/assets/environments`}
+          >
             <i className="fa-solid fa-xmark"></i>
           </Link>
         </Box>
@@ -90,7 +93,7 @@ export class NewAccountSetup extends Component {
                       service === "automation_mode" ? "active" : ""
                     }`}
                     onClick={() => {
-                      this.setState({ service: "automation_mode" })
+                      this.setState({ service: "automation_mode" });
                     }}
                   >
                     <Box className="card-images">

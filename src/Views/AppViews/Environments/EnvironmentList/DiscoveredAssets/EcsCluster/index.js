@@ -285,14 +285,14 @@ class EcsCluster extends React.Component {
           <Box className="breadcrumbs">
             <ul>
               <li>
-                <Link to={`${APP_PREFIX_PATH}/environments`}>Environments</Link>
+                <Link to={`${APP_PREFIX_PATH}/assets/environments`}>Environments</Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li>
                 <Link
-                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+                  to={`${APP_PREFIX_PATH}/assets/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
                 >
                   {cloudName} &nbsp;(
                   {landingZone})

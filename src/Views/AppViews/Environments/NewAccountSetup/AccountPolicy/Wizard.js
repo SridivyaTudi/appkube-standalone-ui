@@ -85,7 +85,7 @@ class Wizard extends Component {
       this.props.addLandingZoneState.status === status.SUCCESS
     ) {
       ToastMessage.success("Successfully new account created");
-      this.props.navigate("/app/environments");
+      this.props.navigate("/app/assets/environments");
     }
 
     if (this.props.finishPrevious && this.state.currentStep === 3) {

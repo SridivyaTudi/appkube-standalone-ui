@@ -163,7 +163,7 @@ class EnvironmentList extends Component {
             <ul>
               <li>
                 <Link
-                  to={`${APP_PREFIX_PATH}/environments`}
+                  to={`${APP_PREFIX_PATH}/assets/environments`}
                   onClick={() => deleteSelectedInfraTopologyView()}
                 >
                   Environments
