@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import Box from "@mui/material/Box";
+import {Box,IconButton} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { connect } from "react-redux";
 import {
@@ -12,6 +12,7 @@ import status from "Redux/Constants/CommonDS";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
+import CloseIcon from "@mui/icons-material/Close";
 
 const deploymentImgs = {
   DEV: "department",
@@ -261,16 +262,17 @@ class FilterPopup extends Component {
       >
         <ModalHeader className="m-b-1 border-bottom">
           Filter
-          <button
-            type="button"
-            className="close"
-            aria-label="Close"
+          <IconButton
+            variant="outlined"
+            aria-label="delete"
+            size="small"
+            className="close-btn"
             onClick={() => {
               this.props.togglePopup();
             }}
           >
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         </ModalHeader>
         <ModalBody
           style={{ overflowY: "auto", overflowX: "hidden", maxHeight: "300px" }}

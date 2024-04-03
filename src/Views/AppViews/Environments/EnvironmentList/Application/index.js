@@ -314,9 +314,9 @@ class Application extends Component {
               </Box>
             </>
           ) : (
-            <>
+            <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
               <h4 style={{ textAlign: "center" }}>No Data Found! </h4>
-            </>
+            </Box>
           )}
         </Box>
       </>

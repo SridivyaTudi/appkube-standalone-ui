@@ -526,20 +526,14 @@ class DiscoveredAssets extends Component {
   }
 
   renderCloudManagedDetails = () => {
-    if (!this.props.infraTopologyCategoryWiseData.data?.length) {
+    if (1 || !this.props.infraTopologyCategoryWiseData.data?.length) {
       return (
-        <div
-          style={{
-            height: "400px",
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+        <Box
+          className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20"
           key={v4()}
         >
           <h4>No Data Found!</h4>
-        </div>
+        </Box>
       );
     }
     return (
