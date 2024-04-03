@@ -24,7 +24,7 @@ export class AccountTable extends Component {
   renderTable = () => {
     return (
       <TableContainer className="table">
-        <Table style={{ width: 1500 }}>
+        <Table style={{ minWidth: 1550 }}>
           {this.renderTableHead()}
           {this.renderTableBody()}
         </Table>

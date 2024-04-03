@@ -46,7 +46,7 @@ class AssetsTable extends Component {
   // Render loder
   renderLoder = () => {
     return (
-      <Box className="d-blck text-center w-100 h-100 ">
+      <Box className="d-blck text-center w-100 h-100 p-t-20 p-b-20">
         <Loader className="align-item-center justify-center w-100 h-100" />
       </Box>
     );
@@ -125,9 +125,10 @@ class AssetsTable extends Component {
                 <TableCell align="left">{name}</TableCell>
                 <TableCell align="left">{elementType}</TableCell>
                 <TableCell align="left">
-                  <HtmlTooltip className="table-tooltip" title={landingZone}>
-                    {landingZone}
-                  </HtmlTooltip>
+                {landingZone}
+                  {/* <HtmlTooltip className="table-tooltip" title={landingZone}>
+                    
+                  </HtmlTooltip> */}
                 </TableCell>
                 <TableCell align="left">{productEnclave}</TableCell>
                 {/* <TableCell align="center">

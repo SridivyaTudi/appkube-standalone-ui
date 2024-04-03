@@ -167,18 +167,18 @@
             text-overflow: unset;
           }
 
-          &:nth-child(3) {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #384cff;
-          }
-          &:nth-child(4) {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #384cff;
-          }
+          // &:nth-child(3) {
+          //   white-space: nowrap;
+          //   overflow: hidden;
+          //   text-overflow: ellipsis;
+          //   color: #384cff;
+          // }
+          // &:nth-child(4) {
+          //   white-space: nowrap;
+          //   overflow: hidden;
+          //   text-overflow: ellipsis;
+          //   color: #384cff;
+          // }
 
           .list-icon {
             background: transparent;
