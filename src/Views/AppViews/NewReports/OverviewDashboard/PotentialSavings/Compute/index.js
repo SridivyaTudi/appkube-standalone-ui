@@ -427,7 +427,7 @@ class Compute extends Component {
         </Box>
         <Box className="new-reports-table">
           <TableContainer className="table">
-            <Table style={{ width: 2300 }}>
+            <Table style={{ minWidth: 2250 }}>
               {this.renderTableHead()}
               {this.renderTableBody()}
             </Table>

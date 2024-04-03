@@ -15,7 +15,7 @@ export class SpendingTable extends Component {
   renderTable = () => {
     return (
       <TableContainer className="table">
-        <Table style={{width: 2000}}>
+        <Table style={{minWidth: 2000}}>
           {this.renderTableHead()}
           {this.renderTableBody()}
         </Table>
