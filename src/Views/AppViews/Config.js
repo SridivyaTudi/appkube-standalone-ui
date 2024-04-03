@@ -82,6 +82,9 @@ const config = {
     "/reporting/organization/#org-id#/cost-top-accounts/detail",
   GET_TOP_ACCOUNTS_BY_ACCOUNT_ID:
     "/reporting/organization/#org-id#/cost-top-accounts",
+
+  /* Discovered Assets*/
+  GET_DISCOVERED_ASSETS: "/cloud-element/org/#org-id#/all-elements",
 };
 
 export default config;

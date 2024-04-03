@@ -7,14 +7,13 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  List,
-  ListItem,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import AssetsSetUpModal from "./AssetsSetUpModal";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import Loader from "Components/Loader";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -38,17 +37,26 @@ class AssetsTable extends Component {
     };
   }
 
-
-  
-
   toggleAssetsSetUp = () => {
     this.setState({
       showAssetsSetUpModal: !this.state.showAssetsSetUpModal,
     });
   };
+
+  // Render loder
+  renderLoder = () => {
+    return (
+      <Box className="d-blck text-center w-100 h-100 ">
+        <Loader className="align-item-center justify-center w-100 h-100" />
+      </Box>
+    );
+  };
+
   //  Render table
   renderTable = () => {
-    return (
+    return this.props.loderStatus ? (
+      this.renderLoder()
+    ) : (
       <TableContainer className="table">
         <Table style={{ minWidth: 1380 }}>
           {this.renderTableHead()}
@@ -67,11 +75,11 @@ class AssetsTable extends Component {
           <TableCell align="left">Element Type</TableCell>
           <TableCell align="left">Landing Zone</TableCell>
           <TableCell align="left">Product Enclave</TableCell>
-          <TableCell align="center">Tag Status</TableCell>
+          {/* <TableCell align="center">Tag Status</TableCell>
           <TableCell align="center">Log</TableCell>
           <TableCell align="center">Trace</TableCell>
-          <TableCell align="center">Event</TableCell>
-          <TableCell align="center">Actions</TableCell>
+          <TableCell align="center">Event</TableCell> */}
+          {/* <TableCell align="center">Actions</TableCell> */}
         </TableRow>
       </TableHead>
     );
@@ -117,15 +125,12 @@ class AssetsTable extends Component {
                 <TableCell align="left">{name}</TableCell>
                 <TableCell align="left">{elementType}</TableCell>
                 <TableCell align="left">
-                  <HtmlTooltip
-                    className="table-tooltip"
-                    title={landingZone}
-                  >
-                    <Link to={``}>{landingZone}</Link>
+                  <HtmlTooltip className="table-tooltip" title={landingZone}>
+                    {landingZone}
                   </HtmlTooltip>
                 </TableCell>
                 <TableCell align="left">{productEnclave}</TableCell>
-                <TableCell align="center">
+                {/* <TableCell align="center">
                   <Box className={tagStatusClass || "tag"}>
                     <i
                       className={tagStatusClass ? "fas fa-cog" : "fas fa-tag"}
@@ -175,8 +180,8 @@ class AssetsTable extends Component {
                       className={eventClass ? "fas fa-times" : "fas fa-check"}
                     ></i>
                   </span>
-                </TableCell>
-                <TableCell align="center">
+                </TableCell> */}
+                {/* <TableCell align="center">
                   <button
                     type="button"
                     className="list-icon"
@@ -203,7 +208,7 @@ class AssetsTable extends Component {
                   ) : (
                     <></>
                   )}
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             );
           })

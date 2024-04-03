@@ -10,6 +10,7 @@ import associateAppReducer from "Redux/AssociateApp/AssociateAppSlice";
 import ServiceViewTopologyReducer from "Redux/ServiceViewTopology/ServiceViewTopologySlice";
 import BIMapping from "Redux/BIMapping/BIMappingSlice";
 import Reports from "Redux/Reports/ReportsSlice";
+import DiscoveredAssetsReducer from "Redux/DiscoveredAssets/DiscoveredAssetsSlice";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     serviceTopology: ServiceViewTopologyReducer,
     biMapping: BIMapping,
     reports: Reports,
+    discoveredAssets: DiscoveredAssetsReducer,
   },
 });
 
