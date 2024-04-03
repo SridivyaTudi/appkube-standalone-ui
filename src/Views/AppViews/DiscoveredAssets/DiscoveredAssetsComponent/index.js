@@ -150,7 +150,10 @@ class DiscoveredAssetsComponent extends Component {
   }
 
   setActiveTab = (activeTab) => {
-    this.setState({ activeTab, selectedFilters: filterData });
+    this.setState({ activeTab, selectedFilters: filterData }, () => {
+      const discoveredData = this.props.discoveredAssetsData?.data || [];
+      this.manipulateDiscoveredData(discoveredData);
+    });
   };
 
   onClickCloseIcon = (id) => {
@@ -161,14 +164,22 @@ class DiscoveredAssetsComponent extends Component {
 
   manipulateDiscoveredData = (data) => {
     let assestsData = [];
+    let { activeTab } = this.state;
+
+    let cloud = this.controlMapping.find(
+      (details, index) => index === activeTab
+    );
+
     if (data.length) {
       data.forEach((assest) => {
-        assestsData.push({
-          name: assest.instanceName,
-          elementType: assest.elementType,
-          landingZone: assest.landingZone,
-          productEnclave: assest.productEnclaveId,
-        });
+        if (assest.cloud?.toUpperCase() === cloud?.key) {
+          assestsData.push({
+            name: assest.instanceName,
+            elementType: assest.elementType,
+            landingZone: assest.landingZone,
+            productEnclave: assest.productEnclaveId,
+          });
+        }
       });
     }
     this.setState({ assestsData });
