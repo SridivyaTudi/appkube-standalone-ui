@@ -263,7 +263,7 @@
                 overflow-y: auto;
                 width: 100%;
                 height: 362px;
-                .data-available{
+                .data-available {
                   display: flex;
                   align-items: center;
                   justify-content: center;
@@ -271,7 +271,6 @@
                 }
                 &.global-sarvices-card {
                   height: 415px;
-                  
                 }
 
                 .cloud-managed-cards-scroll {
@@ -844,11 +843,34 @@
           td {
             font-size: 13px;
             padding: 12px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
             &.functionid {
               max-width: 165px;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
+              .link-btn {
+                max-width: 165px;
+                font-size: 13px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                padding: 0;
+                text-transform: capitalize;
+                color: #384cff;
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                &:hover {
+                  background-color: transparent;
+                }
+              }
+              .Mui-disabled {
+                background-color: transparent;
+                color: rgba(0, 0, 0, 0.26);
+              }
             }
             &.productid {
               max-width: 90px;
