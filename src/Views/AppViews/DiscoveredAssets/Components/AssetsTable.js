@@ -58,7 +58,7 @@ class AssetsTable extends Component {
       this.renderLoder()
     ) : (
       <TableContainer className="table">
-        <Table style={{ minWidth: 1380 }}>
+        <Table style={{ minWidth: 1200 }}>
           {this.renderTableHead()}
           {this.renderTableBody()}
         </Table>
@@ -122,14 +122,13 @@ class AssetsTable extends Component {
             } = environment;
             return (
               <TableRow key={v4()}>
-                <TableCell align="left">{name}</TableCell>
-                <TableCell align="left">{elementType}</TableCell>
                 <TableCell align="left">
-                {landingZone}
-                  {/* <HtmlTooltip className="table-tooltip" title={landingZone}>
-                    
-                  </HtmlTooltip> */}
+                  <HtmlTooltip className="table-tooltip" title={name}>
+                    <Box className="resource-name">{name}</Box>
+                  </HtmlTooltip>
                 </TableCell>
+                <TableCell align="left">{elementType}</TableCell>
+                <TableCell align="left">{landingZone}</TableCell>
                 <TableCell align="left">{productEnclave}</TableCell>
                 {/* <TableCell align="center">
                   <Box className={tagStatusClass || "tag"}>

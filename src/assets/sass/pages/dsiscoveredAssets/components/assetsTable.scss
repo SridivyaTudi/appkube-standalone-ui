@@ -67,6 +67,13 @@
           position: relative;
           border-bottom: 1px solid #eaecf0;
           font-family: "Poppins", sans-serif;
+          .resource-name{
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #101828;
+          }
           .list-icon {
             background: transparent;
             width: 30px;
