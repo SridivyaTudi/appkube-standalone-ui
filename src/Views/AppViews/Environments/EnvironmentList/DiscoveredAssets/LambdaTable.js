@@ -127,17 +127,20 @@ class LambdaTable extends Component {
                         className="table-tooltip"
                         title={row.functionName}
                       >
-                        <Button
-                          variant="contained"
-                          component={Link}
-                          target="_blank"
-                          to={this.getExplorerLink(title, row.id)}
+                        <Link  target="_blank" to={this.getExplorerLink(title, row.id)}
                           disabled={
                             !ELEMENT_EXPLORER_MAPPING[title.toUpperCase()]
-                          }
+                          }>
+                             {row.functionName}
+                          </Link>
+                        {/* <Button
+                          variant="contained"
+                          component={Link}
+                         
+                          
                         >
-                          {row.functionName}
-                        </Button>
+                         
+                        </Button> */}
                       </HtmlTooltip>
                     </TableCell>
                     <TableCell align="center">{row.responseTime}</TableCell>

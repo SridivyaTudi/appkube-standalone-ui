@@ -105,17 +105,18 @@ class ExcludeLambdaTableOfGlobalService extends Component {
                         className="table-tooltip"
                         title={row.instanceId}
                       >
-                        <Button
-                          variant="contained"
-                          component={Link}
-                          target="_blank"
+                        <Link  target="_blank"
                           to={this.getExplorerLink(title, row.id)}
                           disabled={
                             !ELEMENT_EXPLORER_MAPPING[title.toUpperCase()]
-                          }
+                          }> {row.instanceId}</Link>
+                        {/* <Button
+                          variant="contained"
+                          component={Link}
+                         
                         >
-                          {row.instanceId}
-                        </Button>
+                         
+                        </Button> */}
                       </HtmlTooltip>
                     </TableCell>
                     <TableCell align="center">{row.landingZone}</TableCell>
