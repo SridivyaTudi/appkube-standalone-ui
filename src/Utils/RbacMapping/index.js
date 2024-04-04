@@ -58,6 +58,7 @@ const RBAC_MAPPING = {
     "Perform code scanning for sonar complaince",
   PERFORM_BDD_TESTS_ON_SERVICE: "Perform bdd tests on service",
   PERFORM_ATP_TESTS_ON_SERVICE: "Perform atp tests on service",
+  // ADD_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT:'Add Service in N'
 };
 
 export default RBAC_MAPPING;

@@ -252,6 +252,7 @@ class Environments extends Component {
 
   renderEnvironmentTable() {
     const envSummaryStatus = this.props.envSummary.status;
+    const isRbcPermission = this.checkRbacPermissionForAction();
     if (envSummaryStatus === status.IN_PROGRESS) {
       return (
         <Loader
@@ -282,6 +283,7 @@ class Environments extends Component {
         envSummary,
       } = this.state;
       let retData = [];
+
       if (envSummary.length > 0) {
         searchedEnvSummary.forEach((item, envIndex) => {
           let accountsJSX = [];
@@ -359,8 +361,13 @@ class Environments extends Component {
                     type="button"
                     className="list-icon"
                     onClick={(e) => {
-                      this.handleMenuToggle(envIndex, accountIndex);
+                      isRbcPermission ? (
+                        this.handleMenuToggle(envIndex, accountIndex)
+                      ) : (
+                        <></>
+                      );
                     }}
+                    disabled={!isRbcPermission}
                   >
                     <i className="fas fa-ellipsis-v"></i>
                   </button>
@@ -603,10 +610,29 @@ class Environments extends Component {
     const { ADMIN } = USER_RBAC_TYPE;
     const { EDIT_LANDING_ZONE, CREATE_LANDING_ZONE } = RBAC_MAPPING;
 
-    const permissions = [CREATE_LANDING_ZONE, EDIT_LANDING_ZONE];
-    const allowUserRoles = [ADMIN];
+    const permissions = {
+      [CREATE_LANDING_ZONE]: [ADMIN],
+      [EDIT_LANDING_ZONE]: [ADMIN],
+    };
 
-    return CheckRbacPerMission(permissions, allowUserRoles);
+    return CheckRbacPerMission(permissions);
+  };
+
+  checkRbacPermissionForAction = () => {
+    const { ADMIN, PRODUCT_OWNERS } = USER_RBAC_TYPE;
+    const {
+      DELETE_LANDING_ZONE,
+      REPLICATE_LANDING_ZONE,
+      CREATE_PRODUCT_ENCLAVE,
+    } = RBAC_MAPPING;
+
+    const permissions = {
+      [DELETE_LANDING_ZONE]: [ADMIN],
+      [REPLICATE_LANDING_ZONE]: [ADMIN],
+      [CREATE_PRODUCT_ENCLAVE]: [ADMIN, PRODUCT_OWNERS],
+    };
+
+    return CheckRbacPerMission(permissions);
   };
   render() {
     const {

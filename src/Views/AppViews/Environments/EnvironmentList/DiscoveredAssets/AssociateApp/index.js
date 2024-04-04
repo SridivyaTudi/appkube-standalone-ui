@@ -207,10 +207,11 @@ class AssociateApp extends Component {
     const { ADMIN, PRODUCT_OWNERS } = USER_RBAC_TYPE;
     const { CREATE_PRODUCT_ENVIRONMENT } = RBAC_MAPPING;
 
-    const permissions = [CREATE_PRODUCT_ENVIRONMENT];
-    const allowUserRoles = [ADMIN, PRODUCT_OWNERS];
+    const permissions = {
+      [CREATE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
+    };
 
-    return CheckRbacPerMission(permissions, allowUserRoles);
+    return CheckRbacPerMission(permissions);
   };
 
   getUrlDetails() {

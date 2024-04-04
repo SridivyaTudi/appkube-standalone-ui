@@ -32,6 +32,9 @@ import Loader from "Components/Loader";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { SERVICE_TYPE, THREE_TIER_LAYERS } from "CommonData";
+import { USER_RBAC_TYPE } from "CommonData";
+import RBAC_MAPPING from "Utils/RbacMapping";
+import CheckRbacPerMission from "Views/AppViews/Rbac";
 
 const existingTagKeys = [
   "org",
@@ -397,7 +400,7 @@ export class AssociateChartApp extends Component {
   renderTags = (tags, type) => {
     let tempTag = tags;
     let tagKeys = this.filterExistingTagKeys(type);
-
+    const isRbacPermission = this.checkRbacPermission();
     if (tempTag) {
       return tagKeys.map((tag) => {
         tempTag = tempTag[tag];
@@ -406,7 +409,7 @@ export class AssociateChartApp extends Component {
             <li key={v4()} className={this.findActiveTag(tags, type)}>
               <span>{tempTag.name}</span>
             </li>
-            {tag === "service" ? (
+            {tag === "service" && isRbacPermission ? (
               <li style={{ float: "right" }} key={v4()} name={"deleteBtn"}>
                 <Button
                   type="button"
@@ -430,6 +433,19 @@ export class AssociateChartApp extends Component {
         );
       });
     }
+  };
+
+  checkRbacPermission = () => {
+    const { ADMIN, PRODUCT_OWNERS } = USER_RBAC_TYPE;
+    const { CLONE_PRODUCT_ENVIRONMENT, DELETE_PRODUCT_ENVIRONMENT } =
+      RBAC_MAPPING;
+
+    const permissions = {
+      [CLONE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
+      [DELETE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
+    };
+
+    return CheckRbacPerMission(permissions);
   };
 
   // toggle confirmation popup

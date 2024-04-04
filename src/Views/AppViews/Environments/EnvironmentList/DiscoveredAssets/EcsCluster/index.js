@@ -20,7 +20,9 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { v4 } from "uuid";
-
+import { USER_RBAC_TYPE } from "CommonData";
+import RBAC_MAPPING from "Utils/RbacMapping";
+import CheckRbacPerMission from "Views/AppViews/Rbac";
 class EcsCluster extends React.Component {
   constructor(props) {
     super(props);
@@ -260,6 +262,19 @@ class EcsCluster extends React.Component {
 
     return { landingZone, landingZoneId, cloudName };
   }
+
+  checkRbacPermission = () => {
+    const { ADMIN, PRODUCT_OWNERS } = USER_RBAC_TYPE;
+    const { CLONE_PRODUCT_ENVIRONMENT, DELETE_PRODUCT_ENVIRONMENT } =
+      RBAC_MAPPING;
+
+    const permissions = {
+      [CLONE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
+      [DELETE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
+    };
+
+    return CheckRbacPerMission(permissions);
+  };
   render() {
     const { tierRows, soaRows, pg, rpg, actionButton, activeTierTab } =
       this.state;
