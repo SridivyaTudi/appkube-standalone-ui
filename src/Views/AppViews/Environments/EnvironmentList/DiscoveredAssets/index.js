@@ -246,6 +246,7 @@ class DiscoveredAssets extends Component {
               product: item.configJson?.product,
               environment: item.configJson?.environment,
               actions: "",
+              id:item.id
             });
           } else if (
             currentActiveGlobalServiceCategory &&

@@ -8,11 +8,17 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Button,
 } from "@mui/material";
 import { v4 } from "uuid";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-
+import {
+  APPKUBE_UI_ENDPOINT,
+  REGEX_TYPE,
+  ELEMENT_EXPLORER_MAPPING,
+} from "CommonData";
+import { Link } from "react-router-dom";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -62,7 +68,17 @@ class LambdaTable extends Component {
       );
     });
   }
-
+  getExplorerLink = (elementType, id) => {
+    let element = elementType.toUpperCase();
+    return `${
+      ELEMENT_EXPLORER_MAPPING[element]
+        ? `${APPKUBE_UI_ENDPOINT}${ELEMENT_EXPLORER_MAPPING[element].replace(
+            "#element-id#",
+            id
+          )}`
+        : "#"
+    }`;
+  };
   render() {
     const { pg, rpg } = this.state;
     const { title } = this.props;
@@ -111,7 +127,17 @@ class LambdaTable extends Component {
                         className="table-tooltip"
                         title={row.functionName}
                       >
-                        <span> {row.functionName}</span>
+                        <Button
+                          variant="contained"
+                          component={Link}
+                          target="_blank"
+                          to={this.getExplorerLink(title, row.id)}
+                          disabled={
+                            !ELEMENT_EXPLORER_MAPPING[title.toUpperCase()]
+                          }
+                        >
+                          {row.functionName}
+                        </Button>
                       </HtmlTooltip>
                     </TableCell>
                     <TableCell align="center">{row.responseTime}</TableCell>

@@ -107,3 +107,15 @@ export const THREE_TIER_LAYERS = {
   DATA_LAYER: "Data Layer",
   AUXILARY_LAYER: "Auxilary Layer",
 };
+
+export const APPKUBE_UI_ENDPOINT = "http://localhost:3000";
+
+export const ELEMENT_EXPLORER_MAPPING = {
+  EC2: "/ec2-explorer?var-elementId=#element-id#",
+  NLB: "/nlb-explorer?var-elementId=#element-id#",
+  RDS: "/rds-explorer?var-elementId=#element-id#",
+  ECS: "/ecs-explorer?var-elementId=#element-id#",
+  APIGATEWAY: "/ag-explorer?var-elementId=#element-id#",
+  LAMBDA: "/lambda-explorer?var-elementId=#element-id#",
+  EKS: "/eks-explorer?var-elementId=#element-id#",
+};
