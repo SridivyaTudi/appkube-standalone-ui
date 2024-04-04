@@ -658,7 +658,11 @@
                 color: #384cff;
                 text-transform: none;
                 background-color: transparent;
+                .Mui-disabled {
+                  color: rgba(0, 0, 0, 0.26);
+                }
               }
+             
             }
 
             .contents {
@@ -853,7 +857,7 @@
               text-overflow: ellipsis;
               .link-btn {
                 max-width: 165px;
-               
+
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -863,7 +867,7 @@
                 display: flex;
                 align-items: flex-start;
                 justify-content: flex-start;
-                p{
+                p {
                   margin: 0;
                   font-size: 13px;
                   color: #384cff;
@@ -874,18 +878,16 @@
                 &:hover {
                   background-color: transparent;
                 }
-               
               }
               .Mui-disabled {
                 background-color: transparent;
-              
-                p{
+                p {
                   margin: 0;
                   font-size: 13px;
                   white-space: nowrap;
                   text-overflow: ellipsis;
                   overflow: hidden;
-                  color: rgba(0, 0, 0, 0.26);
+                  color: rgba(0, 0, 0, 0.87);
                 }
               }
             }

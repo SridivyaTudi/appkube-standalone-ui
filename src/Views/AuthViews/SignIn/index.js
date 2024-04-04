@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SigninBanner from "assets/img/login/signin-banner.png";
+import SigninBanner2 from "assets/img/login/signin-banner2.png";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
@@ -206,7 +206,7 @@ class Signin extends Component {
                   Manage your project and team in easy way
                 </h1>
                 <Box className="d-flex width-100 banner-image">
-                  <img src={SigninBanner} alt="SigninBanner" />
+                  <img src={SigninBanner2} alt="SigninBanner2" />
                 </Box>
               </Box>
             </Box>
