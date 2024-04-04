@@ -113,7 +113,7 @@ class ExcludeLambdaTableOfGlobalService extends Component {
                             !ELEMENT_EXPLORER_MAPPING[title.toUpperCase()]
                           }
                         >
-                          {row.instanceId}
+                         <p>{row.instanceId}</p>
                         </Button>
                       </HtmlTooltip>
                     </TableCell>

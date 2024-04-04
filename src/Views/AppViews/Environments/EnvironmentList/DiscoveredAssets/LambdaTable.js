@@ -135,7 +135,7 @@ class LambdaTable extends Component {
                             !ELEMENT_EXPLORER_MAPPING[title.toUpperCase()]
                           }
                         >
-                          {row.functionName}
+                          <p>{row.functionName}</p>
                         </Button>
                       </HtmlTooltip>
                     </TableCell>
