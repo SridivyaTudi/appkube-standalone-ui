@@ -379,5 +379,5 @@ export const makeSlugForString = (str) => {
 
 export const getCurrentUserRole = () => {
   let userDetails = getCurrentUser()?.info?.user;
-  return userDetails.type;
+  return userDetails?.type;
 };
