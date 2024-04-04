@@ -7,7 +7,11 @@ import { v4 } from "uuid";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { PRODUCT_CATEGORY_ENUM } from "Utils";
-import { REGEX_TYPE } from "CommonData";
+import {
+  APPKUBE_UI_ENDPOINT,
+  REGEX_TYPE,
+  ELEMENT_EXPLORER_MAPPING,
+} from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -57,6 +61,17 @@ class AssociateApp extends Component {
     return finalResult;
   };
 
+  getExplorerLink = (elementType, id) => {
+    let element = elementType.toUpperCase();
+    return `${
+      ELEMENT_EXPLORER_MAPPING[element]
+        ? `${APPKUBE_UI_ENDPOINT}${ELEMENT_EXPLORER_MAPPING[element].replace(
+            "#element-id#",
+            id
+          )}`
+        : "#"
+    }`;
+  };
   renderTierSoc() {
     const { activeTierTabIndexes } = this.state;
     const dataTierSoc = this.props.data;
@@ -161,8 +176,17 @@ class AssociateApp extends Component {
               className="table-tooltip"
               title={`${data.elementType} Explorer`}
             >
-              <Button className="primary-btn min-width" variant="contained">
-                <p>{data.elementType} Explorer</p>
+              <Button
+                className="primary-btn min-width"
+                variant="contained"
+                component={Link}
+                target="_blank"
+                to={this.getExplorerLink(data.elementType, data.id)}
+                disabled={
+                  !ELEMENT_EXPLORER_MAPPING[data.elementType.toUpperCase()]
+                }
+              >
+                {data.elementType} Explorer
               </Button>
             </HtmlTooltip>
           </Box>
