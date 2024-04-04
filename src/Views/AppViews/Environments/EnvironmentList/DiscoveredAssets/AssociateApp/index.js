@@ -104,7 +104,7 @@ class AssociateApp extends Component {
             </Button>
           </Box>
           <Box className="contents">
-            <div className="d-block width-100">
+            <Box className="d-block width-100">
               <Box className="tier-buttons">
                 <Button
                   className={
@@ -161,11 +161,11 @@ class AssociateApp extends Component {
                       })}
                 </ul>
               </Box>
-            </div>
+            </Box>
           </Box>
           <Box className="buttons">
             <Button
-              className="primary-outline-btn min-width"
+              className="primary-outline-btn min-width button"
               component={Link}
               variant="contained"
               to={`${APP_PREFIX_PATH}/assets/environments/ecscluster?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
@@ -177,7 +177,7 @@ class AssociateApp extends Component {
               title={`${data.elementType} Explorer`}
             >
               <Button
-                className="primary-btn min-width"
+                className="primary-btn min-width button"
                 variant="contained"
                 component={Link}
                 target="_blank"
@@ -186,7 +186,7 @@ class AssociateApp extends Component {
                   !ELEMENT_EXPLORER_MAPPING[data.elementType.toUpperCase()]
                 }
               >
-                {data.elementType} Explorer
+                <p>{data.elementType} Explorer</p>
               </Button>
             </HtmlTooltip>
           </Box>
