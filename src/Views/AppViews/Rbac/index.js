@@ -1,29 +1,32 @@
 import { Component } from "react";
-import { getRbacPermissions } from "Utils";
+import { getAllowedRbacPermissions, getCurrentUserRole } from "Utils";
 import RBAC_MAPPING from "Utils/RbacMapping";
 
-export class Rbac extends Component {
-  getPermission = () => {
-    let userPermission = getRbacPermissions();
+let currentUserRole = getCurrentUserRole();
 
-    if (userPermission?.length) {
-      let permission = userPermission.find(
-        (rbacVal) => rbacVal.permissionName === this.props.rbacValue
-      );
+const CheckRbacPerMission = (rbacValues, userRoles) => {
+  const getPermission = () => {
+    if (userRoles?.includes(currentUserRole?.toUpperCase())) {
+      let userPermission = getAllowedRbacPermissions();
 
-      if (permission) {
-        let valueToKey = permission?.permissionName
-          ?.toUpperCase()
-          .replaceAll(" ", "_");
+      if (userPermission?.length) {
+        let permission = userPermission.find((rbacVal) =>
+          rbacValues.includes(rbacVal.permissionName)
+        );
 
-        return RBAC_MAPPING[valueToKey] || null;
-      } else {
-        return null;
+        if (permission) {
+          let valueToKey = permission?.permissionName
+            ?.toUpperCase()
+            ?.replaceAll(" ", "_");
+
+          return RBAC_MAPPING[valueToKey] !== "" ? true : false;
+        }
       }
     }
+
+    return false;
   };
-  render() {
-    return this.getPermission();
-  }
-}
-export default Rbac;
+
+  return getPermission();
+};
+export default CheckRbacPerMission;

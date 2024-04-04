@@ -6,12 +6,15 @@ import clusterIcon from "assets/img/assetmanager/cluster-icon.png";
 import { v4 } from "uuid";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import { PRODUCT_CATEGORY_ENUM } from "Utils";
+import { PRODUCT_CATEGORY_ENUM, getCurrentUserRole } from "Utils";
 import {
   APPKUBE_UI_ENDPOINT,
   REGEX_TYPE,
   ELEMENT_EXPLORER_MAPPING,
+  USER_RBAC_TYPE,
 } from "CommonData";
+import RBAC_MAPPING from "Utils/RbacMapping";
+import CheckRbacPerMission from "Views/AppViews/Rbac";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -78,6 +81,9 @@ class AssociateApp extends Component {
     const JSX = [];
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
 
+    //check permission
+    let isRbacPermission = this.checkRbacPermissionForAssociate();
+
     dataTierSoc.forEach((data, index) => {
       const tier3Data = Object.entries(data.threeTier);
       const soaData = Object.entries(data.soa);
@@ -95,10 +101,11 @@ class AssociateApp extends Component {
               </HtmlTooltip>
             </h3>
             <Button
-              className="primary-text-btn min-width"
+              className={`primary-text-btn min-width`}
               component={Link}
               variant="contained"
               to={`${APP_PREFIX_PATH}/assets/environments/associatechartapp?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&elementType=${data.elementType}&instanceId=${data.instanceId}`}
+              disabled={!isRbacPermission}
             >
               Associate App
             </Button>
@@ -195,6 +202,16 @@ class AssociateApp extends Component {
     });
     return JSX;
   }
+
+  checkRbacPermissionForAssociate = () => {
+    const { ADMIN, PRODUCT_OWNERS } = USER_RBAC_TYPE;
+    const { CREATE_PRODUCT_ENVIRONMENT } = RBAC_MAPPING;
+
+    const permissions = [CREATE_PRODUCT_ENVIRONMENT];
+    const allowUserRoles = [ADMIN, PRODUCT_OWNERS];
+
+    return CheckRbacPerMission(permissions, allowUserRoles);
+  };
 
   getUrlDetails() {
     const queryPrm = new URLSearchParams(document.location.search);

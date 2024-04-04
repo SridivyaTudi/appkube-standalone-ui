@@ -10,6 +10,7 @@ export const LOCAL_STORAGE_CONSTANTS = {
   INFRAVIEW_DETAILS: "infraViewDetails",
   URL_DETAILS_OF_PAGE: "urlDetailsOfPage",
   CLOUD_WISE_LANDINGZONE_COUNT: "cloudWiseLandingZoneCount",
+  ALLOWED_RBAC_PERMISSIONS: "allowedRbacPermissions",
 };
 
 export const getCurrentUser = () => {
@@ -218,6 +219,24 @@ export const getRbacPermissions = () => {
   }
 };
 
+export const setAllowedRbacPermissions = () => {
+  const data = getRbacPermissions();
+
+  if (data?.length) {
+    localStorage.setItem(
+      LOCAL_STORAGE_CONSTANTS.ALLOWED_RBAC_PERMISSIONS,
+      JSON.stringify(data)
+    );
+  }
+};
+
+export const getAllowedRbacPermissions = () => {
+  return JSON.parse(
+    localStorage.getItem(LOCAL_STORAGE_CONSTANTS.ALLOWED_RBAC_PERMISSIONS) ||
+      null
+  );
+};
+
 export const RbacPermissionsDataManipulation = {
   permissions: [],
   getData: (data) => {
@@ -356,4 +375,9 @@ export const makeSlugForString = (str) => {
   } catch (error) {
     return str;
   }
+};
+
+export const getCurrentUserRole = () => {
+  let userDetails = getCurrentUser()?.info?.user;
+  return userDetails.type;
 };

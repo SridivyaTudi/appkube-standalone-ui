@@ -80,7 +80,7 @@ class DiscoveredAssets extends Component {
       globalServicesSummaryData: [],
       currentActiveGlobalServiceCategory: "",
       selectedCategoryGlobalServicesData: [],
-      excludeLambdaTableData:[]
+      excludeLambdaTableData: [],
     };
   }
 
@@ -246,7 +246,7 @@ class DiscoveredAssets extends Component {
               product: item.configJson?.product,
               environment: item.configJson?.environment,
               actions: "",
-              id:item.id
+              id: item.id,
             });
           } else if (
             currentActiveGlobalServiceCategory &&
@@ -575,7 +575,8 @@ class DiscoveredAssets extends Component {
       cloudElementsData,
       currentActiveGlobalServiceCategory,
       globalServicesSummaryData,
-      lambdaTableData,excludeLambdaTableData
+      lambdaTableData,
+      excludeLambdaTableData,
     } = this.state;
     const {
       envDataByLandingZone,
@@ -775,11 +776,13 @@ class DiscoveredAssets extends Component {
               tableData={lambdaTableData}
               title={currentActiveGlobalServiceCategory}
             />
-          ) : (
+          ) : currentActiveNode === "Global Services" ? (
             <ExcludeLambdaTableOfGlobalService
               tableData={excludeLambdaTableData}
               title={currentActiveGlobalServiceCategory}
             />
+          ) : (
+            <></>
           )
         ) : (
           <></>

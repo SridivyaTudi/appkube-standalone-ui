@@ -37,8 +37,11 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
-import Rbac from "../Rbac";
 import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
+import { USER_RBAC_TYPE } from "CommonData";
+import RBAC_MAPPING from "Utils/RbacMapping";
+import CheckRbacPerMission from "Views/AppViews/Rbac";
+
 class Environments extends Component {
   constructor(props) {
     super(props);
@@ -553,7 +556,9 @@ class Environments extends Component {
     return (
       <>
         <ListItem>
-          <Link to={`${APP_PREFIX_PATH}/assets/environments/aws/newaccountsetup`}>
+          <Link
+            to={`${APP_PREFIX_PATH}/assets/environments/aws/newaccountsetup`}
+          >
             <span className="image-box">
               <img src={AWS} alt="AWS" />
             </span>
@@ -561,7 +566,9 @@ class Environments extends Component {
           </Link>
         </ListItem>
         <ListItem>
-          <Link to={`${APP_PREFIX_PATH}/assets/environments/azure/newaccountsetup`}>
+          <Link
+            to={`${APP_PREFIX_PATH}/assets/environments/azure/newaccountsetup`}
+          >
             <span className="image-box">
               <img src={AZURE} alt="AZURE" />
             </span>
@@ -569,7 +576,9 @@ class Environments extends Component {
           </Link>
         </ListItem>
         <ListItem>
-          <Link to={`${APP_PREFIX_PATH}/assets/environments/gcp/newaccountsetup`}>
+          <Link
+            to={`${APP_PREFIX_PATH}/assets/environments/gcp/newaccountsetup`}
+          >
             <span className="image-box">
               <img src={GCP} alt="GCP" />
             </span>
@@ -590,6 +599,15 @@ class Environments extends Component {
     );
   };
 
+  checkRbacPermissionForAddNewEnvironment = () => {
+    const { ADMIN } = USER_RBAC_TYPE;
+    const { EDIT_LANDING_ZONE, CREATE_LANDING_ZONE } = RBAC_MAPPING;
+
+    const permissions = [CREATE_LANDING_ZONE, EDIT_LANDING_ZONE];
+    const allowUserRoles = [ADMIN];
+
+    return CheckRbacPerMission(permissions, allowUserRoles);
+  };
   render() {
     const {
       isRecentVisitedEnvMenuOpen,
@@ -598,7 +616,8 @@ class Environments extends Component {
       showFilterPopup,
       filters,
     } = this.state;
-    let rbcPermission = <Rbac rbacValue={"Create Landing Zone"} />;
+    let rbcPermission = this.checkRbacPermissionForAddNewEnvironment();
+
     return (
       <div className="environment-container">
         <Box className="list-heading" key={v4()}>

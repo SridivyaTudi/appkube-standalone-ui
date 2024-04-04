@@ -15,6 +15,7 @@ import {
   getSavedUserName,
   setUserName,
   deleteUserName,
+  setAllowedRbacPermissions,
 } from "Utils";
 import { login, authMFACode } from "Redux/Auth/AuthThunk";
 import { connect } from "react-redux";
@@ -170,9 +171,14 @@ class Signin extends Component {
       setCurrentOrgName(
         this.props.loggedInUser.data.info.user.organization.name
       );
-      this.setState({
-        userLoggedIn: true,
-      });
+      this.setState(
+        {
+          userLoggedIn: true,
+        },
+        () => {
+          setAllowedRbacPermissions();
+        }
+      );
     } else {
       ToastMessage.error("We can't find cmdbOrgId.");
     }

@@ -119,3 +119,8 @@ export const ELEMENT_EXPLORER_MAPPING = {
   LAMBDA: "/lambda-explorer?var-elementId=#element-id#",
   EKS: "/eks-explorer?var-elementId=#element-id#",
 };
+
+export const USER_RBAC_TYPE = {
+  ADMIN: "ADMIN",
+  PRODUCT_OWNERS: "PRODUCT-OWNERS",
+};
