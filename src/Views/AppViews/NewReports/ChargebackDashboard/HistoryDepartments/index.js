@@ -16,6 +16,96 @@ import StatusImg2 from "assets/img/report/status-img2.png";
 import StatusImg3 from "assets/img/report/status-img3.png";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SelectFilterModal from "../../Components/SelectFilterModal";
+let data = [
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Pending",
+  },
+];
 class HistoryDepartments extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +113,65 @@ class HistoryDepartments extends Component {
       activeTab: 0,
     };
   }
+  //  Render table head
+  renderTableHead = () => {
+    return (
+      <TableHead>
+        <TableRow>
+          <TableCell align="left">Month</TableCell>
+          <TableCell align="left">Department </TableCell>
+          <TableCell align="center">Budget</TableCell>
+          <TableCell align="center">Current Month’s Spend</TableCell>
+          <TableCell align="center">Differenece</TableCell>
+          <TableCell align="left">Payment Status </TableCell>
+        </TableRow>
+      </TableHead>
+    );
+  };
+  //  Render table body
+  renderTableBody = () => {
+    return (
+      <TableBody>
+        {data?.length ? (
+          data.map((details) => {
+            return (
+              <TableRow>
+                <TableCell align="left">{details.month}</TableCell>
+                <TableCell align="left">{details.department}</TableCell>
+                <TableCell align="center">
+                  <strong>{details.budget}</strong>
+                </TableCell>
+                <TableCell align="center">
+                  <strong>{details.currentMonthSpend}</strong>
+                </TableCell>
+                <TableCell align="center">
+                  <Box
+                    className="d-flex align-center"
+                    justifyContent={"center"}
+                  >
+                    <Box className="variance-count red">
+                      <i class="fas fa-sort-down p-r-5"></i>
+                    </Box>
+                    <strong>{details.difference}</strong>
+                  </Box>
+                </TableCell>
+                <TableCell align="left">
+                  <Box className="payment-status sent pending"></Box>
+                  {details.paymentStatus}
+                </TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <Box className="d-blck text-center w-100 h-100 ">
+            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+            </Box>
+          </Box>
+        )}
+      </TableBody>
+    );
+  };
   handleSelectFilterModal = () => {
     this.setState({
       showSelectFilterModal: !this.state.showSelectFilterModal,
@@ -42,13 +191,13 @@ class HistoryDepartments extends Component {
             Chargeback Dashboard
           </h3>
           <Box className="d-flex align-items-center">
-          <Link to={`/app/new-reports/chargeback-dashboard/create-invoice`}>
-            <Button
-              variant="outlined"
-              className="primary-outline-btn min-width-inherit m-r-3 p-l-15 p-r-15"
-            >
-              View
-            </Button>
+            <Link to={`/app/new-reports/chargeback-dashboard/create-invoice`}>
+              <Button
+                variant="outlined"
+                className="primary-outline-btn min-width-inherit m-r-3 p-l-15 p-r-15"
+              >
+                View
+              </Button>
             </Link>
             <Link to={`/app/new-reports/chargeback-dashboard`}>
               <Button className="primary-btn min-width-inherit m-r-3 p-l-15 p-r-15">
@@ -117,209 +266,9 @@ class HistoryDepartments extends Component {
           </Box>
           <Box className="new-reports-table history-department-table">
             <TableContainer className="table">
-              <Table style={{ width: 1200 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">Month</TableCell>
-                    <TableCell align="left">Department </TableCell>
-                    <TableCell align="center">Budget</TableCell>
-                    <TableCell align="center">Current Month’s Spend</TableCell>
-                    <TableCell align="center">Differenece</TableCell>
-                    <TableCell align="left">Payment Status </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell align="left">January, 2023</TableCell>
-                    <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center">
-                      <strong>$10,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>$12,800</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red d-inline-block">
-                        <i class="fas fa-sort-down p-r-5"></i>
-                      </Box>
-                      <strong> $2,800</strong>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Box className="payment-status sent"></Box>Invoice sent
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">January, 2023</TableCell>
-                    <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center">
-                      <strong>$10,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>$12,800</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red d-inline-block">
-                        <i class="fas fa-sort-down p-r-5"></i>
-                      </Box>
-                      <strong> $2,800</strong>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">January, 2023</TableCell>
-                    <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center">
-                      <strong>$10,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>$12,800</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red d-inline-block">
-                        <i class="fas fa-sort-down p-r-5"></i>
-                      </Box>
-                      <strong> $2,800</strong>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Box className="payment-status sent"></Box>Invoice sent
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">January, 2023</TableCell>
-                    <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center">
-                      <strong>$10,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>$12,800</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red d-inline-block">
-                        <i class="fas fa-sort-down p-r-5"></i>
-                      </Box>
-                      <strong> $2,800</strong>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Box className="payment-status sent"></Box>Invoice sent
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">January, 2023</TableCell>
-                    <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center">
-                      <strong>$10,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>$12,800</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-countred d-inline-block">
-                        <i class="fas fa-sort-down p-r-5"></i>
-                      </Box>
-                      <strong> $2,800</strong>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">January, 2023</TableCell>
-                    <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center">
-                      <strong>$10,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>$12,800</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red d-inline-block">
-                        <i class="fas fa-sort-down p-r-5"></i>
-                      </Box>
-                      <strong> $2,800</strong>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">January, 2023</TableCell>
-                    <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center">
-                      <strong>$10,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>$12,800</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red d-inline-block">
-                        <i class="fas fa-sort-down p-r-5"></i>
-                      </Box>
-                      <strong> $2,800</strong>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">January, 2023</TableCell>
-                    <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center">
-                      <strong>$10,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>$12,800</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red d-inline-block">
-                        <i class="fas fa-sort-down p-r-5"></i>
-                      </Box>
-                      <strong> $2,800</strong>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">January, 2023</TableCell>
-                    <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center">
-                      <strong>$10,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>$12,800</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red d-inline-block">
-                        <i class="fas fa-sort-down p-r-5"></i>
-                      </Box>
-                      <strong> $2,800</strong>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">January, 2023</TableCell>
-                    <TableCell align="left">Information Technology </TableCell>
-                    <TableCell align="center">
-                      <strong>$10,000</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <strong>$12,800</strong>
-                    </TableCell>
-                    <TableCell align="center">
-                      <Box className="variance-count red d-inline-block">
-                        <i class="fas fa-sort-down p-r-5"></i>
-                      </Box>
-                      <strong> $2,800</strong>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Box className="payment-status pending"></Box>Pending
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
+              <Table style={{ minWidth: 1180 }}>
+                {this.renderTableHead()}
+                {this.renderTableBody()}
               </Table>
             </TableContainer>
           </Box>
