@@ -2,11 +2,9 @@ import { Component } from "react";
 import { getAllowedRbacPermissions, getCurrentUserRole } from "Utils";
 import RBAC_MAPPING from "Utils/RbacMapping";
 
-let currentUserRole = getCurrentUserRole();
-
 const CheckRbacPerMission = (permissionAndRole) => {
   const getPermission = () => {
-    // if (userRoles?.includes(currentUserRole?.toUpperCase())) {
+    let currentUserRole = getCurrentUserRole();
     let permissions = Object.keys(permissionAndRole);
     let roles = Object.values(permissionAndRole);
 
@@ -30,7 +28,6 @@ const CheckRbacPerMission = (permissionAndRole) => {
         return RBAC_MAPPING[valueToKey] !== "" ? true : false;
       }
     }
-    // }
 
     return false;
   };

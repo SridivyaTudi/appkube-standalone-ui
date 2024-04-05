@@ -12,7 +12,7 @@ import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { getDiscoveredAssets } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
 
-const orgId = getCurrentOrgId();
+
 let data = [
   {
     name: "45sdf28d",
@@ -134,6 +134,7 @@ class DiscoveredAssetsComponent extends Component {
   }
 
   componentDidMount = () => {
+    const orgId = getCurrentOrgId();
     this.props.getDiscoveredAssets(orgId);
   };
 
