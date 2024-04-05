@@ -25,7 +25,31 @@
           border-left: none;
         }
       }
-      .muidisabled {
+     
+    }
+
+    .cluster-table {
+      margin-top: 20px;
+      display: block;
+      width: 100%;
+      .list-icon {
+        background: transparent;
+        width: 30px;
+        height: 30px;
+        border: none;
+        color: #1b4dff;
+        position: relative;
+        cursor: pointer;
+        border-radius: 3px;
+        font-size: 16px;
+        line-height: 30px;
+        &:hover {
+          background: #e5e1ff;
+          color: #1b4dff;
+        }
+       
+      }
+      button:disabled {
         border: none;
         cursor: default;
         border-radius: 3px;
@@ -35,18 +59,12 @@
         height: 30px;
         color: rgba(0, 0, 0, 0.26);
         box-shadow: none;
-      
-        &:hover {
-         
+        background-color: transparent;
+        &:hover{
+          background-color: transparent;
           color: rgba(0, 0, 0, 0.26);
         }
-      }
     }
-
-    .cluster-table {
-      margin-top: 20px;
-      display: block;
-      width: 100%;
 
       .sle-box {
         display: inline-block;
