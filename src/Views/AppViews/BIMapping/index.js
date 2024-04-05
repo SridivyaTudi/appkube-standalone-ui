@@ -163,12 +163,15 @@ class BIMapping extends Component {
       );
     }
 
-    const {
+    let {
       isDepartmentLandingzoneDataStatus: { department, landingZoneCount },
     } = this.state;
     if (department && landingZoneCount) {
       const organization = this.props.organizationWiseDepartments.data || [];
-      this.manipulateDepartMentData(organization);
+      const landingZoneCounts =
+        this.props.cloudWiseLandingZoneCount?.data || [];
+
+      this.manipulateDepartMentData(organization, landingZoneCounts);
       this.setState({
         isDepartmentLandingzoneDataStatus: {
           department: false,
@@ -214,10 +217,10 @@ class BIMapping extends Component {
   };
 
   // Manipulation of department data
-  manipulateDepartMentData = (organization) => {
+  manipulateDepartMentData = (organization, landingZoneCounts) => {
     if (organization) {
       let { name, id, departments } = organization;
-      let { organizationTableData, landingZoneCounts } = this.state;
+      let { organizationTableData } = this.state;
       let chlidren = [];
       if (departments?.length) {
         chlidren = this.manipulateChildrenData(
@@ -232,16 +235,16 @@ class BIMapping extends Component {
         ENVIRONMENTS.GCP,
         ENVIRONMENTS.KUBERNETES,
       ];
-
+      let counts = [];
       if (landingZoneCounts?.length) {
-        landingZoneCounts = environments.map((cloud) => {
+        counts = environments.map((cloud) => {
           let details = landingZoneCounts.find(
             (landingZone) => landingZone.cloud.toUpperCase() === cloud
           );
           return { name: details?.totalAccounts || 0 };
         });
       } else {
-        landingZoneCounts = environments.map((count) => {
+        counts = environments.map((count) => {
           return { name: 0 };
         });
       }
@@ -251,7 +254,7 @@ class BIMapping extends Component {
           name,
           id,
           isMutipleCell: true,
-          multipeCellData: landingZoneCounts,
+          multipeCellData: counts,
           type: BI_MAPPING_TYPE.ORGANIZATION,
           chlidren,
         },
