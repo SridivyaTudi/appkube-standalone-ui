@@ -460,7 +460,12 @@ class DiscoveredAssets extends Component {
     productEnclaveList?.forEach((vpc, index) => {
       tableBodyJSX.push(
         <TableRow key={v4()}>
-          <TableCell align="center">{vpc.id}</TableCell>
+          <TableCell align="center" className="vpcid">
+            {" "}
+            <HtmlTooltip className="table-tooltip" title={vpc.instanceId}>
+              <span>{vpc.instanceId}</span>
+            </HtmlTooltip>
+          </TableCell>
           <TableCell align="center">{vpc.soa.productCount}</TableCell>
           <TableCell align="center">{vpc.soa.appCount}</TableCell>
           <TableCell align="center">{vpc.soa.dataCount}</TableCell>
