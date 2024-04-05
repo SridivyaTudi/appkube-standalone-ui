@@ -4,7 +4,6 @@ import ChartWrapper from "../../Components/ChartWrapper";
 import HorizontalBarChart from "Views/AppViews/NewReports/Components/HorizontalBarChart";
 import VerticalBarchart from "Views/AppViews/NewReports/Components/VerticalBarchart";
 import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
-import MultiLineChart from "Views/AppViews/NewReports/Components/MultiLineChart";
 import GaugeChart from "Views/AppViews/NewReports/Components/GaugeChart";
 import { connect } from "react-redux";
 import {
@@ -18,6 +17,7 @@ import status from "Redux/Constants/CommonDS";
 import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
 import Loader from "Components/Loader";
 import { SUMMARY_INSTANCE_TYPE, TENURE_TYPE } from "CommonData";
+import LineChart from "../../Components/LineChart";
 
 const totalUsedServiceColor = {
   CDN: "#01f1e3",
@@ -42,7 +42,11 @@ class AwsComponent extends Component {
       potentialSavingsData: [],
       potentialSavingsPercentage: 0,
       costTopAccountsData: [],
-      spendingTrendData: [],
+      spendingTrendData: {
+        current: [],
+        forcast: [],
+        previous: [],
+      },
     };
   }
 
@@ -201,57 +205,27 @@ class AwsComponent extends Component {
   // Maniplate Spending Trend data
   maniplateSpendingTrendData = (data) => {
     let { spendingTrendData } = this.state;
-    spendingTrendData = [];
-
-    if (data) {
-      let { current = [], forcast = [], previous = [] } = data;
-      spendingTrendData = this.manipulateDateWiseData(
-        current.concat(forcast, previous)
-      );
-    }
+    spendingTrendData = {
+      current: [],
+      forcast: [],
+      previous: [],
+    };
+    let trendKeys = Object.keys(spendingTrendData);
+    trendKeys.forEach((key) => {
+      if (data?.[key]?.length) {
+        data[key].forEach((obj) => {
+          if (spendingTrendData[key]) {
+            spendingTrendData[key].push({
+              date: new Date(obj.dates),
+              value: obj.total,
+              dateStr:obj.dates
+            });
+          }
+        });
+      }
+    });
+    
     this.setState({ spendingTrendData });
-  };
-
-  // Maniplate Spending Trend Data Date Wise
-  manipulateDateWiseData = (data) => {
-    let spendTrendData = [];
-    if (data?.length) {
-      let allData = JSON.parse(JSON.stringify(data));
-
-      data.forEach((obj) => {
-        // Find data date wise
-        let sameDateData = JSON.parse(
-          JSON.stringify(allData.filter((spend) => spend.dates === obj.dates))
-        );
-
-        if (sameDateData.length) {
-          let pushData = {
-            date: new Date(obj.dates),
-            last_quarter: 0,
-            current_quarter: 0,
-            forecasted_spend: 0,
-          };
-
-          sameDateData.forEach((sameDate) => {
-            let tenure = sameDate.tenure.toUpperCase();
-            if (tenure === TENURE_TYPE.CURRENT) {
-              pushData["current_quarter"] = sameDate.total;
-            } else if (tenure === TENURE_TYPE.FORCAST) {
-              pushData["forecasted_spend"] = sameDate.total;
-            } else if (tenure === TENURE_TYPE.PREVIOUS) {
-              pushData["last_quarter"] = sameDate.total;
-            }
-          });
-
-          spendTrendData.push(pushData);
-
-          // Remove data
-          allData = allData.filter((spend) => spend.dates !== obj.dates);
-        }
-      });
-    }
-
-    return spendTrendData;
   };
 
   // Render loder
@@ -449,30 +423,50 @@ class AwsComponent extends Component {
                 ChartComponent={
                   spendingTrendLoder ? (
                     this.renderLoder()
-                  ) : spendingTrendData.length ? (
-                    <MultiLineChart
-                      data={spendingTrendData}
-                      labels={[
-                        {
-                          name: `Last ${this.props.selectedGranularity}`,
-                          color: "orange",
-                        },
-                        {
-                          name: `Current ${this.props.selectedGranularity}`,
-                          color: "steelblue",
-                        },
-                        {
-                          name: `Forecasted ${this.props.selectedGranularity}`,
-                          color: "pink",
-                        },
-                      ]}
-                    />
+                  ) : spendingTrendData.previous?.length ? (
+                    <LineChart data={spendingTrendData.previous} color='orange' />
                   ) : (
                     this.renderNoDataHtml()
                   )
                 }
                 data={{
-                  title: "Spending Trend",
+                  title: `Last ${this.props.selectedGranularity} Spending Trend`,
+                  labelOfBtn: " View Details",
+                  link: "/app/new-reports/over-view-dashboard/spending-trend",
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={12} lg={6}>
+              <ChartWrapper
+                ChartComponent={
+                  spendingTrendLoder ? (
+                    this.renderLoder()
+                  ) : spendingTrendData.current?.length ? (
+                    <LineChart data={spendingTrendData.current} color='steelblue' />
+                  ) : (
+                    this.renderNoDataHtml()
+                  )
+                }
+                data={{
+                  title: `Current ${this.props.selectedGranularity} Spending Trend`,
+                  labelOfBtn: " View Details",
+                  link: "/app/new-reports/over-view-dashboard/spending-trend",
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={12} lg={6}>
+              <ChartWrapper
+                ChartComponent={
+                  spendingTrendLoder ? (
+                    this.renderLoder()
+                  ) : spendingTrendData.forcast?.length ? (
+                    <LineChart data={spendingTrendData.forcast} color='pink' />
+                  ) : (
+                    this.renderNoDataHtml()
+                  )
+                }
+                data={{
+                  title: `Forcast ${this.props.selectedGranularity} Spending Trend`,
                   labelOfBtn: " View Details",
                   link: "/app/new-reports/over-view-dashboard/spending-trend",
                 }}

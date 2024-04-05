@@ -7,6 +7,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  TablePagination,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
@@ -34,6 +35,8 @@ class AssetsTable extends Component {
     super(props);
     this.state = {
       showAssetsSetUpModal: false,
+      pg: 0,
+      rpg: 10,
     };
   }
 
@@ -54,15 +57,34 @@ class AssetsTable extends Component {
 
   //  Render table
   renderTable = () => {
+    let environmentList = this.props.data || [];
+    let { rpg, pg } = this.state;
+
     return this.props.loderStatus ? (
       this.renderLoder()
     ) : (
-      <TableContainer className="table">
-        <Table style={{ minWidth: 1200 }}>
-          {this.renderTableHead()}
-          {this.renderTableBody()}
-        </Table>
-      </TableContainer>
+      <>
+        <TableContainer className="table">
+          <Table style={{ minWidth: 1200 }}>
+            {this.renderTableHead()}
+            {this.renderTableBody()}
+          </Table>
+        </TableContainer>
+        {environmentList?.length ? (
+          <TablePagination
+            rowsPerPageOptions={[10, 20, 30]}
+            component="div"
+            count={environmentList.length}
+            rowsPerPage={rpg}
+            page={pg}
+            className="access-control-pagination"
+            onPageChange={this.handleChangePage}
+            onRowsPerPageChange={this.handleChangeRowsPerPage}
+          />
+        ) : (
+          <></>
+        )}
+      </>
     );
   };
 
@@ -104,33 +126,36 @@ class AssetsTable extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    const { tagShowMenu, tagShowMenuList } = this.state;
+    const { tagShowMenu, tagShowMenuList, rpg, pg } = this.state;
     let environmentList = this.props.data || [];
+
     return (
       <TableBody>
         {environmentList.length ? (
-          environmentList.map((environment, index) => {
-            let {
-              name,
-              elementType,
-              landingZone,
-              productEnclave,
-              tagStatusClass,
-              logClass,
-              traceClass,
-              eventClass,
-            } = environment;
-            return (
-              <TableRow key={v4()}>
-                <TableCell align="left">
-                  <HtmlTooltip className="table-tooltip" title={name}>
-                    <Box className="resource-name">{name}</Box>
-                  </HtmlTooltip>
-                </TableCell>
-                <TableCell align="left">{elementType}</TableCell>
-                <TableCell align="left">{landingZone}</TableCell>
-                <TableCell align="left">{productEnclave}</TableCell>
-                {/* <TableCell align="center">
+          environmentList
+            .slice(pg * rpg, pg * rpg + rpg)
+            .map((environment, index) => {
+              let {
+                name,
+                elementType,
+                landingZone,
+                productEnclave,
+                tagStatusClass,
+                logClass,
+                traceClass,
+                eventClass,
+              } = environment;
+              return (
+                <TableRow key={v4()}>
+                  <TableCell align="left">
+                    <HtmlTooltip className="table-tooltip" title={name}>
+                      <Box className="resource-name">{name}</Box>
+                    </HtmlTooltip>
+                  </TableCell>
+                  <TableCell align="left">{elementType}</TableCell>
+                  <TableCell align="left">{landingZone}</TableCell>
+                  <TableCell align="left">{productEnclave}</TableCell>
+                  {/* <TableCell align="center">
                   <Box className={tagStatusClass || "tag"}>
                     <i
                       className={tagStatusClass ? "fas fa-cog" : "fas fa-tag"}
@@ -181,7 +206,7 @@ class AssetsTable extends Component {
                     ></i>
                   </span>
                 </TableCell> */}
-                {/* <TableCell align="center">
+                  {/* <TableCell align="center">
                   <button
                     type="button"
                     className="list-icon"
@@ -209,9 +234,9 @@ class AssetsTable extends Component {
                     <></>
                   )}
                 </TableCell> */}
-              </TableRow>
-            );
-          })
+                </TableRow>
+              );
+            })
         ) : (
           <TableRow>
             <TableCell colSpan={12}>
@@ -225,6 +250,14 @@ class AssetsTable extends Component {
         )}
       </TableBody>
     );
+  };
+
+  handleChangePage = (event, newpage) => {
+    this.setState({ pg: newpage });
+  };
+
+  handleChangeRowsPerPage = (event) => {
+    this.setState({ pg: 0, rpg: parseInt(event.target.value, 10) });
   };
   render() {
     const { showAssetsSetUpModal } = this.state;

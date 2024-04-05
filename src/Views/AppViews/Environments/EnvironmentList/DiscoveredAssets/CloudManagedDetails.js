@@ -294,7 +294,7 @@ class CloudManagedDetails extends React.Component {
               <HtmlTooltip className="table-tooltip" title={item.elementType}>
                 <label>{item.elementType}</label>
               </HtmlTooltip>
-              <strong>{item.totalRecord}1</strong>
+              <strong>{item.totalRecord}</strong>
             </Box>
           </Box>
         );

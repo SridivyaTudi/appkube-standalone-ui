@@ -483,10 +483,9 @@ class EcsCluster extends React.Component {
                         </TableCell>
                         <TableCell align="center">${row.cost}</TableCell>
                         <TableCell align="center">
-                          <IconButton
-                            className="action-btn"
-                            aria-label="morevertIcon"
-                            size="small"
+                          <button
+                            type="button"
+                            className="list-icon"
                             onClick={() =>
                               isRbacPermission ? (
                                 this.handleActionButton(index)
@@ -496,8 +495,8 @@ class EcsCluster extends React.Component {
                             }
                             disabled={!isRbacPermission}
                           >
-                            <MoreVertIcon fontSize="small" />
-                          </IconButton>
+                            <i className="fas fa-ellipsis-v"></i>
+                          </button>
                           {actionButton === index && (
                             <>
                               <Box className="action-buttons">
