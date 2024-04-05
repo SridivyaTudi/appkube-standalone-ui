@@ -67,7 +67,7 @@ class AssetsTable extends Component {
     ) : (
       <>
         <TableContainer className="table">
-          <Table style={{ minWidth: 1200 }}>
+          <Table style={{ minWidth: 1320 }}>
             {this.renderTableHead()}
             {this.renderTableBody()}
           </Table>
