@@ -178,7 +178,7 @@ class DiscoveredAssetsComponent extends Component {
             name: assest.instanceName,
             elementType: assest.elementType,
             landingZone: assest.landingZone,
-            productEnclave: assest.productEnclaveId,
+            productEnclave: assest.productEnclaveInstanceId,
           });
         }
       });
