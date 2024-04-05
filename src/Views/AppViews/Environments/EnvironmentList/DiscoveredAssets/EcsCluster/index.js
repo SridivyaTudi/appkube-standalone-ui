@@ -23,6 +23,17 @@ import { v4 } from "uuid";
 import { USER_RBAC_TYPE } from "CommonData";
 import RBAC_MAPPING from "Utils/RbacMapping";
 import CheckRbacPerMission from "Views/AppViews/Rbac";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+const [anchorEl, setAnchorEl] = React.useState(null);
+const open = Boolean(anchorEl);
+const handleClick = (event) => {
+  setAnchorEl(event.currentTarget);
+};
+const handleClose = () => {
+  setAnchorEl(null);
+};
+
 class EcsCluster extends React.Component {
   constructor(props) {
     super(props);
@@ -483,7 +494,37 @@ class EcsCluster extends React.Component {
                         </TableCell>
                         <TableCell align="center">${row.cost}</TableCell>
                         <TableCell align="center">
-                          <button
+                          <Box>
+                            <IconButton
+                              aria-label="more"
+                              id="long-button"
+                              aria-controls={open ? "long-menu" : undefined}
+                              aria-expanded={open ? "true" : undefined}
+                              aria-haspopup="true"
+                              onClick={handleClick}
+                            >
+                              <MoreVertIcon />
+                            </IconButton>
+                            <Menu
+                              id="long-menu"
+                              MenuListProps={{
+                                "aria-labelledby": "long-button",
+                              }}
+                              anchorEl={anchorEl}
+                              open={open}
+                              onClose={handleClose}
+                            
+                            >
+                              <MenuItem onClick={handleClose}>
+                                <label>fwiufwuf</label>
+                                <label>fwiufwuf</label>
+                                <label>fwiufwuf</label>
+                                <label>fwiufwuf</label>
+                              </MenuItem>
+                            </Menu>
+                          </Box>
+
+                          {/* <button
                             type="button"
                             className="list-icon"
                             onClick={() =>
@@ -496,7 +537,7 @@ class EcsCluster extends React.Component {
                             disabled={!isRbacPermission}
                           >
                             <i className="fas fa-ellipsis-v"></i>
-                          </button>
+                          </button> */}
                           {actionButton === index && (
                             <>
                               <Box className="action-buttons">
