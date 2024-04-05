@@ -23,8 +23,8 @@ import { v4 } from "uuid";
 import { USER_RBAC_TYPE } from "CommonData";
 import RBAC_MAPPING from "Utils/RbacMapping";
 import CheckRbacPerMission from "Views/AppViews/Rbac";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+
+
 
 class EcsCluster extends React.Component {
   constructor(props) {
@@ -228,16 +228,10 @@ class EcsCluster extends React.Component {
       rpg: 10,
       actionButton: null,
       activeTierTab: "3Tier",
-      anchorEl: null,
     };
   }
 
-  handleClick = (event) => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
+ 
   handleChangePage = (event, newpage) => {
     this.setState({ pg: newpage });
   };
@@ -493,45 +487,7 @@ class EcsCluster extends React.Component {
                         </TableCell>
                         <TableCell align="center">${row.cost}</TableCell>
                         <TableCell align="center">
-                          <Box>
-                            <IconButton
-                              aria-label="more"
-                              id="long-button"
-                              aria-controls={
-                                this.state.anchorEl ? "long-menu" : undefined
-                              }
-                              aria-expanded={
-                                this.state.anchorEl ? "true" : undefined
-                              }
-                              aria-haspopup="true"
-                              onClick={this.handleClick}
-                            >
-                              <MoreVertIcon />
-                            </IconButton>
-                            <Menu
-                              id="demo-positioned-menu"
-                              aria-labelledby="demo-positioned-button"
-                              anchorEl={this.state.anchorEl}
-                              open={this.state.anchorEl}
-                              onClose={this.handleClose}
-                              anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "left",
-                              }}
-                              transformOrigin={{
-                                vertical: "top",
-                                horizontal: "left",
-                              }}
-                            >
-                              <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                              <MenuItem onClick={this.handleClose}>
-                                My account
-                              </MenuItem>
-                              <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-                            </Menu>
-                          </Box>
-
-                          {/* <button
+                          <button
                             type="button"
                             className="list-icon"
                             onClick={() =>
@@ -544,7 +500,7 @@ class EcsCluster extends React.Component {
                             disabled={!isRbacPermission}
                           >
                             <i className="fas fa-ellipsis-v"></i>
-                          </button> */}
+                          </button>
                           {actionButton === index && (
                             <>
                               <Box className="action-buttons">
