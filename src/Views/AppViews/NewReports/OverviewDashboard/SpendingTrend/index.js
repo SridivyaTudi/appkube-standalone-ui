@@ -104,7 +104,7 @@ class SpendingTrend extends Component {
       const weeks = ["Week1", "Week2", "Week3", "Week4", "Week5"];
       return weeks;
     } else if (selectedGranularity === "quarterly") {
-      const quarter = ["month1", "month2", "month3"];
+      const quarter = ["Month1", "Month2", "Month3"];
       return quarter;
     } else if (selectedGranularity === "yearly") {
       const months = [
@@ -241,8 +241,9 @@ class SpendingTrend extends Component {
   };
 
   renderMultipleChart = (chartData) => {
+    let { selectedGranularity } = this.state;
     if (Object.values(chartData).length > 0) {
-      return <GroupedBarplotChart data={Object.values(chartData)} />;
+      return <GroupedBarplotChart data={Object.values(chartData)} granularity={selectedGranularity} />;
     } else {
       return null;
     }

@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 
 let margin = { top: 0, right: 0, bottom: 0, left: 0 },
   width = 1200 - margin.left - margin.right,
-  height = 300 - margin.top - margin.bottom;
+  height = 335 - margin.top - margin.bottom;
 
 class GroupedBarplotChart extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class GroupedBarplotChart extends Component {
       this.renderChart();
     }
   };
-  
+
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.data !== this.props.data &&
@@ -45,7 +45,14 @@ class GroupedBarplotChart extends Component {
     const height = 300;
     const barPadding = 0.5;
     const axisTicks = { qty: 5, outerSize: 0, dateFormat: "%m-%d" };
-
+    let tooltip = d3
+      .select("#root")
+      .data(data)
+      .append("div")
+      .attr("class", "chart-tooltip")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden");
     const svg = d3
       .select(this.ref.current)
       .append("svg")
@@ -97,10 +104,7 @@ class GroupedBarplotChart extends Component {
         .enter()
         .append("rect")
         .attr("class", `bar ${barItem}`)
-        .style(
-          "fill",
-          ["#8676FF", "#FF2D2E", ...this.randomHexColorCode()][index]
-        )
+        .style("fill", ["#8676FF", "#FF2D2E", "#f9d33d"][index])
         .attr("x", (d) => xScale1(barItem) + 4)
         .attr("y", (d) => {
           return yScale(d[barItem]);
@@ -110,6 +114,20 @@ class GroupedBarplotChart extends Component {
         .attr("ry", 3)
         .attr("height", (d) => {
           return height - margin.top - margin.bottom - yScale(d[barItem]);
+        })
+        .on("mouseover", function (d, data) {
+          tooltip.html(
+            `<div class="chart-tooltip-contents"><div class="value">${data[barItem]}</div></div>`
+          );
+          return tooltip.style("visibility", "visible");
+        })
+        .on("mousemove", function (d) {
+          return tooltip
+            .style("top", d.pageY - 10 + "px")
+            .style("left", d.pageX + 10 + "px");
+        })
+        .on("mouseout", function () {
+          return tooltip.style("visibility", "hidden");
         });
     });
 
@@ -122,6 +140,44 @@ class GroupedBarplotChart extends Component {
 
     // Add the Y Axis
     svg.append("g").attr("class", "y axis").call(yAxis);
+    //   legend area
+    const legend = svg
+      .append("g")
+      .attr("class", "legend")
+      .attr("transform", `translate(${width / 2.8},${height - height / 3})`);
+
+    const lg = legend
+      .selectAll("g")
+      .data(restKey)
+      .enter()
+      .append("g")
+      .attr("class", "legendGroup")
+      .attr("transform", (d, i) => {
+        return `translate(${170 * i},80)`;
+      });
+
+    lg.append("rect")
+      .attr("fill", (d, index) => {
+        return ["#8676FF", "#FF2D2E", "#f9d33d"][index];
+      })
+      //   legend circles
+      .attr("x", -70)
+      .attr("y", 32 - 10)
+      .attr("width", 7)
+      .attr("height", 7)
+      .attr("rx", 4)
+      .append("title");
+
+    //   legend text
+    lg.append("text")
+      .style("font-family", "'Poppins', sans-serif")
+      .style("font-size", "17px").style('text-transform','capitalize')
+      .attr("x", -60)
+      .attr("y", 30)
+      .text((d, index) => {
+        let name = restKey[index]
+        return `${restKey[index]} ${this.props.granularity}`;
+      });
   };
 
   render() {

@@ -93,22 +93,38 @@ class LineChart extends Component {
       .attr("fill", "none")
       .attr("stroke", color || "steelblue")
       .attr("d", valueline)
-      // .on("mouseover", function (d, data, index) {
-      //   console.log(d.target.id, data, index);
-      //   tooltip.html(
-      //     `<div class="chart-tooltip-contents"><div class="value">${d.target.id}</div></div>`
-      //   );
-      //   return tooltip.style("visibility", "visible");
-      // })
-      // .on("mousemove", function (d) {
-      //   return tooltip
-      //     .style("top", d.pageY - 10 + "px")
-      //     .style("left", d.pageX + 10 + "px");
-      // })
-      // .on("mouseout", function () {
-      //   return tooltip.style("visibility", "hidden");
-      // });
+  
 
+      svg
+      .selectAll(".dot")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("class", "dot")
+      .style("fill", "none")
+      .style("pointer-events", "all")
+      .attr("cx", (d) => x(new Date(d.date)))
+      .attr("cy", (d) => y(d.value))
+      .attr("r", 5)
+      .on("mouseover", function (d, data, index) {
+        let date = getFormattedDate(data.date);
+        if (date) {
+          date = date?.split(" ");
+          date = date[0];
+        }
+        tooltip.html(
+          `<div class="chart-tooltip-contents"><div class="value">${date} - $${data.value}</div></div>`
+        );
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (d) {
+        return tooltip
+          .style("top", d.pageY - 10 + "px")
+          .style("left", d.pageX + 10 + "px");
+      })
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
     // Add the X Axis
     svg
       .append("g")
