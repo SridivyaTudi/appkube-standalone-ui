@@ -264,13 +264,45 @@ class EcsCluster extends React.Component {
   }
 
   checkRbacPermission = () => {
-    const { ADMIN, PRODUCT_OWNERS } = USER_RBAC_TYPE;
-    const { CLONE_PRODUCT_ENVIRONMENT, DELETE_PRODUCT_ENVIRONMENT } =
-      RBAC_MAPPING;
+    const { ADMIN, PRODUCT_OWNERS, DEV_SEC_OPS } = USER_RBAC_TYPE;
+    const {
+      ADD_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
+      EDIT_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
+      DELETE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
+      REPLICATE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
+
+      ADD_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
+      EDIT_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
+      DELETE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
+      REPLICATE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
+    } = RBAC_MAPPING;
 
     const permissions = {
-      [CLONE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
-      [DELETE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
+      [ADD_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT]: [
+        ADMIN,
+        PRODUCT_OWNERS,
+        DEV_SEC_OPS,
+      ],
+      [EDIT_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT]: [
+        ADMIN,
+        PRODUCT_OWNERS,
+        DEV_SEC_OPS,
+      ],
+      [DELETE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT]: [
+        ADMIN,
+        PRODUCT_OWNERS,
+        DEV_SEC_OPS,
+      ],
+      [REPLICATE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT]: [
+        ADMIN,
+        PRODUCT_OWNERS,
+        DEV_SEC_OPS,
+      ],
+
+      [ADD_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
+      [EDIT_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
+      [DELETE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
+      [REPLICATE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
     };
 
     return CheckRbacPerMission(permissions);
@@ -293,6 +325,8 @@ class EcsCluster extends React.Component {
       },
     }));
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
+
+    const isRbacPermission = this.checkRbacPermission();
     return (
       <Box className="environment-container environmentlist cluster-container">
         <Box className="list-heading">
@@ -300,7 +334,9 @@ class EcsCluster extends React.Component {
           <Box className="breadcrumbs">
             <ul>
               <li>
-                <Link to={`${APP_PREFIX_PATH}/assets/environments`}>Environments</Link>
+                <Link to={`${APP_PREFIX_PATH}/assets/environments`}>
+                  Environments
+                </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>
@@ -451,7 +487,14 @@ class EcsCluster extends React.Component {
                             className="action-btn"
                             aria-label="morevertIcon"
                             size="small"
-                            onClick={() => this.handleActionButton(index)}
+                            onClick={() =>
+                              isRbacPermission ? (
+                                this.handleActionButton(index)
+                              ) : (
+                                <></>
+                              )
+                            }
+                            disabled={!isRbacPermission}
                           >
                             <MoreVertIcon fontSize="small" />
                           </IconButton>
@@ -605,7 +648,14 @@ class EcsCluster extends React.Component {
                           className="action-btn"
                           aria-label="morevertIcon"
                           size="small"
-                          onClick={() => this.handleActionButton(index)}
+                          onClick={() =>
+                            isRbacPermission ? (
+                              this.handleActionButton(index)
+                            ) : (
+                              <></>
+                            )
+                          }
+                          disabled={!isRbacPermission}
                         >
                           <MoreVertIcon fontSize="small" />
                         </IconButton>
