@@ -23,6 +23,9 @@ import { v4 } from "uuid";
 import { USER_RBAC_TYPE } from "CommonData";
 import RBAC_MAPPING from "Utils/RbacMapping";
 import CheckRbacPerMission from "Views/AppViews/Rbac";
+
+
+
 class EcsCluster extends React.Component {
   constructor(props) {
     super(props);
@@ -228,6 +231,7 @@ class EcsCluster extends React.Component {
     };
   }
 
+ 
   handleChangePage = (event, newpage) => {
     this.setState({ pg: newpage });
   };

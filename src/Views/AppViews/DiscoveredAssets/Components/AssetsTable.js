@@ -7,7 +7,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  TablePagination,
+  TablePagination,ListItem,List
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
@@ -97,11 +97,11 @@ class AssetsTable extends Component {
           <TableCell align="left">Element Type</TableCell>
           <TableCell align="left">Landing Zone</TableCell>
           <TableCell align="left">Product Enclave</TableCell>
-          {/* <TableCell align="center">Tag Status</TableCell>
+          <TableCell align="center">Tag Status</TableCell>
           <TableCell align="center">Log</TableCell>
           <TableCell align="center">Trace</TableCell>
-          <TableCell align="center">Event</TableCell> */}
-          {/* <TableCell align="center">Actions</TableCell> */}
+          <TableCell align="center">Event</TableCell> 
+           <TableCell align="center">Actions</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -155,7 +155,7 @@ class AssetsTable extends Component {
                   <TableCell align="left">{elementType}</TableCell>
                   <TableCell align="left">{landingZone}</TableCell>
                   <TableCell align="left">{productEnclave}</TableCell>
-                  {/* <TableCell align="center">
+                  <TableCell align="center">
                   <Box className={tagStatusClass || "tag"}>
                     <i
                       className={tagStatusClass ? "fas fa-cog" : "fas fa-tag"}
@@ -205,8 +205,8 @@ class AssetsTable extends Component {
                       className={eventClass ? "fas fa-times" : "fas fa-check"}
                     ></i>
                   </span>
-                </TableCell> */}
-                  {/* <TableCell align="center">
+                </TableCell>
+                 <TableCell align="center">
                   <button
                     type="button"
                     className="list-icon"
@@ -233,7 +233,7 @@ class AssetsTable extends Component {
                   ) : (
                     <></>
                   )}
-                </TableCell> */}
+                </TableCell>
                 </TableRow>
               );
             })
