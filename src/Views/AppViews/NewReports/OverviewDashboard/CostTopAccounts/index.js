@@ -22,8 +22,12 @@ import { getCostTopAccountsDetails } from "Redux/Reports/ReportsThunk";
 import APIstatus from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import Loader from "Components/Loader";
-import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
-import { getCurrentOrgId } from "Utils";
+import {
+  GRANULARITY_DROPDOWN_DATA,
+  GRANULARITY_TYPE,
+  REPORT_PAGE_TYPE,
+} from "CommonData";
+import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
 
 const renderLoader = () => {
   return (
@@ -33,32 +37,14 @@ const renderLoader = () => {
   );
 };
 
-let timeSpendData = [
-  {
-    name: "Last Quarter Spend",
-    value: "$90,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-  {
-    name: "Quarter to date spend ",
-    value: "$70,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-  {
-    name: "Forecasted Spend ",
-    value: "$90,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-  {
-    name: "Avg Daily Spend",
-    value: "$90,000",
-    percentage: "5",
-    subName: " vs Last Quarter",
-  },
-];
+// let timeSpendData = [
+//   {
+//     name: "Last Quarter Spend",
+//     value: "$90,000",
+//     percentage: "5",
+//     subName: " vs Last Quarter",
+//   },
+// ];
 
 class CostTopAccounts extends Component {
   constructor(props) {
@@ -75,7 +61,7 @@ class CostTopAccounts extends Component {
   componentDidMount() {
     this.props.getCostTopAccountsDetails({
       params: {
-        cloud: "aws",
+        cloud: ENVIRONMENTS.AWS.toLowerCase(),
         granularity: this.state.selectedGranularity,
         compareTo: "-1",
       },
@@ -89,7 +75,7 @@ class CostTopAccounts extends Component {
       this.props.costTopAccountsDetailList.status
     ) {
       if (this.props.costTopAccountsDetailList.status === APIstatus.SUCCESS) {
-        this.setState({ accounts: this.props.costTopAccountsDetailList?.data });
+        this.manipluateData(this.props.costTopAccountsDetailList?.data);
       }
     }
   }
@@ -117,10 +103,7 @@ class CostTopAccounts extends Component {
     let { accounts } = this.state;
     return (
       <TableBody>
-        {this.props.costTopAccountsDetailList.status ===
-        APIstatus.IN_PROGRESS ? (
-          renderLoader()
-        ) : accounts?.length ? (
+        {accounts?.length ? (
           accounts.map((details) => {
             return (
               <TableRow key={v4()}>
@@ -137,8 +120,21 @@ class CostTopAccounts extends Component {
                 <TableCell>{details.highSpendingRegion}</TableCell>
                 <TableCell align="center">{details.spending}</TableCell>
                 <TableCell align="center">
-                  <Box className="variance-count red">
-                    {details.variance} <i class="fas fa-sort-down p-l-5"></i>
+                  <Box
+                    className={`variance-count ${
+                      details.variance > 0 ? "" : "red"
+                    }`}
+                  >
+                    {details.variance}{" "}
+                    {details.variance ? (
+                      details.variance > 0 ? (
+                        <i className="fas fa-sort-up p-l-5 " />
+                      ) : (
+                        <i className="fas fa-sort-down p-l-5" />
+                      )
+                    ) : (
+                      <></>
+                    )}
                   </Box>
                 </TableCell>
                 <TableCell align="center">{details.budget}</TableCell>
@@ -220,7 +216,7 @@ class CostTopAccounts extends Component {
     if (selectedGranularity !== this.state.selectedGranularity) {
       this.props.getCostTopAccountsDetails({
         params: {
-          cloud: "aws",
+          cloud: ENVIRONMENTS.AWS.toLowerCase(),
           granularity: selectedGranularity,
           compareTo: "-1",
         },
@@ -230,9 +226,46 @@ class CostTopAccounts extends Component {
     }
   };
 
+  //manipluate compute data
+  manipluateData = (data, isReturnData = 0) => {
+    let { accounts, timerSpendData, selectedGranularity } = this.state;
+    accounts = [];
+    timerSpendData = [];
+    if (data.length) {
+      data.forEach((details) => {
+        let isOverviewDetails = Object.keys(
+          REPORT_PAGE_TYPE.SERVICE_NAMES
+        ).includes(details.accountId.toUpperCase());
+
+        if (isOverviewDetails) {
+          let name = REPORT_PAGE_TYPE.SERVICE_NAMES[
+            details.accountId.toUpperCase()
+          ].replace("#granularity#", selectedGranularity);
+
+          timerSpendData.push({
+            name,
+            value: `$${details.spending ? details.spending : 0}`,
+            percentage: details.variance,
+            subName: " vs Last " + selectedGranularity,
+          });
+        } else {
+          accounts.push(details);
+        }
+      });
+    }
+    if (isReturnData) {
+      return { accounts, timerSpendData };
+    } else {
+      this.setState({ accounts, timerSpendData });
+    }
+  };
   render() {
-    let { searchedKey, showSelectFilterModal, isSelectDepartmentOpen } =
-      this.state;
+    let {
+      searchedKey,
+      showSelectFilterModal,
+      isSelectDepartmentOpen,
+      timerSpendData,
+    } = this.state;
     return (
       <Box className="new-reports-container">
         <Box className="list-heading">
@@ -290,33 +323,38 @@ class CostTopAccounts extends Component {
             />
           </Box>
         </Box>
-        <Box className="reports-tab-section m-t-4">
-          <TimeSpendComponent data={timeSpendData} />
-          <Box className="table-head">
-            <h4 className="m-t-0 m-b-0">Overview of Top 5 Accounts</h4>
-            <Box className="search m-r-0">
-              <input
-                type="text"
-                className="input"
-                placeholder="Search Insatnce "
-                value={searchedKey}
-                onChange={this.handleSearchChange}
-                autoFocus="autoFocus"
-              />
-              <button className="button">
-                <SearchOutlinedIcon />
-              </button>
+        {this.props.costTopAccountsDetailList.status ===
+        APIstatus.IN_PROGRESS ? (
+          renderLoader()
+        ) : (
+          <Box className="reports-tab-section m-t-4">
+            <TimeSpendComponent data={timerSpendData} />
+            <Box className="table-head">
+              <h4 className="m-t-0 m-b-0">Overview of Top 5 Accounts</h4>
+              <Box className="search m-r-0">
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Search Insatnce "
+                  value={searchedKey}
+                  onChange={this.handleSearchChange}
+                  autoFocus="autoFocus"
+                />
+                <button className="button">
+                  <SearchOutlinedIcon />
+                </button>
+              </Box>
+            </Box>
+            <Box className="new-reports-table">
+              <TableContainer className="table">
+                <Table style={{ minWidth: 1500 }}>
+                  {this.renderTableHead()}
+                  {this.renderTableBody()}
+                </Table>
+              </TableContainer>
             </Box>
           </Box>
-          <Box className="new-reports-table">
-            <TableContainer className="table">
-              <Table style={{ width: 1500 }}>
-                {this.renderTableHead()}
-                {this.renderTableBody()}
-              </Table>
-            </TableContainer>
-          </Box>
-        </Box>
+        )}
         {showSelectFilterModal ? (
           <SelectFilterModal
             showModal={showSelectFilterModal}

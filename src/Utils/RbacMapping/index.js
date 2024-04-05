@@ -58,6 +58,23 @@ const RBAC_MAPPING = {
     "Perform code scanning for sonar complaince",
   PERFORM_BDD_TESTS_ON_SERVICE: "Perform bdd tests on service",
   PERFORM_ATP_TESTS_ON_SERVICE: "Perform atp tests on service",
+  
+  ADD_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT:
+    "Add Service in Non-Prod Product Environment",
+  EDIT_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT:
+    "Edit Service in Non-Prod Product Environment",
+  DELETE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT:
+    "Delete Service in Non-Prod Product Environment",
+  REPLICATE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT:
+    "Replicate Service in Non-Prod Product Environment",
+  ADD_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT:
+    "Add Service in Prod Product Environment",
+  EDIT_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT:
+    "Edit Service in Prod Product Environment",
+  DELETE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT:
+    "Delete Service in Prod Product Environment",
+  REPLICATE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT:
+    "Replicate Service in Prod Product Environment",
 };
 
 export default RBAC_MAPPING;

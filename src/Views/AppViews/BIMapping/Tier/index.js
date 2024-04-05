@@ -198,8 +198,10 @@ class Tier extends Component {
 
   // Redirect of the page
   redirectPage = () => {
-    let { name, id } = this.getUrlDetails();
-    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${name}/${id}`);
+    let { name, id, landingZoneId } = this.getUrlDetails();
+    this.props.navigate(
+      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}`
+    );
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -359,7 +361,8 @@ class Tier extends Component {
 
   // Click on deployed card
   onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
-    this.props.getInstancesServices({ cloudName, elementType });
+    let { landingZoneId } = this.getUrlDetails();
+    this.props.getInstancesServices({ cloudName, elementType, landingZoneId });
     this.setState({
       selectedDeployedInstance,
       selectedInstance: -1,
@@ -615,7 +618,8 @@ class Tier extends Component {
   getUrlDetails() {
     let name = this.props.params.name;
     let id = this.props.params.id;
-    return { name, id };
+    let landingZoneId = this.props.params.landingZoneId;
+    return { name, id, landingZoneId };
   }
 
   // Click on edit btn.
@@ -722,7 +726,7 @@ class Tier extends Component {
 
   // Render heading
   renderHeading = () => {
-    let { name, id } = this.getUrlDetails();
+    let { name, id, landingZoneId } = this.getUrlDetails();
     return (
       <Box className="list-heading">
         <h3>3 Tier</h3>
@@ -734,7 +738,9 @@ class Tier extends Component {
             </li>
             <li
               onClick={() =>
-                this.props.navigate(`/app/bim/add-product/${name}/${id}`)
+                this.props.navigate(
+                  `/app/bim/add-product/${name}/${id}/${landingZoneId}`
+                )
               }
             >
               Add Product

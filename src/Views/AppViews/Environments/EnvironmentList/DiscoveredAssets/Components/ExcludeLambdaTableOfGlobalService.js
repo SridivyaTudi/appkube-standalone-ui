@@ -7,8 +7,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TablePagination,
-  Button,
+  TablePagination,Button
 } from "@mui/material";
 import { v4 } from "uuid";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -34,7 +33,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-class LambdaTable extends Component {
+class ExcludeLambdaTableOfGlobalService extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -50,24 +49,6 @@ class LambdaTable extends Component {
   handleChangeRowsPerPage = (event) => {
     this.setState({ pg: 0, rpg: parseInt(event.target.value, 10) });
   };
-
-  /** Render table level-1 data . */
-  renderTableData() {
-    let { data } = this.state;
-    return data.map((datas, index) => {
-      return (
-        <TableRow key={v4()}>
-          <TableCell align="center">{datas.resources}</TableCell>
-          <TableCell align="center">{datas.resourcesType}</TableCell>
-          <TableCell align="center">{datas.primaryResources}</TableCell>
-          <TableCell align="center">{datas.failureResources}</TableCell>
-          <TableCell align="center">
-            <Box className="done">{datas.status}</Box>
-          </TableCell>
-        </TableRow>
-      );
-    });
-  }
   getExplorerLink = (elementType, id) => {
     let element = elementType.toUpperCase();
     return `${
@@ -83,11 +64,12 @@ class LambdaTable extends Component {
     const { pg, rpg } = this.state;
     const { title } = this.props;
     const { tableData } = this.props;
+
     if (!tableData.length) {
       return (
         <Box className="lambda-functions-container">
           <Box className="heading">
-            <h4> {title ? `${title} Functions` : "Lambda Functions"}</h4>
+            <h4> {`${title} Functions`}</h4>
           </Box>
           <Box className="lambda-functions-table-section">
             <h3>No Data available!</h3>
@@ -95,28 +77,24 @@ class LambdaTable extends Component {
         </Box>
       );
     }
+
     return (
       <Box className="lambda-functions-container">
         <Box className="heading">
-          <h4>{title ? `${title} Functions` : "Lambda Functions"}</h4>
+          <h4>{`${title} Functions`}</h4>
         </Box>
         <Box className="lambda-functions-table-section">
           <TableContainer className="table">
             <Table className="lambda-functions-table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Function name</TableCell>
-                  <TableCell align="center">Response time</TableCell>
-                  <TableCell align="center">Duration</TableCell>
-                  <TableCell align="center">Invocations</TableCell>
-                  <TableCell align="center">Throttles</TableCell>
-                  <TableCell align="center">Errors</TableCell>
-                  <TableCell align="center">Latency</TableCell>
-                  <TableCell align="center">Network received</TableCell>
-                  <TableCell align="center">Requests</TableCell>
-                  <TableCell align="center">Product</TableCell>
-                  <TableCell align="center">Environment</TableCell>
-                  <TableCell align="center">Actions</TableCell>
+                  <TableCell>Instance Id</TableCell>
+                  <TableCell align="center">Landing Zone</TableCell>
+                  <TableCell align="center">Element Type</TableCell>
+                  <TableCell align="center">
+                    Product Enclave InstanceId
+                  </TableCell>
+                  <TableCell align="center">Service Category</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -125,7 +103,7 @@ class LambdaTable extends Component {
                     <TableCell className="functionid">
                       <HtmlTooltip
                         className="table-tooltip"
-                        title={row.functionName}
+                        title={row.instanceId}
                       >
                         <Button className="link-btn"
                           component={Link}
@@ -135,35 +113,16 @@ class LambdaTable extends Component {
                             !ELEMENT_EXPLORER_MAPPING[title.toUpperCase()]
                           }
                         >
-                          <p>{row.functionName}</p>
+                         <p>{row.instanceId}</p>
                         </Button>
                       </HtmlTooltip>
                     </TableCell>
-                    <TableCell align="center">{row.responseTime}</TableCell>
-                    <TableCell align="center">{row.duration}</TableCell>
-                    <TableCell align="center">{row.invocations}</TableCell>
-                    <TableCell align="center">{row.throttles}</TableCell>
-                    <TableCell align="center">{row.errors}</TableCell>
-                    <TableCell align="center">{row.latency}</TableCell>
-                    <TableCell align="center">{row.networkReceived}</TableCell>
-                    <TableCell align="center">{row.requests}</TableCell>
-                    <TableCell align="center" className="productid">
-                      <HtmlTooltip
-                        className="table-tooltip"
-                        title={row.product}
-                      >
-                        <span> {row.product}</span>
-                      </HtmlTooltip>
+                    <TableCell align="center">{row.landingZone}</TableCell>
+                    <TableCell align="center">{row.elementType}</TableCell>
+                    <TableCell align="center">
+                      {row.productEnclaveInstanceId || "-"}
                     </TableCell>
-                    <TableCell align="center" className="productid">
-                      <HtmlTooltip
-                        className="table-tooltip"
-                        title={row.environment}
-                      >
-                        <span> {row.environment} </span>
-                      </HtmlTooltip>
-                    </TableCell>
-                    <TableCell align="center">{row.actions}</TableCell>
+                    <TableCell align="center">{row.serviceCategory}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -185,4 +144,4 @@ class LambdaTable extends Component {
   }
 }
 
-export default LambdaTable;
+export default ExcludeLambdaTableOfGlobalService;

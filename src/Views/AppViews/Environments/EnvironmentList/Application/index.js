@@ -102,7 +102,7 @@ class Application extends Component {
         <TableRow key={v4()}>
           <TableCell align="left" className="p-l-15">
             <Link
-              to={`${APP_PREFIX_PATH}/environments/${type}/topology?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&productName=${item.application}&departmentName=${item.lob}&environmentName=${item.environment}`}
+              to={`${APP_PREFIX_PATH}/assets/environments/${type}/topology?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&productName=${item.application}&departmentName=${item.lob}&environmentName=${item.environment}`}
               onClick={() => setActiveTabInEnvironmentData("application")}
             >
               <HtmlTooltip className="table-tooltip" title={item.application}>
@@ -314,9 +314,9 @@ class Application extends Component {
               </Box>
             </>
           ) : (
-            <>
+            <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
               <h4 style={{ textAlign: "center" }}>No Data Found! </h4>
-            </>
+            </Box>
           )}
         </Box>
       </>

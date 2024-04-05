@@ -11,8 +11,13 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { deleteSelectedInfraTopologyView, deleteActiveTab, deleteUrlDetailsOfPage } from "Utils";
+import {
+  deleteSelectedInfraTopologyView,
+  deleteActiveTab,
+  deleteUrlDetailsOfPage,
+} from "Utils";
 import { v4 } from "uuid";
+import { CleaningServices } from "@mui/icons-material";
 function SideBar() {
   let location = useLocation();
   let currentLocation = location.pathname;
@@ -26,6 +31,14 @@ function SideBar() {
 
   const toggleSubMenuOpenClose = () => {
     setActiveSubMenu(!isActiveSubMenu);
+  };
+
+  const isSubMenuActive = (link) => {
+    if (location) {
+      let pageName = "/" + location.pathname.split("/").pop();
+      return pageName === link;
+    }
+    return false;
   };
 
   return (
@@ -53,11 +66,13 @@ function SideBar() {
                 key={v4()}
               >
                 <Link
-                  to={`${APP_PREFIX_PATH + item.link}`}
+                  to={`${APP_PREFIX_PATH}${
+                    item?.subMenu?.[0]?.link ? item?.subMenu[0]?.link : item.link
+                  } `}
                   onClick={() => {
                     deleteSelectedInfraTopologyView();
                     deleteActiveTab();
-                    deleteUrlDetailsOfPage()
+                    deleteUrlDetailsOfPage();
                   }}
                 >
                   <span className={`icon ${Parser(item.icon)}`}></span>
@@ -98,7 +113,7 @@ function SideBar() {
                                 : ""
                             }`}
                           >
-                            <Link to={`${APP_PREFIX_PATH + subItem.link}`}>
+                            <Link to={`${APP_PREFIX_PATH}${subItem.link}`}>
                               {Parser(subItem.name)}
                               <span>
                                 <KeyboardArrowRightIcon fontSize="inherit" />

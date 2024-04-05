@@ -2,11 +2,6 @@ import React, { Component } from "react";
 import { Box } from "@mui/material";
 import TimeSpendComponent from "../../../Components/TimeSpendComponent";
 import ServiceIcon1 from "assets/img/report/service-icon1.png";
-import ServiceIcon2 from "assets/img/report/service-icon2.png";
-import ServiceIcon3 from "assets/img/report/service-icon3.png";
-import ServiceIcon4 from "assets/img/report/service-icon4.png";
-import ServiceIcon5 from "assets/img/report/service-icon5.png";
-import ServiceIcon6 from "assets/img/report/service-icon6.png";
 import SpendingTable from "Views/AppViews/NewReports/OverviewDashboard/Components/SpendingTable";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { getCurrentOrgId, ENVIRONMENTS } from "Utils";
@@ -77,11 +72,20 @@ class Other extends Component {
   renderLoder() {
     return (
       <Box className="reports-loader">
-      <Loader className="align-item-center justify-center w-100 h-100" />
-    </Box>
+        <Loader className="align-item-center justify-center w-100 h-100" />
+      </Box>
     );
   }
 
+  getTotalKey = (key) => {
+    let obj = {
+      TOTAL_LAST_MONT_SPEND: "lastMonthSpend",
+      TOTAL_THIS_MONT_SPEND: "thisMonthSpend",
+      FORECASTED_SPEND: "forecastedSpend",
+      AVG_DAILY_SPEND: "avgDailySpend",
+    };
+    return obj[key] || "";
+  };
   //manipluate compute data
   manipluateData = (data, isReturnData = 0) => {
     let { accounts, timerSpendData } = this.state;
@@ -98,9 +102,12 @@ class Other extends Component {
             details.serviceName.toUpperCase()
           ].replace("#granularity#", this.props.selectedGranularity);
 
+          let key = this.getTotalKey(details.serviceName.toUpperCase());
+          let value = details[key];
+
           timerSpendData.push({
             name,
-            value: `$${details.total || 0}`,
+            value: `$${value > 0 ? value : 0}`,
             percentage: details.variance,
             subName: " vs Last " + this.props.selectedGranularity,
           });
@@ -164,7 +171,10 @@ class Other extends Component {
                 </button>
               </Box>
             </Box>
-            <SpendingTable data={accounts} selectedGranularity={this.props.selectedGranularity} />
+            <SpendingTable
+              data={accounts}
+              selectedGranularity={this.props.selectedGranularity}
+            />
           </>
         )}
       </>

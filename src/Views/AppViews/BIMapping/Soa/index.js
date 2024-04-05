@@ -33,6 +33,7 @@ import {
   getCloudServices,
   getInstancesServices,
   createBiMapping,
+  getServicesFromServiceModule,
 } from "Redux/BIMapping/BIMappingThunk";
 import {
   PRODUCT_CATEGORY_ENUM,
@@ -48,7 +49,7 @@ import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import InstanceListCards from "Views/AppViews/BIMapping/Components/InstanceListCards";
 import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { LOGOS } from "CommonData";
+import { LOGOS, SERVICE_TYPE } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -185,15 +186,24 @@ class Soa extends Component {
       managementInfo: [],
       tempSoaData: [],
       activeServiceCategory: "",
+      commonServiceModules: [],
     };
   }
 
   componentDidMount = () => {
     window.addEventListener("load", this.redirectPage);
-    this.props.getBiServicesFromProductCategory({
-      productCategory: PRODUCT_CATEGORY_ENUM.SOA,
-    });
-    this.previousDataView();
+    let { serviceType, moduleName } = this.props.createProductFormData;
+    if (serviceType === SERVICE_TYPE.COMMON.toLowerCase()) {
+      this.props.getServicesFromServiceModule({ serviceType, moduleName });
+    } else {
+      this.props.getBiServicesFromProductCategory({
+        productCategory: PRODUCT_CATEGORY_ENUM.SOA,
+      });
+    }
+
+    this.manipulateCommonServiceData(
+      this.props.commonServiceModulesData?.data || []
+    ).then(() => this.previousDataView());
   };
 
   componentWillUnmount() {
@@ -202,8 +212,10 @@ class Soa extends Component {
 
   // Redirect page
   redirectPage = () => {
-    let { name, id } = this.getUrlDetails();
-    this.props.navigate(`${APP_PREFIX_PATH}/bim/add-product/${name}/${id}`);
+    let { name, id, landingZoneId } = this.getUrlDetails();
+    this.props.navigate(
+      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}`
+    );
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -214,6 +226,16 @@ class Soa extends Component {
       this.props.biServicesFromProductCategory?.data
     ) {
       let data = this.props.biServicesFromProductCategory?.data || [];
+      this.manipulateServiceData(data);
+    }
+
+    if (
+      prevProps.servicesFromServiceModuleData.status !==
+        this.props.servicesFromServiceModuleData.status &&
+      this.props.servicesFromServiceModuleData.status === status.SUCCESS &&
+      this.props.servicesFromServiceModuleData?.data
+    ) {
+      let data = this.props.servicesFromServiceModuleData?.data || [];
       this.manipulateServiceData(data);
     }
 
@@ -249,6 +271,18 @@ class Soa extends Component {
         );
       } else {
         ToastMessage.error("Creation Of Add BI-mapping Failed.");
+      }
+    }
+
+    if (
+      prevProps.commonServiceModulesData.status !==
+        this.props.commonServiceModulesData.status &&
+      this.props.commonServiceModulesData.status === status.SUCCESS
+    ) {
+      if (this.props.commonServiceModulesData?.data) {
+        this.manipulateCommonServiceData(
+          this.props.commonServiceModulesData?.data
+        );
       }
     }
   }
@@ -537,11 +571,12 @@ class Soa extends Component {
   // Redux data view
   previousDataView = () => {
     let { createProductFormData } = this.props;
+    let { commonServiceModules } = this.state;
 
     let editId = createProductFormData["editServiceId"];
     let soaData = createProductFormData["soaData"];
 
-    if (["search", "security"].includes(editId)) {
+    if (commonServiceModules.includes(editId)) {
       soaData.forEach((soa, index) => {
         if (soa.currentCommonService === editId) {
           editId = index;
@@ -581,6 +616,7 @@ class Soa extends Component {
       configInfo,
       managementInfo,
       editStatus,
+      commonServiceModules,
     } = this.state;
     let { createProductFormData } = this.props;
     let serviceName = "";
@@ -644,7 +680,7 @@ class Soa extends Component {
         JSON.stringify(createProductFormData.soaData || [])
       );
       let editId = createProductFormData["editServiceId"];
-      if (["search", "security"].includes(editId)) {
+      if (commonServiceModules.includes(editId)) {
         soaData.forEach((soa, index) => {
           if (soa.currentCommonService === editId) {
             editId = index;
@@ -688,9 +724,9 @@ class Soa extends Component {
         })
       );
       this.props.setProductIntoDepartment(passData);
-      let { name, id } = this.getUrlDetails();
+      let { name, id, landingZoneId } = this.getUrlDetails();
       this.props.navigate(
-        `/app/bim/add-product/${name}/${id}/product-category`
+        `/app/bim/add-product/${name}/${id}/${landingZoneId}/product-category`
       );
     }
   };
@@ -702,7 +738,8 @@ class Soa extends Component {
 
   // Click on deployed card
   onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
-    this.props.getInstancesServices({ cloudName, elementType });
+    let { landingZoneId } = this.getUrlDetails();
+    this.props.getInstancesServices({ cloudName, elementType, landingZoneId });
     this.setState({
       selectedDeployedInstance,
       selectedInstance: -1,
@@ -785,12 +822,13 @@ class Soa extends Component {
   getUrlDetails() {
     let name = this.props.params.name;
     let id = this.props.params.id;
-    return { name, id };
+    let landingZoneId = this.props.params.landingZoneId;
+    return { name, id, landingZoneId };
   }
 
   // Render heading
   renderHeading = () => {
-    let { name, id } = this.getUrlDetails();
+    let { name, id, landingZoneId } = this.getUrlDetails();
     return (
       <Box className="list-heading">
         <h3>Soa</h3>
@@ -802,7 +840,9 @@ class Soa extends Component {
             </li>
             <li
               onClick={() =>
-                this.props.navigate(`/app/bim/add-product/${name}/${id}`)
+                this.props.navigate(
+                  `/app/bim/add-product/${name}/${id}/${landingZoneId}`
+                )
               }
             >
               Add Product
@@ -813,7 +853,7 @@ class Soa extends Component {
             <li
               onClick={() =>
                 this.props.navigate(
-                  `/app/bim/add-product/${name}/${id}/product-category`
+                  `/app/bim/add-product/${name}/${id}/${landingZoneId}/product-category`
                 )
               }
             >
@@ -1148,6 +1188,19 @@ class Soa extends Component {
     );
   };
 
+  manipulateCommonServiceData = async (data) => {
+    let commonServiceModules = [];
+    if (data?.length) {
+      data.forEach((details) => {
+        if (!commonServiceModules.includes(details.serviceModule)) {
+          commonServiceModules.push(details.serviceModule);
+        }
+      });
+    }
+
+    this.setState({ commonServiceModules });
+  };
+
   render() {
     let {
       selectedInstance,
@@ -1165,7 +1218,7 @@ class Soa extends Component {
       createProductFormData,
       creationBiMapping,
     } = this.props;
-
+    console.log(createProductFormData);
     return (
       <Box className="bimapping-container">
         {this.renderHeading()}
@@ -1320,6 +1373,8 @@ function mapStateToProps(state) {
     cloudServices,
     instancesServices,
     creationBiMapping,
+    commonServiceModulesData,
+    servicesFromServiceModuleData,
   } = state.biMapping;
   return {
     biServicesFromProductCategory,
@@ -1327,6 +1382,8 @@ function mapStateToProps(state) {
     cloudServices,
     instancesServices,
     creationBiMapping,
+    commonServiceModulesData,
+    servicesFromServiceModuleData,
   };
 }
 
@@ -1336,6 +1393,7 @@ const mapDispatchToProps = {
   getInstancesServices,
   setProductIntoDepartment,
   createBiMapping,
+  getServicesFromServiceModule,
 };
 
 export default connect(

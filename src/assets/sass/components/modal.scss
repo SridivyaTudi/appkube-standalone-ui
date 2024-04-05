@@ -49,37 +49,46 @@
         color: #383874 !important;
         text-align: center !important;
         margin: 0px;
-        font-size: 14px;
-        font-weight: 600;
         padding: 0;
         line-height: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
-      }
-
-      button {
-        position: absolute;
-        right: 10px;
-        top: 0px;
-        cursor: pointer;
-        color: #b5b5cf;
-        opacity: 1;
-        border: none;
-        background-color: transparent;
-
-        &:hover {
-          color: #3b4859;
+        .close-btn {
+          position: absolute;
+          right: 10px;
+          top: -5px;
+          cursor: pointer;
+          opacity: 1;
+          border: none;
+          
         }
+       
       }
+      
+
+      // button {
+      //   position: absolute;
+      //   right: 10px;
+      //   top: 0px;
+      //   cursor: pointer;
+      //   color: #b5b5cf;
+      //   opacity: 1;
+      //   border: none;
+      //   background-color: transparent;
+
+      //   &:hover {
+      //     color: #3b4859;
+      //   }
+      // }
     }
 
     .modal-body {
       padding: 0px 10px;
       color: #3b4859;
-      .request-popup-content{
-        p{
+      .request-popup-content {
+        p {
           padding: 0px 20px 10px 20px;
           color: #000000;
           &.red {
@@ -88,8 +97,8 @@
             color: #f93d3d;
           }
         }
-        .input-group{
-          .label{
+        .input-group {
+          .label {
             font-size: 13px;
             line-height: 16px;
             color: #344054;
@@ -101,7 +110,7 @@
         align-items: center;
         justify-content: center;
         height: 300px;
-        i{
+        i {
           margin-right: 8px;
         }
       }
@@ -137,9 +146,7 @@
         line-height: 18px;
         font-weight: 300;
         color: #838b9c;
-        
       }
-      
 
       input {
         margin: 0;

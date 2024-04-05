@@ -172,12 +172,31 @@
               border-radius: 3px;
               font-size: 16px;
               line-height: 30px;
-
               &:hover {
                 background: #e5e1ff;
                 color: #1b4dff;
               }
+             
             }
+            button:disabled {
+              border: none;
+              cursor: default;
+              border-radius: 3px;
+              font-size: 16px;
+              line-height: 30px;
+              width: 30px;
+              height: 30px;
+              color: rgba(0, 0, 0, 0.26);
+              box-shadow: none;
+              background-color: transparent;
+              &:hover{
+                background-color: transparent;
+                color: rgba(0, 0, 0, 0.26);
+              }
+          }
+            
+            
+           
 
             .menu-list {
               position: absolute;

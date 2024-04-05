@@ -40,7 +40,7 @@
 .modal-header {
   background: white;
   box-shadow: none;
-  border-bottom: 1px solid #a2c0d4;
+  border-bottom: 1px solid #c6cbd9;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -95,7 +95,7 @@
   .confirm-modal-icon {
     padding-top: 41px;
     font-size: 280%;
-    color: #1A7F4B;
+    color: #1a7f4b;
     padding-bottom: 20px;
   }
 
@@ -115,7 +115,7 @@
     margin-bottom: 16px;
 
     button {
-      margin-right: calc(16px/2);
+      margin-right: calc(16px / 2);
     }
   }
 

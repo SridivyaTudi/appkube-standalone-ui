@@ -2,24 +2,9 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 import { Box } from "@mui/material";
 
-let data = [
-  { name: "Jan", value1: 2000, value2: 1200 },
-  { name: "Feb", value1: 1300, value2: 1200 },
-  { name: "Mar", value1: 2000, value2: 1200 },
-  { name: "Apr", value1: 1000, value2: 1200 },
-  { name: "May", value1: 1500, value2: 900 },
-  { name: "Jun", value1: 1500, value2: 1300 },
-  { name: "Jul", value1: 2000, value2: 900 },
-  { name: "Aug", value1: 900, value2: 700 },
-  { name: "Sep", value1: 1200, value2: 700 },
-  { name: "Oct", value1: 1200, value2: 700 },
-  { name: "Nov", value1: 1200, value2: 700 },
-  { name: "Dec", value1: 2000, value2: 900 },
-];
-
 let margin = { top: 0, right: 0, bottom: 0, left: 0 },
-width = 1200 - margin.left - margin.right,
-height = 300 - margin.top - margin.bottom;
+  width = 1200 - margin.left - margin.right,
+  height = 300 - margin.top - margin.bottom;
 
 class GroupedBarplotChart extends Component {
   constructor(props) {
@@ -29,24 +14,33 @@ class GroupedBarplotChart extends Component {
   }
 
   componentDidMount = () => {
-    this.renderChart();
+    if (Array.isArray(this.props.data) && this.props.data.length > 0) {
+      this.renderChart();
+    }
   };
-
-  // componentDidUpdate = () => {
-  //   d3.select(this.ref.current)
-  //     .selectAll("*")
-  //     .remove(); // Remove existing chart before rendering new one
-  //   this.renderChart();
-  // };
+  
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.data !== this.props.data) {
+    if (
+      prevProps.data !== this.props.data &&
+      Array.isArray(this.props.data) &&
+      this.props.data.length > 0
+    ) {
+      d3.select(this.ref.current).selectAll("*").remove();
       this.renderChart();
     }
   }
 
+  randomHexColorCode = () => {
+    let n = (Math.random() * 0xfffff * 1000000).toString(16);
+    return "#" + n.slice(0, 6);
+  };
+
   renderChart = () => {
     let { data } = this.props;
-    const margin = { top: 20, right: 0, bottom: 20, left: 40 };
+
+    const restKey = Object.keys(data[0]).filter((e) => e !== "name");
+
+    const margin = { top: 20, right: 0, bottom: 20, left: 60 };
     const width = this.ref.current.parentElement.clientWidth; // Dynamically get parent container width
     const height = 300;
     const barPadding = 0.5;
@@ -77,10 +71,12 @@ class GroupedBarplotChart extends Component {
       .tickSizeOuter(axisTicks.outerSize);
 
     xScale0.domain(data.map((d) => d.name));
-    xScale1.domain(["value1", "value2"]).range([0, xScale0.bandwidth()]);
+    xScale1.domain(restKey).range([0, xScale0.bandwidth()]);
     yScale.domain([
       0,
-      d3.max(data, (d) => (d.value1 > d.value2 ? d.value1 : d.value2)),
+      d3.max(data, (d) => {
+        return Math.max(...restKey.map((e) => d[e]));
+      }),
     ]);
 
     var name = svg
@@ -89,41 +85,33 @@ class GroupedBarplotChart extends Component {
       .enter()
       .append("g")
       .attr("class", "name")
-      .attr("transform", (d) => `translate(${xScale0(d.name)},0)`);
-
-    /* Add value1 bars */
-    name
-      .selectAll(".bar.value1")
-      .data((d) => [d])
-      .enter()
-      .append("rect")
-      .attr("class", "bar value1")
-      .style("fill", "#8676FF")
-      .attr("x", (d) => xScale1("value1"))
-      .attr("y", (d) => yScale(d.value1))
-      .attr("width", xScale1.bandwidth())
-      .attr("rx", 3)
-      .attr("ry", 3)
-      .attr("height", (d) => {
-        return height - margin.top - margin.bottom - yScale(d.value1);
+      .attr("transform", (d) => {
+        return `translate(${xScale0(d.name)},0)`;
       });
 
-    /* Add value2 bars */
-    name
-      .selectAll(".bar.value2")
-      .data((d) => [d])
-      .enter()
-      .append("rect")
-      .attr("class", "bar value2")
-      .style("fill", "#FF2D2E")
-      .attr("x", (d) => xScale1("value2") + 4)
-      .attr("y", (d) => yScale(d.value2))
-      .attr("width", xScale1.bandwidth())
-      .attr("rx", 3)
-      .attr("ry", 3)
-      .attr("height", (d) => {
-        return height - margin.top - margin.bottom - yScale(d.value2);
-      });
+    /* Add all bars from key */
+    restKey.forEach((barItem, index) => {
+      name
+        .selectAll(`.bar.${barItem}`)
+        .data((d) => [d])
+        .enter()
+        .append("rect")
+        .attr("class", `bar ${barItem}`)
+        .style(
+          "fill",
+          ["#8676FF", "#FF2D2E", ...this.randomHexColorCode()][index]
+        )
+        .attr("x", (d) => xScale1(barItem) + 4)
+        .attr("y", (d) => {
+          return yScale(d[barItem]);
+        })
+        .attr("width", xScale1.bandwidth())
+        .attr("rx", 3)
+        .attr("ry", 3)
+        .attr("height", (d) => {
+          return height - margin.top - margin.bottom - yScale(d[barItem]);
+        });
+    });
 
     // Add the X Axis
     svg

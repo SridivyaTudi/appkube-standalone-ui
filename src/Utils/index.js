@@ -1,3 +1,5 @@
+import { REGEX_TYPE } from "CommonData";
+
 export const LOCAL_STORAGE_CONSTANTS = {
   CURRENT_USER: "currentUser",
   CURRENT_ORG_ID: "currentOrgId",
@@ -8,6 +10,7 @@ export const LOCAL_STORAGE_CONSTANTS = {
   INFRAVIEW_DETAILS: "infraViewDetails",
   URL_DETAILS_OF_PAGE: "urlDetailsOfPage",
   CLOUD_WISE_LANDINGZONE_COUNT: "cloudWiseLandingZoneCount",
+  ALLOWED_RBAC_PERMISSIONS: "allowedRbacPermissions",
 };
 
 export const getCurrentUser = () => {
@@ -216,6 +219,24 @@ export const getRbacPermissions = () => {
   }
 };
 
+export const setAllowedRbacPermissions = () => {
+  const data = getRbacPermissions();
+
+  if (data?.length) {
+    localStorage.setItem(
+      LOCAL_STORAGE_CONSTANTS.ALLOWED_RBAC_PERMISSIONS,
+      JSON.stringify(data)
+    );
+  }
+};
+
+export const getAllowedRbacPermissions = () => {
+  return JSON.parse(
+    localStorage.getItem(LOCAL_STORAGE_CONSTANTS.ALLOWED_RBAC_PERMISSIONS) ||
+      null
+  );
+};
+
 export const RbacPermissionsDataManipulation = {
   permissions: [],
   getData: (data) => {
@@ -274,12 +295,12 @@ export const RbacPermissionsDataManipulation = {
 };
 
 export const isAlphaNumeric = (str) => {
-  var alphaNumericRegex = /^[a-zA-Z0-9]+$/;
+  var alphaNumericRegex = REGEX_TYPE.ALPHA_NUMERIC;
   return alphaNumericRegex.test(str);
 };
 
 export const isAlphabet = (str) => {
-  var alphabetRegex = /^[A-Za-z]+$/;
+  var alphabetRegex = REGEX_TYPE.ALPHABET;
   return alphabetRegex.test(str);
 };
 
@@ -329,4 +350,34 @@ export const ENVIRONMENTS = {
   AZURE: "AZURE",
   GCP: "GCP",
   KUBERNETES: "KUBERNETES",
+};
+
+export const getDateInWeek = (date) => {
+  // Create a new Date object for the target date
+  const targetDate = new Date(date); // Use your desired date here
+
+  // Calculate the day of the month
+  const dayOfMonth = targetDate.getDate();
+
+  // Calculate the week number (1 for the first week, 2 for the second week, and so on)
+  const weekNumber = Math.ceil(dayOfMonth / 7);
+
+  return weekNumber;
+};
+
+export const makeSlugForString = (str) => {
+  try {
+    return str
+      .trim()
+      .replace(/[^a-zA-Z0-9 ]/g, "")
+      .replace(/\s+/g, "-")
+      .toLowerCase();
+  } catch (error) {
+    return str;
+  }
+};
+
+export const getCurrentUserRole = () => {
+  let userDetails = getCurrentUser()?.info?.user;
+  return userDetails?.type;
 };

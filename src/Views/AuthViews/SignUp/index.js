@@ -23,6 +23,7 @@ import PasswordStrength from "Components/PasswordStrength";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { generateRandomPassword, isAlphaNumeric, isAlphabet } from "Utils";
+import { REGEX_TYPE } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -133,7 +134,7 @@ class SignUp extends Component {
       companyName: "",
     };
 
-    let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
+    let emailRegex = REGEX_TYPE.EMAIL;
     if (activeStep === this.steps.STEP1 && submittedSteps[this.steps.STEP1]) {
       let firstNameNotMatchPolicy = [
         !isAlphabet(step1.firstName),

@@ -9,7 +9,7 @@ import status from "Redux/Constants/CommonDS";
 import Box from "@mui/material/Box";
 import { v4 } from "uuid";
 import { getCurrentOrgId } from "Utils";
-
+import { REGEX_TYPE } from "CommonData";
 class Wizard extends Component {
   constructor(props) {
     super(props);
@@ -85,7 +85,7 @@ class Wizard extends Component {
       this.props.addLandingZoneState.status === status.SUCCESS
     ) {
       ToastMessage.success("Successfully new account created");
-      this.props.navigate("/app/environments");
+      this.props.navigate("/app/assets/environments");
     }
 
     if (this.props.finishPrevious && this.state.currentStep === 3) {
@@ -99,7 +99,7 @@ class Wizard extends Component {
       formData: { displayName, roleArn, externalId },
     } = this.props;
     let accountId = roleArn
-      .match(/arn:aws:iam::([0-9]+(:user|:role)+)\/[A-Za-z0-9]+/i)[1]
+      .match(REGEX_TYPE.ROLE_ARN)[1]
       .replace(":user", "")
       .replace(":role", "");
     let sendData = {

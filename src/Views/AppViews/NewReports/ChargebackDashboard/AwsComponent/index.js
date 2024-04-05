@@ -343,10 +343,12 @@ class AwsComponent extends Component {
                   {details.currentMonthSpend}
                 </TableCell>
                 <TableCell align="center">
-                  <Box className="variance-count red d-inline-block">
-                    <i class="fas fa-sort-down p-r-5"></i> 
+                  <Box className="d-flex align-center" justifyContent={"center"}>
+                    <Box className="variance-count red d-inline-block">
+                      <i class="fas fa-sort-down p-r-5"></i>
+                    </Box>
+                    <strong>{details.difference}</strong>
                   </Box>
-                  <strong>{details.difference}</strong>
                 </TableCell>
                 <TableCell align="left">
                   <Box className="payment-status pending"></Box>
@@ -417,7 +419,7 @@ class AwsComponent extends Component {
         <h3 className="m-t-3">Quarterly cost and Budget overview</h3>
         <Box className="new-reports-table">
           <TableContainer className="table">
-            <Table style={{ width: 1700 }}>
+            <Table style={{ minWidth: 1550 }}>
               {this.renderTableHead()}
               {this.renderTableBody()}
             </Table>

@@ -7,7 +7,8 @@ import { getCurrentOrgId } from "Utils";
 import { createNewOU } from "Redux/NewAccountSetup/NewAccountSetupThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
-import Box from "@mui/material/Box";
+import {Box, IconButton} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 class CreateNewOuPopup extends Component {
   constructor(props) {
@@ -117,14 +118,23 @@ class CreateNewOuPopup extends Component {
       >
         <ModalHeader>
           Create New OU
-          <button
-            type="button"
-            className="close"
-            aria-label="Close"
-            onClick={this.props.toggleCreateNewOuPopup}
+          <IconButton
+           variant="outlined"
+           aria-label="delete"
+           size="small"
+           className="close-btn"
+            onClick={() => {
+              this.props.toggleCreateNewOuPopup();
+              this.setState({
+                formData: {
+                  name: "",
+                  description: "",
+                },
+              });
+            }}
           >
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+             <CloseIcon fontSize="inherit" />
+          </IconButton>
         </ModalHeader>
         <ModalBody>
           <Box className="form-group">
@@ -164,7 +174,15 @@ class CreateNewOuPopup extends Component {
             <Button
               className="secondary-text-btn m-r-2"
               variant="contained"
-              onClick={this.props.toggleCreateNewOuPopup}
+              onClick={() => {
+                this.props.toggleCreateNewOuPopup();
+                this.setState({
+                  formData: {
+                    name: "",
+                    description: "",
+                  },
+                });
+              }}
             >
               Cancel
             </Button>

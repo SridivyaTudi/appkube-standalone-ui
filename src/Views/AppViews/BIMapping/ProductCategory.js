@@ -12,12 +12,16 @@ import { v4 } from "uuid";
 import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
 import status from "Redux/Constants/CommonDS";
-import { createBiMapping } from "Redux/BIMapping/BIMappingThunk";
+import {
+  createBiMapping,
+  getCommonServiceModules,
+} from "Redux/BIMapping/BIMappingThunk";
 import { PRODUCT_CATEGORY_ENUM, getCurrentOrgId } from "Utils";
 import AddNewModulePopup from "./Components/AddNewModulePopup";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-
+import { SERVICE_TYPE } from "CommonData";
+import Loader from "Components/Loader";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -40,10 +44,14 @@ class ProductCategory extends Component {
     this.state = {
       showServiceModal: false,
       activeCommonService: [],
+      commonServiceModules: [],
     };
   }
 
   componentDidMount = () => {
+    this.props.getCommonServiceModules({
+      serviceType: SERVICE_TYPE.COMMON.toLowerCase(),
+    });
     window.addEventListener("load", this.redirectPage);
   };
 
@@ -64,12 +72,24 @@ class ProductCategory extends Component {
         ToastMessage.error("Creation Of Add BI-mapping Failed.");
       }
     }
+
+    if (
+      prevProps.commonServiceModulesData.status !==
+        this.props.commonServiceModulesData.status &&
+      this.props.commonServiceModulesData.status === status.SUCCESS
+    ) {
+      if (this.props.commonServiceModulesData?.data) {
+        this.manipulateCommonServiceData(
+          this.props.commonServiceModulesData?.data
+        );
+      }
+    }
   }
   redirectPage = () => {
-    let { name: departMentName, id } = this.getUrlDetails();
+    let { name: departMentName, id, landingZoneId } = this.getUrlDetails();
 
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}`
+      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}`
     );
   };
 
@@ -83,16 +103,18 @@ class ProductCategory extends Component {
   getUrlDetails() {
     let name = this.props.params.name;
     let id = this.props.params.id;
-    return { name, id };
+    let landingZoneId = this.props.params.landingZoneId;
+
+    return { name, id, landingZoneId };
   }
 
   // Move to next page
   moveToNextPage = (serviceType) => {
     let { createProductFormData } = this.props;
-    let { name: departMentName, id } = this.getUrlDetails();
+    let { name: departMentName, id, landingZoneId } = this.getUrlDetails();
     let { activeCommonService } = this.state;
 
-    if (serviceType === "business") {
+    if (serviceType === SERVICE_TYPE.BUSINESS.toLowerCase()) {
       this.setState({ showCreateModuleModal: true });
       return 1;
     } else if (
@@ -104,7 +126,7 @@ class ProductCategory extends Component {
     }
 
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/product-category/${createProductFormData?.category
+      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}/product-category/${createProductFormData?.category
         ?.toLowerCase()
         ?.replace(" ", "-")}`
     );
@@ -171,9 +193,9 @@ class ProductCategory extends Component {
       })
     );
     this.props.setProductIntoDepartment(passData);
-    let { name, id } = this.getUrlDetails();
+    let { name, id, landingZoneId } = this.getUrlDetails();
     this.props.navigate(
-      `/app/bim/add-product/${name}/${id}/product-category/soa`
+      `/app/bim/add-product/${name}/${id}/${landingZoneId}/product-category/soa`
     );
   };
 
@@ -190,9 +212,9 @@ class ProductCategory extends Component {
     );
 
     this.props.setProductIntoDepartment(passData);
-    let { name, id } = this.getUrlDetails();
+    let { name, id, landingZoneId } = this.getUrlDetails();
     this.props.navigate(
-      `/app/bim/add-product/${name}/${id}/product-category/soa`
+      `/app/bim/add-product/${name}/${id}/${landingZoneId}/product-category/soa`
     );
   };
 
@@ -243,7 +265,7 @@ class ProductCategory extends Component {
       if (soaData?.length) {
         for (let index = 0; index < soaData.length; index++) {
           const service = soaData[index];
-          if (service.service === "business") {
+          if (service.service === SERVICE_TYPE.BUSINESS.toLowerCase()) {
             return true;
           }
         }
@@ -255,11 +277,29 @@ class ProductCategory extends Component {
   };
 
   // Check both common service already created.
-  isBothCommonServiceAdded = () => {
-    return (
-      this.isCommonServiceAdded(["search"]) &&
-      this.isCommonServiceAdded(["security"])
-    );
+  isAllCommonServiceAdded = () => {
+    try {
+      let { createProductFormData } = this.props;
+      let { commonServiceModules } = this.state;
+      let selectedCommonServiceCount = 0;
+      let commonServiceData = createProductFormData.soaData;
+      if (commonServiceData?.length) {
+        for (let index = 0; index < commonServiceData.length; index++) {
+          const element = commonServiceData[index];
+          if (
+            commonServiceModules.includes(element.module) &&
+            element.service === "common"
+          ) {
+            selectedCommonServiceCount = selectedCommonServiceCount + 1;
+          }
+        }
+      }
+
+      return commonServiceModules.length === selectedCommonServiceCount;
+    } catch (error) {
+      console.log(error);
+    }
+    return false;
   };
 
   // Click on save button.
@@ -318,7 +358,7 @@ class ProductCategory extends Component {
               }),
             },
           };
-          if (serviceCategory === "business") {
+          if (serviceCategory === SERVICE_TYPE.BUSINESS.toLowerCase()) {
             module.service.business.push(appendData);
           } else {
             module.service.common.push(appendData);
@@ -344,7 +384,7 @@ class ProductCategory extends Component {
         },
       },
     };
-  
+
     this.props.createBiMapping(params);
   };
 
@@ -379,17 +419,17 @@ class ProductCategory extends Component {
 
   onClickAddModule = (moduleName) => {
     let { createProductFormData } = this.props;
-    let { name: departMentName, id } = this.getUrlDetails();
+    let { name: departMentName, id, landingZoneId } = this.getUrlDetails();
     let { activeCommonService } = this.state;
 
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/product-category/${createProductFormData?.category
+      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}/product-category/${createProductFormData?.category
         ?.toLowerCase()
         ?.replace(" ", "-")}`
     );
     this.props.setProductIntoDepartment({
       ...createProductFormData,
-      serviceType: "business",
+      serviceType: SERVICE_TYPE.BUSINESS.toLowerCase(),
       editServiceId: -1,
       activeCommonService,
       moduleName,
@@ -397,12 +437,83 @@ class ProductCategory extends Component {
     this.setState({ showCreateModuleModal: false });
   };
 
+  manipulateCommonServiceData = (data) => {
+    let commonServiceModules = [];
+    if (data?.length) {
+      data.forEach((details) => {
+        if (!commonServiceModules.includes(details.serviceModule)) {
+          commonServiceModules.push(details.serviceModule);
+        }
+      });
+    }
+
+    this.setState({ commonServiceModules });
+  };
+
+  // Render the common service.
+  renderCommonService = () => {
+    let { commonServiceModules, activeCommonService } = this.state;
+    let { commonServiceModulesData } = this.props;
+
+    if (commonServiceModulesData.status === status.IN_PROGRESS) {
+      return this.renderLoder();
+    } else if (commonServiceModules?.length) {
+      return commonServiceModules.map((name, index) => {
+        return (
+          <Box
+            className={`product-category-card  ${
+              this.isCommonServiceAdded([name.toUpperCase()])
+                ? "edit-active"
+                : activeCommonService.includes(name.toUpperCase())
+                ? "active"
+                : ""
+            }`}
+            onClick={(e) => {
+              this.onClickCommonService(name);
+              e.stopPropagation();
+            }}
+            key={v4()}
+          >
+            <Box className="d-flex icon-buttons">
+              {this.isCommonServiceAdded([name]) ? (
+                <IconButton
+                  className="edit-icon"
+                  onClick={(e) => {
+                    this.onClickEditIconCommonService(name);
+                    e.stopPropagation();
+                  }}
+                >
+                  <i class="fas fa-edit"></i>
+                </IconButton>
+              ) : (
+                <></>
+              )}
+            </Box>
+            <Box className="product-category-details">
+              <Box className="product-image">
+                <img src={searchIcon} alt="" />
+              </Box>
+              <span className="d-block name">{name}</span>
+            </Box>
+          </Box>
+        );
+      });
+    }
+  };
+
+  // Render Loder
+  renderLoder(widthClass) {
+    return (
+      <Box className="p-t-20 p-b-20 text-center width-100 ">
+        <Loader />
+      </Box>
+    );
+  }
   render() {
     const { showServiceModal, activeCommonService, showCreateModuleModal } =
       this.state;
     let { createProductFormData, creationBiMapping } = this.props;
-    
-    let { name: departMentName, id } = this.getUrlDetails();
+    let { name: departMentName, id, landingZoneId } = this.getUrlDetails();
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -418,7 +529,7 @@ class ProductCategory extends Component {
               <li
                 onClick={() =>
                   this.props.navigate(
-                    `/app/bim/add-product/${departMentName}/${id}`
+                    `/app/bim/add-product/${departMentName}/${id}/${landingZoneId}`
                   )
                 }
               >
@@ -440,7 +551,7 @@ class ProductCategory extends Component {
                 <LoadingButton
                   className="primary-btn"
                   variant="contained"
-                  onClick={() => this.moveToNextPage("business")}
+                  onClick={() => this.moveToNextPage(SERVICE_TYPE.BUSINESS.toLowerCase())}
                 >
                   Add
                 </LoadingButton>
@@ -461,7 +572,7 @@ class ProductCategory extends Component {
                   className="primary-btn"
                   variant="contained"
                   onClick={() => this.moveToNextPage("common")}
-                  disabled={this.isBothCommonServiceAdded()}
+                  disabled={this.isAllCommonServiceAdded()}
                 >
                   Add
                 </LoadingButton>
@@ -469,76 +580,7 @@ class ProductCategory extends Component {
             </Box>
             <Box className="product-category-cards">
               <Box className="product-category-inner">
-                <Box
-                  className={`product-category-card  ${
-                    this.isCommonServiceAdded(["search"])
-                      ? "edit-active"
-                      : activeCommonService.includes("search")
-                      ? "active"
-                      : ""
-                  }`}
-                  onClick={(e) => {
-                    this.onClickCommonService("search");
-                    e.stopPropagation();
-                  }}
-                >
-                  <Box className="d-flex icon-buttons">
-                    {this.isCommonServiceAdded(["search"]) ? (
-                      <IconButton
-                        className="edit-icon"
-                        onClick={(e) => {
-                          this.onClickEditIconCommonService("search");
-                          e.stopPropagation();
-                        }}
-                      >
-                        <i class="fas fa-edit"></i>
-                      </IconButton>
-                    ) : (
-                      <></>
-                    )}
-                  </Box>
-                  <Box className="product-category-details">
-                    <Box className="product-image">
-                      <img src={searchIcon} alt="" />
-                    </Box>
-                    <span className="d-block name">Search</span>
-                  </Box>
-                </Box>
-                <Box
-                  className={`product-category-card ${
-                    this.isCommonServiceAdded(["security"])
-                      ? "edit-active"
-                      : activeCommonService.includes("security")
-                      ? "active"
-                      : ""
-                  }`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    this.onClickCommonService("security");
-                  }}
-                >
-                  <Box className="d-flex icon-buttons">
-                    {this.isCommonServiceAdded(["security"]) ? (
-                      <IconButton
-                        className="edit-icon"
-                        onClick={(e) => {
-                          this.onClickEditIconCommonService("security");
-                          e.stopPropagation();
-                        }}
-                      >
-                        <i class="fas fa-edit"></i>
-                      </IconButton>
-                    ) : (
-                      <></>
-                    )}
-                  </Box>
-                  <Box className="product-category-details">
-                    <Box className="product-image">
-                      <img src={rbacIcon} alt="" />
-                    </Box>
-                    <span className="d-block name">Security</span>
-                  </Box>
-                </Box>
+                {this.renderCommonService()}
               </Box>
             </Box>
           </Box>
@@ -584,16 +626,19 @@ class ProductCategory extends Component {
   }
 }
 function mapStateToProps(state) {
-  const { createProductFormData, creationBiMapping } = state.biMapping;
+  const { createProductFormData, creationBiMapping, commonServiceModulesData } =
+    state.biMapping;
   return {
     createProductFormData,
     creationBiMapping,
+    commonServiceModulesData,
   };
 }
 
 const mapDispatchToProps = {
   setProductIntoDepartment,
   createBiMapping,
+  getCommonServiceModules,
 };
 
 export default connect(

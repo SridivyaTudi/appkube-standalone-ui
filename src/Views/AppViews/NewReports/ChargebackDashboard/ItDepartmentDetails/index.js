@@ -155,6 +155,7 @@ let data = [
     addOns: "NA",
     totalSpend: "$196.22",
   },
+  
 ];
 class ItDepartmentDetails extends Component {
   //  Render table head
@@ -185,23 +186,23 @@ class ItDepartmentDetails extends Component {
           data.map((details) => {
             return (
               <TableRow>
-                <TableCell align="left">10</TableCell>
+                <TableCell align="left">{details.quantity}</TableCell>
                 <TableCell align="left">
-                  <Link to={`#`}>t4g.2xlarge</Link>
+                  <Link to={`#`}>{details.instanceType}</Link>
                 </TableCell>
-                <TableCell align="center">10/10</TableCell>
-                <TableCell align="center">32.0 GiB</TableCell>
-                <TableCell align="center">8 vCPUs</TableCell>
-                <TableCell align="center">EBS only</TableCell>
+                <TableCell align="center">{details.instanceStatus}</TableCell>
+                <TableCell align="center">{details.instanceMemory}</TableCell>
+                <TableCell align="center">{details.vcpus}</TableCell>
+                <TableCell align="center">{details.instanceStorage}</TableCell>
                 <TableCell align="center">
-                  <strong>$0.2688</strong>
+                  <strong>{details.perHrCost}</strong>
                 </TableCell>
                 <TableCell align="center">
-                  <strong>730 hours</strong>
+                  <strong>{details.usageHrs}</strong>
                 </TableCell>
-                <TableCell align="center">NA</TableCell>
+                <TableCell align="center">{details.addOns}</TableCell>
                 <TableCell align="center">
-                  <strong>$196.22</strong>
+                  <strong>{details.totalSpend}</strong>
                 </TableCell>
               </TableRow>
             );
@@ -269,7 +270,7 @@ class ItDepartmentDetails extends Component {
           </Box>
           <Box className="new-reports-table">
             <TableContainer className="table">
-              <Table style={{ width: 2000 }}>
+              <Table style={{ minWidth: 1560 }}>
                 {this.renderTableHead()}
                 {this.renderTableBody()}
               </Table>

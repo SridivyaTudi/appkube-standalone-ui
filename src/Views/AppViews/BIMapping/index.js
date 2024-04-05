@@ -7,7 +7,7 @@ import Kubernetes from "../../../assets/img/kubernetes.png";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { Link } from "react-router-dom";
 import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
-import { getCurrentOrgId, ENVIRONMENTS } from "Utils";
+import { getCurrentOrgId, ENVIRONMENTS, makeSlugForString } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import {
@@ -18,14 +18,17 @@ import { getOrgWiseDepartments } from "Redux/Environments/EnvironmentsThunk";
 import {
   getElementType,
   getElementInstancesOfGivenType,
+  getLandingzoneByDepartment,
 } from "Redux/BIMapping/BIMappingThunk";
 import Loader from "Components/Loader";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import { getCloudWiseLandingZoneCount } from "Redux/Environments/EnvironmentsThunk";
 import CloudElementInstancePopup from "./Components/CloudElementInstancePopup";
+import SelectLendingZonePopup from "./Components/SelectLendingZonePopup";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { BI_MAPPING_TYPE } from "CommonData";
 
 const orgId = getCurrentOrgId();
-
 let headers = [
   { name: "Organization Name", styled: {} },
   {
@@ -74,25 +77,7 @@ let headers = [
   },
 ];
 
-function makeStringForUrl(str) {
-  try {
-    return str
-      .replace(/[^a-zA-Z0-9 ]/g, "")
-      .replace(/\s+/g, "-")
-      .toLowerCase();
-  } catch (error) {
-    return str;
-  }
-}
 class BIMapping extends Component {
-  TYPE = {
-    ORGANIZATION: "organization",
-    DEPARTMENT: "department",
-    PRODUCT: "product",
-    PRODUCT_ENVS: "productEnvs",
-    ELEMENT_TYPE: "elementType",
-    ELEMENT_INSTANCE_TYPE: "elementInstanceType",
-  };
   constructor(props) {
     super(props);
     this.state = {
@@ -101,6 +86,10 @@ class BIMapping extends Component {
       clickTableData: {},
       serviceDetails: [],
       landingZoneCounts: [],
+      isDepartmentLandingzoneDataStatus: {
+        department: false,
+        landingZoneCount: false,
+      },
     };
   }
 
@@ -116,10 +105,11 @@ class BIMapping extends Component {
       this.props.cloudWiseLandingZoneCount.status === status.SUCCESS &&
       this.props.cloudWiseLandingZoneCount?.data
     ) {
-      const landingZoneCounts = this.props.cloudWiseLandingZoneCount.data;
-      if (landingZoneCounts?.length) {
-        this.setState({ landingZoneCounts });
-      }
+      const landingZoneCounts =
+        this.props.cloudWiseLandingZoneCount?.data || [];
+      let { isDepartmentLandingzoneDataStatus } = this.state;
+      isDepartmentLandingzoneDataStatus.landingZoneCount = true;
+      this.setState({ landingZoneCounts, isDepartmentLandingzoneDataStatus });
     }
 
     if (
@@ -128,8 +118,9 @@ class BIMapping extends Component {
       this.props.organizationWiseDepartments.status === status.SUCCESS &&
       this.props.organizationWiseDepartments?.data
     ) {
-      const organization = this.props.organizationWiseDepartments.data;
-      this.manipulateDepartMentData(organization);
+      let { isDepartmentLandingzoneDataStatus } = this.state;
+      isDepartmentLandingzoneDataStatus.department = true;
+      this.setState({ isDepartmentLandingzoneDataStatus });
     }
 
     if (
@@ -171,7 +162,22 @@ class BIMapping extends Component {
         elementInstancesOfGivenTypeData
       );
     }
+
+    const {
+      isDepartmentLandingzoneDataStatus: { department, landingZoneCount },
+    } = this.state;
+    if (department && landingZoneCount) {
+      const organization = this.props.organizationWiseDepartments.data || [];
+      this.manipulateDepartMentData(organization);
+      this.setState({
+        isDepartmentLandingzoneDataStatus: {
+          department: false,
+          landingZoneCount: false,
+        },
+      });
+    }
   }
+
   toggleSelectDepartment = () => {
     this.setState({
       isSelectDepartmentOpen: !this.state.isSelectDepartmentOpen,
@@ -180,7 +186,7 @@ class BIMapping extends Component {
 
   // Manipulation of new API data
   manipulateChildrenData = (data, type, exptraIds, isArrOfObj = 0) => {
-    let isTypeDepartment = type === this.TYPE.DEPARTMENT;
+    let isTypeDepartment = type === BI_MAPPING_TYPE.DEPARTMENT;
     return data.map((dataDetails, index) => {
       let { name, id, instanceName } = dataDetails;
       name = isArrOfObj ? dataDetails : instanceName || name;
@@ -189,9 +195,9 @@ class BIMapping extends Component {
       return {
         name,
         id,
-        isLink: type === this.TYPE.DEPARTMENT,
+        isLink: type === BI_MAPPING_TYPE.DEPARTMENT,
         url: isTypeDepartment
-          ? `/app/bim/add-product/${makeStringForUrl(dataDetails?.name)}/${
+          ? `/app/bim/add-product/${makeSlugForString(dataDetails?.name)}/${
               dataDetails?.id
             }`
           : "",
@@ -216,21 +222,24 @@ class BIMapping extends Component {
       if (departments?.length) {
         chlidren = this.manipulateChildrenData(
           departments,
-          this.TYPE.DEPARTMENT
+          BI_MAPPING_TYPE.DEPARTMENT
         );
       }
 
-      let environments = Object.keys(ENVIRONMENTS);
+      let environments = [
+        ENVIRONMENTS.AWS,
+        ENVIRONMENTS.AZURE,
+        ENVIRONMENTS.GCP,
+        ENVIRONMENTS.KUBERNETES,
+      ];
+
       if (landingZoneCounts?.length) {
-        landingZoneCounts = landingZoneCounts.map((count) => {
-          if (environments.includes(count.cloud)) {
-            environments.splice(environments.indexOf(environments), 1);
-          }
-          return { name: "" + count.totalAccounts };
+        landingZoneCounts = environments.map((cloud) => {
+          let details = landingZoneCounts.find(
+            (landingZone) => landingZone.cloud.toUpperCase() === cloud
+          );
+          return { name: details?.totalAccounts || 0 };
         });
-        if (environments.length) {
-          landingZoneCounts = [...landingZoneCounts, { name: 0 }];
-        }
       } else {
         landingZoneCounts = environments.map((count) => {
           return { name: 0 };
@@ -243,7 +252,7 @@ class BIMapping extends Component {
           id,
           isMutipleCell: true,
           multipeCellData: landingZoneCounts,
-          type: this.TYPE.ORGANIZATION,
+          type: BI_MAPPING_TYPE.ORGANIZATION,
           chlidren,
         },
       ];
@@ -266,7 +275,7 @@ class BIMapping extends Component {
               if (department.id === clickTableData.id) {
                 department.chlidren = this.manipulateChildrenData(
                   products,
-                  this.TYPE.PRODUCT,
+                  BI_MAPPING_TYPE.PRODUCT,
                   {
                     departmentId: department.id,
                   }
@@ -300,7 +309,7 @@ class BIMapping extends Component {
                   if (product.id === clickTableData.id) {
                     product.chlidren = this.manipulateChildrenData(
                       productEnvs,
-                      this.TYPE.PRODUCT_ENVS,
+                      BI_MAPPING_TYPE.PRODUCT_ENVS,
                       {
                         departmentId: clickTableData.departmentId,
                         productId: product.id,
@@ -340,7 +349,7 @@ class BIMapping extends Component {
                       if (productEnv.id === clickTableData.id) {
                         productEnv.chlidren = this.manipulateChildrenData(
                           elemntTypes,
-                          this.TYPE.ELEMENT_TYPE,
+                          BI_MAPPING_TYPE.ELEMENT_TYPE,
                           {
                             departmentId: clickTableData.departmentId,
                             productId: clickTableData.productId,
@@ -389,7 +398,7 @@ class BIMapping extends Component {
                               elementType.chlidren =
                                 this.manipulateChildrenData(
                                   elemntInstanceTypes,
-                                  this.TYPE.ELEMENT_INSTANCE_TYPE,
+                                  BI_MAPPING_TYPE.ELEMENT_INSTANCE_TYPE,
                                   {
                                     departmentId: clickTableData.departmentId,
                                     productId: clickTableData.productId,
@@ -434,20 +443,20 @@ class BIMapping extends Component {
     let { type, departmentId, productId, productEnvId, id, name } = data;
     let { serviceDetails } = this.state;
 
-    if (type === this.TYPE.DEPARTMENT) {
+    if (type === BI_MAPPING_TYPE.DEPARTMENT) {
       this.props.getProductList(id);
-    } else if (type === this.TYPE.PRODUCT) {
+    } else if (type === BI_MAPPING_TYPE.PRODUCT) {
       this.props.getProductEnv(id);
-    } else if (type === this.TYPE.PRODUCT_ENVS) {
+    } else if (type === BI_MAPPING_TYPE.PRODUCT_ENVS) {
       this.props.getElementType({ productId, departmentId, productEnvId: id });
-    } else if (type === this.TYPE.ELEMENT_TYPE) {
+    } else if (type === BI_MAPPING_TYPE.ELEMENT_TYPE) {
       this.props.getElementInstancesOfGivenType({
         productId,
         departmentId,
         productEnvId,
         elementType: name,
       });
-    } else if (type === this.TYPE.ELEMENT_INSTANCE_TYPE) {
+    } else if (type === BI_MAPPING_TYPE.ELEMENT_INSTANCE_TYPE) {
       let { serviceCategory, serviceName, serviceNature, serviceType } =
         data.otherData;
       serviceDetails = [
@@ -471,7 +480,7 @@ class BIMapping extends Component {
     }
 
     this.setState({ clickTableData: data, serviceDetails }, () => {
-      if (type === this.TYPE.ELEMENT_INSTANCE_TYPE) {
+      if (type === BI_MAPPING_TYPE.ELEMENT_INSTANCE_TYPE) {
         this.handleShowInstanceModal();
       }
     });
@@ -479,9 +488,15 @@ class BIMapping extends Component {
 
   // Redirect to Add product
   onLinkClick = (data) => {
+    const departmentId = data.id;
+    const departmentName = data.name;
+    const departmentDescription = data.otherData?.description;
+    this.setState({ showSelectLendingModal: true });
+    this.props.getLandingzoneByDepartment({ orgId, departmentId });
     this.props.setProductIntoDepartment({
-      departmentName: data.name,
-      departmentId: data.id,
+      departmentName,
+      departmentId,
+      departmentDescription,
     });
   };
 
@@ -499,11 +514,17 @@ class BIMapping extends Component {
       showInstanceModal: !this.state.showInstanceModal,
     });
   };
+  handleShowSelectLendingModal = () => {
+    this.setState({
+      showSelectLendingModal: !this.state.showSelectLendingModal,
+    });
+  };
   render() {
     const {
       isSelectDepartmentOpen,
       organizationTableData,
       showInstanceModal,
+      showSelectLendingModal,
       serviceDetails,
     } = this.state;
     const {
@@ -512,6 +533,7 @@ class BIMapping extends Component {
       productEnv,
       elementTypeData,
       elementInstancesOfGivenType,
+      cloudWiseLandingZoneCount,
     } = this.props;
     const inprogressStatus = status.IN_PROGRESS;
     let loderStatus = [
@@ -525,6 +547,7 @@ class BIMapping extends Component {
       <Box className="bimapping-container">
         <Box className="list-heading">
           <h3>Organization Unit</h3>
+
           <Box className="mapping-fliter">
             <Button
               onClick={this.toggleSelectDepartment}
@@ -555,7 +578,9 @@ class BIMapping extends Component {
           </Box>
         </Box>
         <Box className="bimapping-table">
-          {organization.status === inprogressStatus ? (
+          {[organization.status, cloudWiseLandingZoneCount.status].includes(
+            inprogressStatus
+          ) ? (
             this.renderLoder()
           ) : organizationTableData?.length ? (
             <AccordionView
@@ -578,6 +603,14 @@ class BIMapping extends Component {
         ) : (
           <></>
         )}
+        {showSelectLendingModal ? (
+          <SelectLendingZonePopup
+            showModal={showSelectLendingModal}
+            handleSelectLendingModal={this.handleShowSelectLendingModal}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }
@@ -587,7 +620,12 @@ function mapStateToProps(state) {
   const { products, productEnv } = state.associateApp;
   const { organizationWiseDepartments, cloudWiseLandingZoneCount } =
     state.environments;
-  const { elementTypeData, elementInstancesOfGivenType } = state.biMapping;
+  const {
+    elementTypeData,
+    elementInstancesOfGivenType,
+    landingZonesByDepartment,
+    createProductFormData,
+  } = state.biMapping;
   return {
     organizationWiseDepartments,
     products,
@@ -595,6 +633,8 @@ function mapStateToProps(state) {
     elementTypeData,
     elementInstancesOfGivenType,
     cloudWiseLandingZoneCount,
+    landingZonesByDepartment,
+    createProductFormData,
   };
 }
 
@@ -606,6 +646,9 @@ const mapDispatchToProps = {
   getElementInstancesOfGivenType,
   setProductIntoDepartment,
   getCloudWiseLandingZoneCount,
+  getLandingzoneByDepartment,
 };
-
-export default connect(mapStateToProps, mapDispatchToProps)(BIMapping);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(BIMapping));

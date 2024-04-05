@@ -5,6 +5,8 @@ import PreparePolicy from "Views/AppViews/Environments/NewAccountSetup/AccountPo
 import CreateRole from "Views/AppViews/Environments/NewAccountSetup/AccountPolicy/CreateRole";
 import Finish from "Views/AppViews/Environments/NewAccountSetup/AccountPolicy/Finish";
 import Box from "@mui/material/Box";
+import { REGEX_TYPE } from "CommonData";
+
 class AccountPolicy extends Component {
   constructor(props) {
     super(props);
@@ -81,10 +83,8 @@ class AccountPolicy extends Component {
     } = this.state;
     let isValid = true;
     let errors = {};
+    let regex = REGEX_TYPE.ROLE_ARN;
 
-    // let regex = /arn:aws:iam::([0-9]+(:user)+)\/[A-Za-z0-9]+/i;
-    let regex = /arn:aws:iam::([0-9]+(:user|:role)+)\/[A-Za-z0-9]+/i;
-    // arn:aws:iam::([0-9]+(:user|:role))\/[A-Za-z0-9]+/i
     if (isSubmit) {
       if (!displayName) {
         errors = { ...errors, displayName: "Display name is required!" };

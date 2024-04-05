@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button, Grid, List, ListItemButton } from "@mui/material";
+import { Box, Button, Grid, List, ListItem } from "@mui/material";
 import ChartWrapper from "../../Components/ChartWrapper";
 import GroupedBarplotChart from "../../Components/GroupedBarplotChart";
 import SelectFilterModal from "../../Components/SelectFilterModal";
@@ -8,6 +8,10 @@ import { getSpendingTrend } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 import { getCurrentOrgId } from "Utils";
 import Loader from "Components/Loader";
+import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
+import { v4 } from "uuid";
+import { getDateInWeek } from "Utils";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 let verticalBarChartData = [
   {
@@ -37,29 +41,9 @@ class SpendingTrend extends Component {
     super(props);
     this.state = {
       showSelectFilterModal: false,
-      isSelectDepartmentOpen: false,
-      spendingTrendData: [],
-      quarterMenuData: [
-        {
-          menuItem: "daily",
-        },
-        {
-          menuItem: "weekly",
-        },
-        {
-          menuItem: "monthly",
-        },
-        {
-          menuItem: "quarterly",
-        },
-        {
-          menuItem: "half-yearly",
-        },
-        {
-          menuItem: "yearly",
-        },
-      ],
-      selectedGranularity: "quarterly",
+      spendingTrendChartData: {},
+      selectedGranularity: GRANULARITY_TYPE.QUARTERLY.toLowerCase(),
+      isGranularityOpen: false,
     };
   }
 
@@ -78,104 +62,118 @@ class SpendingTrend extends Component {
       prevProps.spendingTrendData.status !==
         this.props.spendingTrendData.status &&
       this.props.spendingTrendData.status === status.SUCCESS &&
-      this.props.spendingTrendData?.data
+      this.props.spendingTrendData?.data &&
+      this.props.spendingTrendData.data.data
     ) {
-      const spendingTrendData = this.props.spendingTrendData.data;
-      if (spendingTrendData) {
-        // console.log(spendingTrendData);
-        this.maniplateSpendingTrendData(spendingTrendData.data);
-      }
+      this.maniplateSpendingTrendData(this.props.spendingTrendData.data.data);
     }
   }
 
   // Maniplate Spending Trend data
   maniplateSpendingTrendData = (data) => {
-    let { spendingTrendData } = this.state;
-    spendingTrendData = [];
+    let { spendingTrendChartData, selectedGranularity } = this.state;
 
     if (data) {
       let { current = [], forcast = [], previous = [] } = data;
-      spendingTrendData = this.manipulateDateWiseData(
-        current.concat(forcast, previous)
-      );
+      if (selectedGranularity === "daily") {
+        const dataSource = current.concat(forcast, previous);
+        spendingTrendChartData = {
+          daily: {
+            name: dataSource[0].dates,
+            current: 0,
+            forcast: 0,
+            previous: 0,
+            [dataSource[0].tenure]: dataSource[0].total,
+          },
+        };
+      } else {
+        spendingTrendChartData = this.manipulateDateWiseData(
+          current.concat(forcast, previous)
+        );
+      }
     }
-    this.setState({ spendingTrendData });
+    this.setState({ spendingTrendChartData });
   };
 
-  getMonthDays = (dates) => {
-    const month = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    const d = new Date(dates);
-    let name = month[d.getMonth()];
-    return name;
+  getListByGranularity = () => {
+    const { selectedGranularity } = this.state;
+    if (selectedGranularity === "weekly") {
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thus", "Fri", "Sat"];
+      return days;
+    } else if (selectedGranularity === "monthly") {
+      const weeks = ["Week1", "Week2", "Week3", "Week4", "Week5"];
+      return weeks;
+    } else if (selectedGranularity === "quarterly") {
+      const quarter = ["month1", "month2", "month3"];
+      return quarter;
+    } else if (selectedGranularity === "yearly") {
+      const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      return months;
+    }
+  };
+
+  getMonthDays = (dates, nameList) => {
+    const { selectedGranularity } = this.state;
+    if (selectedGranularity === "weekly") {
+      const d = new Date(dates).getDay();
+      return nameList[d];
+    } else if (selectedGranularity === "monthly") {
+      const weekNumber = getDateInWeek(dates);
+      return nameList[weekNumber - 1];
+    } else if (selectedGranularity === "quarterly") {
+      const d = new Date(dates).getMonth();
+      return nameList[d % 3];
+    } else if (selectedGranularity === "yearly") {
+      const d = new Date(dates).getMonth();
+      return nameList[d];
+    }
   };
 
   manipulateDateWiseData = (data) => {
-    let spendTrendData = [];
+    let spendTrendData = {};
+    const dataObject = {
+      name: "",
+      current: 0,
+      forcast: 0,
+      previous: 0,
+    };
+    const nameList = this.getListByGranularity();
     if (data?.length) {
-      let allData = JSON.parse(JSON.stringify(data));
-      let currentSum = 0;
-      let previousSum = 0;
-      let forcastSum = 0;
-      let currentMonth = [];
-      let previousMonth = [];
-      data.forEach((obj) => {
-        if (obj.tenure === "current") {
-          currentMonth.push(this.getMonthDays(obj.dates));
-        } else if (obj.tenure === "previous") {
-          previousMonth.push(this.getMonthDays(obj.dates));
-        }
-      });
-      console.log(currentMonth);
-
-      data.forEach((obj) => {
-        if (obj.tenure === "current") {
-          currentSum += obj.total;
-        }
-      });
-
-      data.forEach((obj) => {
-        if (obj.tenure === "previous") {
-          previousSum += obj.total;
-        }
-      });
-
-      data.forEach((obj) => {
-        if (obj.tenure === "forcast") {
-          forcastSum += obj.total;
-        }
-      });
-
-      data.forEach((obj) => {
-        // Find data date wise
-        let sameDateData = JSON.parse(
-          JSON.stringify(allData.filter((spend) => spend.dates === obj.dates))
-        );
-
-        if (sameDateData.length) {
-          let pushData = {
-            name: this.getMonthDays(obj.dates),
-            value1: currentSum,
-            value2: previousSum,
-            value3: forcastSum,
+      spendTrendData = data.reduce((acc, crr) => {
+        const monthStr = this.getMonthDays(crr.dates, nameList);
+        if (acc[monthStr]) {
+          acc[monthStr][crr.tenure] =
+            acc[monthStr][crr.tenure] + parseFloat(crr.total);
+        } else {
+          acc[monthStr] = {
+            ...dataObject,
+            name: monthStr,
+            [crr.tenure]: parseFloat(crr.total),
           };
-
-          spendTrendData.push(pushData);
-
-          // Remove data
-          allData = allData.filter((spend) => spend.dates !== obj.dates);
+        }
+        return acc;
+      }, {});
+      spendTrendData = nameList.map((e) => {
+        if (spendTrendData[e]) {
+          return spendTrendData[e];
+        } else {
+          return {
+            ...dataObject,
+            name: e,
+          };
         }
       });
     }
@@ -189,46 +187,48 @@ class SpendingTrend extends Component {
     });
   };
 
+  getSelectedGranularity = () => {
+    let { selectedGranularity } = this.state;
+    let findValue = GRANULARITY_DROPDOWN_DATA.find(
+      (data) => data.key === selectedGranularity
+    );
+
+    return findValue.value || "";
+  };
+
   toggleSelectDepartment = () => {
     this.setState({
-      isSelectDepartmentOpen: !this.state.isSelectDepartmentOpen,
+      isGranularityOpen: !this.state.isGranularityOpen,
     });
   };
 
-  quarterMenuSelected = (menuItem) => {
-    this.setState({
-      selectedGranularity: menuItem,
-    });
-    this.props.getSpendingTrend({
-      cloud: "aws",
-      granularity: menuItem,
-      compareTo: -1,
-      forcast: true,
-      orgId: getCurrentOrgId(),
+  renderDropDownData = () => {
+    let { selectedGranularity } = this.state;
+    return GRANULARITY_DROPDOWN_DATA.map((data) => {
+      return (
+        <ListItem
+          onClick={() => this.onClickDropDown(data.key)}
+          key={v4()}
+          className={`${data.key === selectedGranularity ? "active" : ""}`}
+        >
+          <i className="fa-solid fa-circle-dot"></i>
+          {data.value}
+        </ListItem>
+      );
     });
   };
 
-  renderQuarterMenu = () => {
-    let { quarterMenuData, selectedGranularity } = this.state;
-    return (
-      <Box>
-        {quarterMenuData?.length ? (
-          quarterMenuData.map((menu) => {
-            return (
-              <ListItemButton
-                className="menuItem"
-                onClick={() => this.quarterMenuSelected(menu.menuItem)}
-                selected={selectedGranularity === menu.menuItem}
-              >
-                <i className="fa-solid fa-circle-dot"></i> {menu.menuItem}
-              </ListItemButton>
-            );
-          })
-        ) : (
-          <ListItemButton>There are no data available.</ListItemButton>
-        )}
-      </Box>
-    );
+  onClickDropDown = (selectedGranularity) => {
+    if (selectedGranularity !== this.state.selectedGranularity) {
+      this.props.getSpendingTrend({
+        cloud: "aws",
+        granularity: selectedGranularity,
+        compareTo: -1,
+        forcast: true,
+        orgId: getCurrentOrgId(),
+      });
+      this.setState({ selectedGranularity, isGranularityOpen: false });
+    }
   };
 
   // Render loder
@@ -239,11 +239,18 @@ class SpendingTrend extends Component {
       </Box>
     );
   };
+
+  renderMultipleChart = (chartData) => {
+    if (Object.values(chartData).length > 0) {
+      return <GroupedBarplotChart data={Object.values(chartData)} />;
+    } else {
+      return null;
+    }
+  };
+
   render() {
-    const { isSelectDepartmentOpen, showSelectFilterModal, spendingTrendData } =
+    const { isGranularityOpen, showSelectFilterModal, spendingTrendChartData } =
       this.state;
-    let { spendingTrendData: spendingTrendProps } = this.props;
-    let spendingTrendLoder = spendingTrendProps.status === status.IN_PROGRESS;
     return (
       <Box className="new-reports-container">
         <Box className="breadcrumbs">
@@ -275,19 +282,29 @@ class SpendingTrend extends Component {
                 className="light-btn p-l-15 p-r-15"
                 onClick={this.toggleSelectDepartment}
               >
-                <i class="fas fa-calendar-minus m-r-2"></i> Last Quarter
+                <i class="fas fa-calendar-minus m-r-2"></i>{" "}
+                {this.getSelectedGranularity()}
               </Button>
-              {this.state.isSelectDepartmentOpen === true && (
+              {this.state.isGranularityOpen === true && (
                 <div
                   className={
-                    isSelectDepartmentOpen
+                    isGranularityOpen
                       ? "fliter-collapse active"
                       : "fliter-collapse"
                   }
                 >
-                  {this.renderQuarterMenu()}
+                  <List>{this.renderDropDownData()}</List>
                 </div>
               )}
+
+              <div
+                className={
+                  isGranularityOpen
+                    ? "fliters-collapse-bg active"
+                    : "fliters-collapse-bg"
+                }
+                onClick={this.toggleSelectDepartment}
+              />
             </Box>
           </Box>
         </Box>
@@ -303,11 +320,9 @@ class SpendingTrend extends Component {
                     labelOfBtn: " View Details",
                   }}
                   ChartComponent={
-                    spendingTrendLoder ? (
-                      this.renderLoder()
-                    ) : (
-                      <GroupedBarplotChart data={spendingTrendData} />
-                    )
+                    this.props.spendingTrendData.status === status.IN_PROGRESS
+                      ? this.renderLoder()
+                      : this.renderMultipleChart(spendingTrendChartData)
                   }
                   // style={{ height: '450px', width: '840px' }}
                 />
@@ -339,4 +354,4 @@ const mapDispatchToProps = {
   getSpendingTrend,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SpendingTrend);
+export default connect(mapStateToProps, mapDispatchToProps)(navigateRouter(SpendingTrend));

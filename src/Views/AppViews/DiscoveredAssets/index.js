@@ -6,6 +6,7 @@ import TaggedAssets from "./TaggedAssets";
 import UntaggedAssets from "./UntaggedAssets";
 import TabsMenu from "Views/AppViews/Environments/EnvironmentList/TabsMenu";
 import { v4 } from "uuid";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 class DiscoveredAssets extends Component {
   tabMapping = [
@@ -79,4 +80,4 @@ class DiscoveredAssets extends Component {
   }
 }
 
-export default DiscoveredAssets;
+export default navigateRouter(DiscoveredAssets);

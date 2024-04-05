@@ -31,6 +31,10 @@ import ConfirmationPopup from "Components/ConfirmationPopup";
 import Loader from "Components/Loader";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { SERVICE_TYPE, THREE_TIER_LAYERS } from "CommonData";
+import { USER_RBAC_TYPE } from "CommonData";
+import RBAC_MAPPING from "Utils/RbacMapping";
+import CheckRbacPerMission from "Views/AppViews/Rbac";
 
 const existingTagKeys = [
   "org",
@@ -43,12 +47,12 @@ const existingTagKeys = [
 ];
 const productCategory = {
   [`${PRODUCT_CATEGORY_ENUM.THREE_TIER}`]: [
-    "Web Layer",
-    "App Layer",
-    "Data Layer",
-    "Auxilary Layer",
+    THREE_TIER_LAYERS.WEB_LAYER,
+    THREE_TIER_LAYERS.APP_LAYER,
+    THREE_TIER_LAYERS.DATA_LAYER,
+    THREE_TIER_LAYERS.AUXILARY_LAYER,
   ],
-  SOA: ["BUSINESS", "COMMON"],
+  SOA: [SERVICE_TYPE.BUSINESS, SERVICE_TYPE.COMMON],
 };
 
 const HtmlTooltip = styled(({ className, ...props }) => (
@@ -372,8 +376,12 @@ export class AssociateChartApp extends Component {
         <ul
           key={v4()}
           onClick={(e) => {
+            let type =
+              PRODUCT_CATEGORY_ENUM.THREE_TIER === tag.tag.type?.toUpperCase()
+                ? PRODUCT_CATEGORY_ENUM.THREE_TIER
+                : PRODUCT_CATEGORY_ENUM.SOA;
             e.target?.attributes?.name?.value !== "deleteBtn" &&
-              this.onClickExistingTag(tag.tag, tag.tag.type);
+              this.onClickExistingTag(tag.tag, type);
           }}
         >
           {this.renderTags(tag.tag, tag.tag.type)}
@@ -392,7 +400,7 @@ export class AssociateChartApp extends Component {
   renderTags = (tags, type) => {
     let tempTag = tags;
     let tagKeys = this.filterExistingTagKeys(type);
-
+    const isRbacPermission = this.checkRbacPermission();
     if (tempTag) {
       return tagKeys.map((tag) => {
         tempTag = tempTag[tag];
@@ -401,7 +409,7 @@ export class AssociateChartApp extends Component {
             <li key={v4()} className={this.findActiveTag(tags, type)}>
               <span>{tempTag.name}</span>
             </li>
-            {tag === "service" ? (
+            {tag === "service" && isRbacPermission ? (
               <li style={{ float: "right" }} key={v4()} name={"deleteBtn"}>
                 <Button
                   type="button"
@@ -425,6 +433,19 @@ export class AssociateChartApp extends Component {
         );
       });
     }
+  };
+
+  checkRbacPermission = () => {
+    const { ADMIN, PRODUCT_OWNERS } = USER_RBAC_TYPE;
+    const { CLONE_PRODUCT_ENVIRONMENT, DELETE_PRODUCT_ENVIRONMENT } =
+      RBAC_MAPPING;
+
+    const permissions = {
+      [CLONE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
+      [DELETE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
+    };
+
+    return CheckRbacPerMission(permissions);
   };
 
   // toggle confirmation popup
@@ -468,6 +489,7 @@ export class AssociateChartApp extends Component {
           if (tag === "service") {
             selectedServiceId = tempTag?.id;
           }
+
           activeLevels[`selectedLevel_${index - 1}`] = {
             label: tempTag?.name,
             id:
@@ -488,11 +510,12 @@ export class AssociateChartApp extends Component {
 
   // Type -(BUSINESS,COMMON) return id
   getTypeId = (name, type) => {
-    return productCategory[type?.toUpperCase()].findIndex(
-      (label) =>
-        label.replace(" Layer", "")?.toLowerCase() ===
-        name.replace(" Layer", "")?.toLowerCase()
-    );
+    return productCategory[type?.toUpperCase()].findIndex((label) => {
+      let labelformat = label.replace(" Layer", "")?.toLowerCase();
+      let nameformat = name.replace(" Layer", "")?.toLowerCase();
+
+      return labelformat === nameformat || labelformat.startsWith(nameformat);
+    });
   };
 
   // Find active tag and return active class
@@ -597,7 +620,7 @@ export class AssociateChartApp extends Component {
             <ul>
               <li>
                 <Link
-                  to={`${APP_PREFIX_PATH}/environments`}
+                  to={`${APP_PREFIX_PATH}/assets/environments`}
                   onClick={() => deleteSelectedInfraTopologyView()}
                 >
                   Environments
@@ -608,7 +631,7 @@ export class AssociateChartApp extends Component {
               </li>
               <li>
                 <Link
-                  to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+                  to={`${APP_PREFIX_PATH}/assets/environments/environmentlist?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
                 >
                   {cloudName} &nbsp;(
                   {landingZone})

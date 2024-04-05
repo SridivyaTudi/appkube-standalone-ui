@@ -25,5 +25,6 @@
   "add-user-group": "Add User Group",
   "add-users": "Add Users",
   "bim": "BI Mapping",
-  "create-department": "Create Department"
+  "create-department": "Create Department",
+  "discovered-assets":"Discovered Assets"
 }

@@ -36,6 +36,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { isAlphaNumeric, isAlphabet } from "Utils";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { REGEX_TYPE } from "CommonData";
 const steps = ["User details ", "Add  user to group ", "Review and Create"];
 const initialFormData = {
   firstName: "",
@@ -354,7 +355,7 @@ class CreateUserControlModal extends Component {
   onClickAnotherPerson = () => {
     let { formData } = this.state;
     let isValidate = true;
-    let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
+    let emailRegex = REGEX_TYPE.EMAIL; // eslint-disable-line
 
     if (formData?.length) {
       for (let index = 0; index < formData.length; index++) {
@@ -419,7 +420,7 @@ class CreateUserControlModal extends Component {
   //  Validate step 1
   validateStep1 = (isSubmit) => {
     let { formData } = this.state;
-    let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // eslint-disable-line
+    let emailRegex = REGEX_TYPE.EMAIL;
     let isStepValid = true;
     let errors = {};
     if (isSubmit) {

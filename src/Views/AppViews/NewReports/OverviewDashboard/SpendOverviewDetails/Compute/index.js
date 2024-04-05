@@ -289,7 +289,7 @@ class Compute extends Component {
       this.props.elementDetailsData?.data.data || [],
       1
     );
-    console.log(data);
+
     if (data?.length) {
       if (value) {
         elementDetails = data.filter((tableData) => {

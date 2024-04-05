@@ -134,7 +134,7 @@ class AccordionView extends Component {
                 {subchild?.name}
                 {subchild.isLink ? (
                   <Link
-                    to={`${subchild.url ? subchild.url : "#"}`}
+                    // to={`${subchild.url ? subchild.url : "#"}`}
                     onClick={(e) => {
                       e.stopPropagation();
                       try {

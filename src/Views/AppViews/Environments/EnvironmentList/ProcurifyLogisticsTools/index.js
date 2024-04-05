@@ -74,7 +74,7 @@ export class ProcurifyLogisticsTools extends Component {
               className="primary-btn min-width-inherit"
               variant="contained"
               style={{ color: "#ffffff" }}
-              to={`${APP_PREFIX_PATH}/environments`}
+              to={`${APP_PREFIX_PATH}/assets/environments`}
             >
               All Application
             </Link>

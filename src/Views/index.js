@@ -31,7 +31,7 @@ import ThreeTierTopology from "./AppViews/Environments/EnvironmentList/ThreeTier
 import ApplicationStatusDashboard from "./AppViews/Dashboard/ApplicationStatusDashboard";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { getCurrentUser } from "Utils";
+import { PRODUCT_CATEGORY_ENUM, getCurrentUser } from "Utils";
 import titles from "./PathTitles.json";
 import Error from "./AppViews/Error";
 import SOATopology from "Views/AppViews/Environments/EnvironmentList/SOATopology";
@@ -127,11 +127,11 @@ export const Views = (props) => {
             element={<Navigate to={`${APP_PREFIX_PATH}/dashboard`} />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments`}
+            path={`${APP_PREFIX_PATH}/assets/environments`}
             element={<Environments />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/environmentlist`}
+            path={`${APP_PREFIX_PATH}/assets/environments/environmentlist`}
             element={<EnvironmentList />}
           />
           <Route
@@ -147,39 +147,39 @@ export const Views = (props) => {
             element={<Dashboard />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/aws/newaccountsetup`}
+            path={`${APP_PREFIX_PATH}/assets/environments/aws/newaccountsetup/:departmentId?`}
             element={<NewAccountSetup />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/azure/newaccountsetup`}
+            path={`${APP_PREFIX_PATH}/assets/environments/azure/newaccountsetup`}
             element={<NewAccountSetup />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/gcp/newaccountsetup`}
+            path={`${APP_PREFIX_PATH}/assets/environments/gcp/newaccountsetup`}
             element={<NewAccountSetup />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/kubernetes/newaccountsetup`}
+            path={`${APP_PREFIX_PATH}/assets/environments/kubernetes/newaccountsetup`}
             element={<NewAccountSetup />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/procurifylogisticstools`}
+            path={`${APP_PREFIX_PATH}/assets/environments/procurifylogisticstools`}
             element={<ProcurifyLogisticsTools />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/deployproject`}
+            path={`${APP_PREFIX_PATH}/assets/environments/deployproject`}
             element={<DeployProject />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/configuretopology`}
+            path={`${APP_PREFIX_PATH}/assets/environments/configuretopology`}
             element={<ConfigureTopology />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/createscratch`}
+            path={`${APP_PREFIX_PATH}/assets/environments/createscratch`}
             element={<CreateScratch />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/SelectYourTemplate`}
+            path={`${APP_PREFIX_PATH}/assets/environments/SelectYourTemplate`}
             element={<SelectYourTemplate />}
           />
           <Route path={`${APP_PREFIX_PATH}/setting`} element={<Setting />} />
@@ -217,19 +217,19 @@ export const Views = (props) => {
           />
 
           <Route
-            path={`${APP_PREFIX_PATH}/environments/ecscluster`}
+            path={`${APP_PREFIX_PATH}/assets/environments/ecscluster`}
             element={<EcsCluster />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/associatechartapp`}
+            path={`${APP_PREFIX_PATH}/assets/environments/associatechartapp`}
             element={<AssociateChartApp />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/3tier/topology`}
+            path={`${APP_PREFIX_PATH}/assets/environments/3tier/topology`}
             element={<ThreeTierTopology />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/environments/soa/topology`}
+            path={`${APP_PREFIX_PATH}/assets/environments/soa/topology`}
             element={<SOATopology />}
           />
           {/* <Route
@@ -345,15 +345,19 @@ export const Views = (props) => {
 
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/product-category`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category`}
             element={<ProductCategory />}
           />
+
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/product-category/3-Tier`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category/${PRODUCT_CATEGORY_ENUM.THREE_TIER.toLowerCase().replace(
+              " ",
+              "-"
+            )}`}
             element={<Tier />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/product-category/soa`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category/soa`}
             element={<Soa />}
           />
           <Route
@@ -361,11 +365,11 @@ export const Views = (props) => {
             element={<AddDepartment />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId`}
             element={<AddProduct />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/discovered-assets`}
+            path={`${APP_PREFIX_PATH}/assets/discovered-assets`}
             element={<DiscoveredAssets />}
           />
           <Route

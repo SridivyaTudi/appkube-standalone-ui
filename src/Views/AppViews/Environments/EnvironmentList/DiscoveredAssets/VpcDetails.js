@@ -18,6 +18,7 @@ import LB from "assets/img/assetmanager/global-icon3.png";
 import { v4 } from "uuid";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { REGEX_TYPE } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -77,7 +78,7 @@ class VpcDetails extends React.Component {
     if (dataList?.length) {
       dataList.map((item) => {
         const text = item.hostingType;
-        const result = text.replace(/([A-Z])/g, " $1");
+        const result = text.replace(REGEX_TYPE.CAPITAL_LETTER, " $1");
         const capitalizedTitle =
           result.charAt(0).toUpperCase() + result.slice(1);
         JSX.push(

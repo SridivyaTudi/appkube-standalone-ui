@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import { v4 } from "uuid";
 import CloseIcon from "@mui/icons-material/Close";
@@ -40,16 +40,17 @@ export class Notification extends Component {
       >
         <ModalHeader className="border-bottom">
           Filter
-          <button
-            type="button"
-            className="close"
-            aria-label="Close"
+          <IconButton
+            variant="outlined"
+            aria-label="delete"
+            size="small"
+            className="close-btn"
             onClick={() => {
               this.props.togglePopup();
             }}
           >
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
         </ModalHeader>
         <ModalBody
           style={{ overflowY: "auto", overflowX: "hidden", maxHeight: "300px" }}

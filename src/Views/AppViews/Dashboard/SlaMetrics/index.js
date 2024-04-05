@@ -61,7 +61,7 @@ class SLAMetrics extends Component {
     let color = "";
     if (number > 98) {
       color = "green";
-    } else if (number > 90 && number < 98) {
+    } else if (number > 90 && number <= 98) {
       color = "orange";
     } else {
       color = "red";

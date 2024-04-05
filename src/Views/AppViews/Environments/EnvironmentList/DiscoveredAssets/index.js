@@ -38,6 +38,7 @@ import GlobalServicesSummaryTable from "Views/AppViews/Environments/EnvironmentL
 import { PRODUCT_CATEGORY_ENUM, getSelectedInfraTopologyView } from "Utils";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import ExcludeLambdaTableOfGlobalService from "./Components/ExcludeLambdaTableOfGlobalService";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -79,6 +80,7 @@ class DiscoveredAssets extends Component {
       globalServicesSummaryData: [],
       currentActiveGlobalServiceCategory: "",
       selectedCategoryGlobalServicesData: [],
+      excludeLambdaTableData: [],
     };
   }
 
@@ -209,6 +211,7 @@ class DiscoveredAssets extends Component {
       this.props.globalServiceData.status === status.SUCCESS
     ) {
       const { data } = this.props.globalServiceData;
+
       if (data?.length) {
         this.setState({
           globalServicesSummaryData: data,
@@ -224,8 +227,10 @@ class DiscoveredAssets extends Component {
     ) {
       let globalServicesCloudElements =
         this.props.globalServicesCloudElements.data;
+      let { currentActiveGlobalServiceCategory } = this.state;
       if (globalServicesCloudElements?.length) {
         const lambdaTableData = [];
+        const excludeLambdaTableData = [];
         globalServicesCloudElements.forEach((item) => {
           if (item.configJson) {
             lambdaTableData.push({
@@ -241,10 +246,16 @@ class DiscoveredAssets extends Component {
               product: item.configJson?.product,
               environment: item.configJson?.environment,
               actions: "",
+              id: item.id,
             });
+          } else if (
+            currentActiveGlobalServiceCategory &&
+            currentActiveGlobalServiceCategory?.toUpperCase() !== "LAMBDA"
+          ) {
+            excludeLambdaTableData.push(item);
           }
         });
-        this.setState({ lambdaTableData });
+        this.setState({ lambdaTableData, excludeLambdaTableData });
       }
     }
   };
@@ -528,18 +539,12 @@ class DiscoveredAssets extends Component {
   renderCloudManagedDetails = () => {
     if (!this.props.infraTopologyCategoryWiseData.data?.length) {
       return (
-        <div
-          style={{
-            height: "400px",
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+        <Box
+          className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20"
           key={v4()}
         >
           <h4>No Data Found!</h4>
-        </div>
+        </Box>
       );
     }
     return (
@@ -571,6 +576,7 @@ class DiscoveredAssets extends Component {
       currentActiveGlobalServiceCategory,
       globalServicesSummaryData,
       lambdaTableData,
+      excludeLambdaTableData,
     } = this.state;
     const {
       envDataByLandingZone,
@@ -765,11 +771,18 @@ class DiscoveredAssets extends Component {
         {currentActiveGlobalServiceCategory ? (
           globalServicesCloudElements.status === status.IN_PROGRESS ? (
             <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
-          ) : (
+          ) : currentActiveGlobalServiceCategory?.toUpperCase() === "LAMBDA" ? (
             <LambdaTable
               tableData={lambdaTableData}
               title={currentActiveGlobalServiceCategory}
             />
+          ) : currentActiveNode === "Global Services" ? (
+            <ExcludeLambdaTableOfGlobalService
+              tableData={excludeLambdaTableData}
+              title={currentActiveGlobalServiceCategory}
+            />
+          ) : (
+            <></>
           )
         ) : (
           <></>

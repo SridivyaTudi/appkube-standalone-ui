@@ -56,7 +56,7 @@ class CommonFilterViewSearch extends Component {
         return (
           <ListItem key={v4()}>
             <Link
-              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}&landingZoneId=${account.landingZoneId}`}
+              to={`${APP_PREFIX_PATH}/assets/environments/environmentlist?landingZone=${account.landingZone}&cloudName=${account.cloud}&landingZoneId=${account.landingZoneId}`}
               onClick={() => {
                 this.setState({ showServiceViewFilter: false });
               }}
@@ -125,7 +125,7 @@ class CommonFilterViewSearch extends Component {
         return (
           <ListItem key={v4()}>
             <Link
-              to={`${APP_PREFIX_PATH}/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}&landingZoneId=${item.landingZoneId}`}
+              to={`${APP_PREFIX_PATH}/assets/environments/environmentlist?landingZone=${item.accountId}&cloudName=${item.accountType}&landingZoneId=${item.landingZoneId}`}
               onClick={() => {
                 this.addAccountToRecentlyVisited(item);
               }}

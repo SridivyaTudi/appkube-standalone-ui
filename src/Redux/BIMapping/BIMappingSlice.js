@@ -9,6 +9,9 @@ import {
   createDepartment,
   createDepartmentWithLandingZone,
   getLandingzone,
+  getLandingzoneByDepartment,
+  getCommonServiceModules,
+  getServicesFromServiceModule,
 } from "Redux/BIMapping/BIMappingThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -57,6 +60,18 @@ export const BIMappingSlice = createSlice({
     creationDepartmentWithLandingZone: {
       status: null,
       data: "",
+    },
+    landingZonesByDepartment: {
+      status: null,
+      data: [],
+    },
+    commonServiceModulesData: {
+      status: null,
+      data: [],
+    },
+    servicesFromServiceModuleData: {
+      status: null,
+      data: [],
     },
   },
   reducers: {
@@ -298,6 +313,84 @@ export const BIMappingSlice = createSlice({
       return {
         ...state,
         creationDepartmentWithLandingZone: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getLandingzoneByDepartment.pending]: (state) => {
+      return {
+        ...state,
+        landingZonesByDepartment: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getLandingzoneByDepartment.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        landingZonesByDepartment: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getLandingzoneByDepartment.rejected]: (state) => {
+      return {
+        ...state,
+        landingZonesByDepartment: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getCommonServiceModules.pending]: (state) => {
+      return {
+        ...state,
+        commonServiceModulesData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getCommonServiceModules.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        commonServiceModulesData: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getCommonServiceModules.rejected]: (state) => {
+      return {
+        ...state,
+        commonServiceModulesData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getServicesFromServiceModule.pending]: (state) => {
+      return {
+        ...state,
+        servicesFromServiceModuleData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getServicesFromServiceModule.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        servicesFromServiceModuleData: {
+          status: status.SUCCESS,
+          data: action.payload,
+        },
+      };
+    },
+    [getServicesFromServiceModule.rejected]: (state) => {
+      return {
+        ...state,
+        servicesFromServiceModuleData: {
           status: status.FAILURE,
         },
       };

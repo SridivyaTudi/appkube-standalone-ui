@@ -6,7 +6,15 @@ import clusterIcon from "assets/img/assetmanager/cluster-icon.png";
 import { v4 } from "uuid";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import { PRODUCT_CATEGORY_ENUM } from "Utils";
+import { PRODUCT_CATEGORY_ENUM, getCurrentUserRole } from "Utils";
+import {
+  APPKUBE_UI_ENDPOINT,
+  REGEX_TYPE,
+  ELEMENT_EXPLORER_MAPPING,
+  USER_RBAC_TYPE,
+} from "CommonData";
+import RBAC_MAPPING from "Utils/RbacMapping";
+import CheckRbacPerMission from "Views/AppViews/Rbac";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -51,16 +59,30 @@ class AssociateApp extends Component {
   };
 
   convertStringToCapCase = (string) => {
-    const result = string.replace(/([A-Z])/g, " $1");
+    const result = string.replace(REGEX_TYPE.CAPITAL_LETTER, " $1");
     const finalResult = result.charAt(0).toUpperCase() + result.slice(1);
     return finalResult;
   };
 
+  getExplorerLink = (elementType, id) => {
+    let element = elementType.toUpperCase();
+    return `${
+      ELEMENT_EXPLORER_MAPPING[element]
+        ? `${APPKUBE_UI_ENDPOINT}${ELEMENT_EXPLORER_MAPPING[element].replace(
+            "#element-id#",
+            id
+          )}`
+        : "#"
+    }`;
+  };
   renderTierSoc() {
     const { activeTierTabIndexes } = this.state;
     const dataTierSoc = this.props.data;
     const JSX = [];
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
+
+    //check permission
+    let isRbacPermission = this.checkRbacPermissionForAssociate();
 
     dataTierSoc.forEach((data, index) => {
       const tier3Data = Object.entries(data.threeTier);
@@ -79,16 +101,17 @@ class AssociateApp extends Component {
               </HtmlTooltip>
             </h3>
             <Button
-              className="primary-text-btn min-width"
+              className={`primary-text-btn min-width`}
               component={Link}
               variant="contained"
-              to={`${APP_PREFIX_PATH}/environments/associatechartapp?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&elementType=${data.elementType}&instanceId=${data.instanceId}`}
+              to={`${APP_PREFIX_PATH}/assets/environments/associatechartapp?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&elementType=${data.elementType}&instanceId=${data.instanceId}`}
+              disabled={!isRbacPermission}
             >
               Associate App
             </Button>
           </Box>
           <Box className="contents">
-            <div className="d-block width-100">
+            <Box className="d-block width-100">
               <Box className="tier-buttons">
                 <Button
                   className={
@@ -145,14 +168,14 @@ class AssociateApp extends Component {
                       })}
                 </ul>
               </Box>
-            </div>
+            </Box>
           </Box>
           <Box className="buttons">
             <Button
-              className="primary-outline-btn min-width"
+              className="primary-outline-btn min-width button"
               component={Link}
               variant="contained"
-              to={`${APP_PREFIX_PATH}/environments/ecscluster?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+              to={`${APP_PREFIX_PATH}/assets/environments/ecscluster?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
             >
               View Services
             </Button>
@@ -160,7 +183,16 @@ class AssociateApp extends Component {
               className="table-tooltip"
               title={`${data.elementType} Explorer`}
             >
-              <Button className="primary-btn min-width" variant="contained">
+              <Button
+                className="primary-btn min-width button"
+                variant="contained"
+                component={Link}
+                target="_blank"
+                to={this.getExplorerLink(data.elementType, data.id)}
+                disabled={
+                  !ELEMENT_EXPLORER_MAPPING[data.elementType.toUpperCase()]
+                }
+              >
                 <p>{data.elementType} Explorer</p>
               </Button>
             </HtmlTooltip>
@@ -170,6 +202,17 @@ class AssociateApp extends Component {
     });
     return JSX;
   }
+
+  checkRbacPermissionForAssociate = () => {
+    const { ADMIN, PRODUCT_OWNERS } = USER_RBAC_TYPE;
+    const { CREATE_PRODUCT_ENVIRONMENT } = RBAC_MAPPING;
+
+    const permissions = {
+      [CREATE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
+    };
+
+    return CheckRbacPerMission(permissions);
+  };
 
   getUrlDetails() {
     const queryPrm = new URLSearchParams(document.location.search);

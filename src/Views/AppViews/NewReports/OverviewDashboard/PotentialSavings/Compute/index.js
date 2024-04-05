@@ -21,74 +21,17 @@ import {
   getPotentialMonthlySaving,
   getTopRiRecommendations,
 } from "Redux/Reports/ReportsThunk";
-import { getCurrentOrgId } from "Utils";
+import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-
+import { REPORT_PAGE_TYPE, SUMMARY_INSTANCE_TYPE } from "CommonData";
+const { CURRENT_TOTAL } = SUMMARY_INSTANCE_TYPE;
 // let donutData = [
 //   {
 //     age_group: "Reserved Instance",
 //     population: 110011100,
-//   },
-//   {
-//     age_group: "Savings Plan",
-//     population: 40267984,
-//   },
-//   {
-//     age_group: "RightSizing",
-//     population: 30672088,
-//   },
-//   {
-//     age_group: "Spot Instances",
-//     population: 53980105,
-//   },
-//   {
-//     age_group: "Others",
-//     population: 81489445,
-//   },
-// ];
-// let verticalBarChartData = [
-//   {
-//     name: "Jun 23",
-//     value: 4500,
-//   },
-//   {
-//     name: "July 23",
-//     value: 4000,
-//   },
-//   {
-//     name: "August 23",
-//     value: 4000,
-//   },
-//   {
-//     name: "Sept 23",
-//     value: 3800,
-//   },
-//   {
-//     name: "Oct 23",
-//     value: 3700,
-//   },
-//   {
-//     name: "Nov 23",
-//     value: 3700,
-//   },
-//   {
-//     name: "Dec 23",
-//     value: 3700,
-//   },
-//   {
-//     name: "Jan 24",
-//     value: 3700,
-//   },
-//   {
-//     name: "Feb 24",
-//     value: 3700,
-//   },
-//   {
-//     name: "March 24",
-//     value: 3700,
 //   },
 // ];
 
@@ -99,66 +42,9 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 //     percentage: "15",
 //     subName: "vs Last Quarter",
 //   },
-//   {
-//     name: "Forecasting Savings",
-//     value: "$90,000",
-//     percentage: "5",
-//     subName: " vs Last Quarter",
-//   },
-//   {
-//     name: "Last Quarter savings ",
-//     value: "$80,000",
-//     percentage: "5",
-//     subName: "vs Previous Month",
-//   },
-//   {
-//     name: "Total Savings ",
-//     value: "$110,000",
-//     percentage: "5",
-//     subName: " vs Last Quarter",
-//   },
 // ];
 
 // let riData = [
-//   {
-//     resourceType: "EC2",
-//     InstanceId: "i-0c1234dc",
-//     recommendation: "RI",
-//     currentInstance: "t4g.2xlarge",
-//     recommendedInstance: "t2.2xlarge",
-//     terms: "1yr RI",
-//     paymentMode: "No Upfront",
-//     UpfrontCost: "$0",
-//     hrCost: "$0.2300",
-//     estimatedSavings: "~$530",
-//     totalSpend: "$196.22",
-//   },
-//   {
-//     resourceType: "ECS",
-//     InstanceId: "i-0c1234dc",
-//     recommendation: "RI",
-//     currentInstance: "t4g.2xlarge",
-//     recommendedInstance: "t2.2xlarge",
-//     terms: "1yr RI",
-//     paymentMode: "No Upfront",
-//     UpfrontCost: "$0",
-//     hrCost: "$0.2300",
-//     estimatedSavings: "~$530",
-//     totalSpend: "$196.22",
-//   },
-//   {
-//     resourceType: "LAMBDA",
-//     InstanceId: "i-0c1234dc",
-//     recommendation: "RI",
-//     currentInstance: "t4g.2xlarge",
-//     recommendedInstance: "t2.2xlarge",
-//     terms: "1yr RI",
-//     paymentMode: "No Upfront",
-//     UpfrontCost: "$0",
-//     hrCost: "$0.2300",
-//     estimatedSavings: "~$530",
-//     totalSpend: "$196.22",
-//   },
 //   {
 //     resourceType: "EC2",
 //     InstanceId: "i-0c1234dc",
@@ -204,34 +90,37 @@ class Compute extends Component {
   }
 
   allAPICall = (granularity) => {
+    const serviceCategory =
+      REPORT_PAGE_TYPE.SPEND_OVERVIEW_SERVICE_CATEGORY.COMPUTE.toLowerCase();
+    const cloud = ENVIRONMENTS.AWS.toLowerCase();
     this.props.getComputeSummary({
-      cloud: "aws",
+      cloud,
       granularity,
       compareTo: -1,
-      serviceCategory: "compute",
+      serviceCategory,
       orgId: getCurrentOrgId(),
     });
 
     this.props.getPotentialTotalSaving({
-      cloud: "aws",
+      cloud,
       granularity,
       compareTo: -1,
-      serviceCategory: "compute",
+      serviceCategory,
       orgId: getCurrentOrgId(),
     });
     this.props.getPotentialMonthlySaving({
-      cloud: "aws",
+      cloud,
       granularity,
       compareTo: -1,
-      serviceCategory: "compute",
+      serviceCategory,
       orgId: getCurrentOrgId(),
     });
 
     this.props.getTopRiRecommendations({
-      cloud: "aws",
+      cloud,
       granularity,
       compareTo: -1,
-      serviceCategory: "compute",
+      serviceCategory,
       orgId: getCurrentOrgId(),
     });
   };
@@ -314,10 +203,10 @@ class Compute extends Component {
     potentialTotalSavingData = [];
     if (data?.length) {
       const totalValue = data
-        .filter((e) => e.instanceType !== "CURRENT_TOTAL")
+        .filter((e) => e.instanceType !== CURRENT_TOTAL)
         .reduce((acc, crr) => (acc += +crr.total), 0);
       data.forEach((obj) => {
-        if (!["CURRENT_TOTAL"].includes(obj.instanceType)) {
+        if (![CURRENT_TOTAL].includes(obj.instanceType)) {
           potentialTotalSavingData.push({
             age_group: obj.instanceType,
             population: obj.total,
@@ -345,19 +234,6 @@ class Compute extends Component {
     this.setState({ potentialMonthlySavingData });
   };
 
-  // maniplatetopRiRecommendationsData = (data) => {
-  //   const updatedtopRiRecommendationsData = data.map((item) => {
-  //     let name = item.label;
-  //     let value = `$${parseFloat(item.currentTotal).toFixed(2)}`;
-  //     let percentage = item.variance;
-  //     let subName = `vs Previous Month`;
-  //     return { name, value, percentage, subName };
-  //   });
-
-  //   this.setState({
-  //     topRiRecommendationsData: updatedtopRiRecommendationsData,
-  //   });
-  // };
   renderLoder = () => {
     return (
       <Box className="chart-loader  text-center  align-item-center justify-center p-b-15">
@@ -408,10 +284,7 @@ class Compute extends Component {
                 <TableCell align="left">{obj.elementType}</TableCell>
 
                 <TableCell align="center">
-                  <HtmlTooltip
-                    className="table-tooltip"
-                    title={obj.instanceId}
-                  >
+                  <HtmlTooltip className="table-tooltip" title={obj.instanceId}>
                     {obj.instanceId}{" "}
                   </HtmlTooltip>
                 </TableCell>
@@ -554,7 +427,7 @@ class Compute extends Component {
         </Box>
         <Box className="new-reports-table">
           <TableContainer className="table">
-            <Table style={{ width: 2300 }}>
+            <Table style={{ minWidth: 2250 }}>
               {this.renderTableHead()}
               {this.renderTableBody()}
             </Table>
