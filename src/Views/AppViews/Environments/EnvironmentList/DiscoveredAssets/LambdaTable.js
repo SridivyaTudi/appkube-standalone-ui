@@ -69,7 +69,7 @@ class LambdaTable extends Component {
     });
   }
   getExplorerLink = (elementType, id) => {
-    let element = elementType.toUpperCase();
+    let element = elementType?.toUpperCase();
     return `${
       ELEMENT_EXPLORER_MAPPING[element]
         ? `${APPKUBE_UI_ENDPOINT}${ELEMENT_EXPLORER_MAPPING[element].replace(
@@ -83,6 +83,7 @@ class LambdaTable extends Component {
     const { pg, rpg } = this.state;
     const { title } = this.props;
     const { tableData } = this.props;
+    
     if (!tableData.length) {
       return (
         <Box className="lambda-functions-container">
@@ -132,7 +133,7 @@ class LambdaTable extends Component {
                           target="_blank"
                           to={this.getExplorerLink(title, row.id)}
                           disabled={
-                            !ELEMENT_EXPLORER_MAPPING[title.toUpperCase()]
+                            !ELEMENT_EXPLORER_MAPPING[title?.toUpperCase()]
                           }
                         >
                           <p>{row.functionName}</p>

@@ -440,12 +440,13 @@
                           text-overflow: ellipsis;
                           width: 70%;
                           span {
-                            font-size: 10px;
-                            line-height: 14px;
+                            font-size: 12px;
+                            line-height: 15px;
                             color: #535362;
                             white-space: nowrap;
                             overflow: hidden;
                             text-overflow: ellipsis;
+                            font-weight: 600;
                           }
 
                           label {
