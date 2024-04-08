@@ -31,6 +31,7 @@ import Loader from "Components/Loader";
 import ConfirmationPopup from "Components/ConfirmationPopup";
 import { ToastMessage } from "Toast/ToastMessage";
 import { getCurrentUser } from "Utils";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -211,7 +212,7 @@ class RoleControl extends Component {
           </TableCell>
           <TableCell>{row?.description}</TableCell>
           <TableCell>
-            <Link to={`/app/setting/role-details/${row.id}`}>View Policy</Link>
+            <Link to={`${APP_PREFIX_PATH}/setting/role-details/${row.id}`}>View Policy</Link>
           </TableCell>
           <TableCell align="center">
             <IconButton

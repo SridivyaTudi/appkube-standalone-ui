@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { Link } from "react-router-dom";
-
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 export class AccountTable extends Component {
   constructor(props) {
     super(props);
@@ -55,7 +55,7 @@ export class AccountTable extends Component {
                 <TableCell>
                   {details.nameImageShow ? details.nameImageShow : <></>}
                   <Link
-                    to={`/app/new-reports/budget-dashboard/budget-services-account`}
+                    to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-services-account`}
                   >
                     {" "}
                     {details.id}

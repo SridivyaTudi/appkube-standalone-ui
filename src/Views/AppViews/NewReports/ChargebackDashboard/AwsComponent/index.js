@@ -16,6 +16,8 @@ import DonutChart from "Views/AppViews/NewReports/Components/DonutChart";
 import TimeSpendComponent from "Views/AppViews/NewReports/Components/TimeSpendComponent";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { Link } from "react-router-dom";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 // const totalUsedServiceData = [
 //   { label: "EC2", value: 4700, color: "#A145FF" },
 //   { label: "RDS", value: 4500, color: "#FA6298" },

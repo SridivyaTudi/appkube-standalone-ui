@@ -254,7 +254,7 @@ class ItDepartmentDetails extends Component {
           </Box>
         </Box>
         <Box className="d-flex d-flex align-items-center justify-content-end m-t-2 ">
-          <Link to={`/app/new-reports/chargeback-dashboard/create-invoice`}>
+          <Link to={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/create-invoice`}>
             <Button className="light-btn p-l-15 p-r-15 m-r-3">
               <i class="fas fa-plus-circle m-r-2"></i> Create Invoice
             </Button>

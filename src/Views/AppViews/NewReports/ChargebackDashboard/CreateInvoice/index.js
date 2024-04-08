@@ -447,7 +447,7 @@ class CreateInvoice extends Component {
       <Box className="new-reports-container">
         <Box className="list-heading">
           <h3>
-            <Link to={`/app/new-reports/chargeback-dashboard`}>
+            <Link to={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard`}>
               <IconButton className="m-r-2">
                 <i class="fas fa-long-arrow-left"></i>
               </IconButton>
@@ -462,7 +462,7 @@ class CreateInvoice extends Component {
               Edit <i className="far fa-edit p-l-5"></i>
             </Button>
             <Link
-              to={`/app/new-reports/chargeback-dashboard/history-departments`}
+              to={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/history-departments`}
             >
               <Button className="success-btn min-width-inherit  p-l-15 p-r-15">
                 Send <i className="fas fa-paper-plane p-l-5"></i>

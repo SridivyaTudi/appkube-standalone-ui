@@ -31,6 +31,7 @@ import {
   getPendingUserCount,
 } from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class UserControl extends Component {
   user = { id: "", username: "", organization: {} };
@@ -218,7 +219,7 @@ class UserControl extends Component {
           rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
             <TableRow key={v4()}>
               <TableCell>
-                <Link to={`/app/setting/user-profile/${row.id}`}>
+                <Link to={`${APP_PREFIX_PATH}/setting/user-profile/${row.id}`}>
                   {row.username}
                 </Link>
               </TableCell>

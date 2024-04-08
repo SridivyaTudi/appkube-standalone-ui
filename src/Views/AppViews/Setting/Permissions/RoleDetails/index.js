@@ -195,7 +195,7 @@ class RoleDetails extends Component {
                 <ul>
                   <li>
                     <Link
-                      to={`/app/setting`}
+                      to={`${APP_PREFIX_PATH}/setting`}
                       onClick={() => setActiveTab("permissions")}
                     >
                       Users and Permissions{" "}
