@@ -7,6 +7,8 @@ import Network from "./Network";
 import Other from "./Other";
 import { Link } from "react-router-dom";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 class TopUsedServicesDetails extends Component {
   tabMapping = [
     {
@@ -102,7 +104,9 @@ class TopUsedServicesDetails extends Component {
             <ul>
               <li
                 onClick={() =>
-                  this.props.navigate("/app/new-reports/over-view-dashboard")
+                  this.props.navigate(
+                    `${APP_PREFIX_PATH}/new-reports/over-view-dashboard`
+                  )
                 }
               >
                 Overview Dashboard
@@ -113,7 +117,7 @@ class TopUsedServicesDetails extends Component {
               <li
                 onClick={() =>
                   this.props.navigate(
-                    "/app/new-reports/over-view-dashboard/top-use-services"
+                    `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/top-use-services`
                   )
                 }
               >
@@ -134,10 +138,10 @@ class TopUsedServicesDetails extends Component {
                 <i className="fas fa-filter m-r-2"></i> Filter
               </Button>
               <Box className="fliter-button">
-              <Button className="light-btn p-l-15 p-r-15">
-                <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
-              </Button>
-            </Box>
+                <Button className="light-btn p-l-15 p-r-15">
+                  <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
+                </Button>
+              </Box>
             </Box>
           </Box>
           {this.renderActiveTabOfComponent()}

@@ -6,6 +6,8 @@ import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import ServiceIcon1 from "assets/img/report/service-icon1.png";
 import AccountTable from "../../CentralDashboard/Components/AccountTable";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 let timeSpendData = [
   {
     name: "Month to date spend",
@@ -199,7 +201,7 @@ class BudgetServicesAccount extends Component {
               <ul>
                 <li
                   onClick={() =>
-                    this.props.navigate("/app/new-reports/budget-dashboard")
+                    this.props.navigate(`${APP_PREFIX_PATH}/new-reports/budget-dashboard`)
                   }
                 >
                   Budget Dashboard
@@ -210,7 +212,7 @@ class BudgetServicesAccount extends Component {
                 <li
                   onClick={() =>
                     this.props.navigate(
-                      "/app/new-reports/budget-dashboard/budget-account"
+                      `${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-account`
                     )
                   }
                 >

@@ -16,6 +16,7 @@ import SelectFilterModal from "../../Components/SelectFilterModal";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class BudgetProducts extends Component {
   constructor(props) {
@@ -339,7 +340,9 @@ class BudgetProducts extends Component {
               <ul>
                 <li
                   onClick={() => {
-                    this.props.navigate(`/app/new-reports/budget-dashboard`);
+                    this.props.navigate(
+                      `${APP_PREFIX_PATH}/new-reports/budget-dashboard`
+                    );
                   }}
                 >
                   Budget Dashboard

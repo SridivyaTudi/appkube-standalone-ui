@@ -17,6 +17,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import AccordionView from "Views/AppViews/Setting/Components/AccordionView";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -235,7 +236,7 @@ export class CreatePolicy extends Component {
   // Move to previous page
   handlePreviousPage = () => {
     setActiveTab("permissions/policies");
-    this.props.navigate("/app/setting");
+    this.props.navigate(`${APP_PREFIX_PATH}/setting`);
   };
 
   //Set state on  input changes
@@ -515,7 +516,8 @@ export class CreatePolicy extends Component {
                   type="text"
                   className="form-control"
                   id="roleDescription"
-                  name="description"  maxlength="255"
+                  name="description"
+                  maxlength="255"
                   style={{
                     maxWidth: "100%",
                     height: "60px",

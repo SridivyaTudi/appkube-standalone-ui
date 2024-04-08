@@ -16,6 +16,8 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import status from "Redux/Constants/CommonDS";
 import SuccessfullyIcon from "assets/img/assetmanager/successfully-icon.png";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 const steps = ["Add OU ", "Add Project & Services ", "Payment and Date"];
 const departments = ["It", "Hr", "Prodution", "Finance"];
 const services = [
@@ -406,7 +408,9 @@ class CreateInvoice extends Component {
             sx={{ mr: 1 }}
             onClick={() => {
               if ([3].includes(activeStep)) {
-                this.props.navigate("/app/new-reports/chargeback-dashboard");
+                this.props.navigate(
+                  `${APP_PREFIX_PATH}/new-reports/chargeback-dashboard`
+                );
               } else {
                 this.handlePreviousSteps();
               }

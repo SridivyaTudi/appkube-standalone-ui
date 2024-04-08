@@ -23,6 +23,7 @@ import Loader from "Components/Loader";
 import ConfirmationPopup from "Components/ConfirmationPopup";
 import { ToastMessage } from "Toast/ToastMessage";
 import AddUserGroup from "./AddUserGroup";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 let HEADER = {
   0: "Assign Permission",
@@ -82,7 +83,7 @@ export class UserProfile extends Component {
         if (removeUserRes) {
           this.togglePopup();
           setActiveTab("permissions/user");
-          this.props.navigate("/app/setting");
+          this.props.navigate(`${APP_PREFIX_PATH}/setting`);
           ToastMessage.success("User being successfully disabled.");
         } else {
           ToastMessage.error(removeUserRes?.message || "User Disable action Failed!");

@@ -20,6 +20,7 @@ import ConfirmationPopup from "Components/ConfirmationPopup";
 import { ToastMessage } from "Toast/ToastMessage";
 import AddUsers from "../AddUsers";
 import AddRole from "../AddRole";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class GroupDetails extends Component {
   tabMapping = [
@@ -87,7 +88,7 @@ class GroupDetails extends Component {
         if (removeGroupRes) {
           this.togglePopup();
           setActiveTab("permissions/group");
-          this.props.navigate("/app/setting");
+          this.props.navigate(`${APP_PREFIX_PATH}/setting`);
           ToastMessage.success("Group Removed Successfully");
         } else {
           ToastMessage.error("Group Deletion Failed!");

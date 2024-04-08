@@ -15,6 +15,8 @@ import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ServiceIcon7 from "assets/img/report/service-icon7.png";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 let timeSpendData = [
   {
     name: "Last Quarter Spend",
@@ -147,7 +149,7 @@ class ItDepartment extends Component {
             <ul>
               <li
                 onClick={() =>
-                  this.props.navigate("/app/new-reports/chargeback-dashboard")
+                  this.props.navigate(`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard`)
                 }
               >
                 Chargeback Dashboard

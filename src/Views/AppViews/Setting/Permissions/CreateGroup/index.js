@@ -32,6 +32,7 @@ import { setActiveTab, getCurrentUser, getFormattedDate } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -502,7 +503,7 @@ export class CreateGroup extends Component {
   // Move to previous page
   handlePreviousPage = () => {
     setActiveTab("permissions/group");
-    this.props.navigate("/app/setting");
+    this.props.navigate(`${APP_PREFIX_PATH}/setting`);
   };
   render() {
     const {

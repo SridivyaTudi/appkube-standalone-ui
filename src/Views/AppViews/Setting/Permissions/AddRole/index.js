@@ -23,6 +23,7 @@ import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import { getUserPermissionData } from "Redux/Settings/SettingsThunk";
 import Loader from "Components/Loader";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -104,7 +105,7 @@ class AddRole extends Component {
 
   handlePreviousPage = () => {
     setActiveTab("permissions/group");
-    this.props.navigate("/app/setting");
+    this.props.navigate(`${APP_PREFIX_PATH}/setting`);
   };
 
   handleCancelRoleControlModal = () => {

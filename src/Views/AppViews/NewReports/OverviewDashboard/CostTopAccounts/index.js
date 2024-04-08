@@ -272,9 +272,9 @@ class CostTopAccounts extends Component {
           <h3> Cost Of Top Accounts</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li
+              <li 
                 onClick={() =>
-                  this.props.navigate("/app/new-reports/over-view-dashboard")
+                  this.props.navigate(`${APP_PREFIX_PATH}/new-reports/over-view-dashboard`)
                 }
               >
                 Overview Dashboard
