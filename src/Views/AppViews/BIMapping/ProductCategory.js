@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Box, IconButton, Grid } from "@mui/material";
 import admissionIcon from "assets/img/bimapping/admission.png";
 import searchIcon from "assets/img/bimapping/search.png";
-import rbacIcon from "assets/img/bimapping/rbac.png";
 import ServiceModal from "./Components/ServiceModal";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
@@ -195,7 +194,7 @@ class ProductCategory extends Component {
     this.props.setProductIntoDepartment(passData);
     let { name, id, landingZoneId } = this.getUrlDetails();
     this.props.navigate(
-      `/app/bim/add-product/${name}/${id}/${landingZoneId}/product-category/soa`
+      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/product-category/soa`
     );
   };
 
@@ -214,7 +213,7 @@ class ProductCategory extends Component {
     this.props.setProductIntoDepartment(passData);
     let { name, id, landingZoneId } = this.getUrlDetails();
     this.props.navigate(
-      `/app/bim/add-product/${name}/${id}/${landingZoneId}/product-category/soa`
+      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/product-category/soa`
     );
   };
 
@@ -520,7 +519,7 @@ class ProductCategory extends Component {
           <h3>Product Category</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li onClick={() => this.props.navigate("/app/bim")}>
+              <li onClick={() => this.props.navigate(`${APP_PREFIX_PATH}/bim`)}>
                 BI-Mapping
               </li>
               <li>
@@ -529,7 +528,7 @@ class ProductCategory extends Component {
               <li
                 onClick={() =>
                   this.props.navigate(
-                    `/app/bim/add-product/${departMentName}/${id}/${landingZoneId}`
+                    `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}`
                   )
                 }
               >
@@ -551,7 +550,9 @@ class ProductCategory extends Component {
                 <LoadingButton
                   className="primary-btn"
                   variant="contained"
-                  onClick={() => this.moveToNextPage(SERVICE_TYPE.BUSINESS.toLowerCase())}
+                  onClick={() =>
+                    this.moveToNextPage(SERVICE_TYPE.BUSINESS.toLowerCase())
+                  }
                 >
                   Add
                 </LoadingButton>

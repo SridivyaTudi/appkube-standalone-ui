@@ -25,7 +25,7 @@ const DonutChart = ({ data, width, height, style, otherData }) => {
         const radius = Math.min(width, height) / 1.6;
         const innerRadius = radius * 0.6;
         var colors = data.map(
-          (e, i) => ["#FF708B", "#ffba69", "#f9d33d", "#8676ff", "#000000"][i]
+          (e, i) => ["#FF708B", "#ffba69", "#f9d33d", "#8676ff", "#34A2C2"][i]
         );
         const color = d3
           .scaleOrdinal(colors)

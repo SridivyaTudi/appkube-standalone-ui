@@ -16,24 +16,22 @@ const totalUsedServiceData = [
 ];
 let verticalBarChartData = [
   {
-    label: "Compute Cost",
-    value: 110011100,
+    name: "Month1",
+    current: 12474153,
+    forcast: 171068,
+    previous: 12888613,
   },
   {
-    label: "Network ",
-    value: 40267984,
+    name: "Month2",
+    current: 12869996,
+    forcast: 148428,
+    previous: 12061264,
   },
   {
-    label: "Storage",
-    value: 30672088,
-  },
-  {
-    label: "Database",
-    value: 53980105,
-  },
-  {
-    label: "Others",
-    value: 81489445,
+    name: "Month3",
+    current: 0,
+    forcast: 118137,
+    previous: 12902894,
   },
 ];
 let donutData = [
@@ -240,7 +238,10 @@ class AwsComponent extends Component {
                   link: "/app/new-reports/budget-dashboard/budget-products",
                 }}
                 ChartComponent={
-                  <GroupedBarplotChart data={verticalBarChartData} />
+                  <GroupedBarplotChart
+                    data={verticalBarChartData}
+                    granularity={"Quarter"}
+                  />
                 }
               />
             </Grid>

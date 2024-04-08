@@ -16,10 +16,9 @@ import ChartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png"
 import DataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png";
 import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import RightArrow from "assets/img/assetmanager/right-arrow.png";
-import deployed1 from "../../../../assets/img/bimapping/deployed1.png";
-import Aws from "../../../../assets/img/aws.png";
-import LoadBalancerIcon from "../../../../assets/img/bimapping/load-balancer-icon.png";
-import IngressIcon from "../../../../assets/img/bimapping/ingress-icon.png";
+import deployed1 from "assets/img/bimapping/deployed1.png";
+import LoadBalancerIcon from "assets/img/bimapping/load-balancer-icon.png";
+import IngressIcon from "assets/img/bimapping/ingress-icon.png";
 import ServiceIcon from "../../../../assets/img/bimapping/service-icon.png";
 import StarIcon from "../../../../assets/img/bimapping/star-icon.png";
 import { v4 } from "uuid";
@@ -47,7 +46,6 @@ import ManagementInfo from "../Soa/components/ManagementInfo";
 import ConfigInfo from "../Soa/components/ConfigInfo";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import InstanceListCards from "Views/AppViews/BIMapping/Components/InstanceListCards";
-import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { LOGOS, SERVICE_TYPE } from "CommonData";
 
@@ -256,22 +254,6 @@ class Soa extends Component {
     ) {
       let instancesServices = this.props.instancesServices?.data || [];
       this.setState({ instancesServices });
-    }
-
-    if (
-      prevProps.creationBiMapping.status !==
-        this.props.creationBiMapping.status &&
-      this.props.creationBiMapping.status === status.SUCCESS
-    ) {
-      if (this.props.creationBiMapping?.data) {
-        ToastMessage.success("Created Product of BI-Mapping.");
-        let { name, id } = this.getUrlDetails();
-        this.props.navigate(
-          `/app/bim/add-product/${name}/${id}/product-category`
-        );
-      } else {
-        ToastMessage.error("Creation Of Add BI-mapping Failed.");
-      }
     }
 
     if (
@@ -726,7 +708,7 @@ class Soa extends Component {
       this.props.setProductIntoDepartment(passData);
       let { name, id, landingZoneId } = this.getUrlDetails();
       this.props.navigate(
-        `/app/bim/add-product/${name}/${id}/${landingZoneId}/product-category`
+        `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/product-category`
       );
     }
   };
@@ -766,12 +748,20 @@ class Soa extends Component {
         managementInfo,
         configInfo,
       } = findSaveData;
+      let { landingZoneId } = this.getUrlDetails();
+
       this.props.getCloudServices({
         serviceCategory: serviceName,
         productCategory: PRODUCT_CATEGORY_ENUM.SOA,
       });
+
       activeServiceCategory = serviceName;
-      this.props.getInstancesServices({ cloudName, elementType });
+
+      this.props.getInstancesServices({
+        cloudName,
+        elementType,
+        landingZoneId,
+      });
 
       Object.keys(savedService).forEach((key) => {
         if (serviceName === key) {
@@ -834,14 +824,16 @@ class Soa extends Component {
         <h3>Soa</h3>
         <Box className="breadcrumbs">
           <ul>
-            <li onClick={() => this.props.navigate("/app/bim")}>BI-Mapping</li>
+            <li onClick={() => this.props.navigate(`${APP_PREFIX_PATH}/bim`)}>
+              BI-Mapping
+            </li>
             <li>
               <i className="fa-solid fa-chevron-right"></i>
             </li>
             <li
               onClick={() =>
                 this.props.navigate(
-                  `/app/bim/add-product/${name}/${id}/${landingZoneId}`
+                  `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}`
                 )
               }
             >
@@ -853,7 +845,7 @@ class Soa extends Component {
             <li
               onClick={() =>
                 this.props.navigate(
-                  `/app/bim/add-product/${name}/${id}/${landingZoneId}/product-category`
+                  `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/product-category`
                 )
               }
             >

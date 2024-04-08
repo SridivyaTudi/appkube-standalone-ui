@@ -638,7 +638,9 @@ class Tier extends Component {
         managementInfo,
         configInfo,
       } = findSaveData;
-      this.props.getInstancesServices({ cloudName, elementType });
+      let { landingZoneId } = this.getUrlDetails();
+
+      this.props.getInstancesServices({ cloudName, elementType,landingZoneId });
 
       Object.keys(savedLayer).forEach((key) => {
         if (layerName === key) {
@@ -732,14 +734,16 @@ class Tier extends Component {
         <h3>3 Tier</h3>
         <Box className="breadcrumbs">
           <ul>
-            <li onClick={() => this.props.navigate("/app/bim")}>BI-Mapping</li>
+            <li onClick={() => this.props.navigate(`${APP_PREFIX_PATH}/bim`)}>
+              BI-Mapping
+            </li>
             <li>
               <i className="fa-solid fa-chevron-right"></i>
             </li>
             <li
               onClick={() =>
                 this.props.navigate(
-                  `/app/bim/add-product/${name}/${id}/${landingZoneId}`
+                  `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}`
                 )
               }
             >

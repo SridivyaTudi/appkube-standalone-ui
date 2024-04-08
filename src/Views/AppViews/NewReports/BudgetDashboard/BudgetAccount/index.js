@@ -5,6 +5,8 @@ import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import AccountTable from "../Components/AccountTable";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 let timeSpendData = [
   {
     name: "Month to date spend",
@@ -148,7 +150,9 @@ class BudgetAccount extends Component {
               <ul>
                 <li
                   onClick={() =>
-                    this.props.navigate("/app/new-reports/budget-dashboard")
+                    this.props.navigate(
+                      `${APP_PREFIX_PATH}/new-reports/budget-dashboard`
+                    )
                   }
                 >
                   Budget Dashboard

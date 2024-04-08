@@ -72,14 +72,14 @@ class AddProduct extends Component {
           this.props.setProductIntoDepartment(productData);
           if (formData.category === PRODUCT_CATEGORY_ENUM.THREE_TIER) {
             this.props.navigate(
-              `/app/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/product-category/${PRODUCT_CATEGORY_ENUM.THREE_TIER.toLowerCase().replace(
+              `${APP_PREFIX_PATH}/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/product-category/${PRODUCT_CATEGORY_ENUM.THREE_TIER.toLowerCase().replace(
                 " ",
                 "-"
               )}`
             );
           } else {
             this.props.navigate(
-              `/app/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/product-category`
+              `${APP_PREFIX_PATH}/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/product-category`
             );
           }
         }
