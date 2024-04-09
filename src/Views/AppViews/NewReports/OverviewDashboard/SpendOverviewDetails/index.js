@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button, List, ListItem, } from "@mui/material";
+import { Box, Button, List, ListItem } from "@mui/material";
 import Compute from "./Compute";
 import Storage from "./Storage";
 import Database from "./Database";
@@ -8,6 +8,8 @@ import Other from "./Other";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
 import { v4 } from "uuid";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 class SpendOverviewDetails extends Component {
   tabMapping = [
     {
@@ -143,7 +145,9 @@ class SpendOverviewDetails extends Component {
             <ul>
               <li
                 onClick={() =>
-                  this.props.navigate("/app/new-reports/over-view-dashboard")
+                  this.props.navigate(
+                    `${APP_PREFIX_PATH}/new-reports/over-view-dashboard`
+                  )
                 }
               >
                 Overview Dashboard
@@ -154,7 +158,7 @@ class SpendOverviewDetails extends Component {
               <li
                 onClick={() =>
                   this.props.navigate(
-                    `/app/new-reports/over-view-dashboard/${
+                    `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/${
                       page === "spend-overview"
                         ? "spend-overview"
                         : "top-use-services"

@@ -16,6 +16,8 @@ import StatusImg2 from "assets/img/report/status-img2.png";
 import StatusImg3 from "assets/img/report/status-img3.png";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SelectFilterModal from "../../Components/SelectFilterModal";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 let data = [
   {
     month: "January, 2023",
@@ -183,7 +185,7 @@ class HistoryDepartments extends Component {
       <Box className="new-reports-container">
         <Box className="list-heading">
           <h3>
-            <Link to={`/app/new-reports/over-view-dashboard`}>
+            <Link to={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard`}>
               <IconButton className="m-r-2">
                 <i class="fas fa-long-arrow-left"></i>
               </IconButton>
@@ -191,7 +193,9 @@ class HistoryDepartments extends Component {
             Chargeback Dashboard
           </h3>
           <Box className="d-flex align-items-center">
-            <Link to={`/app/new-reports/chargeback-dashboard/create-invoice`}>
+            <Link
+              to={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/create-invoice`}
+            >
               <Button
                 variant="outlined"
                 className="primary-outline-btn min-width-inherit m-r-3 p-l-15 p-r-15"
@@ -199,7 +203,7 @@ class HistoryDepartments extends Component {
                 View
               </Button>
             </Link>
-            <Link to={`/app/new-reports/chargeback-dashboard`}>
+            <Link to={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard`}>
               <Button className="primary-btn min-width-inherit m-r-3 p-l-15 p-r-15">
                 Home
               </Button>

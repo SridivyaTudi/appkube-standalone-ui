@@ -37,6 +37,8 @@ import { isAlphaNumeric, isAlphabet } from "Utils";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { REGEX_TYPE } from "CommonData";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 const steps = ["User details ", "Add  user to group ", "Review and Create"];
 const initialFormData = {
   firstName: "",
@@ -654,7 +656,7 @@ class CreateUserControlModal extends Component {
                       className="primary-btn min-width-inherit"
                       variant="contained"
                     >
-                      <Link to={`/app/setting/create-group`}>
+                      <Link to={`${APP_PREFIX_PATH}/setting/create-group`}>
                         {" "}
                         Create Group
                       </Link>

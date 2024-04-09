@@ -364,7 +364,7 @@ class TopologyView extends Component {
     activeView.length = currentLevel + 2;
     activeView[currentLevel] = activeSublevel + "." + activeIndex;
     activeView[currentLevel + 1] = -1;
-
+    
     this.setState({
       activeView,
     });
@@ -372,7 +372,7 @@ class TopologyView extends Component {
 
   /** Get name in form of capitalize. */
   getServiceName(name) {
-    return name ? name.toUpperCase() : "";
+    return name ? name?.toUpperCase() : "";
   }
   getLandingZoneOrCloudName = () => {
     const queryPrm = new URLSearchParams(document.location.search);

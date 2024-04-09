@@ -27,6 +27,7 @@ import { styled } from "@mui/material/styles";
 import TabsMenu from "../TabsMenu";
 import ServiceIcon from "assets/img/assetmanager/ems.png";
 import { removeActiveTabInEnvironmentData } from "Utils";
+import { index } from "d3";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -180,14 +181,55 @@ class SOATopology extends Component {
       globalServiceList: [],
     };
     if (businessServices?.length || commonServices?.length) {
+      let businessServicesModules = [];
+      let commonServicesModules = [];
+      businessServices.forEach((service, index) => {
+        let isModuleNameExist = businessServicesModules.find(
+          (module) => module.moduleName === service.moduleName
+        );
+        if (!isModuleNameExist) {
+          businessServicesModules.push({
+            ...service,
+            instanceId: service.moduleName,
+            instanceName: service.moduleName,
+            id: service.id + index,
+            productEnclaveList: this.manipulateProductData(
+              businessServices,
+              service.moduleName
+            ),
+            globalServiceList: [],
+          });
+        }
+      });
+
+      commonServices.forEach((service, index) => {
+        let isModuleNameExist = commonServicesModules.find(
+          (module) => module.moduleName === service.moduleName
+        );
+        if (!isModuleNameExist) {
+          commonServicesModules.push({
+            ...service,
+            instanceId: service.moduleName,
+            instanceName: service.moduleName,
+            id: service.id + index,
+            productEnclaveList: this.manipulateProductData(
+              commonServices,
+              service.moduleName
+            ),
+            globalServiceList: [],
+          });
+        }
+      });
       serviceViewData.productEnclaveList[0].productEnclaveList =
-        businessServices.map((service) => {
-          return { ...service, instanceId: service.serviceName };
-        });
+        businessServicesModules;
       serviceViewData.productEnclaveList[1].productEnclaveList =
-        commonServices.map((service) => {
-          return { ...service, instanceId: service.serviceName };
-        });
+        commonServicesModules;
+      console.log(serviceViewData);
+      // serviceViewData.productEnclaveList[0].productEnclaveList =
+      //   serviceViewData.productEnclaveList[1].productEnclaveList =
+      //     commonServices.map((service) => {
+      //       return { ...service, instanceId: service.moduleName };
+      //     });
     } else {
       serviceViewData = {};
     }
@@ -195,6 +237,22 @@ class SOATopology extends Component {
     this.setState({ serviceViewData });
   };
 
+  manipulateProductData = (data, moduleName) => {
+    let products = [];
+    if (data?.length) {
+      data.forEach((product) => {
+        if (product.moduleName === moduleName) {
+          products.push({
+            ...product,
+            instanceId: product.serviceName,
+            productEnclaveList: [],
+            globalServiceList: [],
+          });
+        }
+      });
+    }
+    return products;
+  };
   renderComponent = () => {
     let { activeServiceChildTopology } = this.state;
     return activeServiceChildTopology === "SSL" ? (

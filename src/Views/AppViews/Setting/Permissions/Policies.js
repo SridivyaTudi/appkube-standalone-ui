@@ -13,6 +13,7 @@ import {
 } from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
 import { getCurrentUser } from "Utils";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 let searchedData = [];
 class Policies extends Component {
@@ -238,7 +239,7 @@ class Policies extends Component {
                 <SearchOutlinedIcon />
               </button>
             </Box>
-            <Link to={`/app/setting/create-policy`}>
+            <Link to={`${APP_PREFIX_PATH}/setting/create-policy`}>
               <Button className="primary-btn min-width">Create Policy</Button>
             </Link>
           </Box>

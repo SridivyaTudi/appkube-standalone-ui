@@ -6,6 +6,8 @@ import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import ServiceIcon1 from "assets/img/report/service-icon1.png";
 import AccountTable from "../Components/AccountTable";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 let timeSpendData = [
   {
     name: "Quarter to date spend",
@@ -197,9 +199,9 @@ class CostCentralServicesInternal extends Component {
             <h3>Cost Central Services Internal</h3>
             <Box className="breadcrumbs">
               <ul>
-                <li
+                <li 
                   onClick={() =>
-                    this.props.navigate("/app/new-reports/central-dashboard")
+                    this.props.navigate(`${APP_PREFIX_PATH}/new-reports/central-dashboard`)
                   }
                 >
                   Cost Central dashboard
@@ -210,7 +212,7 @@ class CostCentralServicesInternal extends Component {
                 <li
                   onClick={() =>
                     this.props.navigate(
-                      "/app/new-reports/central-dashboard/cost-central-top-internal"
+                      `${APP_PREFIX_PATH}/new-reports/central-dashboard/cost-central-top-internal`
                     )
                   }
                 >

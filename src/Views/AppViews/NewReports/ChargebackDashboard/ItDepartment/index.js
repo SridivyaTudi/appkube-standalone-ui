@@ -15,6 +15,8 @@ import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import ServiceIcon7 from "assets/img/report/service-icon7.png";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 let timeSpendData = [
   {
     name: "Last Quarter Spend",
@@ -118,7 +120,7 @@ class ItDepartment extends Component {
                 </TableCell>
                 <TableCell align="center">
                   <Link
-                    to={`/app/new-reports/chargeback-dashboard/department/department-details`}
+                    to={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/department/department-details`}
                   >
                     <Button className="light-btn p-l-15 p-r-15 ">
                       view more <OpenInNewIcon className="p-l-5" />
@@ -147,7 +149,9 @@ class ItDepartment extends Component {
             <ul>
               <li
                 onClick={() =>
-                  this.props.navigate("/app/new-reports/chargeback-dashboard")
+                  this.props.navigate(
+                    `${APP_PREFIX_PATH}/new-reports/chargeback-dashboard`
+                  )
                 }
               >
                 Chargeback Dashboard
@@ -161,16 +165,18 @@ class ItDepartment extends Component {
         </Box>
 
         <Box className="d-flex align-items-center justify-content-end m-t-2">
-          <Link to={`/app/new-reports/chargeback-dashboard/create-invoice`}>
+          <Link
+            to={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/create-invoice`}
+          >
             <Button className="light-btn p-l-15 p-r-15 m-r-3">
               <i class="fas fa-plus-circle m-r-2"></i> Create Invoice
             </Button>
           </Link>
           <Box className="fliter-button">
-              <Button className="light-btn p-l-15 p-r-15">
-                <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
-              </Button>
-            </Box>
+            <Button className="light-btn p-l-15 p-r-15">
+              <i className="fas fa-calendar-minus m-r-2"></i> Last Quarter
+            </Button>
+          </Box>
         </Box>
         <Box className="reports-tab-section m-t-3">
           <TimeSpendComponent data={timeSpendData} />
@@ -225,7 +231,7 @@ class ItDepartment extends Component {
           </Box>
           <Box className="new-reports-table">
             <TableContainer className="table">
-              <Table style={{minWidth: 800}}>
+              <Table style={{ minWidth: 800 }}>
                 {this.renderTableHead()}
                 {this.renderTableBody()}
               </Table>

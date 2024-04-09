@@ -14,6 +14,8 @@ import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { v4 } from "uuid";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 let timeSpendData = [
   {
     name: "Avg Daily Spend",
@@ -266,7 +268,9 @@ class BudgetAccountDetails extends Component {
               <ul>
                 <li
                   onClick={() =>
-                    this.props.navigate("/app/new-reports/budget-dashboard")
+                    this.props.navigate(
+                      `${APP_PREFIX_PATH}/new-reports/budget-dashboard`
+                    )
                   }
                 >
                   Budget Dashboard
@@ -276,7 +280,9 @@ class BudgetAccountDetails extends Component {
                 </li>
                 <li
                   onClick={() =>
-                    this.props.navigate("/app/new-reports/budget-dashboard")
+                    this.props.navigate(
+                      `${APP_PREFIX_PATH}/new-reports/budget-dashboard`
+                    )
                   }
                 >
                   Budget Account
@@ -287,7 +293,7 @@ class BudgetAccountDetails extends Component {
                 <li
                   onClick={() =>
                     this.props.navigate(
-                      "/app/new-reports/budget-dashboard/budget-services-account"
+                      `${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-services-account`
                     )
                   }
                 >

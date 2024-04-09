@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import AddPermitionControlModal from "../Components/AddPermitionControlModal";
 import { setActiveTab } from "Utils";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class SetTransitions extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class SetTransitions extends Component {
             <ul>
               <li>
                 <Link
-                  to={`/app/setting`}
+                  to={`${APP_PREFIX_PATH}/setting`}
                   onClick={() => setActiveTab("permissions")}
                 >
                   Users and Permissions
@@ -38,7 +39,9 @@ class SetTransitions extends Component {
                 <i className="fa-solid fa-chevron-right"></i>
               </li>
               <li>
-                <Link to={`/app/setting/role-details`}>Role Details</Link>
+                <Link to={`${APP_PREFIX_PATH}/setting/role-details`}>
+                  Role Details
+                </Link>
               </li>
               <li>
                 <i className="fa-solid fa-chevron-right"></i>

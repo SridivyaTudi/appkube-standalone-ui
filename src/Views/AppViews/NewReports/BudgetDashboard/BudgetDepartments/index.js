@@ -14,6 +14,7 @@ import SelectFilterModal from "../../Components/SelectFilterModal";
 import { Link } from "react-router-dom";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class BudgetDepartments extends Component {
   constructor(props) {
@@ -65,7 +66,9 @@ class BudgetDepartments extends Component {
           <TableCell>vpc-d24664bb</TableCell>
           <TableCell>sales & Marketing </TableCell>
           <TableCell>
-            <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
+            <Link
+              to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
+            >
               <Box className="d-flex align-items-center">
                 12 <OpenInNewIcon className="p-l-5" />
               </Box>
@@ -92,7 +95,9 @@ class BudgetDepartments extends Component {
           <TableCell>vpc-d24664bb</TableCell>
           <TableCell>sales & Marketing </TableCell>
           <TableCell>
-            <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
+            <Link
+              to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
+            >
               <Box className="d-flex align-items-center">
                 12 <OpenInNewIcon className="p-l-5" />
               </Box>
@@ -119,7 +124,9 @@ class BudgetDepartments extends Component {
           <TableCell>vpc-d24664bb</TableCell>
           <TableCell>sales & Marketing </TableCell>
           <TableCell>
-            <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
+            <Link
+              to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
+            >
               <Box className="d-flex align-items-center">
                 12 <OpenInNewIcon className="p-l-5" />
               </Box>
@@ -146,7 +153,9 @@ class BudgetDepartments extends Component {
           <TableCell>vpc-d24664bb</TableCell>
           <TableCell>sales & Marketing </TableCell>
           <TableCell>
-            <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
+            <Link
+              to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
+            >
               <Box className="d-flex align-items-center">
                 12 <OpenInNewIcon className="p-l-5" />
               </Box>
@@ -173,7 +182,9 @@ class BudgetDepartments extends Component {
           <TableCell>vpc-d24664bb</TableCell>
           <TableCell>sales & Marketing </TableCell>
           <TableCell>
-            <Link to={`/app/new-reports/budget-dashboard/budget-products`}>
+            <Link
+              to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
+            >
               <Box className="d-flex align-items-center">
                 12 <OpenInNewIcon className="p-l-5" />
               </Box>
@@ -210,7 +221,9 @@ class BudgetDepartments extends Component {
               <ul>
                 <li
                   onClick={() => {
-                    this.props.navigate(`/app/new-reports/budget-dashboard`);
+                    this.props.navigate(
+                      `${APP_PREFIX_PATH}/new-reports/budget-dashboard`
+                    );
                   }}
                 >
                   Budget Dashboard

@@ -555,10 +555,6 @@ class AddDepartment extends Component {
                                       <span className="d-block">
                                         {val.departmentName}
                                       </span>
-                                      <label className="d-block">
-                                        {" "}
-                                        {val.departmentId}
-                                      </label>
                                     </Box>
                                     <Box className="footer-right-content">
                                       <span className="d-block text-right">

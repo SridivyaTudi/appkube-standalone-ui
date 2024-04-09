@@ -27,6 +27,7 @@ import CloudElementInstancePopup from "./Components/CloudElementInstancePopup";
 import SelectLendingZonePopup from "./Components/SelectLendingZonePopup";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { BI_MAPPING_TYPE } from "CommonData";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 const orgId = getCurrentOrgId();
 let headers = [
@@ -569,7 +570,7 @@ class BIMapping extends Component {
                 }
               >
                 <List>
-                  <Link to={`/app/bim/create-department`}>
+                  <Link to={`${APP_PREFIX_PATH}/bim/create-department`}>
                     <ListItem>
                       <i className="fa-solid fa-circle-dot"></i>Create
                       Department

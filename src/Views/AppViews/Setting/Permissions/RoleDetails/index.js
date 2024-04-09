@@ -19,6 +19,8 @@ import { getRoleById, deleteRole } from "Redux/Settings/SettingsThunk";
 import Loader from "Components/Loader";
 import { ToastMessage } from "Toast/ToastMessage";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 class RoleDetails extends Component {
   user = { username: "", email: "", profileImage: "" };
   constructor(props) {
@@ -62,7 +64,7 @@ class RoleDetails extends Component {
         if (removeRoleRes) {
           ToastMessage.success("Role Removed Successfully");
           setActiveTab("permissions/role");
-          this.props.navigate("/app/setting");
+          this.props.navigate(`${APP_PREFIX_PATH}/setting`);
         } else {
           ToastMessage.error("Role Deletion Failed!");
         }
@@ -193,7 +195,7 @@ class RoleDetails extends Component {
                 <ul>
                   <li>
                     <Link
-                      to={`/app/setting`}
+                      to={`${APP_PREFIX_PATH}/setting`}
                       onClick={() => setActiveTab("permissions")}
                     >
                       Users and Permissions{" "}

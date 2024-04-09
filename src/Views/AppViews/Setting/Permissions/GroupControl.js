@@ -213,7 +213,7 @@ class GroupControl extends Component {
             <SearchOutlinedIcon />
           </button>
         </Box>
-        <Link to={`/app/setting/create-group`}>
+        <Link to={`${APP_PREFIX_PATH}/setting/create-group`}>
           <Button className="primary-btn min-width">Create New Group</Button>
         </Link>
       </Box>

@@ -12,6 +12,7 @@ import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
 import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
 import SpendingTable from "./Components/SpendingTable";
 import status from "Redux/Constants/CommonDS";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 const renderLoader = () => {
   return (
@@ -256,7 +257,9 @@ class TopAccounts extends Component {
             <ul>
               <li
                 onClick={() =>
-                  this.props.navigate("/app/new-reports/over-view-dashboard")
+                  this.props.navigate(
+                    `${APP_PREFIX_PATH}/new-reports/over-view-dashboard`
+                  )
                 }
               >
                 Overview Dashboard
@@ -267,7 +270,7 @@ class TopAccounts extends Component {
               <li
                 onClick={() =>
                   this.props.navigate(
-                    `/app/new-reports/over-view-dashboard/cost-top-accounts`
+                    `${APP_PREFIX_PATH}/new-reports/over-view-dashboard/cost-top-accounts`
                   )
                 }
               >

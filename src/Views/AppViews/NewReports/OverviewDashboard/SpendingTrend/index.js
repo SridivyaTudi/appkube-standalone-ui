@@ -12,6 +12,7 @@ import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
 import { v4 } from "uuid";
 import { getDateInWeek } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 let verticalBarChartData = [
   {
@@ -104,7 +105,7 @@ class SpendingTrend extends Component {
       const weeks = ["Week1", "Week2", "Week3", "Week4", "Week5"];
       return weeks;
     } else if (selectedGranularity === "quarterly") {
-      const quarter = ["month1", "month2", "month3"];
+      const quarter = ["Month1", "Month2", "Month3"];
       return quarter;
     } else if (selectedGranularity === "yearly") {
       const months = [
@@ -241,8 +242,14 @@ class SpendingTrend extends Component {
   };
 
   renderMultipleChart = (chartData) => {
+    let { selectedGranularity } = this.state;
     if (Object.values(chartData).length > 0) {
-      return <GroupedBarplotChart data={Object.values(chartData)} />;
+      return (
+        <GroupedBarplotChart
+          data={Object.values(chartData)}
+          granularity={selectedGranularity}
+        />
+      );
     } else {
       return null;
     }
@@ -257,7 +264,9 @@ class SpendingTrend extends Component {
           <ul>
             <li
               onClick={() =>
-                this.props.navigate("/app/new-reports/over-view-dashboard")
+                this.props.navigate(
+                  `${APP_PREFIX_PATH}/new-reports/over-view-dashboard`
+                )
               }
             >
               Overview Dashboard
@@ -354,4 +363,7 @@ const mapDispatchToProps = {
   getSpendingTrend,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(navigateRouter(SpendingTrend));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(SpendingTrend));

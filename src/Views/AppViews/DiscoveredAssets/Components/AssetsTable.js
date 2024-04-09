@@ -7,7 +7,9 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  TablePagination,ListItem,List
+  TablePagination,
+  ListItem,
+  List,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
@@ -65,7 +67,7 @@ class AssetsTable extends Component {
     ) : (
       <>
         <TableContainer className="table">
-          <Table style={{ minWidth: 1200 }}>
+          <Table style={{ minWidth: 1320 }}>
             {this.renderTableHead()}
             {this.renderTableBody()}
           </Table>
@@ -100,8 +102,8 @@ class AssetsTable extends Component {
           <TableCell align="center">Tag Status</TableCell>
           <TableCell align="center">Log</TableCell>
           <TableCell align="center">Trace</TableCell>
-          <TableCell align="center">Event</TableCell> 
-           <TableCell align="center">Actions</TableCell>
+          <TableCell align="center">Event</TableCell>
+          <TableCell align="center">Actions</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -154,86 +156,94 @@ class AssetsTable extends Component {
                   </TableCell>
                   <TableCell align="left">{elementType}</TableCell>
                   <TableCell align="left">{landingZone}</TableCell>
-                  <TableCell align="left">{productEnclave}</TableCell>
+                  <TableCell align="left">
+                    {" "}
+                    <HtmlTooltip
+                      className="table-tooltip"
+                      title={productEnclave}
+                    >
+                      <Box className="resource-name">{productEnclave}</Box>
+                    </HtmlTooltip>{" "}
+                  </TableCell>
                   <TableCell align="center">
-                  <Box className={tagStatusClass || "tag"}>
-                    <i
-                      className={tagStatusClass ? "fas fa-cog" : "fas fa-tag"}
+                    <Box className={tagStatusClass || "tag"}>
+                      <i
+                        className={tagStatusClass ? "fas fa-cog" : "fas fa-tag"}
+                        onClick={(e) => {
+                          this.handleMenuToggle(index);
+                        }}
+                      ></i>
+                      {tagShowMenu === index ? (
+                        <>
+                          <div
+                            className="open-create-menu-close"
+                            onClick={(e) => {
+                              this.handleMenuToggle(index);
+                            }}
+                          ></div>
+                          <Box className="menu-list">
+                            <List>
+                              <ListItem>
+                                <span></span>Tag
+                              </ListItem>
+                            </List>
+                          </Box>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box
+                      className={logClass || "log-eye-icon"}
+                      onClick={this.toggleAssetsSetUp}
+                    >
+                      <i className={logClass ? "fas fa-cog" : "fas fa-eye"}></i>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className={traceClass || "green"}>
+                      <i
+                        className={logClass ? "fas fa-times" : "fas fa-check"}
+                      ></i>
+                    </span>
+                  </TableCell>
+                  <TableCell align="center">
+                    <span className={eventClass || "green"}>
+                      <i
+                        className={eventClass ? "fas fa-times" : "fas fa-check"}
+                      ></i>
+                    </span>
+                  </TableCell>
+                  <TableCell align="center">
+                    <button
+                      type="button"
+                      className="list-icon"
                       onClick={(e) => {
-                        this.handleMenuToggle(index);
+                        this.handleMenuListToggle(index);
                       }}
-                    ></i>
-                    {tagShowMenu === index ? (
+                    >
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
+                    {tagShowMenuList === index ? (
                       <>
                         <div
                           className="open-create-menu-close"
                           onClick={(e) => {
-                            this.handleMenuToggle(index);
+                            this.handleMenuListToggle(index);
                           }}
                         ></div>
                         <Box className="menu-list">
                           <List>
-                            <ListItem>
-                              <span></span>Tag
-                            </ListItem>
+                            <ListItem>Set Up</ListItem>
                           </List>
                         </Box>
                       </>
                     ) : (
                       <></>
                     )}
-                  </Box>
-                </TableCell>
-                <TableCell align="center">
-                  <Box
-                    className={logClass || "log-eye-icon"}
-                    onClick={this.toggleAssetsSetUp}
-                  >
-                    <i className={logClass ? "fas fa-cog" : "fas fa-eye"}></i>
-                  </Box>
-                </TableCell>
-                <TableCell align="center">
-                  <span className={traceClass || "green"}>
-                    <i
-                      className={logClass ? "fas fa-times" : "fas fa-check"}
-                    ></i>
-                  </span>
-                </TableCell>
-                <TableCell align="center">
-                  <span className={eventClass || "green"}>
-                    <i
-                      className={eventClass ? "fas fa-times" : "fas fa-check"}
-                    ></i>
-                  </span>
-                </TableCell>
-                 <TableCell align="center">
-                  <button
-                    type="button"
-                    className="list-icon"
-                    onClick={(e) => {
-                      this.handleMenuListToggle(index);
-                    }}
-                  >
-                    <i className="fas fa-ellipsis-v"></i>
-                  </button>
-                  {tagShowMenuList === index ? (
-                    <>
-                      <div
-                        className="open-create-menu-close"
-                        onClick={(e) => {
-                          this.handleMenuListToggle(index);
-                        }}
-                      ></div>
-                      <Box className="menu-list">
-                        <List>
-                          <ListItem>Set Up</ListItem>
-                        </List>
-                      </Box>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </TableCell>
+                  </TableCell>
                 </TableRow>
               );
             })

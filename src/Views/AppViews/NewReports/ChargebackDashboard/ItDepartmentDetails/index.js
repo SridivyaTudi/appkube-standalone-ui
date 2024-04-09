@@ -13,6 +13,8 @@ import {
 import { Link } from "react-router-dom";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 let timeSpendData = [
   {
     name: "Last Quarter Spend",
@@ -155,7 +157,6 @@ let data = [
     addOns: "NA",
     totalSpend: "$196.22",
   },
-  
 ];
 class ItDepartmentDetails extends Component {
   //  Render table head
@@ -226,7 +227,9 @@ class ItDepartmentDetails extends Component {
             <ul>
               <li
                 onClick={() =>
-                  this.props.navigate("/app/new-reports/chargeback-dashboard")
+                  this.props.navigate(
+                    `${APP_PREFIX_PATH}/new-reports/chargeback-dashboard`
+                  )
                 }
               >
                 Chargeback Dashboard
@@ -237,7 +240,7 @@ class ItDepartmentDetails extends Component {
               <li
                 onClick={() =>
                   this.props.navigate(
-                    "/app/new-reports/chargeback-dashboard/department"
+                    `${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/department`
                   )
                 }
               >
@@ -251,7 +254,7 @@ class ItDepartmentDetails extends Component {
           </Box>
         </Box>
         <Box className="d-flex d-flex align-items-center justify-content-end m-t-2 ">
-          <Link to={`/app/new-reports/chargeback-dashboard/create-invoice`}>
+          <Link to={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/create-invoice`}>
             <Button className="light-btn p-l-15 p-r-15 m-r-3">
               <i class="fas fa-plus-circle m-r-2"></i> Create Invoice
             </Button>

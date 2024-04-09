@@ -307,7 +307,9 @@ class TopUsedServices extends Component {
             <ul>
               <li
                 onClick={() =>
-                  this.props.navigate("/app/new-reports/over-view-dashboard")
+                  this.props.navigate(
+                    `${APP_PREFIX_PATH}/new-reports/over-view-dashboard`
+                  )
                 }
               >
                 Overview Dashboard

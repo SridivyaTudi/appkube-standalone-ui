@@ -9,6 +9,8 @@ import SelectFilterModal from "../../Components/SelectFilterModal";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
 import { v4 } from "uuid";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 class SpendOverview extends Component {
   tabMapping = [
     {
@@ -145,7 +147,9 @@ class SpendOverview extends Component {
               <ul>
                 <li
                   onClick={() =>
-                    this.props.navigate("/app/new-reports/over-view-dashboard")
+                    this.props.navigate(
+                      `${APP_PREFIX_PATH}/new-reports/over-view-dashboard`
+                    )
                   }
                 >
                   Overview Dashboard

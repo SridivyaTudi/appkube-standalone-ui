@@ -16,6 +16,8 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import status from "Redux/Constants/CommonDS";
 import SuccessfullyIcon from "assets/img/assetmanager/successfully-icon.png";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+
 const steps = ["Add OU ", "Add Project & Services ", "Payment and Date"];
 const departments = ["It", "Hr", "Prodution", "Finance"];
 const services = [
@@ -406,7 +408,9 @@ class CreateInvoice extends Component {
             sx={{ mr: 1 }}
             onClick={() => {
               if ([3].includes(activeStep)) {
-                this.props.navigate("/app/new-reports/chargeback-dashboard");
+                this.props.navigate(
+                  `${APP_PREFIX_PATH}/new-reports/chargeback-dashboard`
+                );
               } else {
                 this.handlePreviousSteps();
               }
@@ -443,7 +447,7 @@ class CreateInvoice extends Component {
       <Box className="new-reports-container">
         <Box className="list-heading">
           <h3>
-            <Link to={`/app/new-reports/chargeback-dashboard`}>
+            <Link to={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard`}>
               <IconButton className="m-r-2">
                 <i class="fas fa-long-arrow-left"></i>
               </IconButton>
@@ -458,7 +462,7 @@ class CreateInvoice extends Component {
               Edit <i className="far fa-edit p-l-5"></i>
             </Button>
             <Link
-              to={`/app/new-reports/chargeback-dashboard/history-departments`}
+              to={`${APP_PREFIX_PATH}/new-reports/chargeback-dashboard/history-departments`}
             >
               <Button className="success-btn min-width-inherit  p-l-15 p-r-15">
                 Send <i className="fas fa-paper-plane p-l-5"></i>

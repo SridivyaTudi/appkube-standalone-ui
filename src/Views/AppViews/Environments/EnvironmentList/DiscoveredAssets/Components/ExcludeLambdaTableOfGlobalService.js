@@ -50,7 +50,7 @@ class ExcludeLambdaTableOfGlobalService extends Component {
     this.setState({ pg: 0, rpg: parseInt(event.target.value, 10) });
   };
   getExplorerLink = (elementType, id) => {
-    let element = elementType.toUpperCase();
+    let element = elementType?.toUpperCase();
     return `${
       ELEMENT_EXPLORER_MAPPING[element]
         ? `${APPKUBE_UI_ENDPOINT}${ELEMENT_EXPLORER_MAPPING[element].replace(
@@ -110,7 +110,7 @@ class ExcludeLambdaTableOfGlobalService extends Component {
                           target="_blank"
                           to={this.getExplorerLink(title, row.id)}
                           disabled={
-                            !ELEMENT_EXPLORER_MAPPING[title.toUpperCase()]
+                            !ELEMENT_EXPLORER_MAPPING[title?.toUpperCase()]
                           }
                         >
                          <p>{row.instanceId}</p>
