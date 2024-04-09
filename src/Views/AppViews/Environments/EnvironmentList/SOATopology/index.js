@@ -27,7 +27,6 @@ import { styled } from "@mui/material/styles";
 import TabsMenu from "../TabsMenu";
 import ServiceIcon from "assets/img/assetmanager/ems.png";
 import { removeActiveTabInEnvironmentData } from "Utils";
-import { index } from "d3";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -180,6 +179,7 @@ class SOATopology extends Component {
       ],
       globalServiceList: [],
     };
+
     if (businessServices?.length || commonServices?.length) {
       let businessServicesModules = [];
       let commonServicesModules = [];
@@ -187,12 +187,13 @@ class SOATopology extends Component {
         let isModuleNameExist = businessServicesModules.find(
           (module) => module.moduleName === service.moduleName
         );
+        console.log(isModuleNameExist);
         if (!isModuleNameExist) {
           businessServicesModules.push({
             ...service,
             instanceId: service.moduleName,
             instanceName: service.moduleName,
-            id: service.id + index,
+            id: service.id + "_business_" + index,
             productEnclaveList: this.manipulateProductData(
               businessServices,
               service.moduleName
@@ -211,7 +212,7 @@ class SOATopology extends Component {
             ...service,
             instanceId: service.moduleName,
             instanceName: service.moduleName,
-            id: service.id + index,
+            id: service.id + "_common_" + index,
             productEnclaveList: this.manipulateProductData(
               commonServices,
               service.moduleName
@@ -224,16 +225,10 @@ class SOATopology extends Component {
         businessServicesModules;
       serviceViewData.productEnclaveList[1].productEnclaveList =
         commonServicesModules;
-      console.log(serviceViewData);
-      // serviceViewData.productEnclaveList[0].productEnclaveList =
-      //   serviceViewData.productEnclaveList[1].productEnclaveList =
-      //     commonServices.map((service) => {
-      //       return { ...service, instanceId: service.moduleName };
-      //     });
     } else {
       serviceViewData = {};
     }
-
+   
     this.setState({ serviceViewData });
   };
 

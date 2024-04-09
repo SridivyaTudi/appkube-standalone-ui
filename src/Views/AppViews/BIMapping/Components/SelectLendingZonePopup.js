@@ -95,7 +95,6 @@ class SelectLendingZonePopup extends Component {
                 <Box className="card-footer">
                   <Box className="footer-left-content">
                     <span className="d-block">{data.departmentName}</span>
-                    <label className="d-block">{data.departmentId} </label>
                   </Box>
                   <Box className="footer-right-content">
                     <span className="d-block text-right">Assets</span>

@@ -601,7 +601,7 @@ class DiscoveredAssets extends Component {
       !currentActiveNode && currentActiveNode !== "Global Services";
 
     const soa3TierBtnCondition = dataObjLength && currentActiveNodeNotNull;
-
+    console.log(currentActiveTopologyCategory)
     return (
       <Box className="discovered-assets">
         <Box className="discovered-assets-body">
@@ -780,7 +780,7 @@ class DiscoveredAssets extends Component {
         )}
         {currentActiveGlobalServiceCategory &&
         currentActiveNode &&
-        currentActiveNode == "Global Services" ? (
+        currentActiveNode === "Global Services" ? (
           globalServicesCloudElements.status === status.IN_PROGRESS ? (
             <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
           ) : currentActiveGlobalServiceCategory?.toUpperCase() === "LAMBDA" ? (

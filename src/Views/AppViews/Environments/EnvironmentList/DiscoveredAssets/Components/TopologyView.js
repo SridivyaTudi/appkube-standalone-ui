@@ -309,16 +309,16 @@ class TopologyView extends Component {
     let { activeView } = this.state;
 
     const activeNode = this.getChild(currentLevel);
-
+    
     if (activeView.length > 3 && currentLevel > 1) {
       let activeSubNode = this.getSubChild(activeNode, currentLevel, nodeIndex);
-      return activeSubNode?.id;
+      return activeSubNode?.id || "";
+    } else {
+      if (activeNode) {
+        return activeNode.id;
+      }
+      return "";
     }
-
-    if (activeNode) {
-      return activeNode.id;
-    }
-    return "";
   };
 
   getChild = (level) => {
@@ -364,7 +364,7 @@ class TopologyView extends Component {
     activeView.length = currentLevel + 2;
     activeView[currentLevel] = activeSublevel + "." + activeIndex;
     activeView[currentLevel + 1] = -1;
-    
+
     this.setState({
       activeView,
     });
@@ -382,23 +382,27 @@ class TopologyView extends Component {
   };
 
   getSubChild = (activeNode, currentLevel, nodeIndex) => {
-    let retData = activeNode;
+    let retData = "";
     let { activeView } = this.state;
     if (activeView.length > 3) {
-      for (let index = 2; index < activeView.length; index++) {
-        if (activeView[index] !== 0 && activeView[index] !== -1) {
-          let verticalIndex = parseInt(activeView[index].split(".")[0]);
-          let currentIndex = parseInt(activeView[index].split(".")[1]);
+      retData = this.props.data;
+
+      for (let level = 1; level <= currentLevel; level++) {
+        if (activeView[level] !== 0 && activeView[level] !== -1) {
+          let verticalIndex = parseInt(activeView[level].split(".")[0]);
+          let currentIndex = parseInt(activeView[level].split(".")[1]);
           let keyName =
             verticalIndex === 0 ? "productEnclaveList" : "globalServiceList";
+
           if (retData?.[keyName]) {
             retData = retData[keyName][currentIndex];
+          }
+          if (level === currentLevel) {
+            return retData;
           }
         }
       }
     }
-
-    return retData;
   };
 
   previousCurrentNode = () => {
@@ -429,6 +433,7 @@ class TopologyView extends Component {
 
   render() {
     const { data, parentCssClass } = this.props;
+
     return (
       <>
         <Box className={`${parentCssClass} topology-view`}>
