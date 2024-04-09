@@ -232,7 +232,10 @@ class DiscoveredAssets extends Component {
         const lambdaTableData = [];
         const excludeLambdaTableData = [];
         globalServicesCloudElements.forEach((item) => {
-          if (item.configJson) {
+          if (
+            item.configJson &&
+            currentActiveGlobalServiceCategory?.toUpperCase() === "LAMBDA"
+          ) {
             lambdaTableData.push({
               functionName: item.instanceName,
               responseTime: item.configJson?.responseTime,
@@ -248,7 +251,8 @@ class DiscoveredAssets extends Component {
               actions: "",
               id: item.id,
             });
-          } else if (
+          }
+          if (
             currentActiveGlobalServiceCategory &&
             currentActiveGlobalServiceCategory?.toUpperCase() !== "LAMBDA"
           ) {
@@ -267,7 +271,7 @@ class DiscoveredAssets extends Component {
       selectedCategoryCloudElementsData,
     } = this.state;
     const { landingZoneId: landingZone } = this.getUrlDetails();
-
+    console.log(category);
     selectedCategoryCloudElementsData = [];
 
     if (category === "Lambda") {
@@ -288,6 +292,7 @@ class DiscoveredAssets extends Component {
       selectedCategoryCloudElementsData,
       currentActiveTopologyCategory: category,
       currentActiveGlobalServiceCategory: "",
+      excludeLambdaTableData: [],
     });
   };
 
@@ -773,7 +778,9 @@ class DiscoveredAssets extends Component {
         ) : (
           <></>
         )}
-        {currentActiveGlobalServiceCategory ? (
+        {currentActiveGlobalServiceCategory &&
+        currentActiveNode &&
+        currentActiveNode == "Global Services" ? (
           globalServicesCloudElements.status === status.IN_PROGRESS ? (
             <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
           ) : currentActiveGlobalServiceCategory?.toUpperCase() === "LAMBDA" ? (
@@ -781,13 +788,11 @@ class DiscoveredAssets extends Component {
               tableData={lambdaTableData}
               title={currentActiveGlobalServiceCategory}
             />
-          ) : currentActiveNode === "Global Services" ? (
+          ) : (
             <ExcludeLambdaTableOfGlobalService
               tableData={excludeLambdaTableData}
               title={currentActiveGlobalServiceCategory}
             />
-          ) : (
-            <></>
           )
         ) : (
           <></>
