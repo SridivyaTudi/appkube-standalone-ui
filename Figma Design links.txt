@@ -72,3 +72,7 @@ https://www.figma.com/proto/dlkcEDolt9QlU3E7qxB4sC/Reporting-Module-Prototype?pa
  
 Budget
 https://www.figma.com/proto/dlkcEDolt9QlU3E7qxB4sC/Reporting-Module-Prototype?page-id=29494%3A50138&type=design&node-id=29494-50186&viewport=-324%2C-39%2C0.05&t=FxrI6KhwyMDY1zNo-1&scaling=scale-down-width&starting-point-node-id=29494%3A50186&mode=design
+
+
+
+https://github.com/Appkube-awsx/awsx-elementmanager-doc
