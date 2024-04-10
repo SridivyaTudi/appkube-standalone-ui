@@ -52,7 +52,7 @@ export const GetInfraTopologyCloudElementList = createAsyncThunk(
   async (params) => {
     const url = config.INFRA_TOPOLOGY_CLOUD_ELEMENT_LIST.replace(
       "#landing-zone-id#",
-      params.landingZone
+      params.landingZoneId
     ).replace("#product-enclave#", params.productEnclave);
     try {
       const response = await postLoginService.get(url);
@@ -68,7 +68,7 @@ export const getInfraTopologyCategoryWiseViewData = createAsyncThunk(
   async (params) => {
     const url = config.INFRA_TOPOLOGY_CATEGORY_WISE_VIEW.replace(
       "#landing-zone-id#",
-      params.landingZone
+      params.landingZoneId
     ).replace("#product-enclave#", params.productEnclave);
     try {
       const response = await postLoginService.get(url);
