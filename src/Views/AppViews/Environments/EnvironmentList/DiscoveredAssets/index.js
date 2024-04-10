@@ -199,6 +199,7 @@ class DiscoveredAssets extends Component {
             product: item.configJson?.product,
             environment: item.configJson?.environment,
             actions: "",
+            id: item.id,
           });
         }
       });
@@ -271,7 +272,7 @@ class DiscoveredAssets extends Component {
       selectedCategoryCloudElementsData,
     } = this.state;
     const { landingZoneId: landingZone } = this.getUrlDetails();
-    
+
     selectedCategoryCloudElementsData = [];
 
     if (category?.toUpperCase() === "LAMBDA") {
@@ -768,7 +769,7 @@ class DiscoveredAssets extends Component {
             ].includes(status.IN_PROGRESS) ? (
               <Loader className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" />
             ) : (
-              <LambdaTable tableData={lambdaTableData} />
+              <LambdaTable tableData={lambdaTableData} title={"LAMBDA"} />
             )}
           </>
         ) : infraTopologyCloudElementList.status === status.IN_PROGRESS ? (
