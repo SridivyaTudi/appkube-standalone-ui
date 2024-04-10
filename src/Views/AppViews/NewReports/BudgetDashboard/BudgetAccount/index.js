@@ -95,16 +95,16 @@ let dummyTableData = [
     budget: "$30,000",
   },
 ];
-let tableHeader = [
-  "Account ID",
-  "Department",
-  "Vpc",
-  "Service count",
-  "High spending region",
-  "Spending",
-  "Variance",
-  "Budget",
-];
+// let tableHeader = [
+//   "Account ID",
+//   "Department",
+//   "Vpc",
+//   "Service count",
+//   "High spending region",
+//   "Spending",
+//   "Variance",
+//   "Budget",
+// ];
 class BudgetAccount extends Component {
   constructor(props) {
     super(props);
@@ -196,7 +196,7 @@ class BudgetAccount extends Component {
               </button>
             </Box>
           </Box>
-          <AccountTable headers={tableHeader} data={accounts} />
+          <AccountTable  data={accounts} />
           {showSelectFilterModal ? (
             <SelectFilterModal
               showModal={showSelectFilterModal}

@@ -156,12 +156,13 @@
   margin: 0 auto;
 
   .modal-content {
-    padding: 30px;
+    padding: 25px;
 
     .modal-header {
-      width: 100%;
       display: block;
-      border-bottom: none;
+      padding: 0 25px 15px;
+      margin-left: -25px;
+      margin-right: -25px;
       .modal-title {
         display: flex;
         align-items: center;

@@ -35,9 +35,14 @@ export class AccountTable extends Component {
     return (
       <TableHead>
         <TableRow>
-          {headers.map((header, index) => (
-            <TableCell>{header}</TableCell>
-          ))}
+        <TableCell>Account ID</TableCell>
+            <TableCell>Department</TableCell>
+            <TableCell>Vpc</TableCell>
+            <TableCell align="center">Service count</TableCell>
+            <TableCell>High spending region</TableCell>
+            <TableCell align="center">Spending</TableCell>
+            <TableCell align="center">Variance</TableCell>
+            <TableCell align="center">Budget</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -64,30 +69,30 @@ export class AccountTable extends Component {
                 {this.props?.notShowingField?.includes("id") ? (
                   <></>
                 ) : (
-                  <TableCell>{details.department}</TableCell>
+                  <TableCell >{details.department}</TableCell>
                 )}
                 {this.props?.notShowingField?.includes("orgUnit") ? (
                   <></>
                 ) : (
-                  <TableCell> {details.vpc}</TableCell>
+                  <TableCell > {details.vpc}</TableCell>
                 )}
 
-                <TableCell>
+                <TableCell align="center">
                   <strong>{details.serviceCount}</strong>
                 </TableCell>
                 <TableCell>
                   <strong> {details.region}</strong>
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <strong> {details.spending}</strong>
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <Box className="variance-count red">
                     {details.varience}{" "}
                     <i className="fas fa-sort-down p-l-5 m-r-1"></i>
                   </Box>
-                </TableCell>
-                <TableCell>
+                </TableCell> 
+                <TableCell align="center">
                   <strong>{details.budget}</strong>
                 </TableCell>
               </TableRow>
