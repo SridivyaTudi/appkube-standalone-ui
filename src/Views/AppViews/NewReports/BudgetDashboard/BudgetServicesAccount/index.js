@@ -5,7 +5,8 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import ServiceIcon1 from "assets/img/report/service-icon1.png";
-import AccountTable from "../../CentralDashboard/Components/AccountTable";
+//import AccountTable from "../../CentralDashboard/Components/AccountTable";
+import BudgetServiceTable from "../Components/BudgetServiceTable";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 let timeSpendData = [
@@ -34,14 +35,14 @@ let timeSpendData = [
     subName: "",
   },
 ];
-let tableHeader = [
-  "Service name",
-  "Total instances",
-  "Current month spend",
-  "Last Quarter Spend",
-  "Variance",
-  "Action",
-];
+// let tableHeader = [
+//   "Service name",
+//   "Total instances",
+//   "Current month spend",
+//   "Last Quarter Spend",
+//   "Variance",
+//   "Action",
+// ];
 let dummyTableData = [
   {
     name: "EC2",
@@ -259,8 +260,12 @@ class BudgetServicesAccount extends Component {
               </button>
             </Box>
           </Box>
-          <AccountTable
+          {/* <AccountTable
             headers={tableHeader}
+            data={services}
+            notShowingField={["id", "orgUnit"]}
+          /> */}
+          <BudgetServiceTable
             data={services}
             notShowingField={["id", "orgUnit"]}
           />
