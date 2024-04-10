@@ -271,10 +271,10 @@ class DiscoveredAssets extends Component {
       selectedCategoryCloudElementsData,
     } = this.state;
     const { landingZoneId: landingZone } = this.getUrlDetails();
-    console.log(category);
+    
     selectedCategoryCloudElementsData = [];
 
-    if (category === "Lambda") {
+    if (category?.toUpperCase() === "LAMBDA") {
       this.props.getInfraTopologyLambdaTableData({
         elementType: category,
         landingZone,
@@ -601,7 +601,7 @@ class DiscoveredAssets extends Component {
       !currentActiveNode && currentActiveNode !== "Global Services";
 
     const soa3TierBtnCondition = dataObjLength && currentActiveNodeNotNull;
-    console.log(currentActiveTopologyCategory)
+
     return (
       <Box className="discovered-assets">
         <Box className="discovered-assets-body">

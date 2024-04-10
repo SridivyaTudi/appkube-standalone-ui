@@ -187,7 +187,7 @@ class SOATopology extends Component {
         let isModuleNameExist = businessServicesModules.find(
           (module) => module.moduleName === service.moduleName
         );
-        console.log(isModuleNameExist);
+
         if (!isModuleNameExist) {
           businessServicesModules.push({
             ...service,
@@ -228,7 +228,7 @@ class SOATopology extends Component {
     } else {
       serviceViewData = {};
     }
-   
+
     this.setState({ serviceViewData });
   };
 
