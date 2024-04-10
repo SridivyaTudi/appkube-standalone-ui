@@ -113,11 +113,11 @@ class DiscoveredAssets extends Component {
       } else {
         const { currentActiveNode: productEnclave } = this.state;
         this.props.GetInfraTopologyCloudElementList({
-          landingZone,
+          landingZoneId,
           productEnclave,
         });
         this.props.getInfraTopologyCategoryWiseViewData({
-          landingZone,
+          landingZoneId,
           productEnclave,
         });
       }
