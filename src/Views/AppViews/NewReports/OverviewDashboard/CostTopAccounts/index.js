@@ -28,6 +28,23 @@ import {
   REPORT_PAGE_TYPE,
 } from "CommonData";
 import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
+import { styled } from "@mui/material/styles";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 const renderLoader = () => {
   return (
@@ -115,15 +132,18 @@ class CostTopAccounts extends Component {
                   </Link>
                 </TableCell>
                 <TableCell>{details.department}</TableCell>
-                <TableCell>{details.vpc}</TableCell>
+                <TableCell>
+                  <HtmlTooltip className="table-tooltip" title={details.vpc}>
+                    {details.vpc}
+                  </HtmlTooltip>
+                </TableCell>
                 <TableCell align="center">{details.serviceCount}</TableCell>
                 <TableCell>{details.highSpendingRegion}</TableCell>
                 <TableCell align="center">{details.spending}</TableCell>
                 <TableCell align="center">
                   <Box
-                    className={`variance-count ${
-                      details.variance > 0 ? "" : "red"
-                    }`}
+                    className={`variance-count ${details.variance > 0 ? "" : "red"
+                      }`}
                   >
                     {details.variance}{" "}
                     {details.variance ? (
@@ -272,7 +292,7 @@ class CostTopAccounts extends Component {
           <h3> Cost Of Top Accounts</h3>
           <Box className="breadcrumbs">
             <ul>
-              <li 
+              <li
                 onClick={() =>
                   this.props.navigate(`${APP_PREFIX_PATH}/new-reports/over-view-dashboard`)
                 }
@@ -324,7 +344,7 @@ class CostTopAccounts extends Component {
           </Box>
         </Box>
         {this.props.costTopAccountsDetailList.status ===
-        APIstatus.IN_PROGRESS ? (
+          APIstatus.IN_PROGRESS ? (
           renderLoader()
         ) : (
           <Box className="reports-tab-section m-t-4">

@@ -64,16 +64,17 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.arrow}`]: {
-    color: "#000000",
+    color: "#ffffffff",
   },
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: "#000000",
-    color: "#ffffff",
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
     maxWidth: 250,
     fontSize: theme.typography.pxToRem(12),
     border: "1px solid #dadde9",
   },
 }));
+
 
 class Compute extends Component {
   constructor(props) {
@@ -255,7 +256,7 @@ class Compute extends Component {
       <TableHead>
         <TableRow>
           <TableCell align="left">resource type</TableCell>
-          <TableCell align="center">Instance ID </TableCell>
+          <TableCell align="left">Instance ID </TableCell>
           <TableCell align="center">Recommendation</TableCell>
           <TableCell align="center">current instance </TableCell>
           <TableCell align="center">recommended Instance</TableCell>
@@ -283,7 +284,7 @@ class Compute extends Component {
               <TableRow key={obj.id}>
                 <TableCell align="left">{obj.elementType}</TableCell>
 
-                <TableCell align="center">
+                <TableCell align="left">
                   <HtmlTooltip className="table-tooltip" title={obj.instanceId}>
                     {obj.instanceId}{" "}
                   </HtmlTooltip>
