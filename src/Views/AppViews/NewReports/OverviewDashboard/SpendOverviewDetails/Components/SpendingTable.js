@@ -10,6 +10,22 @@ import {
   TableBody,
   Button,
 } from "@mui/material";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 export class SpendingTable extends Component {
   renderTable = () => {
@@ -67,7 +83,12 @@ export class SpendingTable extends Component {
             return (
               <TableRow>
                 <TableCell>{tags}</TableCell>
-                <TableCell>{InstanceID}</TableCell>
+                <TableCell>
+                {/* {InstanceID} */}
+                <HtmlTooltip className="table-tooltip" title={InstanceID}>
+                      <Box className="instance-id">{InstanceID}</Box>
+                    </HtmlTooltip>
+                </TableCell>
                 <TableCell>{type} </TableCell>
                 <TableCell>{status}</TableCell>
                 <TableCell>{priceModel}</TableCell>
