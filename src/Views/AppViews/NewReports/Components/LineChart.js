@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 import { convertDigitToThousand, getFormattedDate } from "Utils";
 import { Box } from "@mui/material";
-let margin = { top: 20, right: 20, bottom: 50, left: 20 },
+let margin = { top: 20, right: 20, bottom: 10, left: 20 },
   width = 524 - margin.left - margin.right,
-  height = 270 - margin.top - margin.bottom;
+  height = 230 - margin.top - margin.bottom;
 
 class LineChart extends Component {
   constructor(props) {
