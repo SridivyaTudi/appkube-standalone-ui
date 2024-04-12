@@ -219,7 +219,7 @@ class CostAnalysis extends Component {
                         <Box className="chart-contant">
                           <Box
                             className="d-flex chart"
-                            style={{ width: "60%" }}
+                            style={{ width: "60%" }} justifyContent={"center"}
                           >
                             {productWiseCostData &&
                             productWiseCostData.length ? (
@@ -275,7 +275,7 @@ class CostAnalysis extends Component {
                         </Box>
                         <Box className="chart-contant">
                           <Box
-                            className="d-flex chart"
+                            className="d-flex chart" justifyContent={"center"}
                             style={{ width: "60%" }}
                           >
                             <Doughnut
@@ -323,7 +323,7 @@ class CostAnalysis extends Component {
                         </Box>
                         <Box className="chart-contant">
                           <Box
-                            className="d-flex chart"
+                            className="d-flex chart" justifyContent={"center"}
                             style={{ width: "60%" }}
                           >
                             <Doughnut
