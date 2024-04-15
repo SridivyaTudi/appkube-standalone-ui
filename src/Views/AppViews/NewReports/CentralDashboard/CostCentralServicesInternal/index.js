@@ -5,7 +5,7 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import TimeSpendComponent from "../../Components/TimeSpendComponent";
 import ServiceIcon1 from "assets/img/report/service-icon1.png";
-import AccountTable from "../Components/AccountTable";
+import AccountServiceTable from "../Components/AccountServiceTable";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 let timeSpendData = [
@@ -257,7 +257,7 @@ class CostCentralServicesInternal extends Component {
               </button>
             </Box>
           </Box>
-          <AccountTable
+          <AccountServiceTable
             headers={tableHeader}
             data={services}
             notShowingField={["id", "orgUnit"]}

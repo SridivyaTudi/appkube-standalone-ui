@@ -32,22 +32,18 @@ export class AccountTable extends Component {
     );
   };
 
- 
-
   //  Render table head
   renderTableHead = () => {
     let headers = this.props.headers || [];
     return (
       <TableHead>
         <TableRow>
-        <TableCell>Account name</TableCell>
-        <TableCell>Account ID</TableCell>
-        <TableCell>Organization unit</TableCell>
-        <TableCell align="center">Current quarter spend</TableCell>
-        <TableCell align="center">Last quarter spend</TableCell>
-        <TableCell align="center">Variance</TableCell>
-        <TableCell align="center">Avg daily spend</TableCell>
-        <TableCell align="center">Actions</TableCell>
+          <TableCell>Service name	</TableCell>
+          <TableCell align="center">Current quarter spend	</TableCell>
+          <TableCell align="center">Last quarter Spend	</TableCell>
+          <TableCell align="center">Variance	</TableCell>
+          <TableCell align="center">Avg daily spend	</TableCell>
+          <TableCell align="center">Actions	</TableCell>
         </TableRow>
       </TableHead>
     );

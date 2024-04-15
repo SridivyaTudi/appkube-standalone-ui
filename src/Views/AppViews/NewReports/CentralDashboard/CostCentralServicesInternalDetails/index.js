@@ -198,7 +198,7 @@ class CostCentralServicesInternalDetails extends Component {
           <TableCell align="left">Instance Status</TableCell>
           <TableCell align="left">Pricing model</TableCell>
           <TableCell align="left">Availability zone</TableCell>
-          <TableCell align="left">OnDemand cost/hr</TableCell>
+          <TableCell align="center">OnDemand cost/hr</TableCell>
           <TableCell align="left">RI cost / hr</TableCell>
           <TableCell align="center">Usage Hours</TableCell>
           <TableCell align="center">Add-ons</TableCell>
@@ -223,7 +223,7 @@ class CostCentralServicesInternalDetails extends Component {
                 <TableCell align="left">{details.instanceStatus}</TableCell>
                 <TableCell align="left">{details.priceModel}</TableCell>
                 <TableCell align="left">{details.zone}</TableCell>
-                <TableCell align="left">
+                <TableCell align="center">
                   <strong>{details.onDemandCostHr}</strong>
                 </TableCell>
                 <TableCell align="left">{details.riCostHr}</TableCell>
