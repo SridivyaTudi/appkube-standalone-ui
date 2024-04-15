@@ -5,6 +5,7 @@ import GoogleCloud from "assets/img/google-cloud.png";
 import Microsoftazure from "assets/img/microsoftazure.png";
 import AssetsEnvironmentTab from "Views/AppViews/DiscoveredAssets/Components/AssetsEnvironmentTab";
 import AssetsTable from "Views/AppViews/DiscoveredAssets/Components/AssetsTable";
+import AssetsFilterSection from "Views/AppViews/DiscoveredAssets/Components/AssetsFilterSection";
 
 let data = [
   {
@@ -97,7 +98,7 @@ class TaggedAssets extends Component {
   };
 
   render() {
-    const { activeTab, environmentList } = this.state;
+    const { activeTab, environmentList, selectedFilters } = this.state;
     return (
       <Box className="discovered-assets-inner-tabs">
         <Box className="assets-sevices-tabs">
@@ -107,11 +108,11 @@ class TaggedAssets extends Component {
             setActiveTab={(id) => this.setActiveTab(id)}
           />
           <Box className="tabs-content">
-            {/* <AssetsFilterSection
+            <AssetsFilterSection
               data={selectedFilters}
               onClickCloseIcon={(id) => this.onClickCloseIcon(id)}
               onClickClearFilter={() => this.setState({ selectedFilters: [] })}
-            /> */}
+            />
             <AssetsTable data={environmentList} />
           </Box>
         </Box>

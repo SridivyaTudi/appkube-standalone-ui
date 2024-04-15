@@ -197,11 +197,11 @@ class DiscoveredAssetsComponent extends Component {
             setActiveTab={(id) => this.setActiveTab(id)}
           />
           <Box className="tabs-content">
-            {/* <AssetsFilterSection
+            <AssetsFilterSection
               data={selectedFilters}
               onClickCloseIcon={(id) => this.onClickCloseIcon(id)}
               onClickClearFilter={() => this.setState({ selectedFilters: [] })}
-            /> */}
+            />
             <AssetsTable
               data={assestsData}
               loderStatus={discoveredAssetsData?.status === status.IN_PROGRESS}

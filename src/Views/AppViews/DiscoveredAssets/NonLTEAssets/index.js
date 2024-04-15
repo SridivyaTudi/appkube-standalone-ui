@@ -90,11 +90,11 @@ class UntaggedAssets extends Component {
             setActiveTab={(id) => this.setActiveTab(id)}
           />
           <Box className="tabs-content">
-            {/* <AssetsFilterSection
+            <AssetsFilterSection
               data={selectedFilters}
               onClickCloseIcon={(id) => this.onClickCloseIcon(id)}
               onClickClearFilter={() => this.setState({ selectedFilters: [] })}
-            /> */}
+            />
             <AssetsTable data={environmentList} />
           </Box>
         </Box>
