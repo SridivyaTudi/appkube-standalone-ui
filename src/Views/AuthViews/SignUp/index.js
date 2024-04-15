@@ -567,7 +567,8 @@ class SignUp extends Component {
                               <></>
                             )}
 
-                            <i
+                           <button className="eye-icon">
+                           <i
                               className={`fa-sharp fa-regular fa-eye${
                                 passwordView ? "-slash" : ""
                               }`}
@@ -578,6 +579,7 @@ class SignUp extends Component {
                                 });
                               }}
                             ></i>
+                           </button>
                             <span
                               className="input-group-text rotate"
                               onClick={this.generatePassword}

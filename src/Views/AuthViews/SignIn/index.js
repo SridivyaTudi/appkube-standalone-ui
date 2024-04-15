@@ -348,17 +348,19 @@ class Signin extends Component {
                               ) : (
                                 <></>
                               )}
-                              <i
-                                className={`fa-sharp fa-regular fa-eye${
-                                  showPassword ? "" : "-slash"
-                                }`}
-                                style={{ cursor: "pointer" }}
-                                onClick={() => {
-                                  this.setState({
-                                    showPassword: !this.state.showPassword,
-                                  });
-                                }}
-                              ></i>
+                              <button className="eye-icon">
+                                <i
+                                  className={`fa-sharp fa-regular fa-eye${showPassword ? "" : "-slash"
+                                    }`}
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => {
+                                    this.setState({
+                                      showPassword: !this.state.showPassword,
+                                    });
+                                  }}
+                                ></i>
+                              </button>
+
                             </Box>
                           </Grid>
                         </Grid>
@@ -392,7 +394,7 @@ class Signin extends Component {
                           className="primary-btn"
                           variant="contained"
                           type="submit"
-                          // loadingPosition={"start"}
+                        // loadingPosition={"start"}
                         >
                           Sign In
                         </LoadingButton>
