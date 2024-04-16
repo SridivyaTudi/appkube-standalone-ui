@@ -22,7 +22,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.arrow}`]: {
-    color: "#ffffffff",
+    //color: "#ffffffff",
   },
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "#ffffffff",
@@ -155,7 +155,11 @@ class AssetsTable extends Component {
                     </HtmlTooltip>
                   </TableCell>
                   <TableCell align="left">{elementType}</TableCell>
-                  <TableCell align="left">{landingZone}</TableCell>
+                  <TableCell align="left">
+                  <HtmlTooltip className="table-tooltip" title={landingZone}>
+                      <Box className="resource-name">{landingZone}</Box>
+                    </HtmlTooltip>
+                  </TableCell>
                   <TableCell align="left">
                     {" "}
                     <HtmlTooltip

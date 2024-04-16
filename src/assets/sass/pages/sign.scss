@@ -285,6 +285,9 @@
 
         .checkbox {
           margin-left: -11px;
+          .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked{
+            color: #384cff;
+          }
 
           .MuiFormControlLabel-label {
             font-size: 12px;
@@ -343,7 +346,7 @@
 
           a {
             font-weight: 600;
-            color: #5541d7;
+            color: #384cff;
             margin-left: 5px;
           }
         }
