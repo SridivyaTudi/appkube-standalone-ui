@@ -840,8 +840,8 @@ class Tier extends Component {
                     {dropDownLayersData.webLayer.map((layer) => (
                       <ListItem
                         key={v4()}
-                        className={`${
-                          selectedLayer.web === layer.name ? "active" : ""
+                        className={`disabled ${
+                          selectedLayer.web === layer.name ? "active" : "" 
                         }`}
                         onClick={() =>
                           layer?.status?.toUpperCase() === STATUS.ACTIVE ? (
@@ -923,7 +923,7 @@ class Tier extends Component {
                             <></>
                           )
                         }
-                        className={`${
+                        className={`disabled${
                           selectedLayer.app === layer.name ? "active" : ""
                         }`}
                       >
@@ -999,7 +999,7 @@ class Tier extends Component {
                             <></>
                           )
                         }
-                        className={`${
+                        className={`disabled${
                           selectedLayer.data === layer.name ? "active" : ""
                         }`}
                       >
@@ -1074,7 +1074,7 @@ class Tier extends Component {
                           <></>
                         )
                       }
-                      className={`${
+                      className={`disabled${
                         selectedLayer.aux === layer.name ? "active" : ""
                       }`}
                     >

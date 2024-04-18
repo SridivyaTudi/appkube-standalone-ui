@@ -261,6 +261,16 @@
                         overflow: hidden;
                         text-overflow: ellipsis;
                       }
+                      &.disabled {
+                        cursor: auto;
+                        background-color: transparent;
+                        i{
+                          color: rgba(0, 0, 0, 0.26);
+                        }
+                        p{
+                          color: rgba(0, 0, 0, 0.26);
+                        }
+                    }
                       &:hover {
                         color: #383874;
                         background-color: #dde1f8;

@@ -956,7 +956,7 @@ class Soa extends Component {
                   <List>
                     {dropDownServiceData.appService.map((service) => (
                       <ListItem
-                        className={`${
+                        className={`disabled${
                           selectedServiceData.app === service.name
                             ? "active"
                             : ""
@@ -1035,7 +1035,7 @@ class Soa extends Component {
                   <List>
                     {dropDownServiceData.dataService.map((service) => (
                       <ListItem
-                        className={`${
+                        className={`disabled${
                           selectedServiceData.data === service.name
                             ? "active"
                             : ""
@@ -1113,7 +1113,7 @@ class Soa extends Component {
                 <List>
                   {dropDownServiceData.otherService.map((service) => (
                     <ListItem
-                      className={`${
+                      className={`disabled${
                         selectedServiceData.other === service.name
                           ? "active"
                           : ""
