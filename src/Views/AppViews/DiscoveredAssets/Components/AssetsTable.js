@@ -22,7 +22,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.arrow}`]: {
-    //color: "#ffffffff",
+    color: "#ffffffff",
   },
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "#ffffffff",

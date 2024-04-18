@@ -56,9 +56,6 @@ class DiscoveredAssets extends Component {
       <Box className="discovered-assets-container environment-container">
         <Box className="assets-heading">
           <h3 className="m-b-0">ASSETS MANAGEMENT</h3>
-          <Button className="primary-btn min-width-inherit" variant="contained">
-            Back
-          </Button>
         </Box>
         <Box className="global-services-fliter p-0">
           <Box className="heading">Discovered Assets</Box>
