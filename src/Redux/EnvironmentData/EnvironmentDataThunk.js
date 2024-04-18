@@ -162,3 +162,19 @@ export const getEnvironmentsApplicationTableData = createAsyncThunk(
     }
   }
 );
+
+export const getViewServiceData = createAsyncThunk(
+  "environments/getViewServiceData",
+  async (params) => {
+    const url = config.VIEW_SERVICE.replace("#org-id#", params.orgId).replace(
+      "#landing-zone-id#",
+      params.landingZoneId
+    );
+    try {
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

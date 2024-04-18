@@ -47,7 +47,7 @@ import ConfigInfo from "../Soa/components/ConfigInfo";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import InstanceListCards from "Views/AppViews/BIMapping/Components/InstanceListCards";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { LOGOS, SERVICE_TYPE } from "CommonData";
+import { LOGOS, SERVICE_TYPE, STATUS } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -963,13 +963,21 @@ class Soa extends Component {
                         }`}
                         key={v4()}
                         onClick={() =>
-                          this.onClickServiceDropDown("app", service.name)
+                          service?.status?.toUpperCase() === STATUS.ACTIVE ? (
+                            this.onClickServiceDropDown("app", service.name)
+                          ) : (
+                            <></>
+                          )
                         }
                       >
                         <i className="fa-solid fa-circle-dot"></i>
                         <HtmlTooltip
                           className="table-tooltip"
-                          title={service.name}
+                          title={
+                            service?.status?.toUpperCase() === STATUS.ACTIVE
+                              ? service.name
+                              : "Un-Supported"
+                          }
                         >
                           <p>{service.name}</p>
                         </HtmlTooltip>
@@ -1034,13 +1042,21 @@ class Soa extends Component {
                         }`}
                         key={v4()}
                         onClick={() =>
-                          this.onClickServiceDropDown("data", service.name)
+                          service?.status?.toUpperCase() === STATUS.ACTIVE ? (
+                            this.onClickServiceDropDown("data", service.name)
+                          ) : (
+                            <></>
+                          )
                         }
                       >
                         <i className="fa-solid fa-circle-dot"></i>
                         <HtmlTooltip
                           className="table-tooltip"
-                          title={service.name}
+                          title={
+                            service?.status?.toUpperCase() === STATUS.ACTIVE
+                              ? service.name
+                              : "Un-Supported"
+                          }
                         >
                           <p>{service.name}</p>
                         </HtmlTooltip>
@@ -1104,13 +1120,21 @@ class Soa extends Component {
                       }`}
                       key={v4()}
                       onClick={() =>
-                        this.onClickServiceDropDown("other", service.name)
+                        service?.status?.toUpperCase() === STATUS.ACTIVE ? (
+                          this.onClickServiceDropDown("other", service.name)
+                        ) : (
+                          <></>
+                        )
                       }
                     >
                       <i className="fa-solid fa-circle-dot"></i>
                       <HtmlTooltip
                         className="table-tooltip"
-                        title={service.name}
+                        title={
+                          service?.status?.toUpperCase() === STATUS.ACTIVE
+                            ? service.name
+                            : "Un-Supported"
+                        }
                       >
                         <p>{service.name}</p>
                       </HtmlTooltip>

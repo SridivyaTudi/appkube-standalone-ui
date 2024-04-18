@@ -37,7 +37,7 @@ import { styled } from "@mui/material/styles";
 import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import InstanceListCards from "Views/AppViews/BIMapping/Components/InstanceListCards";
 import { ToastMessage } from "Toast/ToastMessage";
-import { LOGOS } from "CommonData";
+import { LOGOS, STATUS } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -640,7 +640,11 @@ class Tier extends Component {
       } = findSaveData;
       let { landingZoneId } = this.getUrlDetails();
 
-      this.props.getInstancesServices({ cloudName, elementType,landingZoneId });
+      this.props.getInstancesServices({
+        cloudName,
+        elementType,
+        landingZoneId,
+      });
 
       Object.keys(savedLayer).forEach((key) => {
         if (layerName === key) {
@@ -840,13 +844,21 @@ class Tier extends Component {
                           selectedLayer.web === layer.name ? "active" : ""
                         }`}
                         onClick={() =>
-                          this.onClickLayerDropDown("web", layer.name)
+                          layer?.status?.toUpperCase() === STATUS.ACTIVE ? (
+                            this.onClickLayerDropDown("web", layer.name)
+                          ) : (
+                            <></>
+                          )
                         }
                       >
                         <i className="fa-solid fa-circle-dot"></i>{" "}
                         <HtmlTooltip
                           className="table-tooltip"
-                          title={layer.name}
+                          title={
+                            layer?.status?.toUpperCase() === STATUS.ACTIVE
+                              ? layer.name
+                              : "Un-Supported"
+                          }
                         >
                           <p>{layer.name}</p>
                         </HtmlTooltip>
@@ -905,7 +917,11 @@ class Tier extends Component {
                       <ListItem
                         key={v4()}
                         onClick={() =>
-                          this.onClickLayerDropDown("app", layer.name)
+                          layer?.status?.toUpperCase() === STATUS.ACTIVE ? (
+                            this.onClickLayerDropDown("app", layer.name)
+                          ) : (
+                            <></>
+                          )
                         }
                         className={`${
                           selectedLayer.app === layer.name ? "active" : ""
@@ -914,7 +930,11 @@ class Tier extends Component {
                         <i className="fa-solid fa-circle-dot"></i>
                         <HtmlTooltip
                           className="table-tooltip"
-                          title={layer.name}
+                          title={
+                            layer?.status?.toUpperCase() === STATUS.ACTIVE
+                              ? layer.name
+                              : "Un-Supported"
+                          }
                         >
                           <p>{layer.name}</p>
                         </HtmlTooltip>
@@ -973,7 +993,11 @@ class Tier extends Component {
                       <ListItem
                         key={v4()}
                         onClick={() =>
-                          this.onClickLayerDropDown("data", layer.name)
+                          layer?.status?.toUpperCase() === STATUS.ACTIVE ? (
+                            this.onClickLayerDropDown("data", layer.name)
+                          ) : (
+                            <></>
+                          )
                         }
                         className={`${
                           selectedLayer.data === layer.name ? "active" : ""
@@ -982,7 +1006,11 @@ class Tier extends Component {
                         <i className="fa-solid fa-circle-dot"></i>
                         <HtmlTooltip
                           className="table-tooltip"
-                          title={layer.name}
+                          title={
+                            layer?.status?.toUpperCase() === STATUS.ACTIVE
+                              ? layer.name
+                              : "Un-Supported"
+                          }
                         >
                           <p>{layer.name}</p>
                         </HtmlTooltip>
@@ -1040,14 +1068,25 @@ class Tier extends Component {
                     <ListItem
                       key={v4()}
                       onClick={() =>
-                        this.onClickLayerDropDown("aux", layer.name)
+                        layer?.status?.toUpperCase() === STATUS.ACTIVE ? (
+                          this.onClickLayerDropDown("aux", layer.name)
+                        ) : (
+                          <></>
+                        )
                       }
                       className={`${
                         selectedLayer.aux === layer.name ? "active" : ""
                       }`}
                     >
                       <i className="fa-solid fa-circle-dot"></i>
-                      <HtmlTooltip className="table-tooltip" title={layer.name}>
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          layer?.status?.toUpperCase() === STATUS.ACTIVE
+                            ? layer.name
+                            : "Un-Supported"
+                        }
+                      >
                         <p>{layer.name}</p>
                       </HtmlTooltip>
                     </ListItem>

@@ -10,6 +10,7 @@ import {
   getGlobalServiceCategoryWiseSummary,
   getGlobalServiceCloudElements,
   getEnvironmentsApplicationTableData,
+  getViewServiceData,
 } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -53,6 +54,10 @@ export const environmentDataSlice = createSlice({
       data: [],
     },
     applicationsTableData: {
+      status: null,
+      data: [],
+    },
+    viewServiceData: {
       status: null,
       data: [],
     },
@@ -318,6 +323,32 @@ export const environmentDataSlice = createSlice({
       return {
         ...state,
         applicationsTableData: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getViewServiceData.pending]: (state) => {
+      return {
+        ...state,
+        viewServiceData: {
+          status: status.IN_PROGRESS,
+        },
+      };
+    },
+    [getViewServiceData.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        viewServiceData: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getViewServiceData.rejected]: (state) => {
+      return {
+        ...state,
+        viewServiceData: {
           status: status.FAILURE,
         },
       };

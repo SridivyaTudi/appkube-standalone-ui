@@ -125,3 +125,7 @@ export const USER_RBAC_TYPE = {
   PRODUCT_OWNERS: "PRODUCT-OWNERS",
   DEV_SEC_OPS: "DEVSECOPS",
 };
+
+export const STATUS = {
+  ACTIVE: "ACTIVE",
+};

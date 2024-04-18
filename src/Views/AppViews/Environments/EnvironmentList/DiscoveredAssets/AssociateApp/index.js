@@ -175,7 +175,7 @@ class AssociateApp extends Component {
               className="primary-outline-btn min-width button"
               component={Link}
               variant="contained"
-              to={`${APP_PREFIX_PATH}/assets/environments/ecscluster?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}`}
+              to={`${APP_PREFIX_PATH}/assets/environments/ecscluster?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&elementType=${data.elementType}`}
             >
               View Services
             </Button>
