@@ -840,9 +840,11 @@ class Tier extends Component {
                     {dropDownLayersData.webLayer.map((layer) => (
                       <ListItem
                         key={v4()}
-                        className={`disabled ${
-                          selectedLayer.web === layer.name ? "active" : "" 
-                        }`}
+                        className={`${
+                          layer?.status?.toUpperCase() === STATUS.ACTIVE
+                            ? ""
+                            : "disabled"
+                        } ${selectedLayer.web === layer.name ? "active" : ""}`}
                         onClick={() =>
                           layer?.status?.toUpperCase() === STATUS.ACTIVE ? (
                             this.onClickLayerDropDown("web", layer.name)
@@ -923,9 +925,11 @@ class Tier extends Component {
                             <></>
                           )
                         }
-                        className={`disabled${
-                          selectedLayer.app === layer.name ? "active" : ""
-                        }`}
+                        className={`${
+                          layer?.status?.toUpperCase() === STATUS.ACTIVE
+                            ? ""
+                            : "disabled"
+                        } ${selectedLayer.app === layer.name ? "active" : ""}`}
                       >
                         <i className="fa-solid fa-circle-dot"></i>
                         <HtmlTooltip
@@ -999,9 +1003,11 @@ class Tier extends Component {
                             <></>
                           )
                         }
-                        className={`disabled${
-                          selectedLayer.data === layer.name ? "active" : ""
-                        }`}
+                        className={`${
+                          layer?.status?.toUpperCase() === STATUS.ACTIVE
+                            ? ""
+                            : "disabled"
+                        } ${selectedLayer.data === layer.name ? "active" : ""}`}
                       >
                         <i className="fa-solid fa-circle-dot"></i>
                         <HtmlTooltip
@@ -1074,9 +1080,11 @@ class Tier extends Component {
                           <></>
                         )
                       }
-                      className={`disabled${
-                        selectedLayer.aux === layer.name ? "active" : ""
-                      }`}
+                      className={`${
+                        layer?.status?.toUpperCase() === STATUS.ACTIVE
+                          ? ""
+                          : "disabled"
+                      } ${selectedLayer.aux === layer.name ? "active" : ""}`}
                     >
                       <i className="fa-solid fa-circle-dot"></i>
                       <HtmlTooltip

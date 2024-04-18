@@ -956,10 +956,14 @@ class Soa extends Component {
                   <List>
                     {dropDownServiceData.appService.map((service) => (
                       <ListItem
-                        className={`disabled${
+                        className={`${
                           selectedServiceData.app === service.name
                             ? "active"
                             : ""
+                        } ${
+                          service?.status?.toUpperCase() === STATUS.ACTIVE
+                            ? ""
+                            : "disabled"
                         }`}
                         key={v4()}
                         onClick={() =>
@@ -1035,11 +1039,15 @@ class Soa extends Component {
                   <List>
                     {dropDownServiceData.dataService.map((service) => (
                       <ListItem
-                        className={`disabled${
+                        className={`${
                           selectedServiceData.data === service.name
                             ? "active"
                             : ""
-                        }`}
+                        } ${
+                          service?.status?.toUpperCase() === STATUS.ACTIVE
+                            ? ""
+                            : "disabled"
+                        } `}
                         key={v4()}
                         onClick={() =>
                           service?.status?.toUpperCase() === STATUS.ACTIVE ? (
@@ -1113,10 +1121,14 @@ class Soa extends Component {
                 <List>
                   {dropDownServiceData.otherService.map((service) => (
                     <ListItem
-                      className={`disabled${
+                      className={`${
                         selectedServiceData.other === service.name
                           ? "active"
                           : ""
+                      } ${
+                        service?.status?.toUpperCase() === STATUS.ACTIVE
+                          ? ""
+                          : "disabled"
                       }`}
                       key={v4()}
                       onClick={() =>

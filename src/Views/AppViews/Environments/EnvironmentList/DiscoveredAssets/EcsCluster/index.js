@@ -69,6 +69,7 @@ class EcsCluster extends React.Component {
       this.props.viewServiceData?.data
     ) {
       const viewServices = this.props.viewServiceData?.data || [];
+
       this.setState({ viewServices });
     }
   }
@@ -171,8 +172,11 @@ class EcsCluster extends React.Component {
   };
 
   renderBody = () => {
-    const { viewServices, pg, rpg, activeTierTab, actionButton } = this.state;
+    let { viewServices, pg, rpg, activeTierTab, actionButton } = this.state;
     const isRbacPermission = this.checkRbacPermission();
+    viewServices = viewServices.filter(
+      (service) => service?.productType?.toUpperCase() === activeTierTab
+    );
     return (
       <TableBody>
         {viewServices?.length ? (
@@ -180,8 +184,8 @@ class EcsCluster extends React.Component {
             <TableRow key={v4()}>
               <TableCell>{row.product}</TableCell>
               <TableCell align="center">{row.environment}</TableCell>
-              <TableCell>{row.businessName}</TableCell>
-              <TableCell>{row.layer}</TableCell>
+              <TableCell>{row.serviceName}</TableCell>
+              <TableCell>{row.serviceType}</TableCell>
               <TableCell align="center">
                 <Box className="sle-box">
                   <HtmlTooltip
@@ -421,7 +425,7 @@ class EcsCluster extends React.Component {
   }
 }
 function mapStateToProps(state) {
-  const { viewServiceData } = state.environments;
+  const { viewServiceData } = state.environmentData;
   return {
     viewServiceData,
   };
