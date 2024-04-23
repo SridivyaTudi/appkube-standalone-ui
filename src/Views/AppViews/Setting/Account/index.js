@@ -7,7 +7,7 @@ import TwoFactorImg from "assets/img/setting/two-factor.svg";
 import AuthenticationModal from "./Components/AuthenticationModal";
 import { styled } from "@mui/material/styles";
 import status from "Redux/Constants/CommonDS";
-import { getCurrentUser } from "Utils";
+import { generateRandomPassword, getCurrentUser } from "Utils";
 import { changePasswordOfAccount } from "Redux/Settings/SettingsThunk";
 import { connect } from "react-redux";
 import { ToastMessage } from "Toast/ToastMessage";
@@ -143,51 +143,11 @@ export class Account extends Component {
   };
 
   /** Generates random password on user click */
-  generateRandomPassword = () => {
+  generatePassword = () => {
     const { formData } = this.state;
 
-    formData["newPassword"] = this.generatePassword();
+    formData["newPassword"] = generateRandomPassword()
     this.setState({ formData });
-  };
-
-  generatePassword = () => {
-    const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
-    const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const specialChars = "!%&@#$^*?_~";
-
-    const allChars = lowercaseChars + uppercaseChars + specialChars;
-
-    const getRandomChar = (charset) =>
-      charset[Math.floor(Math.random() * charset.length)];
-
-    let password = "";
-
-    const minLength = 8;
-    const maxLength = 20;
-    const passwordLength =
-      Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
-
-    // Ensure at least one lowercase letter
-    password += getRandomChar(lowercaseChars);
-
-    // Ensure at least one uppercase letter
-    password += getRandomChar(uppercaseChars);
-
-    // Ensure at least one special character
-    password += getRandomChar(specialChars);
-
-    // Fill the remaining characters randomly
-    for (let i = 0; i < passwordLength - 3; i++) {
-      password += getRandomChar(allChars);
-    }
-
-    // Shuffle the characters in the password
-    password = password
-      .split("")
-      .sort(() => Math.random() - 0.5)
-      .join("");
-
-    return password;
   };
 
   handleSubmitPassword = () => {
@@ -314,7 +274,7 @@ export class Account extends Component {
                         />
                         <span
                           className="input-group-text rotate"
-                          onClick={this.generateRandomPassword}
+                          onClick={this.generatePassword}
                         >
                           <HtmlTooltip
                             className="popup-tooltip"
