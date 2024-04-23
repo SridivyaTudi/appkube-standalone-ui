@@ -145,16 +145,49 @@ export class Account extends Component {
   /** Generates random password on user click */
   generateRandomPassword = () => {
     const { formData } = this.state;
-    const chars =
-      "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const passwordLength = 12;
-    let pwd = "";
-    for (var i = 0; i <= passwordLength; i++) {
-      var randomNumber = Math.floor(Math.random() * chars.length);
-      pwd += chars.substring(randomNumber, randomNumber + 1);
-    }
-    formData["newPassword"] = pwd;
+
+    formData["newPassword"] = this.generatePassword();
     this.setState({ formData });
+  };
+
+  generatePassword = () => {
+    const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+    const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const specialChars = "!%&@#$^*?_~";
+
+    const allChars = lowercaseChars + uppercaseChars + specialChars;
+
+    const getRandomChar = (charset) =>
+      charset[Math.floor(Math.random() * charset.length)];
+
+    let password = "";
+
+    const minLength = 8;
+    const maxLength = 20;
+    const passwordLength =
+      Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
+
+    // Ensure at least one lowercase letter
+    password += getRandomChar(lowercaseChars);
+
+    // Ensure at least one uppercase letter
+    password += getRandomChar(uppercaseChars);
+
+    // Ensure at least one special character
+    password += getRandomChar(specialChars);
+
+    // Fill the remaining characters randomly
+    for (let i = 0; i < passwordLength - 3; i++) {
+      password += getRandomChar(allChars);
+    }
+
+    // Shuffle the characters in the password
+    password = password
+      .split("")
+      .sort(() => Math.random() - 0.5)
+      .join("");
+
+    return password;
   };
 
   handleSubmitPassword = () => {
@@ -401,7 +434,9 @@ export class Account extends Component {
                     <Box className="card-btn">
                       <Button
                         className={
-                          isMfaEnable === "YES" ? "disabled width-25" : "primary-btn width-25"
+                          isMfaEnable === "YES"
+                            ? "disabled width-25"
+                            : "primary-btn width-25"
                         }
                         // disabled={this.user.isMfaEnable === "YES"}
                         onClick={() =>
