@@ -573,7 +573,8 @@ class SignUp extends Component {
                                 passwordView ? "-slash" : ""
                               }`}
                               style={{ cursor: "pointer" }}
-                              onClick={() => {
+                              onClick={(e) => {
+                                e.preventDefault()
                                 this.setState({
                                   passwordView: !this.state.passwordView,
                                 });
