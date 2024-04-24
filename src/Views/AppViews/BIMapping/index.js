@@ -579,6 +579,14 @@ class BIMapping extends Component {
                 </List>
               </div>
             )}
+            <div
+              className={
+                isSelectDepartmentOpen
+                  ? "fliters-collapse-bg active"
+                  : "fliters-collapse-bg"
+              }
+              onClick={this.toggleSelectDepartment}
+            />
           </Box>
         </Box>
         <Box className="bimapping-table">
