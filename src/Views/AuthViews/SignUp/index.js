@@ -422,7 +422,14 @@ class SignUp extends Component {
                   </>
                 )}
               </Box>
-              <form onSubmit={this.setActiveStep}>
+              <form
+                onSubmit={(e) =>
+                  this.setActiveStep(
+                    e,
+                    activeStep === 2 ? activeStep : activeStep + 1
+                  )
+                }
+              >
                 {activeStep === this.steps.STEP1 && (
                   <>
                     <Box className="d-block width-100 google-btn">
@@ -567,20 +574,20 @@ class SignUp extends Component {
                               <></>
                             )}
 
-                           <button className="eye-icon">
-                           <i
-                              className={`fa-sharp fa-regular fa-eye${
-                                passwordView ? "-slash" : ""
-                              }`}
-                              style={{ cursor: "pointer" }}
-                              onClick={(e) => {
-                                e.preventDefault()
-                                this.setState({
-                                  passwordView: !this.state.passwordView,
-                                });
-                              }}
-                            ></i>
-                           </button>
+                            <button className="eye-icon">
+                              <i
+                                className={`fa-sharp fa-regular fa-eye${
+                                  passwordView ? "-slash" : ""
+                                }`}
+                                style={{ cursor: "pointer" }}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  this.setState({
+                                    passwordView: !this.state.passwordView,
+                                  });
+                                }}
+                              ></i>
+                            </button>
                             <span
                               className="input-group-text rotate"
                               onClick={this.generatePassword}
