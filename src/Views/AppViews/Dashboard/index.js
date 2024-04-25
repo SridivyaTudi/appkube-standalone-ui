@@ -40,9 +40,11 @@ class Dashboard extends Component {
     const { activeTab } = this.state;
     return (
       <Box className="dashboard-container">
-        <Box className="dashboard-inner">
-          <Box className="dashboard-image">
-            <img src={Planet} alt="Planet" />
+        <Box className="dashboard-bg-image">
+          <Box className="dashboard-inner">
+            <Box className="dashboard-image">
+              <img src={Planet} alt="Planet" />
+            </Box>
           </Box>
         </Box>
         <Box className="services-panel-tabs">

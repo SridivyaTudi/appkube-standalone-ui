@@ -6,7 +6,11 @@
   padding: 0 60px;
   background-color: #f6f7fb;
   position: relative;
-
+.dashboard-bg-image{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .dashboard-inner {
     width: 850px;
     height: 850px;
@@ -19,7 +23,6 @@
     align-items: center;
     justify-content: center;
     position: fixed;
-    left: 21.2%;
     top: 0;
 
     .dashboard-image {
@@ -38,6 +41,9 @@
       }
     }
   }
+
+}
+  
 
   .services-panel-tabs {
     position: absolute;
