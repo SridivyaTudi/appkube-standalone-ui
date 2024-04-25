@@ -187,6 +187,7 @@ class SpendAnalytics extends Component {
             tension: 0,
           },
         },
+        maintainAspectRatio : false
       },
       totalSpend: "",
     };
