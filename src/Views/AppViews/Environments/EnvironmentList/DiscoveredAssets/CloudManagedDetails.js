@@ -22,6 +22,7 @@ import {
 import TitleIconAndCountOfCard from "Components/TitleIconAndCountOfCard";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { Height } from "@mui/icons-material";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -251,15 +252,18 @@ class CloudManagedDetails extends React.Component {
                     {childJSX.length ? (
                       childJSX
                     ) : (
-                      <p
-                        style={{
-                          fontSize: "16px",
-                          margin: "30% auto",
-                          color: "#000",
-                        }}
-                      >
-                        No Data Available!
-                      </p>
+                      <Box className="d-flex align-items-center width-100" justifyContent={"center"} style={{height: "320px"}} >
+                        <p
+                          style={{  
+                            margin: 0,
+                            fontSize: "16px",
+                            // margin: "30% auto",
+                            color: "#000",
+                          }}
+                        >
+                          No Data Available!
+                        </p>
+                      </Box>
                     )}
                   </Box>
                 </Box>
@@ -312,10 +316,15 @@ class CloudManagedDetails extends React.Component {
     } else {
       return [
         <Box className="cloud-managed-cards" key={v4()}>
-          <Box className="cloud-managed-cards-scroll">
-            <p style={{ fontSize: "16px", margin: "22% auto", color: "#000" }}>
-              No Data Available!
-            </p>
+          <Box className="cloud-managed-cards-scroll" style={{height: "100%"}}>
+            <Box
+              className="d-flex align-items-center width-100"
+              justifyContent={"center"} style={{height: "320px"}}
+            >
+              <p style={{ margin: 0, fontSize: "16px", color: "#000" }}>
+                No Data Available!
+              </p>
+            </Box>
           </Box>
         </Box>,
       ];
