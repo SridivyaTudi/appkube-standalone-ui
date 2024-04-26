@@ -421,9 +421,11 @@ class SpendAnalytics extends Component {
   /** Render the monthly CloudWise spend. */
   renderMonthlyCloudWiseSpendHtml = () => {
     let monthlyCloudWiseSpendStatus = this.props.monthlyCloudWiseSpend.status;
-    let { monthlyCloudWiseOptions, monthlyCloudWiseData } = this.state;
+    let {monthlyCloudWiseOptions, monthlyCloudWiseData } = this.state;
     return monthlyCloudWiseSpendStatus === status.IN_PROGRESS ? (
-      <Loader />
+    <Box className="d-flex align-items-center" justifyContent={"center"} style={{height: "100%"}}>
+        <Loader />
+    </Box>
     ) : (
       <Line
         options={monthlyCloudWiseOptions}
@@ -566,7 +568,9 @@ class SpendAnalytics extends Component {
           </Box>
         </Box>
         {totalBudgetStatus === status.IN_PROGRESS ? (
-          <Loader />
+          <Box className="d-flex align-items-center width-100" justifyContent={"center"} style={{height: "50px"}}>
+            <Loader />
+          </Box>
         ) : (
           <Box className="content">
             <Box className="gauge">

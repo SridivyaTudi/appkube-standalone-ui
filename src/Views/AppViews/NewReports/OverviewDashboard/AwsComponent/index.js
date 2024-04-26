@@ -410,7 +410,7 @@ class AwsComponent extends Component {
                   ) : costTopAccountsData?.length ? (
                     <VerticalBarchart
                       data={costTopAccountsData}
-                      style={{ width: "100%", height: "350" }}
+                      // style={{ width: "100%", height: "350" }}
                     />
                   ) : (
                     this.renderNoDataHtml()

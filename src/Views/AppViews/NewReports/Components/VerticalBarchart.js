@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import * as d3 from "d3";
 import { convertDigitToThousand } from "Utils";
 
-const margin = { top: 50, right: 20, bottom: 40, left: 40 };
+const margin = { top: 30, right: 20, bottom: 30, left: 40 };
 
 // Increase the width and height as needed
 const width = 860; // Adjust the width
