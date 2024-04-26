@@ -6,6 +6,8 @@ import CreateRole from "Views/AppViews/Environments/NewAccountSetup/AccountPolic
 import Finish from "Views/AppViews/Environments/NewAccountSetup/AccountPolicy/Finish";
 import Box from "@mui/material/Box";
 import { REGEX_TYPE } from "CommonData";
+import { Link } from "react-router-dom";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 class AccountPolicy extends Component {
   constructor(props) {
@@ -123,6 +125,9 @@ class AccountPolicy extends Component {
     return (
       <Box className="new-account-container">
         <Box className="new-account-page-container">
+        <Link className="close-btn" to={`${APP_PREFIX_PATH}/assets/environments`}>
+          <i className="fa-solid fa-xmark"></i>
+        </Link>
           <Wizard
             steps={this.steps}
             formData={formData}
@@ -139,6 +144,7 @@ class AccountPolicy extends Component {
             }}
             finishPrevious={finishPrevious}
           />
+          
         </Box>
       </Box>
     );

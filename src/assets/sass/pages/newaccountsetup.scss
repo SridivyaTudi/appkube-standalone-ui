@@ -140,14 +140,22 @@
     border-radius: 10px;
     height: 575px;
     padding: 50px 15px 15px 15px;
+    position: relative;
+    .close-btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
 
     .new-account-tab-container {
       width: 100%;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
       height: 93%;
 
       .wizard-tab-line-container {
-        margin-top: 13%;
+        //margin-top: 13%;
         margin-left: 30px;
         padding: 0 15px;
         border-left: 2px solid #dcdae6;

@@ -115,9 +115,9 @@ class AssociateOu extends Component {
     let { departmentId } = this.getUrlDetails();
     return (
       <>
-        <Link className="close-btn" to={`${APP_PREFIX_PATH}/assets/environments`}>
+        {/* <Link className="close-btn" to={`${APP_PREFIX_PATH}/assets/environments`}>
           <i className="fa-solid fa-xmark"></i>
-        </Link>
+        </Link> */}
         {!isDepartmentCreated && !checkedId ? (
           <Box className="d-inline-block width-100 new-account-setup-tab-contents">
             <h3>Associate OU</h3>

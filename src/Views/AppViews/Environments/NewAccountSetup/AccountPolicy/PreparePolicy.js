@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import IamImg from "assets/img/login/iam-img.png";
 import PolicyImg from "assets/img/login/policy-img.png";
 import JsonImg from "assets/img/login/json-img.png";
@@ -10,9 +10,9 @@ class PreparePolicy extends Component {
   render() {
     return (
       <>
-        <Link className="close-btn" to={`${APP_PREFIX_PATH}/assets/environments`}>
+        {/* <Link className="close-btn" to={`${APP_PREFIX_PATH}/assets/environments`}>
           <i className="fa-solid fa-xmark"></i>
-        </Link>
+        </Link> */}
         <Box className="d-block new-account-setup-tab-contents">
           <h3>Prepare IAM Policy For Appkube</h3>
           <ul>
