@@ -210,6 +210,18 @@ function TopBar() {
                       >
                         <div className="email">{user.email}</div>
                       </HtmlTooltip>
+                      <HtmlTooltip
+                        className="table-tooltip"
+                        title={
+                          <React.Fragment>
+                            <Box className="details">
+                              <div className="email">Change Role</div>
+                            </Box>
+                          </React.Fragment>
+                        }
+                      >
+                        <div className="email">Admin</div>
+                      </HtmlTooltip>
                     </Box>
                   </Box>
                   <List>
