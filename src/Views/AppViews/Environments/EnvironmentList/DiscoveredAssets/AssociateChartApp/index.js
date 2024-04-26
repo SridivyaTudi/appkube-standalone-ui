@@ -34,7 +34,7 @@ import { styled } from "@mui/material/styles";
 import { SERVICE_TYPE, THREE_TIER_LAYERS } from "CommonData";
 import { USER_RBAC_TYPE } from "CommonData";
 import RBAC_MAPPING from "Utils/RbacMapping";
-import CheckRbacPerMission from "Views/AppViews/Rbac";
+import Rbac from "Views/AppViews/Rbac";
 
 const existingTagKeys = [
   "org",
@@ -400,7 +400,8 @@ export class AssociateChartApp extends Component {
   renderTags = (tags, type) => {
     let tempTag = tags;
     let tagKeys = this.filterExistingTagKeys(type);
-    const isRbacPermission = this.checkRbacPermission();
+    const { CLONE_PRODUCT_ENVIRONMENT, DELETE_PRODUCT_ENVIRONMENT } =
+      RBAC_MAPPING;
     if (tempTag) {
       return tagKeys.map((tag) => {
         tempTag = tempTag[tag];
@@ -409,23 +410,30 @@ export class AssociateChartApp extends Component {
             <li key={v4()} className={this.findActiveTag(tags, type)}>
               <span>{tempTag.name}</span>
             </li>
-            {tag === "service" && isRbacPermission ? (
-              <li style={{ float: "right" }} key={v4()} name={"deleteBtn"}>
-                <Button
-                  type="button"
-                  className="close"
-                  aria-label="Close"
-                  onClick={() => {
-                    this.setState({
-                      showConfirmPopup: true,
-                      serviceId: tempTag.id,
-                    });
-                  }}
-                  name={"deleteBtn"}
-                >
-                  <i className="fa-solid fa-xmark" name={"deleteBtn"}></i>
-                </Button>
-              </li>
+            {tag === "service" ? (
+              <Rbac
+                permissions={[
+                  CLONE_PRODUCT_ENVIRONMENT,
+                  DELETE_PRODUCT_ENVIRONMENT,
+                ]}
+              >
+                <li style={{ float: "right" }} key={v4()} name={"deleteBtn"}>
+                  <Button
+                    type="button"
+                    className="close"
+                    aria-label="Close"
+                    onClick={() => {
+                      this.setState({
+                        showConfirmPopup: true,
+                        serviceId: tempTag.id,
+                      });
+                    }}
+                    name={"deleteBtn"}
+                  >
+                    <i className="fa-solid fa-xmark" name={"deleteBtn"}></i>
+                  </Button>
+                </li>
+              </Rbac>
             ) : (
               <></>
             )}
@@ -433,19 +441,6 @@ export class AssociateChartApp extends Component {
         );
       });
     }
-  };
-
-  checkRbacPermission = () => {
-    const { ADMIN, PRODUCT_OWNERS } = USER_RBAC_TYPE;
-    const { CLONE_PRODUCT_ENVIRONMENT, DELETE_PRODUCT_ENVIRONMENT } =
-      RBAC_MAPPING;
-
-    const permissions = {
-      [CLONE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
-      [DELETE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
-    };
-
-    return CheckRbacPerMission(permissions);
   };
 
   // toggle confirmation popup

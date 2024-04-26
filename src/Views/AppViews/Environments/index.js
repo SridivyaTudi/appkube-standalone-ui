@@ -40,7 +40,7 @@ import { v4 } from "uuid";
 import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 import { USER_RBAC_TYPE } from "CommonData";
 import RBAC_MAPPING from "Utils/RbacMapping";
-import CheckRbacPerMission from "Views/AppViews/Rbac";
+import Rbac from "Views/AppViews/Rbac";
 
 class Environments extends Component {
   constructor(props) {
@@ -252,7 +252,13 @@ class Environments extends Component {
 
   renderEnvironmentTable() {
     const envSummaryStatus = this.props.envSummary.status;
-    const isRbcPermission = this.checkRbacPermissionForAction();
+
+    const {
+      DELETE_LANDING_ZONE,
+      REPLICATE_LANDING_ZONE,
+      CREATE_PRODUCT_ENCLAVE,
+    } = RBAC_MAPPING;
+
     if (envSummaryStatus === status.IN_PROGRESS) {
       return (
         <Loader
@@ -357,20 +363,24 @@ class Environments extends Component {
                   </HtmlTooltip>
                 </TableCell>
                 <TableCell align="center">
-                  <button
-                    type="button"
-                    className="list-icon"
-                    onClick={(e) => {
-                      isRbcPermission ? (
-                        this.handleMenuToggle(envIndex, accountIndex)
-                      ) : (
-                        <></>
-                      );
-                    }}
-                    disabled={!isRbcPermission}
+                  <Rbac
+                    permissions={[
+                      DELETE_LANDING_ZONE,
+                      REPLICATE_LANDING_ZONE,
+                      CREATE_PRODUCT_ENCLAVE,
+                    ]}
                   >
-                    <i className="fas fa-ellipsis-v"></i>
-                  </button>
+                    <button
+                      type="button"
+                      className="list-icon"
+                      onClick={(e) =>
+                        this.handleMenuToggle(envIndex, accountIndex)
+                      }
+                    >
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
+                  </Rbac>
+
                   {menuSummaryShowMenu[0] === envIndex &&
                   menuSummaryShowMenu[1] === accountIndex ? (
                     <>
@@ -606,34 +616,6 @@ class Environments extends Component {
     );
   };
 
-  checkRbacPermissionForAddNewEnvironment = () => {
-    const { ADMIN } = USER_RBAC_TYPE;
-    const { EDIT_LANDING_ZONE, CREATE_LANDING_ZONE } = RBAC_MAPPING;
-
-    const permissions = {
-      [CREATE_LANDING_ZONE]: [ADMIN],
-      [EDIT_LANDING_ZONE]: [ADMIN],
-    };
-
-    return CheckRbacPerMission(permissions);
-  };
-
-  checkRbacPermissionForAction = () => {
-    const { ADMIN, PRODUCT_OWNERS } = USER_RBAC_TYPE;
-    const {
-      DELETE_LANDING_ZONE,
-      REPLICATE_LANDING_ZONE,
-      CREATE_PRODUCT_ENCLAVE,
-    } = RBAC_MAPPING;
-
-    const permissions = {
-      [DELETE_LANDING_ZONE]: [ADMIN],
-      [REPLICATE_LANDING_ZONE]: [ADMIN],
-      [CREATE_PRODUCT_ENCLAVE]: [ADMIN, PRODUCT_OWNERS],
-    };
-
-    return CheckRbacPerMission(permissions);
-  };
   render() {
     const {
       isRecentVisitedEnvMenuOpen,
@@ -642,8 +624,8 @@ class Environments extends Component {
       showFilterPopup,
       filters,
     } = this.state;
-    let rbcPermission = this.checkRbacPermissionForAddNewEnvironment();
 
+    const { EDIT_LANDING_ZONE, CREATE_LANDING_ZONE } = RBAC_MAPPING;
     return (
       <div className="environment-container">
         <Box className="list-heading" key={v4()}>
@@ -709,41 +691,39 @@ class Environments extends Component {
                             />
                           </Box>
                         )}
-                        <Box className="environment-fliter">
-                          {rbcPermission ? (
-                            <>
-                              <Box
-                                className="fliter-toggel new-environment"
-                                onClick={this.toggleAddNewEnvironmentMenu}
-                              >
-                                Add New Environment
-                                <i className="fa-solid fa-caret-down arrow-icon"></i>
-                              </Box>
-                              <Box
-                                className={
-                                  isAddNewEnvironmentShown
-                                    ? "fliter-collapse active"
-                                    : "fliter-collapse"
-                                }
-                              >
-                                <List>
-                                  {this.renderAddNewEnvironmentList()}
-                                </List>
-                              </Box>
-                            </>
-                          ) : (
-                            <></>
-                          )}
 
-                          <div
-                            className={
-                              isAddNewEnvironmentShown
-                                ? "fliters-collapse-bg active"
-                                : "fliters-collapse-bg"
-                            }
-                            onClick={this.toggleAddNewEnvironmentMenu}
-                          />
-                        </Box>
+                        <Rbac
+                          permissions={[EDIT_LANDING_ZONE, CREATE_LANDING_ZONE]}
+                        >
+                          <Box className="environment-fliter">
+                            <Box
+                              className="fliter-toggel new-environment"
+                              onClick={this.toggleAddNewEnvironmentMenu}
+                            >
+                              Add New Environment
+                              <i className="fa-solid fa-caret-down arrow-icon"></i>
+                            </Box>
+                            <Box
+                              className={
+                                isAddNewEnvironmentShown
+                                  ? "fliter-collapse active"
+                                  : "fliter-collapse"
+                              }
+                            >
+                              <List>{this.renderAddNewEnvironmentList()}</List>
+                            </Box>
+
+                            <div
+                              className={
+                                isAddNewEnvironmentShown
+                                  ? "fliters-collapse-bg active"
+                                  : "fliters-collapse-bg"
+                              }
+                              onClick={this.toggleAddNewEnvironmentMenu}
+                            />
+                          </Box>
+                        </Rbac>
+
                         <Button
                           className="primary-btn min-width-inherit"
                           variant="contained"

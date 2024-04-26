@@ -15,9 +15,11 @@ import {
   setCurrentOrgId,
   getCurrentUser,
   localStorageClear,
+  getCurrentRole,
 } from "Utils";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import RbacPopup from "Components/RbacPopup";
 let user = { username: "", email: "", profileImage: "" };
 function TopBar() {
   const navigate = useNavigate();
@@ -25,6 +27,8 @@ function TopBar() {
   const orgs = useSelector((state) => state.organization);
   const [showProfile, setShowProfile] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const [showRbacPopup, setShowRbacPopup] = useState(false);
+  const role = getCurrentRole();
 
   const onClickNotification = () => {
     setShowNotification(!showNotification);
@@ -46,6 +50,11 @@ function TopBar() {
       user = userDetails;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  
+    if (!role) {
+      setShowRbacPopup(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -68,7 +77,9 @@ function TopBar() {
       border: "1px solid #dadde9",
     },
   }));
-
+  const handleRbacModal = () => {
+    setShowRbacPopup(!showRbacPopup);
+  };
   return (
     <Box className="top-bar">
       <Box sx={{ width: "100%" }}>
@@ -220,7 +231,9 @@ function TopBar() {
                           </React.Fragment>
                         }
                       >
-                        <div className="email">Admin</div>
+                        <div className="email" onClick={handleRbacModal}>
+                          {role?.name}
+                        </div>
                       </HtmlTooltip>
                     </Box>
                   </Box>
@@ -255,6 +268,14 @@ function TopBar() {
           </Grid>
         </Grid>
       </Box>
+      {showRbacPopup ? (
+        <RbacPopup
+          showModal={showRbacPopup}
+          handleRbacModal={handleRbacModal}
+        />
+      ) : (
+        <></>
+      )}
     </Box>
   );
 }

@@ -16,6 +16,7 @@ import {
   setUserName,
   deleteUserName,
   setAllowedRbacPermissions,
+  setCurrentRole,
 } from "Utils";
 import { login, authMFACode } from "Redux/Auth/AuthThunk";
 import { connect } from "react-redux";
@@ -176,7 +177,12 @@ class Signin extends Component {
           userLoggedIn: true,
         },
         () => {
-          setAllowedRbacPermissions();
+          let roles = this.props.loggedInUser.data.info.user?.roles || [];
+
+          if (roles?.length === 1) {
+            setAllowedRbacPermissions(roles[0]?.id);
+            setCurrentRole(roles[0]);
+          }
         }
       );
     } else {
@@ -342,13 +348,14 @@ class Signin extends Component {
                                 onChange={this.handleInputChange}
                                 autoComplete="on"
                                 id="password"
+                               
                               />
                               {errors.password ? (
                                 <p className="m-b-0">{errors.password}</p>
                               ) : (
                                 <></>
                               )}
-                              <button className="eye-icon">
+                              <button className="eye-icon" type="button">
                                 <i
                                   className={`fa-sharp fa-regular fa-eye${
                                     showPassword ? "" : "-slash"

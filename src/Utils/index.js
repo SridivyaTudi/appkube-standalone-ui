@@ -11,6 +11,7 @@ export const LOCAL_STORAGE_CONSTANTS = {
   URL_DETAILS_OF_PAGE: "urlDetailsOfPage",
   CLOUD_WISE_LANDINGZONE_COUNT: "cloudWiseLandingZoneCount",
   ALLOWED_RBAC_PERMISSIONS: "allowedRbacPermissions",
+  CURRENT_ROLE: "currentRole",
 };
 
 export const getCurrentUser = () => {
@@ -237,25 +238,24 @@ export const generateRandomPassword = () => {
   return password;
 };
 
-export const getRbacPermissions = () => {
+export const getRbacPermissions = (selectedRoleId) => {
   let groups = getCurrentUser()?.info?.user.roles;
 
   if (groups?.length) {
-    return RbacPermissionsDataManipulation.getData(groups);
+    groups = groups.filter((role) => role.id === selectedRoleId);
+    return RbacPermissionsDataManipulation.getData(groups, selectedRoleId);
   } else {
     return [];
   }
 };
 
-export const setAllowedRbacPermissions = () => {
-  const data = getRbacPermissions();
+export const setAllowedRbacPermissions = (selectedRoleId) => {
+  const data = getRbacPermissions(selectedRoleId);
 
-  if (data?.length) {
-    localStorage.setItem(
-      LOCAL_STORAGE_CONSTANTS.ALLOWED_RBAC_PERMISSIONS,
-      JSON.stringify(data)
-    );
-  }
+  localStorage.setItem(
+    LOCAL_STORAGE_CONSTANTS.ALLOWED_RBAC_PERMISSIONS,
+    data?.length ? JSON.stringify(data) : null
+  );
 };
 
 export const getAllowedRbacPermissions = () => {
@@ -272,7 +272,7 @@ export const RbacPermissionsDataManipulation = {
     return RbacPermissionsDataManipulation.permissions;
   },
   getGroupList: (data) => {
-    data.forEach((userData) => {
+    data.find((userData) => {
       if (userData.grp) {
         if (userData.roles?.length) {
           RbacPermissionsDataManipulation.getRoleList(userData.roles);
@@ -408,4 +408,22 @@ export const makeSlugForString = (str) => {
 export const getCurrentUserRole = () => {
   let userDetails = getCurrentUser()?.info?.user;
   return userDetails?.type;
+};
+
+export const getRoleList = () => {
+  let roles = getCurrentUser()?.info?.user.roles || [];
+  return roles;
+};
+
+export const getCurrentRole = () => {
+  return JSON.parse(
+    localStorage.getItem(LOCAL_STORAGE_CONSTANTS.CURRENT_ROLE) || null
+  );
+};
+
+export const setCurrentRole = (data) => {
+  localStorage.setItem(
+    LOCAL_STORAGE_CONSTANTS.CURRENT_ROLE,
+    JSON.stringify(data)
+  );
 };

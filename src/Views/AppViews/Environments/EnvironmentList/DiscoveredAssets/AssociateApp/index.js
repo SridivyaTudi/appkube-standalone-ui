@@ -14,7 +14,7 @@ import {
   USER_RBAC_TYPE,
 } from "CommonData";
 import RBAC_MAPPING from "Utils/RbacMapping";
-import CheckRbacPerMission from "Views/AppViews/Rbac";
+import Rbac from "Views/AppViews/Rbac";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -80,9 +80,7 @@ class AssociateApp extends Component {
     const dataTierSoc = this.props.data;
     const JSX = [];
     const { landingZone, landingZoneId, cloudName } = this.getUrlDetails();
-
-    //check permission
-    let isRbacPermission = this.checkRbacPermissionForAssociate();
+    const { CREATE_PRODUCT_ENVIRONMENT } = RBAC_MAPPING;
 
     dataTierSoc.forEach((data, index) => {
       const tier3Data = Object.entries(data.threeTier);
@@ -100,15 +98,16 @@ class AssociateApp extends Component {
                 </span>
               </HtmlTooltip>
             </h3>
-            <Button
-              className={`primary-text-btn min-width`}
-              component={Link}
-              variant="contained"
-              to={`${APP_PREFIX_PATH}/assets/environments/associatechartapp?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&elementType=${data.elementType}&instanceId=${data.instanceId}`}
-              disabled={!isRbacPermission}
-            >
-              Associate App
-            </Button>
+            <Rbac permissions={[CREATE_PRODUCT_ENVIRONMENT]}>
+              <Button
+                className={`primary-text-btn min-width`}
+                component={Link}
+                variant="contained"
+                to={`${APP_PREFIX_PATH}/assets/environments/associatechartapp?landingZone=${landingZone}&cloudName=${cloudName}&landingZoneId=${landingZoneId}&elementType=${data.elementType}&instanceId=${data.instanceId}`}
+              >
+                Associate App
+              </Button>
+            </Rbac>
           </Box>
           <Box className="contents">
             <Box className="d-block width-100">
@@ -202,17 +201,6 @@ class AssociateApp extends Component {
     });
     return JSX;
   }
-
-  checkRbacPermissionForAssociate = () => {
-    const { ADMIN, PRODUCT_OWNERS } = USER_RBAC_TYPE;
-    const { CREATE_PRODUCT_ENVIRONMENT } = RBAC_MAPPING;
-
-    const permissions = {
-      [CREATE_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
-    };
-
-    return CheckRbacPerMission(permissions);
-  };
 
   getUrlDetails() {
     const queryPrm = new URLSearchParams(document.location.search);

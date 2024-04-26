@@ -22,7 +22,7 @@ import { styled } from "@mui/material/styles";
 import { v4 } from "uuid";
 import { USER_RBAC_TYPE } from "CommonData";
 import RBAC_MAPPING from "Utils/RbacMapping";
-import CheckRbacPerMission from "Views/AppViews/Rbac";
+import Rbac from "Views/AppViews/Rbac";
 import { getViewServiceData } from "Redux/EnvironmentData/EnvironmentDataThunk";
 import { PRODUCT_CATEGORY_ENUM, getCurrentOrgId } from "Utils";
 import { connect } from "react-redux";
@@ -109,51 +109,6 @@ class EcsCluster extends React.Component {
     return { landingZone, landingZoneId, cloudName, elementType };
   }
 
-  checkRbacPermission = () => {
-    const { ADMIN, PRODUCT_OWNERS, DEV_SEC_OPS } = USER_RBAC_TYPE;
-    const {
-      ADD_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
-      EDIT_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
-      DELETE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
-      REPLICATE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
-
-      ADD_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
-      EDIT_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
-      DELETE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
-      REPLICATE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
-    } = RBAC_MAPPING;
-
-    const permissions = {
-      [ADD_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT]: [
-        ADMIN,
-        PRODUCT_OWNERS,
-        DEV_SEC_OPS,
-      ],
-      [EDIT_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT]: [
-        ADMIN,
-        PRODUCT_OWNERS,
-        DEV_SEC_OPS,
-      ],
-      [DELETE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT]: [
-        ADMIN,
-        PRODUCT_OWNERS,
-        DEV_SEC_OPS,
-      ],
-      [REPLICATE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT]: [
-        ADMIN,
-        PRODUCT_OWNERS,
-        DEV_SEC_OPS,
-      ],
-
-      [ADD_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
-      [EDIT_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
-      [DELETE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
-      [REPLICATE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT]: [ADMIN, PRODUCT_OWNERS],
-    };
-
-    return CheckRbacPerMission(permissions);
-  };
-
   renderHeader = () => {
     return (
       <TableHead>
@@ -173,10 +128,21 @@ class EcsCluster extends React.Component {
 
   renderBody = () => {
     let { viewServices, pg, rpg, activeTierTab, actionButton } = this.state;
-    const isRbacPermission = this.checkRbacPermission();
+
     viewServices = viewServices.filter(
       (service) => service?.productType?.toUpperCase() === activeTierTab
     );
+
+    const {
+      ADD_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
+      EDIT_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
+      DELETE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
+      REPLICATE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
+      ADD_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
+      EDIT_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
+      DELETE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
+      REPLICATE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
+    } = RBAC_MAPPING;
     return (
       <TableBody>
         {viewServices?.length ? (
@@ -258,16 +224,28 @@ class EcsCluster extends React.Component {
               </TableCell>
               <TableCell align="center">${row.cost}</TableCell>
               <TableCell align="center">
-                <button
-                  type="button"
-                  className="list-icon"
-                  onClick={() =>
-                    isRbacPermission ? this.handleActionButton(index) : <></>
-                  }
-                  disabled={!isRbacPermission}
+                <Rbac
+                  permissions={[
+                    ADD_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
+                    EDIT_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
+                    DELETE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
+                    REPLICATE_SERVICE_IN_NON_PROD_PRODUCT_ENVIRONMENT,
+                    ADD_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
+                    EDIT_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
+                    DELETE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
+                    REPLICATE_SERVICE_IN_PROD_PRODUCT_ENVIRONMENT,
+                  ]}
                 >
-                  <i className="fas fa-ellipsis-v"></i>
-                </button>
+                  {" "}
+                  <button
+                    type="button"
+                    className="list-icon"
+                    onClick={() => this.handleActionButton(index)}
+                  >
+                    <i className="fas fa-ellipsis-v"></i>
+                  </button>
+                </Rbac>
+
                 {actionButton === index && (
                   <>
                     <Box className="action-buttons">

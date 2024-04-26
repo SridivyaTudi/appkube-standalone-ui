@@ -574,7 +574,7 @@ class SignUp extends Component {
                               <></>
                             )}
 
-                            <button className="eye-icon">
+                            <button className="eye-icon" type="button">
                               <i
                                 className={`fa-sharp fa-regular fa-eye${
                                   passwordView ? "-slash" : ""
