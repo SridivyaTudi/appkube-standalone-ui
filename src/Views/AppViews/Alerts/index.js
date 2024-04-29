@@ -79,6 +79,8 @@ class index extends Component {
                 ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{
                   title: `Average wait time alert`,
+                  description:
+                  "A standard line chart provides a clear way to compare trends over time.",
                   labelOfBtn: " View Details",
                   link: "#",
                 }}
@@ -89,6 +91,8 @@ class index extends Component {
                 ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{
                   title: `Alert Volume Trends`,
+                  description:
+                  "A standard line chart provides a clear way to compare trends over time.",
                   labelOfBtn: " View Details",
                   link: "#",
                 }}
@@ -191,6 +195,8 @@ class index extends Component {
                 ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{
                   title: `Alert Volume By trends`,
+                  description:
+                  "A standard line chart provides a clear way to compare trends over time.",
                   labelOfBtn: " View Details",
                   link: "#",
                 }}
@@ -201,6 +207,8 @@ class index extends Component {
                 ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{
                   title: `Average response time alert`,
+                  description:
+                  "A standard line chart provides a clear way to compare trends over time.",
                   labelOfBtn: " View Details",
                   link: "#",
                 }}
