@@ -23,7 +23,7 @@ class ChartWrapper extends Component {
     let { ChartComponent, data } = this.props;
     let { title, labelOfBtn, link } = data;
     return (
-      <Box className="reports-chart-box">
+      <Box className="reports-chart-box" style={{minHeight:"215px"}}>
         <Box className="heading m-b-10">
           <Box className="chart-title">
             <h4 className="title">

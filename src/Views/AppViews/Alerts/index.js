@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, ListItem } from "@mui/material";
 import AlertServiceIcon1 from "../../../assets/img/alerts/alert-service-icon1.png";
 import AlertServiceIcon2 from "../../../assets/img/alerts/alert-service-icon2.png";
 import ChartWrapper from "./Components/ChartWrapper";
 import LineChart from "./Components/LineChart";
+import { List } from "reactstrap";
 
 class index extends Component {
   constructor(props) {
@@ -72,33 +73,138 @@ class index extends Component {
           </Box>
         </Box>
         <Box className="alerts-charts">
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item xs={12} md={5} lg={5}>
               <ChartWrapper
-                ChartComponent={
-                  <LineChart data={[]} color="pink" />
-                }
+                ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{
-                  title: `Forcast Spending Trend`,
+                  title: `Average wait time alert`,
                   labelOfBtn: " View Details",
-                  link: "/app/new-reports/over-view-dashboard/spending-trend",
+                  link: "#",
                 }}
               />
             </Grid>
             <Grid item xs={12} md={5} lg={5}>
-              <h2>chart 2</h2>
+              <ChartWrapper
+                ChartComponent={<LineChart data={[]} color="pink" />}
+                data={{
+                  title: `Alert Volume Trends`,
+                  labelOfBtn: " View Details",
+                  link: "#",
+                }}
+              />
             </Grid>
             <Grid item xs={12} md={5} lg={2}>
-              <h2>chart 3</h2>
+              <Box className="team-metrics">
+                <Box className="heading">Team Metrics</Box>
+                <List>
+                  <ListItem>
+                    <Box className="title">John</Box>
+                    <span>650</span>
+                    <label>17 Mins</label>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="title">Bill</Box>
+                    <span>612</span>
+                    <label>17 Mins</label>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="title">Lyna</Box>
+                    <span>598</span>
+                    <label>17 Mins</label>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="title">Steyn</Box>
+                    <span>513</span>
+                    <label>17 Mins</label>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="title">Bob</Box>
+                    <span>498</span>
+                    <label>17 Mins</label>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="title">bill</Box>
+                    <span>321</span>
+                    <label>17 Mins</label>
+                  </ListItem>
+                </List>
+              </Box>
             </Grid>
             <Grid item xs={12} md={5} lg={2}>
-              <h2>chart 4</h2>
+              <Box className="top-alert">
+                <Box className="heading">Top Alerts Today</Box>
+                <List>
+                  <ListItem>
+                    <Box className="d-flex align-items-center">
+                      <span style={{ backgroundColor: "#17D74D" }}></span>
+                      <Box className="title">CPU Utilization</Box>
+                    </Box>
+                    <Box className="alert-count">654</Box>
+                    <Box className="alert-button">High</Box>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="d-flex align-items-center">
+                      <span style={{ backgroundColor: "#FF6A2A" }}></span>
+                      <Box className="title">AWS S3</Box>
+                    </Box>
+                  <Box className="alert-count">654</Box>
+                    <Box className="alert-button medium">Medium</Box>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="d-flex align-items-center">
+                      <span style={{ backgroundColor: "#AE2AFF" }}></span>
+                      <Box className="title"> Dard Disk </Box>
+                    </Box>
+                  <Box className="alert-count">654</Box>
+                    <Box className="alert-button low">Low</Box>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="d-flex align-items-center">
+                      <span style={{ backgroundColor: "#20DFB1" }}></span>
+                      <Box className="title"> Network IN </Box>
+                    </Box>
+                  <Box className="alert-count">654</Box>
+                    <Box className="alert-button"> High</Box>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="d-flex align-items-center">
+                      <span style={{ backgroundColor: "#FF2AB7" }}></span>
+                      <Box className="title">Network OUT </Box>
+                    </Box>
+                  <Box className="alert-count">654</Box>
+                    <Box className="alert-button medium">Medium</Box>
+                  </ListItem>
+                  <ListItem>
+                    <Box className="d-flex align-items-center">
+                      <span style={{ backgroundColor: "#FFC32A" }}></span>
+                      <Box className="title"> VCenter</Box>
+                    </Box>
+                  <Box className="alert-count">654</Box>
+                    <Box className="alert-button low">Low</Box>
+                  </ListItem>
+                </List>
+              </Box>
             </Grid>
             <Grid item xs={12} md={5} lg={5}>
-              <h2>chart 5</h2>
+              <ChartWrapper
+                ChartComponent={<LineChart data={[]} color="pink" />}
+                data={{
+                  title: `Alert Volume By trends`,
+                  labelOfBtn: " View Details",
+                  link: "#",
+                }}
+              />
             </Grid>
             <Grid item xs={12} md={5} lg={5}>
-              <h2>chart 6</h2>
+              <ChartWrapper
+                ChartComponent={<LineChart data={[]} color="pink" />}
+                data={{
+                  title: `Average response time alert`,
+                  labelOfBtn: " View Details",
+                  link: "#",
+                }}
+              />
             </Grid>
           </Grid>
         </Box>
