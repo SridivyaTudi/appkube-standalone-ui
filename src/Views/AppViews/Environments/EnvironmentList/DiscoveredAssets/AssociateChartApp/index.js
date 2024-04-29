@@ -411,13 +411,13 @@ export class AssociateChartApp extends Component {
               <span>{tempTag.name}</span>
             </li>
             {tag === "service" ? (
-              <Rbac
-                permissions={[
-                  CLONE_PRODUCT_ENVIRONMENT,
-                  DELETE_PRODUCT_ENVIRONMENT,
-                ]}
-              >
-                <li style={{ float: "right" }} key={v4()} name={"deleteBtn"}>
+              <li style={{ float: "right" }} key={v4()} name={"deleteBtn"}>
+                <Rbac
+                  permissions={[
+                    CLONE_PRODUCT_ENVIRONMENT,
+                    DELETE_PRODUCT_ENVIRONMENT,
+                  ]}
+                >
                   <Button
                     type="button"
                     className="close"
@@ -432,8 +432,8 @@ export class AssociateChartApp extends Component {
                   >
                     <i className="fa-solid fa-xmark" name={"deleteBtn"}></i>
                   </Button>
-                </li>
-              </Rbac>
+                </Rbac>
+              </li>
             ) : (
               <></>
             )}
