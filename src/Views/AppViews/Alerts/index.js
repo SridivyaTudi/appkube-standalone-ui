@@ -45,8 +45,10 @@ class index extends Component {
         </Box>
         <Box className="alert-sevice-boxs">
           <Box className="alert-service-box">
-            <Box className="service-image">
-              <img src={AlertServiceIcon1} alt="" />
+            <Box class="container">
+              <Box class="ui-widgets">
+                <Box class="ui-values">85%</Box>
+              </Box>
             </Box>
             <Box className="service-content">
               <Box className="title">Total Alerts</Box>
@@ -80,7 +82,7 @@ class index extends Component {
                 data={{
                   title: `Average wait time alert`,
                   description:
-                  "A standard line chart provides a clear way to compare trends over time.",
+                    "A standard line chart provides a clear way to compare trends over time.",
                   labelOfBtn: " View Details",
                   link: "#",
                 }}
@@ -92,7 +94,7 @@ class index extends Component {
                 data={{
                   title: `Alert Volume Trends`,
                   description:
-                  "A standard line chart provides a clear way to compare trends over time.",
+                    "A standard line chart provides a clear way to compare trends over time.",
                   labelOfBtn: " View Details",
                   link: "#",
                 }}
@@ -152,7 +154,7 @@ class index extends Component {
                       <span style={{ backgroundColor: "#FF6A2A" }}></span>
                       <Box className="title">AWS S3</Box>
                     </Box>
-                  <Box className="alert-count">654</Box>
+                    <Box className="alert-count">654</Box>
                     <Box className="alert-button medium">Medium</Box>
                   </ListItem>
                   <ListItem>
@@ -160,7 +162,7 @@ class index extends Component {
                       <span style={{ backgroundColor: "#AE2AFF" }}></span>
                       <Box className="title"> Dard Disk </Box>
                     </Box>
-                  <Box className="alert-count">654</Box>
+                    <Box className="alert-count">654</Box>
                     <Box className="alert-button low">Low</Box>
                   </ListItem>
                   <ListItem>
@@ -168,7 +170,7 @@ class index extends Component {
                       <span style={{ backgroundColor: "#20DFB1" }}></span>
                       <Box className="title"> Network IN </Box>
                     </Box>
-                  <Box className="alert-count">654</Box>
+                    <Box className="alert-count">654</Box>
                     <Box className="alert-button"> High</Box>
                   </ListItem>
                   <ListItem>
@@ -176,7 +178,7 @@ class index extends Component {
                       <span style={{ backgroundColor: "#FF2AB7" }}></span>
                       <Box className="title">Network OUT </Box>
                     </Box>
-                  <Box className="alert-count">654</Box>
+                    <Box className="alert-count">654</Box>
                     <Box className="alert-button medium">Medium</Box>
                   </ListItem>
                   <ListItem>
@@ -184,7 +186,7 @@ class index extends Component {
                       <span style={{ backgroundColor: "#FFC32A" }}></span>
                       <Box className="title"> VCenter</Box>
                     </Box>
-                  <Box className="alert-count">654</Box>
+                    <Box className="alert-count">654</Box>
                     <Box className="alert-button low">Low</Box>
                   </ListItem>
                 </List>
@@ -196,7 +198,7 @@ class index extends Component {
                 data={{
                   title: `Alert Volume By trends`,
                   description:
-                  "A standard line chart provides a clear way to compare trends over time.",
+                    "A standard line chart provides a clear way to compare trends over time.",
                   labelOfBtn: " View Details",
                   link: "#",
                 }}
@@ -208,7 +210,7 @@ class index extends Component {
                 data={{
                   title: `Average response time alert`,
                   description:
-                  "A standard line chart provides a clear way to compare trends over time.",
+                    "A standard line chart provides a clear way to compare trends over time.",
                   labelOfBtn: " View Details",
                   link: "#",
                 }}
