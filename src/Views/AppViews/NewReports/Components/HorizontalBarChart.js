@@ -2,12 +2,7 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 import { Box } from "@mui/material";
 import { convertDigitToThousand } from "Utils";
-const marginTop = 0;
-const marginRight = 10;
-const marginBottom = 0;
-const marginLeft = 128;
-let width = 860;
-let height = 320;
+
 class HorizontalBarChart extends Component {
   constructor(props) {
     super(props);
@@ -29,13 +24,23 @@ class HorizontalBarChart extends Component {
     let { data } = this.props;
     const barHeight = 28;
 
-    height = Math.ceil(data.length * barHeight) + marginTop + marginBottom;
+    const marginTop = 0;
+    const marginRight = 10;
+    const marginBottom = 0;
+    const marginLeft = 130;
+    const width = 800;
+    const height =
+      Math.ceil(data.length * barHeight) + marginTop + marginBottom;
 
     // Create the SVG container.
-    const svg = d3.select(this.ref.current);
+    const svg = d3
+      .select(this.ref.current)
+      .attr("width", width)
+      .attr("height", height)
+      .attr("viewBox", [0, 10, width, height])
+      .attr("style", "max-width: 100%;  font: 12px sans-serif; ");
 
     svg.selectAll("*").remove();
-    svg.attr("width", "100%").attr("height", "100%");
 
     let tooltip = d3
       .select("#root")
@@ -149,7 +154,7 @@ class HorizontalBarChart extends Component {
       <>
         <Box className="top-used-service-chrt">
           {this.props.chardBeforeRenderHTML}
-          <svg ref={this.ref} viewBox={`-15 0 ${width} ${height}`}></svg>
+          <svg ref={this.ref}></svg>
         </Box>{" "}
       </>
     );
