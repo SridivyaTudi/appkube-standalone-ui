@@ -2,9 +2,32 @@ import React, { Component } from "react";
 import { Box, Button, Grid } from "@mui/material";
 import AlertServiceIcon1 from "../../../assets/img/alerts/alert-service-icon1.png";
 import AlertServiceIcon2 from "../../../assets/img/alerts/alert-service-icon2.png";
+import ChartWrapper from "./Components/ChartWrapper";
+import LineChart from "./Components/LineChart";
 
 class index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      spendingTrendData: {
+        current: [],
+        forcast: [],
+        previous: [],
+      },
+    };
+  }
+
+  // Render no data html
+  renderNoDataHtml = () => {
+    return (
+      <Box className="chart-loader">
+        <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+      </Box>
+    );
+  };
+
   render() {
+    let spendingTrendLoder = spendingTrendProps.status === status.IN_PROGRESS;
     return (
       <Box className="alert-container">
         <Box className="list-heading">
@@ -52,7 +75,22 @@ class index extends Component {
         <Box className="alerts-charts">
           <Grid container spacing={3}>
             <Grid item xs={12} md={5} lg={5}>
-              <h2>chart 1</h2>
+              <ChartWrapper
+                ChartComponent={
+                  spendingTrendLoder ? (
+                    this.renderLoder()
+                  ) : spendingTrendData.forcast?.length ? (
+                    <LineChart data={spendingTrendData.forcast} color="pink" />
+                  ) : (
+                    this.renderNoDataHtml()
+                  )
+                }
+                data={{
+                  title: `Forcast ${this.props.selectedGranularity} Spending Trend`,
+                  labelOfBtn: " View Details",
+                  link: "/app/new-reports/over-view-dashboard/spending-trend",
+                }}
+              />
             </Grid>
             <Grid item xs={12} md={5} lg={5}>
               <h2>chart 2</h2>
