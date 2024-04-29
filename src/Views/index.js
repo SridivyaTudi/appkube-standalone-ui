@@ -76,6 +76,7 @@ import BudgetAccountDetails from "./AppViews/NewReports/BudgetDashboard/BudgetAc
 import BudgetProducts from "./AppViews/NewReports/BudgetDashboard/BudgetProducts";
 import BudgetDepartments from "./AppViews/NewReports/BudgetDashboard/BudgetDepartments";
 import TopAccounts from "./AppViews/NewReports/OverviewDashboard/TopAccounts";
+import Alerts from "./AppViews/Alerts";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -380,6 +381,7 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/discovered-assets/events-history`}
             element={<Eventhistory />}
           />
+          <Route path={`${APP_PREFIX_PATH}/alerts`} element={<Alerts/>} />
           <Route path={`/error`} element={<Error />} />
         </Routes>
         <ToastContainer
