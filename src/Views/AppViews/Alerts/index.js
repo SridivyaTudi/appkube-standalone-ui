@@ -27,7 +27,6 @@ class index extends Component {
   };
 
   render() {
-    let spendingTrendLoder = spendingTrendProps.status === status.IN_PROGRESS;
     return (
       <Box className="alert-container">
         <Box className="list-heading">
@@ -77,16 +76,10 @@ class index extends Component {
             <Grid item xs={12} md={5} lg={5}>
               <ChartWrapper
                 ChartComponent={
-                  spendingTrendLoder ? (
-                    this.renderLoder()
-                  ) : spendingTrendData.forcast?.length ? (
-                    <LineChart data={spendingTrendData.forcast} color="pink" />
-                  ) : (
-                    this.renderNoDataHtml()
-                  )
+                  <LineChart data={[]} color="pink" />
                 }
                 data={{
-                  title: `Forcast ${this.props.selectedGranularity} Spending Trend`,
+                  title: `Forcast Spending Trend`,
                   labelOfBtn: " View Details",
                   link: "/app/new-reports/over-view-dashboard/spending-trend",
                 }}
