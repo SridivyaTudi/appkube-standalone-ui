@@ -95,7 +95,7 @@ class AlertPercentage extends Component {
             </ul>
           </Box>
         </Box>
-        <Box className="reports-tab-section">
+        <Box className="alert-tab-section">
           <Box className="tabs">{this.renderTabMenu()}</Box>
           {this.renderActiveTabOfComponent()}
         </Box>
