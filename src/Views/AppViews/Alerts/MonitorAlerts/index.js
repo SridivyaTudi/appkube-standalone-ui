@@ -4,7 +4,140 @@ import { v4 } from "uuid";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import AlertFilterSection from "../Components/AlertFilterSection";
 import AlertTable from "../Components/AlertTable";
- 
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+let tableData = [
+  {
+    name: "Percentage CPU 1",
+    ticketID: 1029221,
+    ticketStatus: "Generated",
+    Severity: "Critical",
+    alertState: "Open",
+    affectedResource: "Prod_DB_SYN14",
+    triggeredTime: "2024-03-08; 15:45",
+    assignedWorkflow: "Alert Management",
+    actions: "",
+  },
+  {
+    name: "Percentage CPU 2",
+    ticketID: 102922,
+    ticketStatus: "Generated",
+    Severity: "Critical",
+    alertState: "Open",
+    affectedResource: "Prod_DB_SYN14",
+    triggeredTime: "2024-03-08; 15:45",
+    assignedWorkflow: "Alert Management",
+    actions: "",
+  },
+  {
+    name: "Percentage CPU 3",
+    ticketID: 102922,
+    ticketStatus: "Generated",
+    Severity: "Critical",
+    alertState: "Open",
+    affectedResource: "Prod_DB_SYN14",
+    triggeredTime: "2024-03-08; 15:45",
+    assignedWorkflow: "Alert Management",
+    actions: "",
+  },
+  {
+    name: "Percentage CPU 4",
+    ticketID: 102922,
+    ticketStatus: "Generated",
+    Severity: "Critical",
+    alertState: "Open",
+    affectedResource: "Prod_DB_SYN14",
+    triggeredTime: "2024-03-08; 15:45",
+    assignedWorkflow: "Alert Management",
+    actions: "",
+  },{
+    name: "Percentage CPU 1",
+    ticketID: 1029221,
+    ticketStatus: "Generated",
+    Severity: "Critical",
+    alertState: "Open",
+    affectedResource: "Prod_DB_SYN14",
+    triggeredTime: "2024-03-08; 15:45",
+    assignedWorkflow: "Alert Management",
+    actions: "",
+  },
+  {
+    name: "Percentage CPU 2",
+    ticketID: 102922,
+    ticketStatus: "Generated",
+    Severity: "Critical",
+    alertState: "Open",
+    affectedResource: "Prod_DB_SYN14",
+    triggeredTime: "2024-03-08; 15:45",
+    assignedWorkflow: "Alert Management",
+    actions: "",
+  },
+  {
+    name: "Percentage CPU 3",
+    ticketID: 102922,
+    ticketStatus: "Generated",
+    Severity: "Critical",
+    alertState: "Open",
+    affectedResource: "Prod_DB_SYN14",
+    triggeredTime: "2024-03-08; 15:45",
+    assignedWorkflow: "Alert Management",
+    actions: "",
+  },
+  {
+    name: "Percentage CPU 4",
+    ticketID: 102922,
+    ticketStatus: "Generated",
+    Severity: "Critical",
+    alertState: "Open",
+    affectedResource: "Prod_DB_SYN14",
+    triggeredTime: "2024-03-08; 15:45",
+    assignedWorkflow: "Alert Management",
+    actions: "",
+  },{
+    name: "Percentage CPU 1",
+    ticketID: 1029221,
+    ticketStatus: "Generated",
+    Severity: "Critical",
+    alertState: "Open",
+    affectedResource: "Prod_DB_SYN14",
+    triggeredTime: "2024-03-08; 15:45",
+    assignedWorkflow: "Alert Management",
+    actions: "",
+  },
+  {
+    name: "Percentage CPU 2",
+    ticketID: 102922,
+    ticketStatus: "Generated",
+    Severity: "Critical",
+    alertState: "Open",
+    affectedResource: "Prod_DB_SYN14",
+    triggeredTime: "2024-03-08; 15:45",
+    assignedWorkflow: "Alert Management",
+    actions: "",
+  },
+  {
+    name: "Percentage CPU 3",
+    ticketID: 102922,
+    ticketStatus: "Generated",
+    Severity: "Critical",
+    alertState: "Open",
+    affectedResource: "Prod_DB_SYN14",
+    triggeredTime: "2024-03-08; 15:45",
+    assignedWorkflow: "Alert Management",
+    actions: "",
+  },
+  {
+    name: "Percentage CPU 4",
+    ticketID: 102922,
+    ticketStatus: "Generated",
+    Severity: "Critical",
+    alertState: "Open",
+    affectedResource: "Prod_DB_SYN14",
+    triggeredTime: "2024-03-08; 15:45",
+    assignedWorkflow: "Alert Management",
+    actions: "",
+  },
+];
+
 let filterData = [
   {
     name: "Region",
@@ -37,6 +170,7 @@ class MonitorAlerts extends Component {
     super(props);
     this.state = {
       selectedFilters: filterData,
+      assestsData: tableData,
     };
   }
   setActiveTab = (activeTab) => {
@@ -45,8 +179,28 @@ class MonitorAlerts extends Component {
       this.manipulateDiscoveredData(discoveredData);
     });
   };
+  //  Serach
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { assestsData, searchedKey } = this.state;
+    let data = tableData || [];
+    if (data?.length) {
+      if (value) {
+        assestsData = data.filter((tableData) => {
+          if (tableData?.name.toLowerCase().includes(value.toLowerCase())) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        assestsData = data;
+      }
+      this.setState({ assestsData, searchedKey: value });
+    }
+  };
   render() {
-    const { activeTab, selectedFilters, assestsData } = this.state;
+    const { searchedKey, selectedFilters, assestsData } = this.state;
     return (
       <Box className="alert-container">
         <Box className="list-heading">
@@ -54,9 +208,7 @@ class MonitorAlerts extends Component {
           <Box className="breadcrumbs">
             <ul>
               <li
-                onClick={() =>
-                  this.props.navigate(`${APP_PREFIX_PATH}/app/alerts`)
-                }
+                onClick={() => this.props.navigate(`${APP_PREFIX_PATH}/alerts`)}
               >
                 Home
               </li>
@@ -81,7 +233,7 @@ class MonitorAlerts extends Component {
                   type="text"
                   className="input"
                   placeholder="Search"
-                  //value={searchedKey}
+                  value={searchedKey}
                   onChange={this.handleSearchChange}
                   autoFocus="autoFocus"
                 />
@@ -90,13 +242,13 @@ class MonitorAlerts extends Component {
             </Box>
           </Box>
           <AlertTable
-              data={assestsData}
-              //loderStatus={discoveredAssetsData?.status === status.IN_PROGRESS}
-            />
+            data={assestsData}
+            //loderStatus={discoveredAssetsData?.status === status.IN_PROGRESS}
+          />
         </Box>
       </Box>
     );
   }
 }
 
-export default MonitorAlerts;
+export default navigateRouter(MonitorAlerts);

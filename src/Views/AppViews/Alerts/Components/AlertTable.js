@@ -32,6 +32,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     border: "1px solid #dadde9",
   },
 }));
+
 class AlertTable extends Component {
   constructor(props) {
     super(props);
@@ -59,7 +60,7 @@ class AlertTable extends Component {
 
   //  Render table
   renderTable = () => {
-    let environmentList = this.props.data || [];
+    let alerts = this.props.data || [];
     let { rpg, pg } = this.state;
 
     return this.props.loderStatus ? (
@@ -72,11 +73,11 @@ class AlertTable extends Component {
             {this.renderTableBody()}
           </Table>
         </TableContainer>
-        {environmentList?.length ? (
+        {alerts?.length ? (
           <TablePagination
             rowsPerPageOptions={[10, 20, 30]}
             component="div"
-            count={environmentList.length}
+            count={alerts.length}
             rowsPerPage={rpg}
             page={pg}
             className="access-control-pagination"
@@ -109,163 +110,44 @@ class AlertTable extends Component {
     );
   };
 
-  handleMenuToggle = (envKey) => {
-    const { tagShowMenu } = this.state;
-    if (tagShowMenu) {
-      this.setState({ tagShowMenu: null });
-    } else {
-      this.setState({ tagShowMenu: envKey });
-    }
-  };
-  handleMenuListToggle = (envKey) => {
-    const { tagShowMenuList } = this.state;
-    if (tagShowMenuList) {
-      this.setState({ tagShowMenuList: null });
-    } else {
-      this.setState({ tagShowMenuList: envKey });
-    }
-  };
-
   //  Render table body
   renderTableBody = () => {
     const { tagShowMenu, tagShowMenuList, rpg, pg } = this.state;
-    let environmentList = this.props.data || [];
+    let alerts = this.props.data || [];
 
     return (
       <TableBody>
-        <TableRow>
-          <TableCell align="left">
-            <HtmlTooltip className="table-tooltip">
-              <Box className="resource-name">Percentage CPU</Box>
-            </HtmlTooltip>
-          </TableCell>
-          <TableCell align="left">102922</TableCell>
-          <TableCell align="left">Generated</TableCell>
-          <TableCell align="left">Critical </TableCell>
-          <TableCell align="center">Open</TableCell>
-          <TableCell align="center">Prod_DB_SYN14</TableCell>
-          <TableCell align="center">2024-03-08; 15:45</TableCell>
-          <TableCell align="center">Alert Management</TableCell>
-          <TableCell align="center">
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">
-            <HtmlTooltip className="table-tooltip">
-              <Box className="resource-name">Percentage CPU</Box>
-            </HtmlTooltip>
-          </TableCell>
-          <TableCell align="left">102922</TableCell>
-          <TableCell align="left">Generated</TableCell>
-          <TableCell align="left">Critical </TableCell>
-          <TableCell align="center">Open</TableCell>
-          <TableCell align="center">Prod_DB_SYN14</TableCell>
-          <TableCell align="center">2024-03-08; 15:45</TableCell>
-          <TableCell align="center">Alert Management</TableCell>
-          <TableCell align="center">
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">
-            <HtmlTooltip className="table-tooltip">
-              <Box className="resource-name">Percentage CPU</Box>
-            </HtmlTooltip>
-          </TableCell>
-          <TableCell align="left">102922</TableCell>
-          <TableCell align="left">Generated</TableCell>
-          <TableCell align="left">Critical </TableCell>
-          <TableCell align="center">Open</TableCell>
-          <TableCell align="center">Prod_DB_SYN14</TableCell>
-          <TableCell align="center">2024-03-08; 15:45</TableCell>
-          <TableCell align="center">Alert Management</TableCell>
-          <TableCell align="center">
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">
-            <HtmlTooltip className="table-tooltip">
-              <Box className="resource-name">Percentage CPU</Box>
-            </HtmlTooltip>
-          </TableCell>
-          <TableCell align="left">102922</TableCell>
-          <TableCell align="left">Generated</TableCell>
-          <TableCell align="left">Critical </TableCell>
-          <TableCell align="center">Open</TableCell>
-          <TableCell align="center">Prod_DB_SYN14</TableCell>
-          <TableCell align="center">2024-03-08; 15:45</TableCell>
-          <TableCell align="center">Alert Management</TableCell>
-          <TableCell align="center">
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">
-            <HtmlTooltip className="table-tooltip">
-              <Box className="resource-name">Percentage CPU</Box>
-            </HtmlTooltip>
-          </TableCell>
-          <TableCell align="left">102922</TableCell>
-          <TableCell align="left">Generated</TableCell>
-          <TableCell align="left">Critical </TableCell>
-          <TableCell align="center">Open</TableCell>
-          <TableCell align="center">Prod_DB_SYN14</TableCell>
-          <TableCell align="center">2024-03-08; 15:45</TableCell>
-          <TableCell align="center">Alert Management</TableCell>
-          <TableCell align="center">
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">
-            <HtmlTooltip className="table-tooltip">
-              <Box className="resource-name">Percentage CPU</Box>
-            </HtmlTooltip>
-          </TableCell>
-          <TableCell align="left">102922</TableCell>
-          <TableCell align="left">Generated</TableCell>
-          <TableCell align="left">Critical </TableCell>
-          <TableCell align="center">Open</TableCell>
-          <TableCell align="center">Prod_DB_SYN14</TableCell>
-          <TableCell align="center">2024-03-08; 15:45</TableCell>
-          <TableCell align="center">Alert Management</TableCell>
-          <TableCell align="center">
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">
-            <HtmlTooltip className="table-tooltip">
-              <Box className="resource-name">Percentage CPU</Box>
-            </HtmlTooltip>
-          </TableCell>
-          <TableCell align="left">102922</TableCell>
-          <TableCell align="left">Generated</TableCell>
-          <TableCell align="left">Critical </TableCell>
-          <TableCell align="center">Open</TableCell>
-          <TableCell align="center">Prod_DB_SYN14</TableCell>
-          <TableCell align="center">2024-03-08; 15:45</TableCell>
-          <TableCell align="center">Alert Management</TableCell>
-          <TableCell align="center">
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
+        {alerts.length ? (
+          alerts.slice(pg * rpg, pg * rpg + rpg).map((alert) => {
+            return (
+              <TableRow>
+                <TableCell align="left">
+                  <HtmlTooltip className="table-tooltip">
+                    <Box className="resource-name">{alert.name}</Box>
+                  </HtmlTooltip>
+                </TableCell>
+                <TableCell align="left">{alert.ticketID}</TableCell>
+                <TableCell align="left">{alert.ticketStatus}</TableCell>
+                <TableCell align="left">{alert.Severity} </TableCell>
+                <TableCell align="center">{alert.alertState}</TableCell>
+                <TableCell align="center">{alert.affectedResource}</TableCell>
+                <TableCell align="center">{alert.triggeredTime}</TableCell>
+                <TableCell align="center">{alert.assignedWorkflow}</TableCell>
+                <TableCell align="center">
+                  <button type="button" className="list-icon">
+                    <i className="fas fa-ellipsis-v"></i>
+                  </button>
+                </TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <Box className="d-blck text-center w-100 h-100 ">
+            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+            </Box>
+          </Box>
+        )}
       </TableBody>
     );
   };

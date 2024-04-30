@@ -144,6 +144,11 @@ class AlertFilterSection extends Component {
     return findValue?.value || "";
   };
 
+  onClickDropDown = (selectedGranularity) => {
+    if (selectedGranularity !== this.state.selectedGranularity) {
+      this.setState({ selectedGranularity, isGranularityDropDownOpen: false });
+    }
+  };
   renderDropDownData = () => {
     let { selectedGranularity } = this.state;
     return GRANULARITY_DROPDOWN_DATA.map((data) => {

@@ -5,6 +5,8 @@ import AlertServiceIcon2 from "../../../assets/img/alerts/alert-service-icon2.pn
 import ChartWrapper from "./Components/ChartWrapper";
 import LineChart from "./Components/LineChart";
 import { List } from "reactstrap";
+import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 class index extends Component {
   constructor(props) {
@@ -44,7 +46,10 @@ class index extends Component {
           </Box>
         </Box>
         <Box className="alert-sevice-boxs">
-          <Box className="alert-service-box">
+          <Box
+            className="alert-service-box"
+            onClick={() => this.props.navigate(`${APP_PREFIX_PATH}/alerts/monitor-alerts`)}
+          >
             <Box class="container">
               <Box class="ui-widgets">
                 <Box class="ui-values">85%</Box>
@@ -229,4 +234,4 @@ class index extends Component {
   }
 }
 
-export default index;
+export default navigateRouter(index);
