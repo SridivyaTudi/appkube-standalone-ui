@@ -141,7 +141,7 @@ class AlertFilterSection extends Component {
       (data) => data.key === selectedGranularity
     );
 
-    return findValue.value || "";
+    return findValue?.value || "";
   };
 
   renderDropDownData = () => {
