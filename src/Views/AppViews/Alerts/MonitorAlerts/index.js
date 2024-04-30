@@ -3,6 +3,8 @@ import { Box, Button, Grid, ListItem } from "@mui/material";
 import { v4 } from "uuid";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import AlertFilterSection from "../Components/AlertFilterSection";
+import AlertTable from "../Components/AlertTable";
+ 
 let filterData = [
   {
     name: "Region",
@@ -65,12 +67,32 @@ class MonitorAlerts extends Component {
             </ul>
           </Box>
         </Box>
-        <Box>
+        <Box className="m-t-4">
           <AlertFilterSection
-           data={selectedFilters}
-           onClickCloseIcon={(id) => this.onClickCloseIcon(id)}
-           onClickClearFilter={() => this.setState({ selectedFilters: [] })}
-           />
+            data={selectedFilters}
+            onClickCloseIcon={(id) => this.onClickCloseIcon(id)}
+            onClickClearFilter={() => this.setState({ selectedFilters: [] })}
+          />
+          <Box className="table-head">
+            <h4 className="m-t-0 m-b-0">All Alerts</h4>
+            <Box className="d-flex">
+              <Box className="search m-r-2">
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Search"
+                  //value={searchedKey}
+                  onChange={this.handleSearchChange}
+                  autoFocus="autoFocus"
+                />
+              </Box>
+              <Button className="light-btn p-l-15 p-r-15">Bulk Action</Button>
+            </Box>
+          </Box>
+          <AlertTable
+              data={assestsData}
+              //loderStatus={discoveredAssetsData?.status === status.IN_PROGRESS}
+            />
         </Box>
       </Box>
     );

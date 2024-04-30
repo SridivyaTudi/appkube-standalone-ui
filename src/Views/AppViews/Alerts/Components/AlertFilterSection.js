@@ -161,7 +161,12 @@ class AlertFilterSection extends Component {
   };
 
   render() {
-    const { showAlertMainFilterModal, showFilterPopup, noOfRow, isGranularityDropDownOpen } = this.state;
+    const {
+      showAlertMainFilterModal,
+      showFilterPopup,
+      noOfRow,
+      isGranularityDropDownOpen,
+    } = this.state;
     let filterData = this.props.data;
     return (
       <Box className="head-top-section">
@@ -183,35 +188,36 @@ class AlertFilterSection extends Component {
           </Box>
         </Box>
         <Box className="fliter-button">
-                  <Button
-                    className="light-btn p-l-15 p-r-15"
-                    onClick={this.toggleGranularity}
-                  >
-                    <i className="fas fa-calendar-minus m-r-2"></i>{" "}
-                    {this.getSelectedGranularity()}
-                  </Button>
-                  {isGranularityDropDownOpen && (
-                    <div
-                      className={
-                        isGranularityDropDownOpen
-                          ? "fliter-collapse active"
-                          : "fliter-collapse"
-                      }
-                    >
-                      <List>{this.renderDropDownData()}</List>
-                    </div>
-                  )}
+          <Button
+            className="primary-outline-btn min-width p-l-15 p-r-15" variant="outlined"
+            onClick={this.toggleGranularity}
+          >
+            Timeframe:
+            <i className="fas fa-chevron-down p-l-10"></i>
+            {/* {this.getSelectedGranularity()} */}
+          </Button>
+          {isGranularityDropDownOpen && (
+            <div
+              className={
+                isGranularityDropDownOpen
+                  ? "fliter-collapse active"
+                  : "fliter-collapse"
+              }
+            >
+              <List>{this.renderDropDownData()}</List>
+            </div>
+          )}
 
-                  <div
-                    className={
-                      isGranularityDropDownOpen
-                        ? "fliters-collapse-bg active"
-                        : "fliters-collapse-bg"
-                    }
-                    onClick={this.toggleGranularity}
-                  />
-                </Box>
-        
+          <div
+            className={
+              isGranularityDropDownOpen
+                ? "fliters-collapse-bg active"
+                : "fliters-collapse-bg"
+            }
+            onClick={this.toggleGranularity}
+          />
+        </Box>
+
         {showAlertMainFilterModal ? (
           <AlertMainFilterModal
             showModal={showAlertMainFilterModal}
