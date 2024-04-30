@@ -5,6 +5,8 @@ import Summary from "./Components/Summary";
 import History from "./Components/History";
 import Diagnostics from "./Components/Diagnostics";
 import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+
 class AlertPercentage extends Component {
   tabMapping = [
     {
@@ -83,7 +85,7 @@ class AlertPercentage extends Component {
             <ul>
               <li
                 onClick={() =>
-                  this.props.navigate(`${APP_PREFIX_PATH}/app/alerts`)
+                  this.props.navigate(`${APP_PREFIX_PATH}/alerts`)
                 }
               >
                 Home
@@ -104,4 +106,4 @@ class AlertPercentage extends Component {
   }
 }
 
-export default AlertPercentage;
+export default navigateRouter(AlertPercentage);
