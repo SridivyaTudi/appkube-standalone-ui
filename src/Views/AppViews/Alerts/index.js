@@ -52,7 +52,13 @@ class index extends Component {
             </Box>
             <Box className="service-content">
               <Box className="title">Total Alerts</Box>
-              <label className="m-b-0">43,833</label>
+              <Box className="d-flex" alignItems={"flex-end"}>
+                <label className="m-b-0 m-r-2">43,833</label>
+                <Box className="d-flex alert-present" alignItems={"flex-end"}>
+                  <i className="fas fa-caret-up m-r-1"></i>
+                  <span>10%</span>
+                </Box>
+              </Box>
             </Box>
           </Box>
           <Box className="alert-service-box">
