@@ -129,3 +129,28 @@ export const USER_RBAC_TYPE = {
 export const STATUS = {
   ACTIVE: "ACTIVE",
 };
+
+export const TIME_FRAME = {
+  TODAY: "TODAY",
+  MONTH: "MONTH",
+  WEEK: "WEEK",
+  CUSTOM: "CUSTOM",
+};
+export const TIME_FRAME_DROPDOWN_DATA = [
+  {
+    key: TIME_FRAME.TODAY,
+    value: "Today",
+  },
+  {
+    key: TIME_FRAME.WEEK,
+    value: "Last Week",
+  },
+  {
+    key: TIME_FRAME.MONTH,
+    value: "Last Month",
+  },
+  {
+    key: TIME_FRAME.CUSTOM,
+    value: "Custom",
+  },
+];

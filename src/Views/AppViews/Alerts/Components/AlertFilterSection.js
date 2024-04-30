@@ -5,7 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 import AlertMainFilterModal from "../Components/AlertMainFilterModal";
 import FilterPopup from "Views/AppViews/DiscoveredAssets/Components/FilterPopup";
-import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
+import { TIME_FRAME_DROPDOWN_DATA,  } from "CommonData";
 class AlertFilterSection extends Component {
   constructor(props) {
     super(props);
@@ -135,28 +135,26 @@ class AlertFilterSection extends Component {
       isGranularityDropDownOpen: !this.state.isGranularityDropDownOpen,
     });
   };
-  getSelectedGranularity = () => {
-    let { selectedGranularity } = this.state;
-    let findValue = GRANULARITY_DROPDOWN_DATA.find(
-      (data) => data.key === selectedGranularity
-    );
+  getselectedTimeFrame = () => {
+    let { selectedTimeFrame } = this.state;
+    let findValue = TIME_FRAME_DROPDOWN_DATA.find((data) => data.key === selectedTimeFrame);
 
     return findValue?.value || "";
   };
 
-  onClickDropDown = (selectedGranularity) => {
-    if (selectedGranularity !== this.state.selectedGranularity) {
-      this.setState({ selectedGranularity, isGranularityDropDownOpen: false });
+  onClickDropDown = (selectedTimeFrame) => {
+    if (selectedTimeFrame !== this.state.selectedTimeFrame) {
+      this.setState({ selectedTimeFrame, isGranularityDropDownOpen: false });
     }
   };
   renderDropDownData = () => {
-    let { selectedGranularity } = this.state;
-    return GRANULARITY_DROPDOWN_DATA.map((data) => {
+    let { selectedTimeFrame } = this.state;
+    return TIME_FRAME_DROPDOWN_DATA.map((data) => {
       return (
         <ListItem
           onClick={() => this.onClickDropDown(data.key)}
           key={v4()}
-          className={`${data.key === selectedGranularity ? "active" : ""}`}
+          className={`${data.key === selectedTimeFrame ? "active" : ""}`}
         >
           <i className="fa-solid fa-circle-dot"></i>
           {data.value}
@@ -194,12 +192,13 @@ class AlertFilterSection extends Component {
         </Box>
         <Box className="fliter-button">
           <Button
-            className="primary-outline-btn min-width p-l-15 p-r-15" variant="outlined"
+            className="primary-outline-btn min-width p-l-15 p-r-15"
+            variant="outlined"
             onClick={this.toggleGranularity}
           >
             Timeframe:
             <i className="fas fa-chevron-down p-l-10"></i>
-            {/* {this.getSelectedGranularity()} */}
+            {this.getselectedTimeFrame()}
           </Button>
           {isGranularityDropDownOpen && (
             <div
