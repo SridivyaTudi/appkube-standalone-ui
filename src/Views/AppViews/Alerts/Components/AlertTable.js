@@ -122,8 +122,8 @@ class AlertTable extends Component {
             return (
               <TableRow>
                 <TableCell align="left">
-                  <HtmlTooltip className="table-tooltip">
-                    <Box className="resource-name">{alert.name}</Box>
+                  <HtmlTooltip className="table-tooltip" title={alert.name}>
+                    <Box className="resource-name"><Link to={`/app/alerts/alert-percentage`}>{alert.name}</Link></Box>
                   </HtmlTooltip>
                 </TableCell>
                 <TableCell align="left">{alert.ticketID}</TableCell>
@@ -164,14 +164,7 @@ class AlertTable extends Component {
     return (
       <>
         <Box className="assets-table">{this.renderTable()}</Box>
-        {/* {showAssetsSetUpModal ? (
-          <AssetsSetUpModal
-            showModal={showAssetsSetUpModal}
-            toggleAssetsSetUp={this.toggleAssetsSetUp}
-          />
-        ) : (
-          <></>
-        )} */}
+       
       </>
     );
   }
