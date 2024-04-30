@@ -163,7 +163,7 @@ class AlertTable extends Component {
     // const { showAssetsSetUpModal } = this.state;
     return (
       <>
-        <Box className="assets-table">{this.renderTable()}</Box>
+        <Box className="alert-table">{this.renderTable()}</Box>
        
       </>
     );

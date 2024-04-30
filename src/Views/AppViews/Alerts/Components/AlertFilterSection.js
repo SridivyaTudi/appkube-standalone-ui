@@ -196,9 +196,9 @@ class AlertFilterSection extends Component {
             variant="outlined"
             onClick={this.toggleGranularity}
           >
-            Timeframe:
+            Timeframe : {this.getselectedTimeFrame()}
             <i className="fas fa-chevron-down p-l-10"></i>
-            {this.getselectedTimeFrame()}
+          
           </Button>
           {isGranularityDropDownOpen && (
             <div
