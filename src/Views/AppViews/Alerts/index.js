@@ -66,7 +66,9 @@ class index extends Component {
               </Box>
             </Box>
           </Box>
-          <Box className="alert-service-box">
+          <Box className="alert-service-box"
+          onClick={() => this.props.navigate(`${APP_PREFIX_PATH}/alerts/alert-rules`)}
+          >
             <Box className="service-image">
               <img src={AlertServiceIcon1} alt="" />
             </Box>
