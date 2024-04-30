@@ -78,6 +78,7 @@ import BudgetDepartments from "./AppViews/NewReports/BudgetDashboard/BudgetDepar
 import TopAccounts from "./AppViews/NewReports/OverviewDashboard/TopAccounts";
 import Alerts from "./AppViews/Alerts";
 import MonitorAlerts from "./AppViews/Alerts/MonitorAlerts";
+import AlertPercentage from "./AppViews/Alerts/AlertPercentage";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -384,6 +385,7 @@ export const Views = (props) => {
           />
           <Route path={`${APP_PREFIX_PATH}/alerts`} element={<Alerts/>} />
           <Route path={`${APP_PREFIX_PATH}/alerts/monitor-alerts`} element={<MonitorAlerts/>} />
+          <Route path={`${APP_PREFIX_PATH}/alerts/alert-percentage`} element={<AlertPercentage/>}/>
           <Route path={`/error`} element={<Error />} />
         </Routes>
         <ToastContainer
