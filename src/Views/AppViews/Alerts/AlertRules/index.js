@@ -9,12 +9,83 @@ import {
   TableCell,
   TableBody,
   TablePagination,
-  Grid,
-  List,
-  ListItem,
 } from "@mui/material";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
-
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+const tableData = [
+  {
+    name: "Percentage CPU 1",
+    Condition: "Percentage CPU GreaterOrEqual 0",
+    status: "Enabled",
+    targetResource: "kub-master-1467834",
+  },
+  {
+    name: "Percentage CPU 2",
+    Condition: "Percentage CPU GreaterOrEqual 0",
+    status: "Enabled",
+    targetResource: "kub-master-1467834",
+  },
+  {
+    name: "Percentage CPU 3",
+    Condition: "Percentage CPU GreaterOrEqual 0",
+    status: "Enabled",
+    targetResource: "kub-master-1467834",
+  },
+  {
+    name: "Percentage CPU 4",
+    Condition: "Percentage CPU GreaterOrEqual 0",
+    status: "Enabled",
+    targetResource: "kub-master-1467834",
+  },
+  {
+    name: "Percentage CPU 1",
+    Condition: "Percentage CPU GreaterOrEqual 0",
+    status: "Enabled",
+    targetResource: "kub-master-1467834",
+  },
+  {
+    name: "Percentage CPU 2",
+    Condition: "Percentage CPU GreaterOrEqual 0",
+    status: "Enabled",
+    targetResource: "kub-master-1467834",
+  },
+  {
+    name: "Percentage CPU 3",
+    Condition: "Percentage CPU GreaterOrEqual 0",
+    status: "Enabled",
+    targetResource: "kub-master-1467834",
+  },
+  {
+    name: "Percentage CPU 4",
+    Condition: "Percentage CPU GreaterOrEqual 0",
+    status: "Enabled",
+    targetResource: "kub-master-1467834",
+  },
+  {
+    name: "Percentage CPU 1",
+    Condition: "Percentage CPU GreaterOrEqual 0",
+    status: "Enabled",
+    targetResource: "kub-master-1467834",
+  },
+  {
+    name: "Percentage CPU 2",
+    Condition: "Percentage CPU GreaterOrEqual 0",
+    status: "Enabled",
+    targetResource: "kub-master-1467834",
+  },
+  {
+    name: "Percentage CPU 3",
+    Condition: "Percentage CPU GreaterOrEqual 0",
+    status: "Enabled",
+    targetResource: "kub-master-1467834",
+  },
+  {
+    name: "Percentage CPU 4",
+    Condition: "Percentage CPU GreaterOrEqual 0",
+    status: "Enabled",
+    targetResource: "kub-master-1467834",
+  },
+];
 class AlertRules extends Component {
   constructor(props) {
     super(props);
@@ -22,28 +93,37 @@ class AlertRules extends Component {
       showAssetsSetUpModal: false,
       pg: 0,
       rpg: 10,
+      alertsData: tableData,
     };
   }
+
+  handleChangePage = (event, newpage) => {
+    this.setState({ pg: newpage });
+  };
+
+  handleChangeRowsPerPage = (event) => {
+    this.setState({ pg: 0, rpg: parseInt(event.target.value, 10) });
+  };
+
   //  Render table
   renderTable = () => {
-    let alerts = this.props.data || [];
-    let { rpg, pg } = this.state;
+    let { rpg, pg, alertsData } = this.state;
 
     return this.props.loderStatus ? (
       this.renderLoder()
     ) : (
       <>
         <TableContainer className="table">
-          <Table style={{minWidth: 1300}}>
+          <Table style={{ minWidth: 1300 }}>
             {this.renderTableHead()}
             {this.renderTableBody()}
           </Table>
         </TableContainer>
-        {alerts?.length ? (
+        {alertsData?.length ? (
           <TablePagination
             rowsPerPageOptions={[10, 20, 30]}
             component="div"
-            count={alerts.length}
+            count={alertsData.length}
             rowsPerPage={rpg}
             page={pg}
             className="access-control-pagination"
@@ -74,96 +154,61 @@ class AlertRules extends Component {
 
   //  Render table body
   renderTableBody = () => {
+    let { alertsData, pg, rpg } = this.state;
     return (
       <TableBody>
-        <TableRow>
-          <TableCell align="left">Percentage CPU</TableCell>
-          <TableCell align="left">Percentage CPU GreaterOrEqual 0</TableCell>
-          <TableCell align="left" className="status">Enabled</TableCell>
-          <TableCell align="left">kub-master-1467834</TableCell>
-          <TableCell align="center">
-            {" "}
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">Percentage CPU</TableCell>
-          <TableCell align="left">Percentage CPU GreaterOrEqual 0</TableCell>
-          <TableCell align="left" className="status">Enabled</TableCell>
-          <TableCell align="left">kub-master-1467834</TableCell>
-          <TableCell align="center">
-            {" "}
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">Percentage CPU</TableCell>
-          <TableCell align="left">Percentage CPU GreaterOrEqual 0</TableCell>
-          <TableCell align="left" className="status">Enabled</TableCell>
-          <TableCell align="left">kub-master-1467834</TableCell>
-          <TableCell align="center">
-            {" "}
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">Percentage CPU</TableCell>
-          <TableCell align="left">Percentage CPU GreaterOrEqual 0</TableCell>
-          <TableCell align="left" className="status">Enabled</TableCell>
-          <TableCell align="left">kub-master-1467834</TableCell>
-          <TableCell align="center">
-            {" "}
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">Percentage CPU</TableCell>
-          <TableCell align="left">Percentage CPU GreaterOrEqual 0</TableCell>
-          <TableCell align="left" className="status">Enabled</TableCell>
-          <TableCell align="left">kub-master-1467834</TableCell>
-          <TableCell align="center">
-            {" "}
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">Percentage CPU</TableCell>
-          <TableCell align="left">Percentage CPU GreaterOrEqual 0</TableCell>
-          <TableCell align="left" className="status">Enabled</TableCell>
-          <TableCell align="left">kub-master-1467834</TableCell>
-          <TableCell align="center">
-            {" "}
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">Percentage CPU</TableCell>
-          <TableCell align="left">Percentage CPU GreaterOrEqual 0</TableCell>
-          <TableCell align="left" className="status">Enabled</TableCell>
-          <TableCell align="left">kub-master-1467834</TableCell>
-          <TableCell align="center">
-            {" "}
-            <button type="button" className="list-icon">
-              <i className="fas fa-ellipsis-v"></i>
-            </button>
-          </TableCell>
-        </TableRow>
+        {alertsData.length ? (
+          alertsData.slice(pg * rpg, pg * rpg + rpg).map((alert) => {
+            return (
+              <TableRow>
+                <TableCell align="left">{alert.name}</TableCell>
+                <TableCell align="left">{alert.Condition}</TableCell>
+                <TableCell align="left" className="status">
+                  {alert.status}
+                </TableCell>
+                <TableCell align="left">{alert.targetResource}</TableCell>
+                <TableCell align="center">
+                  <button type="button" className="list-icon">
+                    <i className="fas fa-ellipsis-v"></i>
+                  </button>
+                </TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <Box className="d-blck text-center w-100 h-100 ">
+            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+            </Box>
+          </Box>
+        )}
       </TableBody>
     );
   };
+
+  //  Serach
+  handleSearchChange = (e) => {
+    let value = e.target.value;
+    let { alertsData } = this.state;
+    let data = tableData || [];
+    if (data?.length) {
+      if (value) {
+        alertsData = data.filter((tableData) => {
+          if (tableData?.name.toLowerCase().includes(value.toLowerCase())) {
+            return tableData;
+          } else {
+            return null;
+          }
+        });
+      } else {
+        alertsData = data;
+      }
+      this.setState({ alertsData, searchedKey: value });
+    }
+  };
+
   render() {
+    let { searchedKey } = this.state;
     return (
       <Box className="alert-container">
         <Box className="list-heading">
@@ -190,7 +235,7 @@ class AlertRules extends Component {
                 type="text"
                 className="input"
                 placeholder="Search"
-                //value={searchedKey}
+                value={searchedKey}
                 onChange={this.handleSearchChange}
                 autoFocus="autoFocus"
               />
@@ -204,4 +249,4 @@ class AlertRules extends Component {
   }
 }
 
-export default AlertRules;
+export default navigateRouter(AlertRules);
