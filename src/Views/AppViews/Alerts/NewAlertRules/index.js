@@ -1,73 +1,75 @@
 import React, { Component } from "react";
 import { Box } from "@mui/material";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
 class NewAlertRules extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentStep: 0,
-        };
-      }
+  steps = ["Step 1", "Step 2", "Step 3"];
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentStep: 0,
+    };
+  }
 
-      onClickStepButton = (activeStep: any) => {
-        this.setState({
-          currentStep: activeStep,
-        });
-        this.props.nextClick(activeStep);
-      };
-    
-      setActiveStep = (step: any) => {
-        this.setState({
-          currentStep: step,
-        });
-      };
-    
-      createStepLine = () => {
-        const { steps } = this.props;
-        const { currentStep } = this.state;
-        const retData = [];
-        if (steps && steps.length > 0) {
-          const totalSteps = steps.length;
-          for (let i = 0; i < totalSteps; i++) {
-            const step = steps[i];
-            retData.push(
-              <div
-                className={`wizard-step-button ${currentStep === i ? "active" : ""
-                  }`}
-                onClick={(e) => this.onClickStepButton(i)}
-              >
-                {step.name}
-              </div>
-            );
-          }
-        }
-        return retData;
-      };
-    
-      createStepContainer = () => {
-        const { steps } = this.props;
-        const { currentStep } = this.state;
-        const retData = [];
-        if (steps && steps.length > 0) {
-          const totalSteps = steps.length;
-          for (let i = 0; i < totalSteps; i++) {
-            const step = steps[i];
-            retData.push(
-              <div
-                className={`wizard-step-component ${currentStep === i ? "" : "d-none"
-                  }`}
-              >
-                {step.component()}
-              </div>
-            );
-          }
-        }
-        return retData;
-      };
+  onClickStepButton = (activeStep) => {
+    this.setState({
+      currentStep: activeStep,
+    });
+  };
+
+  setActiveStep = (step) => {
+    this.setState({
+      currentStep: step,
+    });
+  };
+
+  createStepLine = () => {
+    const { currentStep } = this.state;
+    const retData = [];
+    if (this.steps?.length) {
+      const totalSteps = this.steps.length;
+      for (let i = 0; i < totalSteps; i++) {
+        const step = this.steps[i];
+        retData.push(
+          <div
+            className={`wizard-step-button ${
+              currentStep === i ? "active" : ""
+            }`}
+            onClick={(e) => this.onClickStepButton(i)}
+          >
+            {step}
+          </div>
+        );
+      }
+    }
+    return retData;
+  };
+
+  createStepContainer = () => {
+    const { currentStep } = this.state;
+    const retData = [];
+    if (this.steps?.length) {
+      const totalSteps = this.steps.length;
+      for (let i = 0; i < totalSteps; i++) {
+        const step = this.steps[i];
+        retData.push(
+          <div
+            className={`wizard-step-component ${
+              currentStep === i ? "" : "d-none"
+            }`}
+          >
+            {step}
+          </div>
+        );
+      }
+    }
+    return retData;
+  };
   render() {
     const { currentStep } = this.state;
-    const { steps, isDisabled } = this.props;
+
+    const isDisabled = false;
     return (
       <Box className="alert-container">
         <Box className="list-heading">
@@ -98,7 +100,7 @@ class NewAlertRules extends Component {
         </Box>
         <Box className="wizard-container">
           <Box className="wizard-step-line-container">
-          {this.createStepLine()}
+            {this.createStepLine()}
           </Box>
           <Box className="wizard-step-component-container">
             {this.createStepContainer()}
@@ -113,7 +115,7 @@ class NewAlertRules extends Component {
               {/* {currentStep >= steps.length + 1 && (
               <button className="blue-button m-b-0">Previous</button>
             )} */}
-              {currentStep < steps.length - 1 && (
+              {currentStep < this.steps.length - 1 && (
                 <button
                   onClick={(e) => this.onClickStepButton(currentStep + 1)}
                   className="asset-blue-button m-r-0 m-b-0"
@@ -121,7 +123,7 @@ class NewAlertRules extends Component {
                   Next
                 </button>
               )}
-              {currentStep >= steps.length - 1 && (
+              {currentStep >= this.steps.length - 1 && (
                 <button
                   disabled={isDisabled ? true : false}
                   onClick={this.props.submitPage}
@@ -142,4 +144,4 @@ class NewAlertRules extends Component {
   }
 }
 
-export default NewAlertRules;
+export default navigateRouter(NewAlertRules);
