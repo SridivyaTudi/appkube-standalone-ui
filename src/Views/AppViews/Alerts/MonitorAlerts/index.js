@@ -5,6 +5,7 @@ import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import AlertFilterSection from "../Components/AlertFilterSection";
 import AlertTable from "../Components/AlertTable";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { filter } from "d3";
 let tableData = [
   {
     name: "Percentage CPU 1",
@@ -254,7 +255,13 @@ class MonitorAlerts extends Component {
         <Box className="m-t-4">
           <AlertFilterSection
             data={selectedFilters}
-            onClickCloseIcon={(id) => this.onClickCloseIcon(id)}
+            onClickCloseIcon={(id) =>
+              this.setState({
+                selectedFilters: selectedFilters.filter(
+                  (filter, index) => index !== id
+                ),
+              })
+            }
             onClickClearFilter={() => this.setState({ selectedFilters: [] })}
           />
           <Box className="table-head">
