@@ -1,75 +1,44 @@
 import React, { Component } from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import AlertDetails from "./Components/AlertDetails";
+import AlertTypes from "./Components/AlertTypes";
+import Conditions from "./Components/Conditions";
+import AlertHandler from "./Components/AlertHandler";
+import Message from "./Components/Message";
+import Wizard from "./Components/Wizard";
 
 class NewAlertRules extends Component {
-  steps = ["Step 1", "Step 2", "Step 3"];
   constructor(props) {
     super(props);
-    this.state = {
-      currentStep: 0,
-    };
+    this.state = {};
+    this.steps = [
+      {
+        name: "Alert Details",
+        component: <AlertDetails />,
+      },
+      {
+        name: "Alert Type",
+        component: <AlertTypes />,
+      },
+      {
+        name: "Conditions",
+        component: <Conditions />,
+      },
+      {
+        name: "Alert Handlers",
+        component: <AlertHandler />,
+      },
+      {
+        name: "Message",
+        component: <Message />,
+      },
+    ];
   }
+  //steps = ["Alert Details", "Alert Type", "Conditions", "Alert Handlers", "Message"];
 
-  onClickStepButton = (activeStep) => {
-    this.setState({
-      currentStep: activeStep,
-    });
-  };
-
-  setActiveStep = (step) => {
-    this.setState({
-      currentStep: step,
-    });
-  };
-
-  createStepLine = () => {
-    const { currentStep } = this.state;
-    const retData = [];
-    if (this.steps?.length) {
-      const totalSteps = this.steps.length;
-      for (let i = 0; i < totalSteps; i++) {
-        const step = this.steps[i];
-        retData.push(
-          <div
-            className={`wizard-step-button ${
-              currentStep === i ? "active" : ""
-            }`}
-            onClick={(e) => this.onClickStepButton(i)}
-          >
-            {step}
-          </div>
-        );
-      }
-    }
-    return retData;
-  };
-
-  createStepContainer = () => {
-    const { currentStep } = this.state;
-    const retData = [];
-    if (this.steps?.length) {
-      const totalSteps = this.steps.length;
-      for (let i = 0; i < totalSteps; i++) {
-        const step = this.steps[i];
-        retData.push(
-          <div
-            className={`wizard-step-component ${
-              currentStep === i ? "" : "d-none"
-            }`}
-          >
-            {step}
-          </div>
-        );
-      }
-    }
-    return retData;
-  };
   render() {
-    const { currentStep } = this.state;
-
-    const isDisabled = false;
     return (
       <Box className="alert-container">
         <Box className="list-heading">
@@ -98,47 +67,35 @@ class NewAlertRules extends Component {
             </ul>
           </Box>
         </Box>
-        <Box className="wizard-container">
-          <Box className="wizard-step-line-container">
-            {this.createStepLine()}
-          </Box>
-          <Box className="wizard-step-component-container">
-            {this.createStepContainer()}
-            <Box className="d-block text-right next">
-              <button
-                onClick={(e) => this.onClickStepButton(currentStep - 1)}
-                className="asset-blue-button m-b-0"
-                disabled={currentStep == 0}
-              >
-                Previous
-              </button>
-              {/* {currentStep >= steps.length + 1 && (
-              <button className="blue-button m-b-0">Previous</button>
-            )} */}
-              {currentStep < this.steps.length - 1 && (
-                <button
-                  onClick={(e) => this.onClickStepButton(currentStep + 1)}
-                  className="asset-blue-button m-r-0 m-b-0"
-                >
-                  Next
-                </button>
-              )}
-              {currentStep >= this.steps.length - 1 && (
-                <button
-                  disabled={isDisabled ? true : false}
-                  onClick={this.props.submitPage}
-                  className={
-                    isDisabled
-                      ? "asset-blue-button asset-disabled m-r-0 m-b-0 "
-                      : "asset-blue-button m-r-0 m-b-0"
-                  }
-                >
-                  Submit
-                </button>
-              )}
-            </Box>
-          </Box>
-        </Box>
+        <Wizard
+          steps={this.steps}
+          ref={this.wizardRef}
+          onChangeStep={this.onChangeStep}
+          onChangePrevStep={this.onChangePrevStep}
+        />
+        {/* <div className="d-block width-100 text-right alert-wizard-buttons">
+          {!state.hidePrevBtn && (
+            <button
+              className="alert-blue-button m-r-0 m-b-0 previous-btn"
+              onClick={this.onClickPrevious}
+            >
+              Previous
+            </button>
+          )}
+          {!state.hideNextBtn && (
+            <button
+              className="alert-blue-button m-r-0 m-b-0 next-btn"
+              onClick={this.onClickNext}
+            >
+              Next
+            </button>
+          )}
+          {!state.hideFinishBtn && (
+            <button className="alert-blue-button m-r-0 m-b-0 finish-btn">
+              Finish
+            </button>
+          )}
+        </div> */}
       </Box>
     );
   }

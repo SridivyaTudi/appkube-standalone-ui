@@ -4,3 +4,16 @@
     padding: 30px 40px;
     background-color: #f6f7fb;
 }
+.alert-detail-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    label {
+      display: block;
+      color: #3b4859;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 600;
+    }
+  }

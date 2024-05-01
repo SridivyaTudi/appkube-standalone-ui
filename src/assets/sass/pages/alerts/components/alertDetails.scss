@@ -1,0 +1,45 @@
+.alert-details {
+  width: 100%;
+  display: block;
+  .alert-details-name {
+    padding-bottom: 25px;
+
+    .input-group-text {
+      background-color: #ffffff;
+      border: 1px solid #8392a7;
+      border-radius: 4px;
+      line-height: 38px;
+      height: 38px;
+      padding: 0 15px;
+      font-size: 12px;
+      font-weight: 500;
+      width: 100%;
+      text-align: left;
+    }
+  }
+  .alert-details-description {
+    padding-bottom: 25px;
+    label {
+      display: block;
+      color: #3b4859;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 600;
+      padding-bottom: 5px;
+    }
+    textarea {
+      display: block;
+      background-color: #ffffff;
+      border: 1px solid #8392a7;
+      border-radius: 4px;
+      line-height: 24px;
+      padding: 5px 10px;
+      color: #8998ac;
+      font-size: 12px;
+      font-weight: 500;
+      width: 100%;
+      max-height: 250px;
+      height: 250px;
+    }
+  }
+}
