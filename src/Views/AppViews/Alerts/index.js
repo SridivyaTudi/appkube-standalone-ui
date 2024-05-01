@@ -91,7 +91,7 @@ class index extends Component {
           <Grid container spacing={2}>
             <Grid item xs={12} md={5} lg={5}>
               <ChartWrapper
-                ChartComponent={<LineChart data={[]} color="pink" />}
+                // ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{
                   title: `Average wait time alert`,
                   description:
@@ -103,7 +103,7 @@ class index extends Component {
             </Grid>
             <Grid item xs={12} md={5} lg={5}>
               <ChartWrapper
-                ChartComponent={<LineChart data={[]} color="pink" />}
+                // ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{
                   title: `Alert Volume Trends`,
                   description:
@@ -207,7 +207,7 @@ class index extends Component {
             </Grid>
             <Grid item xs={12} md={5} lg={5}>
               <ChartWrapper
-                ChartComponent={<LineChart data={[]} color="pink" />}
+                // ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{
                   title: `Alert Volume By trends`,
                   description:
@@ -219,7 +219,7 @@ class index extends Component {
             </Grid>
             <Grid item xs={12} md={5} lg={5}>
               <ChartWrapper
-                ChartComponent={<LineChart data={[]} color="pink" />}
+                // ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{
                   title: `Average response time alert`,
                   description:

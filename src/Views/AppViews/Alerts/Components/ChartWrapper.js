@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
@@ -23,7 +23,7 @@ class ChartWrapper extends Component {
     let { ChartComponent, data } = this.props;
     let { title, labelOfBtn, link } = data;
     return (
-      <Box className="reports-chart-box" style={{minHeight:"215px"}}>
+      <Box className="reports-chart-box" style={{ minHeight: "250px" }}>
         <Box className="heading m-b-10">
           <Box className="chart-title">
             <h4 className="title">
@@ -45,12 +45,9 @@ class ChartWrapper extends Component {
             )}
           </Box>
           <Link to={`${link ? link : "#"} `}>
-            <Button
-              className="primary-outline-btn min-width"
-              variant="outlined"
-            >
-              {labelOfBtn}
-            </Button>
+            <IconButton className="p-5">
+              <i className="fas fa-ellipsis-h"></i>
+            </IconButton>
           </Link>
         </Box>
         <Box className="chart-content">{ChartComponent}</Box>
