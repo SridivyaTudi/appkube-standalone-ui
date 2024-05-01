@@ -5,7 +5,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 import AlertMainFilterModal from "../Components/AlertMainFilterModal";
 import FilterPopup from "Views/AppViews/DiscoveredAssets/Components/FilterPopup";
-import { TIME_FRAME_DROPDOWN_DATA,  } from "CommonData";
+import { TIME_FRAME, TIME_FRAME_DROPDOWN_DATA } from "CommonData";
+import DatePicker from "react-multi-date-picker";
+import "react-multi-date-picker/styles/layouts/prime.css";
+const weekDays = ["SU", "MO", "TU", "WE", "TH", "FR", "SA",]
 class AlertFilterSection extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +17,8 @@ class AlertFilterSection extends Component {
       noOfRow: 0,
       currentWidthRange: window.innerWidth,
       showFilterPopup: false,
+      selectedDates: [],
+   
     };
   }
 
@@ -137,7 +142,9 @@ class AlertFilterSection extends Component {
   };
   getselectedTimeFrame = () => {
     let { selectedTimeFrame } = this.state;
-    let findValue = TIME_FRAME_DROPDOWN_DATA.find((data) => data.key === selectedTimeFrame);
+    let findValue = TIME_FRAME_DROPDOWN_DATA.find(
+      (data) => data.key === selectedTimeFrame
+    );
 
     return findValue?.value || "";
   };
@@ -148,17 +155,54 @@ class AlertFilterSection extends Component {
     }
   };
   renderDropDownData = () => {
-    let { selectedTimeFrame } = this.state;
-    return TIME_FRAME_DROPDOWN_DATA.map((data) => {
+    let { selectedTimeFrame, selectedDates } = this.state;
+    return TIME_FRAME_DROPDOWN_DATA.map((data, index) => {
       return (
-        <ListItem
-          onClick={() => this.onClickDropDown(data.key)}
-          key={v4()}
-          className={`${data.key === selectedTimeFrame ? "active" : ""}`}
-        >
-          <i className="fa-solid fa-circle-dot"></i>
-          {data.value}
-        </ListItem>
+        <>
+          <ListItem
+            onClick={() =>
+              data.key === TIME_FRAME.CUSTOM ? (
+                <></>
+              ) : (
+                this.onClickDropDown(data.key)
+              )
+            }
+            key={index}
+            className={`${
+              data.key === selectedTimeFrame && data.key !== TIME_FRAME.CUSTOM
+                ? "active"
+                : ""
+            }`}
+          >
+            {data.key === TIME_FRAME.CUSTOM ? (
+              <DatePicker
+                multiple={true}
+                portal
+                value={selectedDates}
+                onChange={(e) => {
+                  this.setState({ selectedDates: e });
+                }}
+                render={(value, openCalendar) => {
+                  return (
+                    <span onClick={openCalendar}>
+                      {" "}
+                      <i className="fa-solid fa-circle-dot"></i>
+                      {data.value}
+                    </span>
+                  );
+                }}
+                weekDays={weekDays}
+                calendarPosition="right-center"
+              />
+            ) : (
+              <>
+                {" "}
+                <i className="fa-solid fa-circle-dot"></i>
+                {data.value}
+              </>
+            )}
+          </ListItem>
+        </>
       );
     });
   };
@@ -169,6 +213,7 @@ class AlertFilterSection extends Component {
       showFilterPopup,
       noOfRow,
       isGranularityDropDownOpen,
+      selectedDates,
     } = this.state;
     let filterData = this.props.data;
     return (
@@ -198,7 +243,6 @@ class AlertFilterSection extends Component {
           >
             Timeframe : {this.getselectedTimeFrame()}
             <i className="fas fa-chevron-down p-l-10"></i>
-          
           </Button>
           {isGranularityDropDownOpen && (
             <div

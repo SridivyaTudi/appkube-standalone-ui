@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button, Grid, ListItem } from "@mui/material";
+import { Box, Button, Grid, List, ListItem } from "@mui/material";
 import { v4 } from "uuid";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import AlertFilterSection from "../Components/AlertFilterSection";
@@ -49,7 +49,8 @@ let tableData = [
     triggeredTime: "2024-03-08; 15:45",
     assignedWorkflow: "Alert Management",
     actions: "",
-  },{
+  },
+  {
     name: "Percentage CPU 1",
     ticketID: 1029221,
     ticketStatus: "Generated",
@@ -92,7 +93,8 @@ let tableData = [
     triggeredTime: "2024-03-08; 15:45",
     assignedWorkflow: "Alert Management",
     actions: "",
-  },{
+  },
+  {
     name: "Percentage CPU 1",
     ticketID: 1029221,
     ticketStatus: "Generated",
@@ -171,6 +173,7 @@ class MonitorAlerts extends Component {
     this.state = {
       selectedFilters: filterData,
       assestsData: tableData,
+      isBulkActionDropDownOpen: false,
     };
   }
   setActiveTab = (activeTab) => {
@@ -199,8 +202,37 @@ class MonitorAlerts extends Component {
       this.setState({ assestsData, searchedKey: value });
     }
   };
+
+  toggleBulkAction = () => {
+    this.setState({
+      isBulkActionDropDownOpen: !this.state.isBulkActionDropDownOpen,
+    });
+  };
+  renderDropDownData = () => {
+    let { selectedTimeFrame, selectedDates } = this.state;
+    return [
+      "Delete",
+      "Archive",
+      "Processed",
+      "Create Ticket",
+      "Execute Workfolw",
+    ].map((data, index) => {
+      return (
+        <ListItem key={index}>
+          {" "}
+          <i className="fa-solid fa-circle-dot"></i>
+          {data}
+        </ListItem>
+      );
+    });
+  };
   render() {
-    const { searchedKey, selectedFilters, assestsData } = this.state;
+    const {
+      searchedKey,
+      selectedFilters,
+      assestsData,
+      isBulkActionDropDownOpen,
+    } = this.state;
     return (
       <Box className="alert-container">
         <Box className="list-heading">
@@ -238,7 +270,34 @@ class MonitorAlerts extends Component {
                   autoFocus="autoFocus"
                 />
               </Box>
-              <Button className="light-btn p-l-15 p-r-15">Bulk Action</Button>
+              <Box className="fliter-button">
+                <Button
+                  className="light-btn p-l-15 p-r-15"
+                  onClick={this.toggleBulkAction}
+                >
+                  Bulk Action
+                </Button>
+                {isBulkActionDropDownOpen && (
+                  <div
+                    className={
+                      isBulkActionDropDownOpen
+                        ? "fliter-collapse active"
+                        : "fliter-collapse"
+                    }
+                  >
+                    <List>{this.renderDropDownData()}</List>
+                  </div>
+                )}
+
+                <div
+                  className={
+                    isBulkActionDropDownOpen
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
+                  onClick={this.toggleBulkAction}
+                />
+              </Box>{" "}
             </Box>
           </Box>
           <AlertTable
