@@ -13,6 +13,7 @@ import {
   ListItem,
   Checkbox,
 } from "@mui/material";
+import {Link}  from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 const tableData = [
@@ -305,9 +306,11 @@ class AlertRules extends Component {
               />
             </Box>
           </Box>
-          <Button className="primary-btn min-width-inherit p-l-15 p-r-15">
-            <i class="fas fa-plus m-r-1"></i> New Alert Rule
-          </Button>
+          <Link to={`/app/alerts/new-alert-rules`}>
+            <Button className="primary-btn min-width-inherit p-l-15 p-r-15">
+              <i class="fas fa-plus m-r-1"></i> New Alert Rule
+            </Button>
+          </Link>
         </Box>
         <Box className="table-head">
           <h4 className="m-t-0 m-b-0">24 Rules / 20 Enabled</h4>

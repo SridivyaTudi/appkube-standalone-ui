@@ -80,6 +80,7 @@ import Alerts from "./AppViews/Alerts";
 import MonitorAlerts from "./AppViews/Alerts/MonitorAlerts";
 import AlertPercentage from "./AppViews/Alerts/AlertPercentage";
 import AlertRules from "./AppViews/Alerts/AlertRules";
+import NewAlertRules from "./AppViews/Alerts/NewAlertRules";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -388,6 +389,7 @@ export const Views = (props) => {
           <Route path={`${APP_PREFIX_PATH}/alerts/monitor-alerts`} element={<MonitorAlerts/>} />
           <Route path={`${APP_PREFIX_PATH}/alerts/alert-percentage`} element={<AlertPercentage/>}/>
           <Route path={`${APP_PREFIX_PATH}/alerts/alert-rules`} element={<AlertRules/>}/>
+          <Route path={`${APP_PREFIX_PATH}/alerts/new-alert-rules`} element={<NewAlertRules/>} />
           <Route path={`/error`} element={<Error />} />
         </Routes>
         <ToastContainer
