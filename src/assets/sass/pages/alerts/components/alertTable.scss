@@ -68,6 +68,7 @@
           border-bottom: 1px solid #eaecf0;
           font-family: "Poppins", sans-serif;
           .percentage-status{
+            display: inline-block;
             width: 10px;
             min-width: 10px;
             height: 10px;
@@ -153,33 +154,33 @@
               }
             }
           }
-          span {
-            display: inline-block;
-            text-align: center;
-            line-height: 22px;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            color: #ffffff;
-            &.green {
-              background-color: #00b929;
-            }
-            &.orange {
-              background-color: #ffba69;
-            }
-          }
-          .tag {
-            font-size: 20px;
-            color: #00b929;
-          }
-          .log-eye-icon {
-            font-size: 20px;
-            color: #384cff;
-          }
-          .setting-icon {
-            font-size: 20px;
-            color: #9a9aaf;
-          }
+          // span {
+          //   display: inline-block;
+          //   text-align: center;
+          //   line-height: 22px;
+          //   border-radius: 50%;
+          //   width: 20px;
+          //   height: 20px;
+          //   color: #ffffff;
+          //   &.green {
+          //     background-color: #00b929;
+          //   }
+          //   &.orange {
+          //     background-color: #ffba69;
+          //   }
+          // }
+          // .tag {
+          //   font-size: 20px;
+          //   color: #00b929;
+          // }
+          // .log-eye-icon {
+          //   font-size: 20px;
+          //   color: #384cff;
+          // }
+          // .setting-icon {
+          //   font-size: 20px;
+          //   color: #9a9aaf;
+          // }
 
           &:last-child {
             overflow: unset;

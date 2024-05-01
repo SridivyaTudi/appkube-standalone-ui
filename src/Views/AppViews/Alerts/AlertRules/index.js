@@ -9,6 +9,9 @@ import {
   TableCell,
   TableBody,
   TablePagination,
+  List,
+  ListItem,
+  Checkbox,
 } from "@mui/material";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
@@ -94,6 +97,7 @@ class AlertRules extends Component {
       pg: 0,
       rpg: 10,
       alertsData: tableData,
+      showSelectFilter: false,
     };
   }
 
@@ -161,7 +165,16 @@ class AlertRules extends Component {
           alertsData.slice(pg * rpg, pg * rpg + rpg).map((alert) => {
             return (
               <TableRow>
-                <TableCell align="left">{alert.name}</TableCell>
+                <TableCell align="left">
+                  <Checkbox
+                    size="small"
+                    className="check-box"
+                    //id={`${row.id}`}
+                    //checked={selectedData.includes(row.id)}
+                    onChange={this.handleCheckBox}
+                  />
+                  {alert.name}
+                </TableCell>
                 <TableCell align="left">{alert.Condition}</TableCell>
                 <TableCell align="left" className="status">
                   {alert.status}
@@ -209,6 +222,7 @@ class AlertRules extends Component {
 
   render() {
     let { searchedKey } = this.state;
+    const { showSelectFilter } = this.state;
     return (
       <Box className="alert-container">
         <Box className="list-heading">
@@ -226,6 +240,74 @@ class AlertRules extends Component {
               <li className="active">Alerts | Rules</li>
             </ul>
           </Box>
+        </Box>
+        <Box className="resource-section">
+          <Box className="d-block">
+            <label>
+              Resource <i className="fas fa-exclamation-circle"></i>
+            </label>
+            <Box className="select-resource">
+              <Box
+                className="fliter-toggel"
+                onClick={() =>
+                  this.setState({
+                    showSelectFilter: !showSelectFilter,
+                  })
+                }
+              >
+                Select Resource Group
+                <i className="fas fa-chevron-down arrow-icon"></i>
+              </Box>
+              <Box
+                className={
+                  showSelectFilter === true
+                    ? "fliter-collapse active"
+                    : "fliter-collapse"
+                }
+              >
+                <Box className="search-bar">
+                  <input type="text" placeholder="Search...." />
+                </Box>
+                <List>
+                  <ListItem>
+                    <input type="checkbox" />
+                    OU
+                  </ListItem>
+                  <ListItem>
+                    <input type="checkbox" />
+                    Status
+                  </ListItem>
+                  <ListItem>
+                    <input type="checkbox" />
+                    No of Assets
+                  </ListItem>
+                  <ListItem>
+                    <input type="checkbox" />
+                    Logs
+                  </ListItem>
+                  <ListItem>
+                    <input type="checkbox" />
+                    Performance & Availability
+                  </ListItem>
+                </List>
+              </Box>
+              <Box
+                className={
+                  showSelectFilter === true
+                    ? "fliters-collapse-bg active"
+                    : "fliters-collapse-bg"
+                }
+                onClick={() =>
+                  this.setState({
+                    showSelectFilter: !showSelectFilter,
+                  })
+                }
+              />
+            </Box>
+          </Box>
+          <Button className="primary-btn min-width-inherit p-l-15 p-r-15">
+            <i class="fas fa-plus m-r-1"></i> New Alert Rule
+          </Button>
         </Box>
         <Box className="table-head">
           <h4 className="m-t-0 m-b-0">24 Rules / 20 Enabled</h4>

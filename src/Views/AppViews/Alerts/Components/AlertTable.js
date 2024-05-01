@@ -10,6 +10,7 @@ import {
   TablePagination,
   ListItem,
   List,
+  Checkbox
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
@@ -123,12 +124,26 @@ class AlertTable extends Component {
               <TableRow>
                 <TableCell align="left">
                   <HtmlTooltip className="table-tooltip" title={alert.name}>
-                    <Box className="resource-name"><Link to={`/app/alerts/alert-percentage`}>{alert.name}</Link></Box>
+                    <Box className="resource-name">
+                      <Checkbox
+                        size="small"
+                        className="check-box"
+                        //id={`${row.id}`}
+                        //checked={selectedData.includes(row.id)}
+                        onChange={this.handleCheckBox}
+                      />
+                      <Link to={`/app/alerts/alert-percentage`}>
+                        {alert.name}
+                      </Link>
+                    </Box>
                   </HtmlTooltip>
                 </TableCell>
                 <TableCell align="left">{alert.ticketID}</TableCell>
                 <TableCell align="left">{alert.ticketStatus}</TableCell>
-                <TableCell align="left">{alert.Severity} </TableCell>
+                <TableCell align="left">
+                  <Box className="percentage-status"></Box>
+                  {alert.Severity} 
+                  </TableCell>
                 <TableCell align="center">{alert.alertState}</TableCell>
                 <TableCell align="center">{alert.affectedResource}</TableCell>
                 <TableCell align="center">{alert.triggeredTime}</TableCell>
@@ -164,7 +179,6 @@ class AlertTable extends Component {
     return (
       <>
         <Box className="alert-table">{this.renderTable()}</Box>
-       
       </>
     );
   }
