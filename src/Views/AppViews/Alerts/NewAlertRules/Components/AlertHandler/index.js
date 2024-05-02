@@ -97,7 +97,7 @@ export class AlertHandler extends Component {
                 <select
                   className="form-control"
                   id="rousourceGroup"
-                  onChange={this.handleAlertSelection}
+                  // onChange={this.handleAlertSelection}
                 >
                   <option value="Add another Handler">
                     Add another Handler

@@ -55,7 +55,7 @@ class NewAlertRules extends Component {
               </li>
               <li
                 onClick={() =>
-                  this.props.navigate(`${APP_PREFIX_PATH}alert-rules`)
+                  this.props.navigate(`${APP_PREFIX_PATH}/alerts/alert-rules`)
                 }
               >
                 Alerts Rules
