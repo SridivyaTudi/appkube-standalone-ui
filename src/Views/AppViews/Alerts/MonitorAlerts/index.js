@@ -304,7 +304,7 @@ class MonitorAlerts extends Component {
                   }
                   onClick={this.toggleBulkAction}
                 />
-              </Box>{" "}
+              </Box>
             </Box>
           </Box>
           <AlertTable

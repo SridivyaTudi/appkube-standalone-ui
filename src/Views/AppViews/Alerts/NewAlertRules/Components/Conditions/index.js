@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, List, ListItem } from "@mui/material";
 
 class Conditions extends Component {
   constructor(props) {
@@ -8,6 +8,7 @@ class Conditions extends Component {
       displayThresoldData: true,
       displayRelativeData: false,
       displayDadmanData: false,
+       isBulkActionDropDownOpen: false,
     };
   }
 
@@ -16,6 +17,30 @@ class Conditions extends Component {
       console.log(this.props.dataFromAlertType);
     }
   }
+  toggleBulkAction = () => {
+    this.setState({
+      isBulkActionDropDownOpen: !this.state.isBulkActionDropDownOpen,
+    });
+  };
+
+  renderDropDownData = () => {
+    let { selectedTimeFrame, selectedDates } = this.state;
+    return [
+      "Delete",
+      "Archive",
+      "Processed",
+      "Create Ticket",
+      "Execute Workfolw",
+    ].map((data, index) => {
+      return (
+        <ListItem key={index}>
+          {" "}
+          <i className="fa-solid fa-circle-dot"></i>
+          {data}
+        </ListItem>
+      );
+    });
+  };
 
   onChangeAlertType = (alertType) => {
     if (alertType === "Threshold") {
@@ -46,6 +71,34 @@ class Conditions extends Component {
           Conditions{" "}
           {/* <span className="time-series-text">Select a Time-Series</span> is */}
         </Box>
+        <Box className="fliter-button">
+                <Button
+                  className="light-btn p-l-15 p-r-15"
+                  onClick={this.toggleBulkAction}
+                >
+                  Bulk Action
+                </Button>
+                {isBulkActionDropDownOpen && (
+                  <div
+                    className={
+                      isBulkActionDropDownOpen
+                        ? "fliter-collapse active"
+                        : "fliter-collapse"
+                    }
+                  >
+                    <List>{this.renderDropDownData()}</List>
+                  </div>
+                )}
+
+                <div
+                  className={
+                    isBulkActionDropDownOpen
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
+                  onClick={this.toggleBulkAction}
+                />
+              </Box>
         <Box className="greater-select m-r-2">
           <select>
             <option>Select time series</option>
@@ -112,7 +165,7 @@ class Conditions extends Component {
         </Box>
 
         <Box className="greater-search">
-          <input type="text" />
+          <input type="text" placeholder="placeholder" />
         </Box>
       </Box>
     );
@@ -139,7 +192,7 @@ class Conditions extends Component {
     return dadmanData;
   }
   render() {
-    const { displayThresoldData, displayRelativeData, displayDadmanData } =
+    const { displayThresoldData, displayRelativeData, displayDadmanData, isBulkActionDropDownOpen } =
       this.state;
     return (
       <>
