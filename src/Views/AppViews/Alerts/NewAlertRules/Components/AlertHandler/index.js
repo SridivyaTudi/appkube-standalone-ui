@@ -89,7 +89,7 @@ export class AlertHandler extends Component {
             Save Rule
           </Button>
         </Box>
-        <Box className="alert-details-name">
+        <Box className="alert-details-description">
           <Box className="condition-box">
             <Box className="condition-header">
               <Box className="send-alert-text">Send this alert to:</Box>

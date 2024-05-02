@@ -58,7 +58,7 @@ class Conditions extends Component {
             <option>outside range</option>
           </select>
         </Box>
-        <label className="m-r-2">is</label>
+        <label className="m-r-2 d-inline-block">is</label>
         <Box className="greater-select">
           <select>
             <option>Greater than</option>
@@ -154,7 +154,7 @@ class Conditions extends Component {
               Save Rule
             </Button>
           </Box>
-          <Box className="alert-details-name">
+          <Box className="alert-details-description">
             <Box className="condition-box">
               {displayThresoldData ? this.thresoldCondition() : null}
               {displayRelativeData ? this.relativeCondition() : null}

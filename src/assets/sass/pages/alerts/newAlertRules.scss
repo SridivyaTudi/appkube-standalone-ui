@@ -130,7 +130,7 @@
         .alert-details-description {
           padding-bottom: 25px;
           label {
-            display: block;
+            display: inline-block;
             color: #3b4859;
             font-size: 14px;
             line-height: 20px;
@@ -148,8 +148,8 @@
             font-size: 12px;
             font-weight: 500;
             width: 100%;
-            max-height: 250px;
-            height: 250px;
+            max-height: 180px;
+            height: 180px;
           }
 
           //**************************** Alert Type ****************************//
