@@ -8,7 +8,7 @@ class Conditions extends Component {
       displayThresoldData: true,
       displayRelativeData: false,
       displayDadmanData: false,
-       isBulkActionDropDownOpen: false,
+      isBulkActionDropDownOpen: false,
     };
   }
 
@@ -26,11 +26,8 @@ class Conditions extends Component {
   renderDropDownData = () => {
     let { selectedTimeFrame, selectedDates } = this.state;
     return [
-      "Delete",
-      "Archive",
-      "Processed",
-      "Create Ticket",
-      "Execute Workfolw",
+      "Query Ok",
+      "Query Fail",
     ].map((data, index) => {
       return (
         <ListItem key={index}>
@@ -65,65 +62,72 @@ class Conditions extends Component {
   };
 
   thresoldCondition() {
-    let {isBulkActionDropDownOpen } =this.state
+    let { isBulkActionDropDownOpen } = this.state;
     let thresoldData = (
       <Box className="condition-header">
         <Box className="send-alert-text">
           Conditions{" "}
           {/* <span className="time-series-text">Select a Time-Series</span> is */}
         </Box>
-        <Box className="fliter-button">
-                <Button
-                  className="light-btn p-l-15 p-r-15"
-                  onClick={this.toggleBulkAction}
-                >
-                  Bulk Action
-                </Button>
-                {isBulkActionDropDownOpen && (
-                  <div
-                    className={
-                      isBulkActionDropDownOpen
-                        ? "fliter-collapse active"
-                        : "fliter-collapse"
-                    }
-                  >
-                    <List>{this.renderDropDownData()}</List>
-                  </div>
-                )}
+        <Box className="mapping-fliter m-r-2">
+          <Box
+            className="fliter-toggel p-l-15 p-r-15"
+            onClick={this.toggleBulkAction}
+          >
+            Select time series
+            <i className="fas fa-angle-down"></i>
+          </Box>
+          {isBulkActionDropDownOpen && (
+            <div
+              className={
+                isBulkActionDropDownOpen
+                  ? "fliter-collapse active"
+                  : "fliter-collapse"
+              }
+            >
+              <List>{this.renderDropDownData()}</List>
+            </div>
+          )}
 
-                <div
-                  className={
-                    isBulkActionDropDownOpen
-                      ? "fliters-collapse-bg active"
-                      : "fliters-collapse-bg"
-                  }
-                  onClick={this.toggleBulkAction}
-                />
-              </Box>
-        <Box className="greater-select m-r-2">
-          <select>
-            <option>Select time series</option>
-            <option>equal to or greater</option>
-            <option>equal to or less than</option>
-            <option>less than</option>
-            <option>equal to</option>
-            <option>not equal to</option>
-            <option>inside range</option>
-            <option>outside range</option>
-          </select>
+          <div
+            className={
+              isBulkActionDropDownOpen
+                ? "fliters-collapse-bg active"
+                : "fliters-collapse-bg"
+            }
+            onClick={this.toggleBulkAction}
+          />
         </Box>
+       
         <label className="m-r-2 d-inline-block">is</label>
-        <Box className="greater-select">
-          <select>
-            <option>Greater than</option>
-            <option>equal to or greater</option>
-            <option>equal to or less than</option>
-            <option>less than</option>
-            <option>equal to</option>
-            <option>not equal to</option>
-            <option>inside range</option>
-            <option>outside range</option>
-          </select>
+        <Box className="mapping-fliter">
+          <Box
+            className="fliter-toggel p-l-15 p-r-15"
+            onClick={this.toggleBulkAction}
+          >
+            greater than
+            <i className="fas fa-angle-down"></i>
+          </Box>
+          {isBulkActionDropDownOpen && (
+            <div
+              className={
+                isBulkActionDropDownOpen
+                  ? "fliter-collapse active"
+                  : "fliter-collapse"
+              }
+            >
+              <List>{this.renderDropDownData()}</List>
+            </div>
+          )}
+
+          <div
+            className={
+              isBulkActionDropDownOpen
+                ? "fliters-collapse-bg active"
+                : "fliters-collapse-bg"
+            }
+            onClick={this.toggleBulkAction}
+          />
         </Box>
         <Box className="greater-search">
           <input type="text" />
@@ -193,8 +197,11 @@ class Conditions extends Component {
     return dadmanData;
   }
   render() {
-    const { displayThresoldData, displayRelativeData, displayDadmanData, isBulkActionDropDownOpen } =
-      this.state;
+    const {
+      displayThresoldData,
+      displayRelativeData,
+      displayDadmanData,
+    } = this.state;
     return (
       <>
         <Box className="alert-details">

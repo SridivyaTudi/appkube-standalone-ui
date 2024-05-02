@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, List, ListItem } from "@mui/material";
 
 export class AlertHandler extends Component {
   tabComponentsList;
@@ -7,6 +7,7 @@ export class AlertHandler extends Component {
     super(props);
     this.state = {
       activeTab: 0,
+      isBulkActionDropDownOpen: false,
       tabData: [],
       tabComponents: [],
     };
@@ -46,6 +47,38 @@ export class AlertHandler extends Component {
       tabData,
     });
   };
+
+  toggleBulkAction = () => {
+    this.setState({
+      isBulkActionDropDownOpen: !this.state.isBulkActionDropDownOpen,
+    });
+  };
+
+  renderDropDownData = () => {
+    let { selectedTimeFrame, selectedDates } = this.state;
+    return [
+      "Post",
+      "tcp",
+      "exec",
+      "log",
+      "slack (default)",
+      "email",
+      "alert",
+      "hipchart",
+      "kafka (local host)",
+      "opsGenie",
+      "Pushover",
+    ].map((data, index) => {
+      return (
+        <ListItem key={index}>
+          {" "}
+          <i className="fa-solid fa-circle-dot"></i>
+          {data}
+        </ListItem>
+      );
+    });
+  };
+
   createTabs = (tabData) => {
     const retData = [];
     const { activeTab } = this.state;
@@ -81,6 +114,8 @@ export class AlertHandler extends Component {
   };
   render() {
     const { activeTab, tabData, tabComponents } = this.state;
+    let { isBulkActionDropDownOpen } = this.state;
+
     return (
       <Box className="alert-details">
         <Box className="alert-detail-head">
@@ -93,7 +128,36 @@ export class AlertHandler extends Component {
           <Box className="condition-box">
             <Box className="condition-header">
               <Box className="send-alert-text">Send this alert to:</Box>
-              <Box className="greater-select">
+              <Box className="mapping-fliter m-r-2">
+                <Box
+                  className="fliter-toggel p-l-15 p-r-15"
+                  onClick={this.toggleBulkAction}
+                >
+                  Select time series
+                  <i className="fas fa-angle-down"></i>
+                </Box>
+                {isBulkActionDropDownOpen && (
+                  <div
+                    className={
+                      isBulkActionDropDownOpen
+                        ? "fliter-collapse active"
+                        : "fliter-collapse"
+                    }
+                  >
+                    <List>{this.renderDropDownData()}</List>
+                  </div>
+                )}
+
+                <div
+                  className={
+                    isBulkActionDropDownOpen
+                      ? "fliters-collapse-bg active"
+                      : "fliters-collapse-bg"
+                  }
+                  onClick={this.toggleBulkAction}
+                />
+              </Box>
+              {/* <Box className="greater-select">
                 <select
                   className="form-control"
                   id="rousourceGroup"
@@ -112,7 +176,7 @@ export class AlertHandler extends Component {
                   <option value="hipChat">hipChat</option>
                   <option value="Kafka(localhost)">Kafka (localhost)</option>
                 </select>
-              </Box>
+              </Box> */}
             </Box>
             <Box className="alert-handler-box">
               <section className="tab-container row vertical-tab-container">
