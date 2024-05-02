@@ -65,6 +65,7 @@ class Conditions extends Component {
   };
 
   thresoldCondition() {
+    let {isBulkActionDropDownOpen } =this.state
     let thresoldData = (
       <Box className="condition-header">
         <Box className="send-alert-text">
