@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button, List, ListItem, } from "@mui/material";
+import { Box, Button, List, ListItem } from "@mui/material";
 import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
 import Threshold from "./Components/Threshold";
 import Relative from "./Components/Relative";
@@ -61,11 +61,11 @@ export class AlertTypes extends Component {
     return (
       <Box className="tabs-content">
         {activeTab === 0 ? (
-          <Threshold/>
+          <Threshold />
         ) : activeTab === 1 ? (
-          <Relative/>
+          <Relative />
         ) : activeTab === 2 ? (
-          <Availability/>
+          <Availability />
         ) : (
           <></>
         )}
@@ -74,7 +74,7 @@ export class AlertTypes extends Component {
   };
   render() {
     return (
-      <>
+      <Box className="alert-details">
         <Box className="alert-detail-head">
           <label>Alert Type</label>
           <Button
@@ -89,7 +89,7 @@ export class AlertTypes extends Component {
           <Box className="tabs">{this.renderTabMenu()}</Box>
           {this.renderActiveTabOfComponent()}
         </Box>
-      </>
+      </Box>
     );
   }
 }

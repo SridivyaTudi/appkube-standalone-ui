@@ -79,7 +79,7 @@ createTemplateList = (templateList) => {
               <Box className="templates-text">
                 <ul>
                   <li>
-                    <span>Templates:</span>
+                    <span>Templates : </span>
                   </li>
                   {this.createTemplateList(this.templateList)}
                 </ul>
