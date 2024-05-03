@@ -87,7 +87,7 @@ class SelectFilterModal extends Component {
   renderPolicies = () => {
     if (dropDownData.length) {
       return dropDownData.map((policy) => (
-        <MenuItem value={policy.value} key={v4()}>
+        <MenuItem value={policy.value} key={v4()} className="select-menu">
           <Checkbox
             className="check-box"
             size="small"
@@ -185,7 +185,9 @@ class SelectFilterModal extends Component {
                         // onChange={(e) => this.handleSelectboxChange(e, index)}
                         inputProps={{ "aria-label": "Without label" }}
                       >
-                        {this.renderPolicies()}
+                        <Box className="dropdown-select-menu">
+                          {this.renderPolicies()}
+                        </Box>
                       </Select>
                     </FormControl>
                     {errors.policy ? (
