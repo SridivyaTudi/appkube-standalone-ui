@@ -37,6 +37,7 @@ class AssetsTable extends Component {
     super(props);
     this.state = {
       showAssetsSetUpModal: false,
+      isSelectDepartmentOpen: false,
       pg: 0,
       rpg: 10,
     };
@@ -60,7 +61,7 @@ class AssetsTable extends Component {
   //  Render table
   renderTable = () => {
     let environmentList = this.props.data || [];
-    let { rpg, pg } = this.state;
+    let { rpg, pg,  } = this.state;
 
     return this.props.loderStatus ? (
       this.renderLoder()
@@ -125,10 +126,15 @@ class AssetsTable extends Component {
       this.setState({ tagShowMenuList: envKey });
     }
   };
+  toggleSelectDepartment = () => {
+    this.setState({
+      isSelectDepartmentOpen: !this.state.isSelectDepartmentOpen,
+    });
+  };
 
   //  Render table body
   renderTableBody = () => {
-    const { tagShowMenu, tagShowMenuList, rpg, pg } = this.state;
+    const {  tagShowMenu, tagShowMenuList, rpg, pg,  } = this.state;
     let environmentList = this.props.data || [];
 
     return (
@@ -156,7 +162,7 @@ class AssetsTable extends Component {
                   </TableCell>
                   <TableCell align="left">{elementType}</TableCell>
                   <TableCell align="left">
-                  <HtmlTooltip className="table-tooltip" title={landingZone}>
+                    <HtmlTooltip className="table-tooltip" title={landingZone}>
                       <Box className="resource-name">{landingZone}</Box>
                     </HtmlTooltip>
                   </TableCell>
@@ -221,32 +227,64 @@ class AssetsTable extends Component {
                     </span>
                   </TableCell>
                   <TableCell align="center">
-                    <button
-                      type="button"
-                      className="list-icon"
-                      onClick={(e) => {
-                        this.handleMenuListToggle(index);
-                      }}
-                    >
-                      <i className="fas fa-ellipsis-v"></i>
-                    </button>
-                    {tagShowMenuList === index ? (
-                      <>
+                    <Box className="mapping-fliter">
+                      <button
+                        type="button"
+                        className="list-icon"
+                        // onClick={(e) => {
+                        //   this.handleMenuListToggle(index);
+                        // }}
+                        onClick={this.toggleSelectDepartment}
+                      >
+                        <i className="fas fa-ellipsis-v"></i>
+                      </button>
+                      {this.state.isSelectDepartmentOpen === true && (
                         <div
-                          className="open-create-menu-close"
-                          onClick={(e) => {
-                            this.handleMenuListToggle(index);
-                          }}
-                        ></div>
-                        <Box className="menu-list">
-                          <List>
+                          className={
+                            isSelectDepartmentOpen
+                              ? "fliter-collapse active"
+                              : "fliter-collapse"
+                          }
+                        >
+                          <List menu-list>
                             <ListItem>Set Up</ListItem>
                           </List>
-                        </Box>
-                      </>
-                    ) : (
-                      <></>
-                    )}
+                        </div>
+                      )}
+                      <div
+                        className={
+                          isSelectDepartmentOpen
+                            ? "fliters-collapse-bg active"
+                            : "fliters-collapse-bg"
+                        }
+                        onClick={this.toggleSelectDepartment}
+                      />
+                      {/* {tagShowMenuList === index ? (
+                        <>
+                          <div
+                            className="open-create-menu-close"
+                            onClick={(e) => {
+                              this.handleMenuListToggle(index);
+                            }}
+                          ></div>
+                          <Box className="menu-list">
+                            <List>
+                              <ListItem>Set Up</ListItem>
+                            </List>
+                          </Box>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      <div
+                        className={
+                          tagShowMenuList
+                            ? "fliters-collapse-bg active"
+                            : "fliters-collapse-bg"
+                        }
+                        onClick={this.handleMenuListToggle}
+                      /> */}
+                    </Box>
                   </TableCell>
                 </TableRow>
               );
@@ -273,8 +311,9 @@ class AssetsTable extends Component {
   handleChangeRowsPerPage = (event) => {
     this.setState({ pg: 0, rpg: parseInt(event.target.value, 10) });
   };
+ 
   render() {
-    const { showAssetsSetUpModal } = this.state;
+    const { showAssetsSetUpModal,  } = this.state;
     return (
       <>
         <Box className="assets-table">{this.renderTable()}</Box>
