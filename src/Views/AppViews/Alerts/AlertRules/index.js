@@ -12,7 +12,11 @@ import {
   List,
   ListItem,
   Checkbox,
+  IconButton
 } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
@@ -100,6 +104,8 @@ class AlertRules extends Component {
       alertsData: tableData,
       showSelectFilter: false,
       isBulkActionDropDownOpen: false,
+      actionButton: null,
+      showConfirmPopup: false,
     };
   }
 
@@ -109,6 +115,25 @@ class AlertRules extends Component {
 
   handleChangeRowsPerPage = (event) => {
     this.setState({ pg: 0, rpg: parseInt(event.target.value, 10) });
+  };
+  handleCreateRoleControlModal = () => {
+    this.setState({
+      showCreateRoleControlModal: !this.state.showCreateRoleControlModal,
+      editRoleId: 0,
+      actionButton: null,
+    });
+  };
+  handleActionButton = (index) => {
+    const { actionButton } = this.state;
+    if (actionButton === null) {
+      this.setState({
+        actionButton: index,
+      });
+    } else {
+      this.setState({
+        actionButton: null,
+      });
+    }
   };
 
   //  Render table
@@ -177,7 +202,7 @@ class AlertRules extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    let { alertsData, pg, rpg } = this.state;
+    let { alertsData, pg, rpg, actionButton } = this.state;
     return (
       <TableBody>
         {alertsData.length ? (
@@ -200,9 +225,51 @@ class AlertRules extends Component {
                 </TableCell>
                 <TableCell align="left">{alert.targetResource}</TableCell>
                 <TableCell align="center">
-                  <button type="button" className="list-icon">
+                  {/* <button type="button" className="list-icon">
                     <i className="fas fa-ellipsis-v"></i>
-                  </button>
+                  </button> */}
+                  <IconButton
+                    className="action-btn"
+                    aria-label="morevertIcon"
+                    size="small"
+                    onClick={() => this.handleActionButton(index)}
+                  >
+                    <MoreVertIcon fontSize="small" />
+                  </IconButton>
+                  {actionButton === index && (
+              <>
+                <Box className="action-buttons">
+                  <Button
+                    startIcon={<DeleteOutlineOutlinedIcon className="icon" />}
+                    className="secondary-text-btn"
+                    onClick={() => {
+                      this.setState({
+                        showConfirmPopup: true,
+                        // roleId: row.id,
+                      });
+                    }}
+                  >
+                    Delete Role
+                  </Button>
+                  <Button
+                    startIcon={<EditCalendarIcon className="icon" />}
+                    className="secondary-text-btn"
+                    onClick={() => {
+                      this.setState({
+                        showCreateRoleControlModal: true,
+                        // editRoleId: row.id,
+                      });
+                    }}
+                  >
+                    Edit Role
+                  </Button>
+                </Box>
+                <Box
+                  className="action-buttons-bg"
+                  onClick={() => this.handleActionButton(index)}
+                ></Box>
+              </>
+            )}
                 </TableCell>
               </TableRow>
             );
