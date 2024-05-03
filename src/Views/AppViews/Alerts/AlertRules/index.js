@@ -13,7 +13,7 @@ import {
   ListItem,
   Checkbox,
 } from "@mui/material";
-import {Link}  from "react-router-dom";
+import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 const tableData = [
@@ -99,6 +99,7 @@ class AlertRules extends Component {
       rpg: 10,
       alertsData: tableData,
       showSelectFilter: false,
+      isBulkActionDropDownOpen: false,
     };
   }
 
@@ -139,6 +140,24 @@ class AlertRules extends Component {
           <></>
         )}
       </>
+    );
+  };
+  toggleBulkAction = () => {
+    this.setState({
+      isBulkActionDropDownOpen: !this.state.isBulkActionDropDownOpen,
+    });
+  };
+  renderDropDownData = () => {
+    let { selectedTimeFrame, selectedDates } = this.state;
+    return ["Delete", "Archive", "Processed", "Disable Rule"].map(
+      (data, index) => {
+        return (
+          <ListItem key={index}>
+            <i className="fa-solid fa-circle-dot"></i>
+            {data}
+          </ListItem>
+        );
+      }
     );
   };
 
@@ -223,7 +242,7 @@ class AlertRules extends Component {
 
   render() {
     let { searchedKey } = this.state;
-    const { showSelectFilter } = this.state;
+    const { showSelectFilter, isBulkActionDropDownOpen } = this.state;
     return (
       <Box className="alert-container">
         <Box className="list-heading">
@@ -325,7 +344,34 @@ class AlertRules extends Component {
                 autoFocus="autoFocus"
               />
             </Box>
-            <Button className="light-btn p-l-15 p-r-15">Bulk Action</Button>
+            <Box className="fliter-button">
+              <Button
+                className="light-btn p-l-15 p-r-15"
+                onClick={this.toggleBulkAction}
+              >
+                Bulk Action
+              </Button>
+              {isBulkActionDropDownOpen && (
+                <div
+                  className={
+                    isBulkActionDropDownOpen
+                      ? "fliter-collapse active"
+                      : "fliter-collapse"
+                  }
+                >
+                  <List>{this.renderDropDownData()}</List>
+                </div>
+              )}
+
+              <div
+                className={
+                  isBulkActionDropDownOpen
+                    ? "fliters-collapse-bg active"
+                    : "fliters-collapse-bg"
+                }
+                onClick={this.toggleBulkAction}
+              />
+            </Box>
           </Box>
         </Box>
         <Box className="alert-table">{this.renderTable()}</Box>
