@@ -206,7 +206,7 @@ class AlertRules extends Component {
     return (
       <TableBody>
         {alertsData.length ? (
-          alertsData.slice(pg * rpg, pg * rpg + rpg).map((alert) => {
+          alertsData.slice(pg * rpg, pg * rpg + rpg).map((alert,index) => {
             return (
               <TableRow>
                 <TableCell align="left">
