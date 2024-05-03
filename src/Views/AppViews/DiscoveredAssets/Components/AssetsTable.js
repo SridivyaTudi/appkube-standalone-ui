@@ -37,7 +37,7 @@ class AssetsTable extends Component {
     super(props);
     this.state = {
       showAssetsSetUpModal: false,
-      isSelectDepartmentOpen: false,
+      isSelectDepartmentOpen: -1,
       pg: 0,
       rpg: 10,
     };
@@ -61,7 +61,7 @@ class AssetsTable extends Component {
   //  Render table
   renderTable = () => {
     let environmentList = this.props.data || [];
-    let { rpg, pg,  } = this.state;
+    let { rpg, pg } = this.state;
 
     return this.props.loderStatus ? (
       this.renderLoder()
@@ -126,15 +126,17 @@ class AssetsTable extends Component {
       this.setState({ tagShowMenuList: envKey });
     }
   };
-  toggleSelectDepartment = () => {
+  toggleSelectDepartment = (index) => {
+    let { isSelectDepartmentOpen } = this.state;
     this.setState({
-      isSelectDepartmentOpen: !this.state.isSelectDepartmentOpen,
+      isSelectDepartmentOpen: index,
     });
   };
 
   //  Render table body
   renderTableBody = () => {
-    const {  tagShowMenu, tagShowMenuList, rpg, pg,  } = this.state;
+    const { tagShowMenu, tagShowMenuList, rpg, pg, isSelectDepartmentOpen } =
+      this.state;
     let environmentList = this.props.data || [];
 
     return (
@@ -231,17 +233,14 @@ class AssetsTable extends Component {
                       <button
                         type="button"
                         className="list-icon"
-                        // onClick={(e) => {
-                        //   this.handleMenuListToggle(index);
-                        // }}
-                        onClick={this.toggleSelectDepartment}
+                        onClick={() => this.toggleSelectDepartment(index)}
                       >
                         <i className="fas fa-ellipsis-v"></i>
                       </button>
-                      {this.state.isSelectDepartmentOpen === true && (
+                      {isSelectDepartmentOpen === index && (
                         <div
                           className={
-                            isSelectDepartmentOpen
+                            isSelectDepartmentOpen === index
                               ? "fliter-collapse active"
                               : "fliter-collapse"
                           }
@@ -253,11 +252,11 @@ class AssetsTable extends Component {
                       )}
                       <div
                         className={
-                          isSelectDepartmentOpen
+                          isSelectDepartmentOpen === index
                             ? "fliters-collapse-bg active"
                             : "fliters-collapse-bg"
                         }
-                        onClick={this.toggleSelectDepartment}
+                        onClick={() => this.toggleSelectDepartment(null)}
                       />
                       {/* {tagShowMenuList === index ? (
                         <>
@@ -311,9 +310,9 @@ class AssetsTable extends Component {
   handleChangeRowsPerPage = (event) => {
     this.setState({ pg: 0, rpg: parseInt(event.target.value, 10) });
   };
- 
+
   render() {
-    const { showAssetsSetUpModal,  } = this.state;
+    const { showAssetsSetUpModal } = this.state;
     return (
       <>
         <Box className="assets-table">{this.renderTable()}</Box>

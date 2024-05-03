@@ -14,7 +14,7 @@ import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
-import { index } from "d3";
+
 let dropDownData = [
   {
     name: "China (Hong Kong)",

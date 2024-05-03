@@ -148,7 +148,6 @@ class AlertRules extends Component {
     });
   };
   renderDropDownData = () => {
-    let { selectedTimeFrame, selectedDates } = this.state;
     return ["Delete", "Archive", "Processed", "Disable Rule"].map(
       (data, index) => {
         return (

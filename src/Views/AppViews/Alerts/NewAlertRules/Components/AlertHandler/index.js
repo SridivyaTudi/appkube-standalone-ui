@@ -55,7 +55,6 @@ export class AlertHandler extends Component {
   };
 
   renderDropDownData = () => {
-    let { selectedTimeFrame, selectedDates } = this.state;
     return [
       "Post",
       "tcp",
@@ -81,7 +80,7 @@ export class AlertHandler extends Component {
 
   createTabs = (tabData) => {
     const retData = [];
-    const { activeTab } = this.state;
+
     for (let i = 0; i < tabData.length; i++) {
       retData
         .push
@@ -113,9 +112,7 @@ export class AlertHandler extends Component {
     return retData;
   };
   render() {
-    const { activeTab, tabData, tabComponents } = this.state;
     let { isBulkActionDropDownOpen } = this.state;
-
     return (
       <Box className="alert-details">
         <Box className="alert-detail-head">
