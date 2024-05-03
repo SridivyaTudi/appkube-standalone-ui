@@ -13,105 +13,97 @@ import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 let data = [
   {
-    label: "Region",
-    values: [
-      "China (Hong Kong)",
-      "East US",
-      "East US 2",
-      "France Central",
-      "Germany West Central",
-      "India (Mumbai)",
-      "Indonesia ( Jakarta)",
-    ],
-  },
-  {
-    label: "AWS Account",
+    label: "Landing Zone",
     values: [
       "AWS (657907747554)",
-      "AWS (657907747551)",
-      "AWS (657907747552)",
-      "AWS (657907747553)",
-      "AWS (65790774755)",
+      "AWS (657907747554)",
+      "AWS (657907747554)",
+      "AWS (657907747554)",
+      "AWS (657907747554)",
     ],
   },
   {
     label: "Product Enclave",
-    values: ["8 VPC", "8 VPC", "5 VPC", "4 VPC", "3 VPC"],
+    values: ["8 VPC", "8 VPC", "8 VPC", "5 VPC", "6 VPC"],
   },
   {
-    label: "Element Type",
-    values: ["EC2", "Lambda", "EKS", "ECS", "DynameDB", "Redshift"],
+    label: "Elements",
+    values: ["EC2", "Lambda", "EKS", "ECS", "DynamoDB", "Redshift"],
   },
-  {
-    label: "App/Data",
-    values: ["App", "Data", "Both"],
-  },
-  {
-    label: "Resource Type",
-    values: [
-      "API Request",
-      "Bucket",
-      "Business Analytics",
-      "CF Stack (Cluster)",
-      "Compute",
-      "Data Transfer",
-      "Dev Stand (IT Environment)",
-      "Encryption",
-      "IP Address",
-      "Instance",
-      "KB Pod",
-    ],
-  },
-  {
-    label: "Node",
-    values: ["Orchid-Staging"],
-  },
-  {
-    label: "Tags",
-    values: [
-      "Seed",
-      "app",
-      "app_kubernetes_to_component",
-      "app_kubernetes_to_managed_by",
-      "app_kubernetes_to_name",
-      "app_kubernetes_to_part_of",
-      "app_kubernetes_to_version",
-      "aqa",
-      "aqa_tag",
-      "aqa_uuid",
-    ],
-  },
-  {
-    label: "Resource State",
-    values: ["Billing Only", "Active"],
-  },
-  {
-    label: "Data Source",
-    values: [
-      "AWS HQ",
-      "AWS Marketing",
-      "All dev",
-      "Azure QA",
-      "Dev Environment",
-      "GCP dev",
-      "K8s dev",
-    ],
-  },
-  {
-    label: "Service",
-    values: [
-      "AWS",
-      "AWSCloudTrail",
-      "AWSCostExplorer",
-      "AWSELB",
-      "AWSCloudWatch",
-      "AmazonEc2",
-      "AmazonEKS",
-      "AmazonKinesis",
-      "AmazonQuickSight",
-      "AmazonRDS",
-    ],
-  },
+  // {
+  //   label: "Element Type",
+  //   values: ["EC2", "Lambda", "EKS", "ECS", "DynameDB", "Redshift"],
+  // },
+  // {
+  //   label: "App/Data",
+  //   values: ["App", "Data", "Both"],
+  // },
+  // {
+  //   label: "Resource Type",
+  //   values: [
+  //     "API Request",
+  //     "Bucket",
+  //     "Business Analytics",
+  //     "CF Stack (Cluster)",
+  //     "Compute",
+  //     "Data Transfer",
+  //     "Dev Stand (IT Environment)",
+  //     "Encryption",
+  //     "IP Address",
+  //     "Instance",
+  //     "KB Pod",
+  //   ],
+  // },
+  // {
+  //   label: "Node",
+  //   values: ["Orchid-Staging"],
+  // },
+  // {
+  //   label: "Tags",
+  //   values: [
+  //     "Seed",
+  //     "app",
+  //     "app_kubernetes_to_component",
+  //     "app_kubernetes_to_managed_by",
+  //     "app_kubernetes_to_name",
+  //     "app_kubernetes_to_part_of",
+  //     "app_kubernetes_to_version",
+  //     "aqa",
+  //     "aqa_tag",
+  //     "aqa_uuid",
+  //   ],
+  // },
+  // {
+  //   label: "Resource State",
+  //   values: ["Billing Only", "Active"],
+  // },
+  // {
+  //   label: "Data Source",
+  //   values: [
+  //     "AWS HQ",
+  //     "AWS Marketing",
+  //     "All dev",
+  //     "Azure QA",
+  //     "Dev Environment",
+  //     "GCP dev",
+  //     "K8s dev",
+  //   ],
+  // },
+  // {
+  //   label: "Service",
+  //   values: [
+  //     "AWS",
+  //     "AWSCloudTrail",
+  //     "AWSCostExplorer",
+  //     "AWSELB",
+  //     "AWSCloudWatch",
+  //     "AmazonEc2",
+  //     "AmazonEKS",
+  //     "AmazonKinesis",
+  //     "AmazonQuickSight",
+  //     "AmazonRDS",
+  //   ],
+  // },
 ];
 
 class AlertMainFilterModal extends Component {
@@ -157,7 +149,7 @@ class AlertMainFilterModal extends Component {
     return data.length ? (
       data.map((fillterData, index) => {
         return (
-          <Grid item xs={12} sm={6}   md={6}  lg={4} key={v4()}>
+          <Grid item xs={12} sm={6} md={6} lg={4} key={v4()}>
             <Box className="environment-fliter">
               <Box
                 className="fliter-toggel new-environment"
@@ -207,7 +199,6 @@ class AlertMainFilterModal extends Component {
       >
         <ModalHeader tag="div">
           <h5>
-            Log Setup for 95dse45ss{" "}
             <IconButton
               onClick={this.props.togglePopup}
               variant="outlined"
@@ -221,7 +212,35 @@ class AlertMainFilterModal extends Component {
         </ModalHeader>
         <ModalBody>
           <Box sx={{ width: "100%" }}>
+            <h5>Infra</h5>
             <Grid
+            className="m-t-2"
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              alignItems={"center"}
+              justifyContent={"flex-start"}
+            >
+              {this.renderDropDowns()}
+            </Grid>
+          </Box>
+          <Box sx={{ width: "100%" }}>
+            <h5 className="m-t-2">Business/Common Service</h5>
+            <Grid
+              className="m-t-2"
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              alignItems={"center"}
+              justifyContent={"flex-start"}
+            >
+              {this.renderDropDowns()}
+            </Grid>
+          </Box>
+          <Box sx={{ width: "100%" }}>
+            <h5 className="m-t-2">Filters</h5>
+            <Grid
+            className="m-t-2"
               container
               rowSpacing={1}
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
