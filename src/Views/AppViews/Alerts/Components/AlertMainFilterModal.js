@@ -41,7 +41,7 @@ let data = [
       {
         label: "Elements",
         values: [
-          { name: "EC2", value: 1 },
+          { name: "EC2", value: 11 },
           { name: "Lambda", value: 2 },
           { name: "EKS", value: 3 },
           { name: "DynamoDB", value: 4 },
@@ -57,10 +57,10 @@ let data = [
       {
         label: "Department",
         values: [
-          { name: "HR", value: 1 },
-          { name: "Finance", value: 2 },
-          { name: "Procurement", value: 3 },
-          { name: "Inventory Department", value: 4 },
+          { name: "HR", value: 11 },
+          { name: "Finance", value: 21 },
+          { name: "Procurement", value: 31 },
+          { name: "Inventory Department", value: 41 },
         ],
       },
       {
@@ -100,7 +100,7 @@ let data = [
         label: "Severity",
         values: [
           { name: "Low", value: 1 },
-          { name: "Medium", value: 1 },
+          { name: "Medium", value: 12 },
         ],
       },
       {
@@ -125,6 +125,7 @@ class AlertMainFilterModal extends Component {
     this.state = {
       isAddNewEnvironmentShown: false,
       openDropDownId: -1,
+      selectedData: {},
     };
   }
 
@@ -221,7 +222,15 @@ class AlertMainFilterModal extends Component {
       ));
     }
   };
+
+  handleSelectboxChange = (value, index) => {
+    let { selectedData } = this.state;
+    selectedData[index] = value;
+    console.log(selectedData);
+    this.setState({ selectedData });
+  };
   render() {
+    let { selectedData } = this.state;
     return (
       <Modal
         isOpen={this.props.showModal}
@@ -243,7 +252,7 @@ class AlertMainFilterModal extends Component {
         </ModalHeader>
         <ModalBody>
           {data?.length ? (
-            data.map((details) => {
+            data.map((details, outerIndex) => {
               return (
                 <Box sx={{ width: "100%" }}>
                   <h5>{details.title}</h5>
@@ -265,10 +274,19 @@ class AlertMainFilterModal extends Component {
                                 <Select
                                   labelId="demo-multiple-name-label"
                                   displayEmpty
-                                  // value={selectedPolicy[index] || '' }
-                                  // onChange={(e) => this.handleSelectboxChange(e, index)}
-                                  inputProps={{ "aria-label": "Without label" }}
+                                  value={
+                                    selectedData[
+                                      `${details.title}_${outerIndex}_${index}`
+                                    ] || ""
+                                  }
+                                  onChange={(e) =>
+                                    this.handleSelectboxChange(
+                                      e.target.value,
+                                      `${details.title}_${outerIndex}_${index}`
+                                    )
+                                  }
                                 >
+                                  <MenuItem value="">{data.label}</MenuItem>
                                   {this.renderPolicies(data.values)}
                                 </Select>
                               </FormControl>

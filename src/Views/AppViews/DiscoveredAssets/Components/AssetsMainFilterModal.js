@@ -14,6 +14,7 @@ import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
+import { index } from "d3";
 let dropDownData = [
   {
     name: "eu-east-1",
@@ -150,7 +151,7 @@ class AssetsMainFilterModal extends Component {
       isAddNewEnvironmentShown: false,
       openDropDownId: -1,
       policyList: [],
-      selectedPolicy: {},
+      selectedLog: {},
     };
   }
 
@@ -196,7 +197,7 @@ class AssetsMainFilterModal extends Component {
     return selectedPolicy;
   };
 
-  renderPolicies = () => {
+  renderData = () => {
     if (dropDownData.length) {
       return dropDownData.map((policy) => (
         <MenuItem value={policy.value} key={v4()}>
@@ -289,11 +290,14 @@ class AssetsMainFilterModal extends Component {
   //   );
   // };
 
-  handleSelectboxChange = ()=>{
-    
-  }
+  handleSelectboxChange = (value, index) => {
+    let { selectedLog } = this.state;
+    selectedLog[index] = value;
+    this.setState({ selectedLog });
+  };
+
   render() {
-    let { selectedPolicy } = this.state;
+    let { selectedLog } = this.state;
     const errors = {};
     return (
       <Modal
@@ -343,14 +347,19 @@ class AssetsMainFilterModal extends Component {
                     <Box className="form-group" key={v4()}>
                       <FormControl className="select-policy">
                         <Select
-                          labelId="demo-multiple-name-label"
-                          value={''}
-                          onChange={(e) => this.handleSelectboxChange(e, index)}
+                          value={selectedLog[`${filter}_${index}`] || ""}
+                          displayEmpty
+                          onChange={(e) =>
+                            this.handleSelectboxChange(
+                              e.target.value,
+                              `${filter}_${index}`
+                            )
+                          }
                         >
-                          <MenuItem disabled value={""}>
-                            <em>{dropDowns[index]}</em>
+                          <MenuItem disabled value="">
+                            {dropDowns[index]}
                           </MenuItem>
-                          {this.renderPolicies()}
+                          {this.renderData()}
                         </Select>
                       </FormControl>
                       {errors.policy ? (
