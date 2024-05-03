@@ -288,6 +288,10 @@ class AssetsMainFilterModal extends Component {
   //     <></>
   //   );
   // };
+
+  handleSelectboxChange = ()=>{
+    
+  }
   render() {
     let { selectedPolicy } = this.state;
     const errors = {};
@@ -323,39 +327,29 @@ class AssetsMainFilterModal extends Component {
               {this.renderDropDowns()}
             </Grid>
           </Box> */}
-          {dropDowns.map((filter, index) => {
-            return (
-              <Box sx={{ width: "100%" }}>
-                <Grid
-                  container
-                  rowSpacing={1}
-                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                  alignItems={"center"}
-                  justifyContent={"flex-start"}
-                >
+
+          <Box sx={{ width: "100%" }}>
+            <Grid
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              alignItems={"center"}
+              justifyContent={"flex-start"}
+            >
+              {" "}
+              {dropDowns.map((filter, index) => {
+                return (
                   <Grid item xs={12} sm={6} md={6} lg={4}>
                     <Box className="form-group" key={v4()}>
                       <FormControl className="select-policy">
                         <Select
                           labelId="demo-multiple-name-label"
-                          multiple
-                          displayEmpty
-                          renderValue={(selected) => {
-                            if (selected.length === 0) {
-                              return <em>{filter}</em>;
-                            }
-                            let labels = [];
-                            dropDownData.forEach((policy) => {
-                              if (selected.includes(policy.value)) {
-                                labels.push(policy.name);
-                              }
-                            });
-                            return labels.join(", ");
-                          }}
-                          value={selectedPolicy[index] || []}
-                          // onChange={(e) => this.handleSelectboxChange(e, index)}
-                          inputProps={{ "aria-label": "Without label" }}
+                          value={''}
+                          onChange={(e) => this.handleSelectboxChange(e, index)}
                         >
+                          <MenuItem disabled value={""}>
+                            <em>{dropDowns[index]}</em>
+                          </MenuItem>
                           {this.renderPolicies()}
                         </Select>
                       </FormControl>
@@ -366,10 +360,10 @@ class AssetsMainFilterModal extends Component {
                       )}
                     </Box>
                   </Grid>
-                </Grid>
-              </Box>
-            );
-          })}
+                );
+              })}
+            </Grid>
+          </Box>
         </ModalBody>
         <ModalFooter className="footer-top-br m-t-3">
           <Box className="d-block text-center">

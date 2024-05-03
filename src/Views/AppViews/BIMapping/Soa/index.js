@@ -1246,7 +1246,7 @@ class Soa extends Component {
       createProductFormData,
       creationBiMapping,
     } = this.props;
-    console.log(createProductFormData);
+
     return (
       <Box className="bimapping-container">
         {this.renderHeading()}

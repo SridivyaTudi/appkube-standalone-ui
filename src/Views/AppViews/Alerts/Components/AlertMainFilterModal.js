@@ -6,104 +6,117 @@ import {
   ListItem,
   Checkbox,
   IconButton,
+  MenuItem,
+  FormControl,
+  Select,
 } from "@mui/material/";
 import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import CloseIcon from "@mui/icons-material/Close";
-import { v4 } from "uuid";
+import { v4, validate } from "uuid";
+
 let data = [
   {
-    label: "Landing Zone",
-    values: [
-      "AWS (657907747554)",
-      "AWS (657907747554)",
-      "AWS (657907747554)",
-      "AWS (657907747554)",
-      "AWS (657907747554)",
+    dropDownData: [
+      {
+        label: "Landing Zone",
+        values: [
+          { name: "AWS (657907747554)", value: 1 },
+          { name: "AWS (657907747554)", value: 2 },
+          { name: "AWS (657907747554)", value: 3 },
+          { name: "AWS (657907747554)", value: 4 },
+          { name: "AWS (657907747554)", value: 5 },
+        ],
+      },
+      {
+        label: "Product Enclave",
+        values: [
+          { name: "8 VPC", value: 1 },
+          { name: "8 VPC", value: 2 },
+          { name: "8 VPC", value: 3 },
+          { name: "8 VPC", value: 4 },
+          { name: "5 VPC", value: 5 },
+        ],
+      },
+      {
+        label: "Elements",
+        values: [
+          { name: "EC2", value: 1 },
+          { name: "Lambda", value: 2 },
+          { name: "EKS", value: 3 },
+          { name: "DynamoDB", value: 4 },
+          { name: "Redshift", value: 5 },
+        ],
+      },
     ],
+    title: "Infra",
+  },
+
+  {
+    dropDownData: [
+      {
+        label: "Department",
+        values: [
+          { name: "HR", value: 1 },
+          { name: "Finance", value: 2 },
+          { name: "Procurement", value: 3 },
+          { name: "Inventory Department", value: 4 },
+        ],
+      },
+      {
+        label: "Product",
+        values: [{ name: "HRMS", value: 1 }],
+      },
+      {
+        label: "Environment",
+        values: [{ name: "Development", value: 1 }],
+      },
+      {
+        label: "Module",
+        values: [
+          { name: "Payroll Management", value: 1 },
+          { name: "Leave Management", value: 2 },
+          { name: "Onboarding Management", value: 3 },
+        ],
+      },
+      {
+        label: "Services Type",
+        values: [{ name: "Development", value: 1 }],
+      },
+      {
+        label: "Services",
+        values: [{ name: "Development", value: 1 }],
+      },
+      {
+        label: "Product Type",
+        values: [{ name: "Development", value: 1 }],
+      },
+    ],
+    title: "Business/Common Services",
   },
   {
-    label: "Product Enclave",
-    values: ["8 VPC", "8 VPC", "8 VPC", "5 VPC", "6 VPC"],
+    dropDownData: [
+      {
+        label: "Severity",
+        values: [
+          { name: "Low", value: 1 },
+          { name: "Medium", value: 1 },
+        ],
+      },
+      {
+        label: "Alert State",
+        values: [
+          { name: "New Generated", value: 1 },
+          { name: "In process", value: 2 },
+        ],
+      },
+      {
+        label: "Alert type",
+        values: [{ name: "CPU percentage", value: 1 }],
+      },
+    ],
+    title: "Filters",
   },
-  {
-    label: "Elements",
-    values: ["EC2", "Lambda", "EKS", "ECS", "DynamoDB", "Redshift"],
-  },
-  // {
-  //   label: "Element Type",
-  //   values: ["EC2", "Lambda", "EKS", "ECS", "DynameDB", "Redshift"],
-  // },
-  // {
-  //   label: "App/Data",
-  //   values: ["App", "Data", "Both"],
-  // },
-  // {
-  //   label: "Resource Type",
-  //   values: [
-  //     "API Request",
-  //     "Bucket",
-  //     "Business Analytics",
-  //     "CF Stack (Cluster)",
-  //     "Compute",
-  //     "Data Transfer",
-  //     "Dev Stand (IT Environment)",
-  //     "Encryption",
-  //     "IP Address",
-  //     "Instance",
-  //     "KB Pod",
-  //   ],
-  // },
-  // {
-  //   label: "Node",
-  //   values: ["Orchid-Staging"],
-  // },
-  // {
-  //   label: "Tags",
-  //   values: [
-  //     "Seed",
-  //     "app",
-  //     "app_kubernetes_to_component",
-  //     "app_kubernetes_to_managed_by",
-  //     "app_kubernetes_to_name",
-  //     "app_kubernetes_to_part_of",
-  //     "app_kubernetes_to_version",
-  //     "aqa",
-  //     "aqa_tag",
-  //     "aqa_uuid",
-  //   ],
-  // },
-  // {
-  //   label: "Resource State",
-  //   values: ["Billing Only", "Active"],
-  // },
-  // {
-  //   label: "Data Source",
-  //   values: [
-  //     "AWS HQ",
-  //     "AWS Marketing",
-  //     "All dev",
-  //     "Azure QA",
-  //     "Dev Environment",
-  //     "GCP dev",
-  //     "K8s dev",
-  //   ],
-  // },
-  // {
-  //   label: "Service",
-  //   values: [
-  //     "AWS",
-  //     "AWSCloudTrail",
-  //     "AWSCostExplorer",
-  //     "AWSELB",
-  //     "AWSCloudWatch",
-  //     "AmazonEc2",
-  //     "AmazonEKS",
-  //     "AmazonKinesis",
-  //     "AmazonQuickSight",
-  //     "AmazonRDS",
-  //   ],
-  // },
 ];
 
 class AlertMainFilterModal extends Component {
@@ -115,11 +128,12 @@ class AlertMainFilterModal extends Component {
     };
   }
 
-  toggleAddNewEnvironmentMenu = (e, id) => {
-    let { isAddNewEnvironmentShown } = this.state;
+  toggleDropDown = (e, id) => {
+    let { isDropDownShown, openDropDownId } = this.state;
     this.setState({
-      isAddNewEnvironmentShown: !this.state.isAddNewEnvironmentShown,
-      openDropDownId: isAddNewEnvironmentShown ? -1 : id,
+      isDropDownShown:
+        openDropDownId === id ? false : !this.state.isDropDownShown,
+      openDropDownId: isDropDownShown ? -1 : id,
     });
   };
 
@@ -144,24 +158,24 @@ class AlertMainFilterModal extends Component {
     );
   };
 
-  renderDropDowns = () => {
-    const { isAddNewEnvironmentShown, openDropDownId } = this.state;
-    return data.length ? (
-      data.map((fillterData, index) => {
+  renderDropDowns = (dropDownData = [], title) => {
+    const { isDropDownShown, openDropDownId } = this.state;
+    return dropDownData?.length ? (
+      dropDownData.map((fillterData, index) => {
         return (
           <Grid item xs={12} sm={6} md={6} lg={4} key={v4()}>
             <Box className="environment-fliter">
               <Box
                 className="fliter-toggel new-environment"
-                onClick={(e) => this.toggleAddNewEnvironmentMenu(e, index)}
+                onClick={(e) => this.toggleDropDown(e, `${title}_${index}`)}
               >
                 {fillterData.label}
                 <i class="fas fa-angle-down arrow-icon"></i>
               </Box>
-              {openDropDownId === index ? (
+              {openDropDownId === `${title}_${index}` ? (
                 <Box
                   className={
-                    isAddNewEnvironmentShown
+                    isDropDownShown
                       ? "fliter-collapse active"
                       : "fliter-collapse"
                   }
@@ -176,11 +190,11 @@ class AlertMainFilterModal extends Component {
 
               <div
                 className={
-                  isAddNewEnvironmentShown
+                  isDropDownShown
                     ? "fliters-collapse-bg active"
                     : "fliters-collapse-bg"
                 }
-                onClick={(e) => this.toggleAddNewEnvironmentMenu(e, index)}
+                onClick={(e) => this.toggleDropDown(e, `${title}_${index}`)}
               />
             </Box>
           </Grid>
@@ -189,6 +203,23 @@ class AlertMainFilterModal extends Component {
     ) : (
       <></>
     );
+  };
+
+  renderPolicies = (data, title) => {
+    if (data.length) {
+      return data.map((policy) => (
+        <MenuItem value={policy.value} key={v4()}>
+          <Checkbox
+            className="check-box"
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          />
+          {policy.name}
+        </MenuItem>
+      ));
+    }
   };
   render() {
     return (
@@ -211,45 +242,50 @@ class AlertMainFilterModal extends Component {
           </h5>
         </ModalHeader>
         <ModalBody>
-          <Box sx={{ width: "100%" }}>
-            <h5>Infra</h5>
-            <Grid
-            className="m-t-2"
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              {this.renderDropDowns()}
-            </Grid>
-          </Box>
-          <Box sx={{ width: "100%" }}>
-            <h5 className="m-t-2">Business/Common Service</h5>
-            <Grid
-              className="m-t-2"
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              {this.renderDropDowns()}
-            </Grid>
-          </Box>
-          <Box sx={{ width: "100%" }}>
-            <h5 className="m-t-2">Filters</h5>
-            <Grid
-            className="m-t-2"
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              {this.renderDropDowns()}
-            </Grid>
-          </Box>
+          {data?.length ? (
+            data.map((details) => {
+              return (
+                <Box sx={{ width: "100%" }}>
+                  <h5>{details.title}</h5>
+                  <Grid
+                    className="m-t-2"
+                    container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                    alignItems={"center"}
+                    justifyContent={"flex-start"}
+                  >
+                    {/* {this.renderDropDowns(details.dropDownData, details.title)} */}
+                    {details.dropDownData?.length ? (
+                      details.dropDownData.map((data, index) => {
+                        return (
+                          <Grid item xs={12} sm={6} md={6} lg={4} key={v4()}>
+                            <Box className="form-group">
+                              <FormControl className="select-policy">
+                                <Select
+                                  labelId="demo-multiple-name-label"
+                                  displayEmpty
+                                  // value={selectedPolicy[index] || '' }
+                                  // onChange={(e) => this.handleSelectboxChange(e, index)}
+                                  inputProps={{ "aria-label": "Without label" }}
+                                >
+                                  {this.renderPolicies(data.values)}
+                                </Select>
+                              </FormControl>
+                            </Box>
+                          </Grid>
+                        );
+                      })
+                    ) : (
+                      <></>
+                    )}
+                  </Grid>
+                </Box>
+              );
+            })
+          ) : (
+            <></>
+          )}
         </ModalBody>
         <ModalFooter className="footer-top-br m-t-3">
           <Box className="d-block text-center">

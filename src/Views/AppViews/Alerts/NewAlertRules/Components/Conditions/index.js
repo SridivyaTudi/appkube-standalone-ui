@@ -8,7 +8,12 @@ class Conditions extends Component {
       displayThresoldData: true,
       displayRelativeData: false,
       displayDadmanData: false,
-      isBulkActionDropDownOpen: false,
+      isComparisionDropDownOpen: false,
+      isTimeSeriesDropDownOpen: false,
+      selectedDropDowns: {
+        timeSeries: '',
+        comparision: '',
+      },
     };
   }
 
@@ -17,26 +22,56 @@ class Conditions extends Component {
       console.log(this.props.dataFromAlertType);
     }
   }
-  toggleBulkAction = () => {
+  toggleComparisionAction = () => {
     this.setState({
-      isBulkActionDropDownOpen: !this.state.isBulkActionDropDownOpen,
+      isComparisionDropDownOpen: !this.state.isComparisionDropDownOpen,
     });
   };
 
-  renderDropDownData = () => {
-    let { selectedTimeFrame, selectedDates } = this.state;
-    return [
-      "Query Ok",
-      "Query Fail",
-    ].map((data, index) => {
+  toggleTimeSeriesAction = () => {
+    this.setState({
+      isTimeSeriesDropDownOpen: !this.state.isTimeSeriesDropDownOpen,
+    });
+  };
+
+  renderDropDownData = (isTimeSeriesData = 1) => {
+    let {
+      selectedDropDowns: { timeSeries, comparision },
+    } = this.state;
+
+    let data = isTimeSeriesData
+      ? ["Query Ok", "Query Fail"]
+      : ["Greater than", "Less than", "Equal to"];
+
+    return data.map((data, index) => {
+      let activeClass = isTimeSeriesData
+        ? (timeSeries === data && "active") || ""
+        : (comparision === data && "active") || "";
       return (
-        <ListItem key={index}>
-          {" "}
+        <ListItem
+          key={index}
+          onClick={() => this.onClickDropDown(isTimeSeriesData, data)}
+          className={activeClass}
+        >
           <i className="fa-solid fa-circle-dot"></i>
           {data}
         </ListItem>
       );
     });
+  };
+
+  onClickDropDown = (isTimeSeriesData, data) => {
+    let {
+      selectedDropDowns: { timeSeries, comparision },
+    } = this.state;
+
+    if (isTimeSeriesData) {
+      timeSeries = data;
+    } else {
+      comparision = data;
+    }
+
+    this.setState({ selectedDropDowns: { timeSeries, comparision } });
   };
 
   onChangeAlertType = (alertType) => {
@@ -62,7 +97,11 @@ class Conditions extends Component {
   };
 
   thresoldCondition() {
-    let { isBulkActionDropDownOpen } = this.state;
+    let {
+      isComparisionDropDownOpen,
+      isTimeSeriesDropDownOpen,
+      selectedDropDowns: { timeSeries, comparision },
+    } = this.state;
     let thresoldData = (
       <Box className="condition-header">
         <Box className="send-alert-text">
@@ -72,15 +111,15 @@ class Conditions extends Component {
         <Box className="mapping-fliter m-r-2">
           <Box
             className="fliter-toggel p-l-15 p-r-15"
-            onClick={this.toggleBulkAction}
+            onClick={this.toggleTimeSeriesAction}
           >
-            Select time series
+            {timeSeries || "Select time series"}
             <i className="fas fa-angle-down"></i>
           </Box>
-          {isBulkActionDropDownOpen && (
+          {isTimeSeriesDropDownOpen && (
             <div
               className={
-                isBulkActionDropDownOpen
+                isTimeSeriesDropDownOpen
                   ? "fliter-collapse active"
                   : "fliter-collapse"
               }
@@ -91,42 +130,42 @@ class Conditions extends Component {
 
           <div
             className={
-              isBulkActionDropDownOpen
+              isTimeSeriesDropDownOpen
                 ? "fliters-collapse-bg active"
                 : "fliters-collapse-bg"
             }
-            onClick={this.toggleBulkAction}
+            onClick={this.toggleTimeSeriesAction}
           />
         </Box>
-       
+
         <label className="m-r-2 d-inline-block">is</label>
         <Box className="mapping-fliter">
           <Box
             className="fliter-toggel p-l-15 p-r-15"
-            onClick={this.toggleBulkAction}
+            onClick={this.toggleComparisionAction}
           >
-            greater than
+            {comparision || "greater than"}
             <i className="fas fa-angle-down"></i>
           </Box>
-          {isBulkActionDropDownOpen && (
+          {isComparisionDropDownOpen && (
             <div
               className={
-                isBulkActionDropDownOpen
+                isComparisionDropDownOpen
                   ? "fliter-collapse active"
                   : "fliter-collapse"
               }
             >
-              <List>{this.renderDropDownData()}</List>
+              <List>{this.renderDropDownData(0)}</List>
             </div>
           )}
 
           <div
             className={
-              isBulkActionDropDownOpen
+              isComparisionDropDownOpen
                 ? "fliters-collapse-bg active"
                 : "fliters-collapse-bg"
             }
-            onClick={this.toggleBulkAction}
+            onClick={this.toggleComparisionAction}
           />
         </Box>
         <Box className="greater-search">
@@ -197,11 +236,8 @@ class Conditions extends Component {
     return dadmanData;
   }
   render() {
-    const {
-      displayThresoldData,
-      displayRelativeData,
-      displayDadmanData,
-    } = this.state;
+    const { displayThresoldData, displayRelativeData, displayDadmanData } =
+      this.state;
     return (
       <>
         <Box className="alert-details">
