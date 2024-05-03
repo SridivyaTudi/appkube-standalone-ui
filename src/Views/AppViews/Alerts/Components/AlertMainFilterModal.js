@@ -286,9 +286,13 @@ class AlertMainFilterModal extends Component {
                                     )
                                   }
                                 >
-                                  
+                                  <MenuItem
+                                    value=""
+                                    style={{ fontSize: 14, color: "383874" }}
+                                  >
+                                    {data.label}
+                                  </MenuItem>
                                   <Box className="dropdown-select-menu">
-                                  <MenuItem value="" className="title">{data.label}</MenuItem>
                                     {this.renderPolicies(data.values)}
                                   </Box>
                                 </Select>

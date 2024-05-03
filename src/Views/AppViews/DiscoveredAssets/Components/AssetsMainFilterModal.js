@@ -218,7 +218,7 @@ class AssetsMainFilterModal extends Component {
   renderData = () => {
     if (dropDownData.length) {
       return dropDownData.map((policy) => (
-        <MenuItem value={policy.value} key={v4()} className="">
+        <MenuItem value={policy.value} key={v4()} className="select-menu">
           <Checkbox
             className="check-box"
             size="small"
@@ -374,10 +374,13 @@ class AssetsMainFilterModal extends Component {
                             )
                           }
                         >
+                          <MenuItem
+                            value=""
+                            style={{ fontSize: 14, color: "383874" }}
+                          >
+                            {dropDowns[index]}
+                          </MenuItem>
                           <Box className="dropdown-select-menu">
-                            <MenuItem disabled value="" className="title">
-                              {dropDowns[index]}
-                            </MenuItem>
                             {this.renderData()}
                           </Box>
                         </Select>

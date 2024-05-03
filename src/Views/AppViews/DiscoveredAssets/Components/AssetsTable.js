@@ -246,7 +246,10 @@ class AssetsTable extends Component {
                           }
                         >
                           <List menu-list>
-                            <ListItem>Set Up</ListItem>
+                            <ListItem>
+                              {" "}
+                              <i className="fa-solid fa-circle-dot"></i> Set Up
+                            </ListItem>
                           </List>
                         </div>
                       )}
