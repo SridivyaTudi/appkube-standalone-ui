@@ -218,7 +218,7 @@ class AssetsMainFilterModal extends Component {
   renderData = () => {
     if (dropDownData.length) {
       return dropDownData.map((policy) => (
-        <MenuItem value={policy.value} key={v4()}>
+        <MenuItem value={policy.value} key={v4()} className="">
           <Checkbox
             className="check-box"
             size="small"
@@ -350,7 +350,7 @@ class AssetsMainFilterModal extends Component {
             </Grid>
           </Box> */}
 
-          <Box sx={{ width: "100%" }}>
+          <Box sx={{ width: "100%" }} className="p-r-5">
             <Grid
               container
               rowSpacing={1}
@@ -374,10 +374,12 @@ class AssetsMainFilterModal extends Component {
                             )
                           }
                         >
-                          <MenuItem disabled value="">
-                            {dropDowns[index]}
-                          </MenuItem>
-                          {this.renderData()}
+                          <Box className="dropdown-select-menu">
+                            <MenuItem disabled value="" className="title">
+                              {dropDowns[index]}
+                            </MenuItem>
+                            {this.renderData()}
+                          </Box>
                         </Select>
                       </FormControl>
                       {errors.policy ? (

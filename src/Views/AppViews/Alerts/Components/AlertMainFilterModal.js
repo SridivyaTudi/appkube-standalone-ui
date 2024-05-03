@@ -209,7 +209,7 @@ class AlertMainFilterModal extends Component {
   renderPolicies = (data, title) => {
     if (data.length) {
       return data.map((policy) => (
-        <MenuItem value={policy.value} key={v4()}>
+        <MenuItem value={policy.value} key={v4()} className="select-menu">
           <Checkbox
             className="check-box"
             size="small"
@@ -254,7 +254,7 @@ class AlertMainFilterModal extends Component {
           {data?.length ? (
             data.map((details, outerIndex) => {
               return (
-                <Box sx={{ width: "100%" }}>
+                <Box sx={{ width: "100%" }} className="p-r-5">
                   <h5>{details.title}</h5>
                   <Grid
                     className="m-t-2"
@@ -286,8 +286,11 @@ class AlertMainFilterModal extends Component {
                                     )
                                   }
                                 >
-                                  <MenuItem value="">{data.label}</MenuItem>
-                                  {this.renderPolicies(data.values)}
+                                  
+                                  <Box className="dropdown-select-menu">
+                                  <MenuItem value="" className="title">{data.label}</MenuItem>
+                                    {this.renderPolicies(data.values)}
+                                  </Box>
                                 </Select>
                               </FormControl>
                             </Box>
