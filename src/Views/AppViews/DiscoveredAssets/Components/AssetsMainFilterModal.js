@@ -17,29 +17,47 @@ import { v4 } from "uuid";
 import { index } from "d3";
 let dropDownData = [
   {
-    name: "eu-east-1",
+    name: "China (Hong Kong)",
     value: "2",
   },
   {
-    name: "eu-west-2",
+    name: "East US",
     value: "3",
   },
   {
-    name: "ap-south-1",
+    name: "East US 2",
     value: "4",
   },
   {
-    name: "ap-south-2",
+    name: "France Central",
     value: "5",
+  },
+  {
+    name: "Germany West Central",
+    value: "6",
+  },
+  {
+    name: "India (Mumbai)",
+    value: "7",
+  },
+  {
+    name: "Indonesia ( Jakarta)",
+    value: "8",
   },
 ];
 
 let dropDowns = [
-  "Select Regions",
-  "Select VPCs",
-  "Select Tagname",
-  "Select Accounts",
-  "Select Products",
+  "Regions",
+  "AWS Account",
+  "Product Enclave",
+  "Element Type",
+  "App/Data",
+  "Resource Type",
+  "Node",
+  "Tags",
+  "Resource State",
+  "Data Source",
+  "Service",
 ];
 // let data = [
 //   {
@@ -343,7 +361,7 @@ class AssetsMainFilterModal extends Component {
               {" "}
               {dropDowns.map((filter, index) => {
                 return (
-                  <Grid item xs={12} sm={6} md={6} lg={4}>
+                  <Grid item xs={12} sm={6} md={6} lg={4} className="p-t-10">
                     <Box className="form-group" key={v4()}>
                       <FormControl className="select-policy">
                         <Select
