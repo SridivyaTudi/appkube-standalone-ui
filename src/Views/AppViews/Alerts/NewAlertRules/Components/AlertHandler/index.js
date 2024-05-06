@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Box, Button, List, ListItem } from "@mui/material";
+import { Box, Grid, Button, List, ListItem } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export class AlertHandler extends Component {
   tabComponentsList;
@@ -176,16 +177,98 @@ export class AlertHandler extends Component {
               </Box> */}
             </Box>
             <Box className="alert-handler-box">
-              <section className="tab-container row vertical-tab-container">
-                <Box className="col-lg-2 col-md-3 col-sm-6">
+              <Grid container spacing={2}>
+                <Grid item lg={2} md={3} sm={6} sx={12}>
                   <Box className="alert-left-box">
-                    {/* <Nav tabs>{this.createTabs(tabData)}</Nav> */}
+                    <List>
+                      <ListItem>
+                        <Link to={`#`} className="active">
+                          Post<i className="fas fa-times"></i>
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link to={`#`}>
+                          tcp <i className="fas fa-times"></i>
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link to={`#`}>
+                          exec <i className="fas fa-times"></i>
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link to={`#`}>
+                          exec <i className="fas fa-times"></i>
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link to={`#`}>
+                          exec <i className="fas fa-times"></i>
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link to={`#`}>
+                          exec <i className="fas fa-times"></i>
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link to={`#`}>
+                          exec <i className="fas fa-times"></i>
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link to={`#`}>
+                          exec <i className="fas fa-times"></i>
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link to={`#`}>
+                          exec <i className="fas fa-times"></i>
+                        </Link>
+                      </ListItem>
+                    </List>
                   </Box>
-                </Box>
-                <Box className="col-lg-9 col-md-9 col-sm-6 alert-description">
-                  {/* <TabContent activeTab={activeTab}>{this.createTabPanes(tabComponents)}</TabContent> */}
-                </Box>
-              </section>
+                </Grid>
+                <Grid item lg={9} md={9} sm={6} sx={12}>
+                  <Box className="tab-content">
+                    <Box className="alert-handler-span">
+                      Parameters for this Alert Handler
+                    </Box>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <Box className="form-group">
+                          <label className="alert-handler-label">HTTP endpoint for POST request</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Placeholder"
+                          />
+                        </Box>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Box className="form-group">
+                          <label className="alert-handler-label">Header Key</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Placeholder"
+                          />
+                        </Box>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Box className="form-group">
+                          <label className="alert-handler-label">Header Value</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Placeholder"
+                          />
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Grid>
+              </Grid>
             </Box>
           </Box>
         </Box>

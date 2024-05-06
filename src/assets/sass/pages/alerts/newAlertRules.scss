@@ -267,7 +267,7 @@
                       }
                       &.selected {
                         background-color: #efefef;
-                    
+
                         &:after,
                         &:before {
                           top: 13px;
@@ -279,7 +279,7 @@
                           position: absolute;
                           pointer-events: none;
                         }
-                    
+
                         &:after {
                           border-color: rgba(248, 249, 251, 0);
                           border-top-color: #efefef;
@@ -287,7 +287,7 @@
                           margin-left: -3px;
                           margin-top: 0;
                         }
-                    
+
                         &:before {
                           border-color: rgba(239, 239, 239, 0);
                           border-top-color: #8392a7;
@@ -312,11 +312,11 @@
                         display: block;
                         width: 100%;
                         padding: 10px 0 0 0;
-                    
+
                         ul li.selected {
                           padding-left: 15px;
                         }
-                    
+
                         .hostname {
                           float: right;
                           width: auto;
@@ -329,7 +329,7 @@
                           font-size: 12px;
                           margin-top: 1px;
                         }
-                    
+
                         ul li {
                           &.selected {
                             &:before,
@@ -337,19 +337,19 @@
                               left: 0;
                             }
                           }
-                    
+
                           &:before,
                           &:after {
                             left: 0;
                           }
                         }
-                    
+
                         .hostname-search {
                           display: block;
                           position: relative;
                           width: 100%;
                           margin-top: 10px;
-                    
+
                           .input-group-text {
                             border: 1px solid #8392a7;
                             background-color: #ffffff;
@@ -363,7 +363,7 @@
                             text-align: left;
                             width: 100%;
                           }
-                    
+
                           button {
                             position: absolute;
                             left: 0;
@@ -374,7 +374,7 @@
                             font-size: 12px;
                           }
                         }
-                    
+
                         .hostip {
                           display: block;
                           font-size: 11px;
@@ -384,7 +384,7 @@
                           position: relative;
                           padding-left: 10px;
                           margin-top: 5px;
-                    
+
                           &:before {
                             content: "";
                             width: 6px;
@@ -489,7 +489,7 @@
             .condition-header {
               border-bottom: 1px solid #979797;
               padding: 10px 0px 7px 15px;
-          
+
               .send-alert-text {
                 color: #3b4859;
                 font-size: 14px;
@@ -509,7 +509,7 @@
                   padding: 0 15px 0 10px;
                 }
               }
-          
+
               // .greater-select {
               //   display: inline-block;
               //   padding: 0 0 0 0;
@@ -544,22 +544,22 @@
               .mapping-fliter {
                 position: relative;
                 display: inline-block;
-              
+
                 button {
-                  border: 1.5px solid #384CFF;
+                  border: 1.5px solid #384cff;
                   font-weight: 600;
                   font-size: 13px;
                   line-height: 18px;
-                  color: #023AFF;
-              
+                  color: #023aff;
+
                   &:hover {
-                    border: 1.5px solid #384CFF;
+                    border: 1.5px solid #384cff;
                   }
                   svg {
-                    color: #3A4DFE;
+                    color: #3a4dfe;
                   }
                 }
-              
+
                 .fliter-toggel {
                   display: flex;
                   align-items: center;
@@ -577,12 +577,12 @@
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
-              
+
                   .arrow-icon {
                     margin-left: 20px;
                   }
                 }
-              
+
                 .fliter-collapse {
                   background-color: #ffffff;
                   border-radius: 5px;
@@ -597,17 +597,17 @@
                   overflow-y: auto;
                   max-height: 200px;
                   box-shadow: 0px 4px 32px 0px #00103d29;
-              
+
                   &.active {
                     display: block;
                   }
-              
+
                   ul {
                     display: block;
                     list-style: none;
                     padding: 0;
                     margin: 0;
-              
+
                     li {
                       width: 100%;
                       display: flex;
@@ -622,30 +622,30 @@
                       padding: 7px 10px;
                       border-radius: 3px;
                       cursor: pointer;
-              
+
                       span {
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
                       }
-              
+
                       &:hover {
                         color: #383874;
                         background-color: #dde1f8;
                       }
-              
+
                       &.active {
                         color: #383874;
                         background-color: #dde1f8;
                       }
-              
+
                       i {
                         margin-right: 7px;
                       }
                     }
                   }
                 }
-              
+
                 .fliters-collapse-bg {
                   position: fixed;
                   width: 100%;
@@ -654,11 +654,87 @@
                   top: 0;
                   z-index: 1;
                   display: none;
-              
+
                   &.active {
                     display: block;
                   }
                 }
+              }
+            }
+            .alert-handler-box {
+              height: 375px;
+              overflow: hidden;
+              .alert-left-box {
+                background-color: #dde4e9;
+                padding: 0px;
+                height: 375px;
+                ul {
+                  padding: 0;
+                  li {
+                    width: 100%;
+                    display: block;
+                    padding: 0;
+                    a {
+                      width: 100%;
+                      display: block;
+                      left: 0;
+                      padding: 7px 15px;
+                      color: #3b4859;
+                      font-size: 12px;
+                      line-height: 18px;
+                      font-weight: 400;
+                      position: relative;
+                      i {
+                        position: absolute;
+                        top: 10px;
+                        right: 15px;
+                        color: red;
+                      }
+                      &:hover {
+                        background-color: #f8f9fb;
+                        color: #2662f0;
+                      }
+                      &.active {
+                        background-color: #f8f9fb;
+                        color: #2662f0;
+                      }
+                    }
+                  }
+                }
+              }
+              .tab-content {
+                .alert-handler-span {
+                  padding-top: 20px;
+                  color: #3b4859;
+                  font-size: 16px;
+                  font-weight: 600;
+                  line-height: 18px;
+                  display: block;
+                  margin-bottom: 10px;
+                }
+                .alert-handler-label {
+                  display: block;
+                  color: #3b4859;
+                  font-size: 14px;
+                  line-height: 20px;
+                  font-weight: 400;
+                  padding-bottom: 8px;
+                }
+                .form-control {
+                  display: block;
+                  width: 100%;
+                  height: calc(1.5em + 0.75rem + 2px);
+                  padding: 0.375rem 0.75rem;
+                  font-size: 0.8rem;
+                  font-weight: 400;
+                  line-height: 1.5;
+                  color: #495057;
+                  background-color: #fff;
+                  background-clip: padding-box;
+                  border: 1px solid #ced4da;
+                  border-radius: 0.25rem;
+                  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+              }
               }
             }
             .time-series-preview-box {
@@ -754,7 +830,7 @@
               .templates-text {
                 display: block;
                 margin-top: 15px;
-          
+
                 li {
                   color: #3b4859;
                   font-size: 12px;
@@ -764,7 +840,7 @@
                   display: inline-block;
                   vertical-align: top;
                   cursor: pointer;
-          
+
                   pre {
                     background-color: #dde1f8;
                     color: #383874;
@@ -776,7 +852,7 @@
                     border: none;
                     padding: 0 7px;
                     margin-top: 0;
-          
+
                     &:hover {
                       background-color: #eaedfc;
                     }
@@ -799,7 +875,6 @@
               }
             }
           }
-
         }
       }
     }
