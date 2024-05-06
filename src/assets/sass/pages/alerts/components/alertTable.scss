@@ -67,20 +67,28 @@
           position: relative;
           border-bottom: 1px solid #eaecf0;
           font-family: "Poppins", sans-serif;
-          .percentage-status{
+          .percentage-status {
             display: inline-block;
             width: 10px;
             min-width: 10px;
             height: 10px;
             border-radius: 50%;
             margin-right: 5px;
-            background: #FF2D2E;
-
+            background: #ff2d2e;
+            &.medium {
+              background: #ffba69;
+            }
+            &.low {
+              background: #00b929;
+            }
+            &.high {
+              background: #ff708b;
+            }
           }
-          &.status{
+          &.status {
             color: #00b929;
           }
-          .resource-name{
+          .resource-name {
             width: 100%;
             white-space: nowrap;
             overflow: hidden;
@@ -115,7 +123,8 @@
             overflow: hidden;
             border-radius: 10px;
             background-color: #ffffff;
-            box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px #6c49ac0d;
+            box-shadow: 0px 41.777610778808594px 33.422088623046875px 0px
+              #6c49ac0d;
 
             .secondary-text-btn {
               font-size: 12px;
@@ -270,7 +279,7 @@
               color: #1b4dff;
             }
           }
-          a{
+          a {
             color: #1b4dff;
           }
         }

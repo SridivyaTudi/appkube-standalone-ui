@@ -10,7 +10,7 @@ import {
   TablePagination,
   ListItem,
   List,
-  Checkbox
+  Checkbox,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
@@ -141,9 +141,13 @@ class AlertTable extends Component {
                 <TableCell align="left">{alert.ticketID}</TableCell>
                 <TableCell align="left">{alert.ticketStatus}</TableCell>
                 <TableCell align="left">
-                  <Box className="percentage-status"></Box>
-                  {alert.Severity} 
-                  </TableCell>
+                  <Box
+                    className={`percentage-status ${
+                      alert.stateClass ? alert.stateClass : ""
+                    }`}
+                  ></Box>
+                  {alert.Severity}
+                </TableCell>
                 <TableCell align="center">{alert.alertState}</TableCell>
                 <TableCell align="center">{alert.affectedResource}</TableCell>
                 <TableCell align="center">{alert.triggeredTime}</TableCell>

@@ -45,7 +45,7 @@ class ChartWrapper extends Component {
             )}
           </Box>
           <Link to={`${link ? link : "#"} `}>
-            <IconButton className="p-5">
+            <IconButton className="p-5 menu-btn">
               <i className="fas fa-ellipsis-h"></i>
             </IconButton>
           </Link>

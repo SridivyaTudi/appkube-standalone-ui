@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 class Threshold extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ messurementTag() {
             <ul>
                 <li className="selected">
                     <a>Cq</a>
-                    <div className="toggle">=</div>
+                    <Button className="toggle-btn"><i className="fa-solid fa-bars"></i></Button>
                     <div className="toggle-box">
                         <ul>
                             <li className="selected">

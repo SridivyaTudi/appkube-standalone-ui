@@ -14,7 +14,7 @@
 
   .heading {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
     .chart-title {
      display: block;
@@ -50,6 +50,11 @@
       font-size: 12px;
       line-height: 18px;
       padding: 5px 10px;
+    }
+    .menu-btn{
+      padding: 6px;
+      font-size: 18px;
+      color: #C6CBD9;
     }
   }
   .chart-content {
