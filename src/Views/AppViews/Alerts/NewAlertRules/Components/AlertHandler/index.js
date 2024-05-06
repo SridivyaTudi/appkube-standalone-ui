@@ -229,7 +229,7 @@ export class AlertHandler extends Component {
                     </List>
                   </Box>
                 </Grid>
-                <Grid item lg={9} md={9} sm={6} sx={12}>
+                <Grid item lg={10} md={9} sm={6} sx={12}>
                   <Box className="tab-content">
                     <Box className="alert-handler-span">
                       Parameters for this Alert Handler

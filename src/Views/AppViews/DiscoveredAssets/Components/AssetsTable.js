@@ -126,16 +126,21 @@ class AssetsTable extends Component {
       this.setState({ tagShowMenuList: envKey });
     }
   };
-  toggleSelectDepartment = (index) => {
-    let { isSelectDepartmentOpen } = this.state;
+  toggleSelectDepartment = (index,isStatus=0) => {
+    let { isSelectDepartmentOpen,isSelectStatusOpen } = this.state;
+    if (isStatus) {
+      isSelectStatusOpen = index
+    } else {
+      isSelectDepartmentOpen = index
+    }
     this.setState({
-      isSelectDepartmentOpen: index,
+      isSelectDepartmentOpen,isSelectStatusOpen
     });
   };
 
   //  Render table body
   renderTableBody = () => {
-    const { tagShowMenu, tagShowMenuList, rpg, pg, isSelectDepartmentOpen } =
+    const { tagShowMenu, tagShowMenuList, rpg, pg, isSelectDepartmentOpen,isSelectStatusOpen } =
       this.state;
     let environmentList = this.props.data || [];
 
@@ -178,14 +183,39 @@ class AssetsTable extends Component {
                     </HtmlTooltip>{" "}
                   </TableCell>
                   <TableCell align="center">
-                    <Box className={tagStatusClass || "tag"}>
+                    <Box
+                      className={`${tagStatusClass || "tag"} mapping-fliter`}
+                    >
                       <i
-                        className={tagStatusClass ? "fas fa-cog" : "fas fa-tag"}
-                        onClick={(e) => {
-                          this.handleMenuToggle(index);
-                        }}
+                        className={
+                          tagStatusClass ? "fas fa-cog " : "fas fa-tag "
+                        }
+                        onClick={() => this.toggleSelectDepartment(index, 1)}
                       ></i>
-                      {tagShowMenu === index ? (
+                      {isSelectStatusOpen === index && (
+                        <div
+                          className={
+                            isSelectStatusOpen === index
+                              ? "fliter-collapse active"
+                              : "fliter-collapse"
+                          }
+                        >
+                          <List menu-list>
+                            <ListItem>
+                              <i className="fa-solid fa-circle-dot"></i> Tag
+                            </ListItem>
+                          </List>
+                        </div>
+                      )}
+                      <div
+                        className={
+                          isSelectStatusOpen === index
+                            ? "fliters-collapse-bg active"
+                            : "fliters-collapse-bg"
+                        }
+                        onClick={() => this.toggleSelectDepartment(null, 1)}
+                      />
+                      {/* {tagShowMenu === index ? (
                         <>
                           <div
                             className="open-create-menu-close"
@@ -203,7 +233,7 @@ class AssetsTable extends Component {
                         </>
                       ) : (
                         <></>
-                      )}
+                      )} */}
                     </Box>
                   </TableCell>
                   <TableCell align="center">
@@ -247,7 +277,6 @@ class AssetsTable extends Component {
                         >
                           <List menu-list>
                             <ListItem>
-                              {" "}
                               <i className="fa-solid fa-circle-dot"></i> Set Up
                             </ListItem>
                           </List>
