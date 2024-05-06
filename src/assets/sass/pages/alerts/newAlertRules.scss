@@ -196,7 +196,10 @@
                   display: inline-block;
                   width: 25%;
                   min-height: 255px;
+                  height: 255px;
                   vertical-align: top;
+                  overflow: auto;
+                  overflow-y: auto;
 
                   li {
                     color: #3b4859;
@@ -471,7 +474,9 @@
                         background-color: #e4eaf0;
                         padding: 0 10px;
                         font-size: 11px;
-                        line-height: 16px;
+                        line-height: 20px;
+                        height: 20px;
+                        border-radius: 3px;
                       }
                     }
                   }
@@ -668,6 +673,8 @@
                 background-color: #dde4e9;
                 padding: 0px;
                 height: 375px;
+                overflow: hidden;
+                overflow-y: auto;
                 ul {
                   padding: 0;
                   li {
@@ -703,6 +710,11 @@
                 }
               }
               .tab-content {
+                width: 100%;
+                display: block;
+                max-height: 365px;
+                overflow: auto;
+                overflow-y: auto;
                 .alert-handler-span {
                   padding-top: 20px;
                   color: #3b4859;
@@ -733,8 +745,9 @@
                   background-clip: padding-box;
                   border: 1px solid #ced4da;
                   border-radius: 0.25rem;
-                  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-              }
+                  transition: border-color 0.15s ease-in-out,
+                    box-shadow 0.15s ease-in-out;
+                }
               }
             }
             .time-series-preview-box {

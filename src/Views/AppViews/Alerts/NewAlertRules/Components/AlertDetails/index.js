@@ -20,7 +20,7 @@ class AlertDetails extends Component {
         </Box>
         <Box className="alert-details-description">
           <label>Description</label>
-          <textarea placeholder="Specify alert rule description"></textarea>
+          <textarea style={{minHeight: 330}} placeholder="Specify alert rule description"></textarea>
         </Box>
       </Box>
     );

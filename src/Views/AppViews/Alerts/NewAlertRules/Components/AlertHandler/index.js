@@ -237,7 +237,9 @@ export class AlertHandler extends Component {
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <Box className="form-group">
-                          <label className="alert-handler-label">HTTP endpoint for POST request</label>
+                          <label className="alert-handler-label">
+                            HTTP endpoint for POST request
+                          </label>
                           <input
                             type="text"
                             class="form-control"
@@ -247,7 +249,9 @@ export class AlertHandler extends Component {
                       </Grid>
                       <Grid item xs={6}>
                         <Box className="form-group">
-                          <label className="alert-handler-label">Header Key</label>
+                          <label className="alert-handler-label">
+                            Header Key
+                          </label>
                           <input
                             type="text"
                             class="form-control"
@@ -257,7 +261,9 @@ export class AlertHandler extends Component {
                       </Grid>
                       <Grid item xs={6}>
                         <Box className="form-group">
-                          <label className="alert-handler-label">Header Value</label>
+                          <label className="alert-handler-label">
+                            Header Value
+                          </label>
                           <input
                             type="text"
                             class="form-control"
