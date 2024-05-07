@@ -184,7 +184,7 @@ class AssetsTable extends Component {
                   </TableCell>
                   <TableCell align="center">
                     <Box
-                      className={`${tagStatusClass || "tag"} mapping-fliter`}
+                      className={`${tagStatusClass || "tag"} tag-status	`}
                     >
                       <i
                         className={
@@ -259,7 +259,7 @@ class AssetsTable extends Component {
                     </span>
                   </TableCell>
                   <TableCell align="center">
-                    <Box className="mapping-fliter">
+                    <Box className="tag-status">
                       <button
                         type="button"
                         className="list-icon"

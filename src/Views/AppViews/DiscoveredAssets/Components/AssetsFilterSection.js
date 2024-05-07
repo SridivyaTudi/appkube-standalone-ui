@@ -33,10 +33,9 @@ class AssetsFilterSection extends Component {
       noOfRow = 5;
     } else if (width >= 1290 && width < 1500) {
       noOfRow = 4;
-    }else if (width >= 1100 && width < 1120) {
+    } else if (width >= 1100 && width < 1120) {
       noOfRow = 2;
-    }
-     else if (width >= 1100 && width < 1290) {
+    } else if (width >= 1100 && width < 1290) {
       noOfRow = 3;
     } else if (width >= 882 && width < 1100) {
       noOfRow = 2;
@@ -136,14 +135,16 @@ class AssetsFilterSection extends Component {
     let filterData = this.props.data;
     return (
       <Box className="head-top-section">
-        <Button
-          onClick={this.togglePopup}
-          className="primary-outline-btn min-width m-r-3"
-          variant="outlined"
-        >
-          Filters
-        </Button>
-        {this.renderAppliedFilters()}
+        <Box className="d-flex align-items-center">
+          <Button
+            onClick={this.togglePopup}
+            className="primary-outline-btn min-width m-r-3"
+            variant="outlined"
+          >
+            Filters
+          </Button>
+          {this.renderAppliedFilters()}
+        </Box>
 
         <Box
           className="clear-filter-box"
