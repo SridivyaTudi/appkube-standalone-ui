@@ -10,6 +10,7 @@ import status from "Redux/Constants/CommonDS";
 import { connect } from "react-redux";
 import { getTopUsedServiceDetails } from "Redux/Reports/ReportsThunk";
 import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
+import SelectFilterModal from "../../Components/SelectFilterModal";
 import {
   GRANULARITY_TYPE,
   REPORT_PAGE_TYPE,
@@ -127,6 +128,7 @@ class TopUsedServices extends Component {
       searchedKey: "",
       accounts: [],
       spendOverAllDetails: [],
+      showSelectFilterModal: false,
       selectedGranularity: GRANULARITY_TYPE.QUARTERLY.toLowerCase(),
     };
   }
@@ -198,6 +200,12 @@ class TopUsedServices extends Component {
     } else {
       this.setState({ accounts, spendOverAllDetails });
     }
+  };
+
+  handleSelectFilterModal = () => {
+    this.setState({
+      showSelectFilterModal: !this.state.showSelectFilterModal,
+    });
   };
 
   //  Serach
@@ -297,6 +305,7 @@ class TopUsedServices extends Component {
       searchedKey,
       spendOverAllDetails,
       isGranularityDropDownOpen,
+      showSelectFilterModal,
     } = this.state;
     let { topUsedServiceDetailsData } = this.props;
     return (
@@ -322,7 +331,10 @@ class TopUsedServices extends Component {
           </Box>
         </Box>
         <Box className="d-flex  align-items-center justify-content-end m-t-2">
-          <Button className="light-btn p-l-15 p-r-15 m-r-3">
+          <Button
+            className="light-btn p-l-15 p-r-15 m-r-3"
+            onClick={this.handleSelectFilterModal}
+          >
             <i className="fas fa-filter m-r-2"></i> Filter
           </Button>
           <Box className="fliter-button">
@@ -385,6 +397,14 @@ class TopUsedServices extends Component {
               page={"top-use-service"}
             />
           </Box>
+        )}
+        {showSelectFilterModal ? (
+          <SelectFilterModal
+            showModal={showSelectFilterModal}
+            handleSelectFilterModal={this.handleSelectFilterModal}
+          />
+        ) : (
+          <></>
         )}
       </Box>
     );

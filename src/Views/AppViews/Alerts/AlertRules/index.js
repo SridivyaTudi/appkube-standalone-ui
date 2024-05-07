@@ -12,7 +12,7 @@ import {
   List,
   ListItem,
   Checkbox,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
@@ -206,7 +206,7 @@ class AlertRules extends Component {
     return (
       <TableBody>
         {alertsData.length ? (
-          alertsData.slice(pg * rpg, pg * rpg + rpg).map((alert,index) => {
+          alertsData.slice(pg * rpg, pg * rpg + rpg).map((alert, index) => {
             return (
               <TableRow>
                 <TableCell align="left">
@@ -237,39 +237,41 @@ class AlertRules extends Component {
                     <MoreVertIcon fontSize="small" />
                   </IconButton>
                   {actionButton === index && (
-              <>
-                <Box className="action-buttons">
-                  <Button
-                    startIcon={<DeleteOutlineOutlinedIcon className="icon" />}
-                    className="secondary-text-btn"
-                    onClick={() => {
-                      this.setState({
-                        showConfirmPopup: true,
-                        // roleId: row.id,
-                      });
-                    }}
-                  >
-                    Delete Role
-                  </Button>
-                  <Button
-                    startIcon={<EditCalendarIcon className="icon" />}
-                    className="secondary-text-btn"
-                    onClick={() => {
-                      this.setState({
-                        showCreateRoleControlModal: true,
-                        // editRoleId: row.id,
-                      });
-                    }}
-                  >
-                    Edit Role
-                  </Button>
-                </Box>
-                <Box
-                  className="action-buttons-bg"
-                  onClick={() => this.handleActionButton(index)}
-                ></Box>
-              </>
-            )}
+                    <>
+                      <Box className="action-buttons">
+                        <Button
+                          startIcon={
+                            <DeleteOutlineOutlinedIcon className="icon" />
+                          }
+                          className="secondary-text-btn"
+                          onClick={() => {
+                            this.setState({
+                              showConfirmPopup: true,
+                              // roleId: row.id,
+                            });
+                          }}
+                        >
+                          Delete Role
+                        </Button>
+                        <Button
+                          startIcon={<EditCalendarIcon className="icon" />}
+                          className="secondary-text-btn"
+                          onClick={() => {
+                            this.setState({
+                              showCreateRoleControlModal: true,
+                              // editRoleId: row.id,
+                            });
+                          }}
+                        >
+                          Edit Role
+                        </Button>
+                      </Box>
+                      <Box
+                        className="action-buttons-bg"
+                        onClick={() => this.handleActionButton(index)}
+                      ></Box>
+                    </>
+                  )}
                 </TableCell>
               </TableRow>
             );

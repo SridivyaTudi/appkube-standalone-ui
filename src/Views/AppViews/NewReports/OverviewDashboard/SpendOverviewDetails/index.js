@@ -9,6 +9,7 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
 import { v4 } from "uuid";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import SelectFilterModal from"../../Components/SelectFilterModal";
 
 class SpendOverviewDetails extends Component {
   tabMapping = [
@@ -42,10 +43,17 @@ class SpendOverviewDetails extends Component {
     super(props);
     this.state = {
       activeTab: 0,
+      showSelectFilterModal: false,
       selectedGranularity: GRANULARITY_TYPE.QUARTERLY.toLowerCase(),
       isGranularityDropDownOpen: false,
     };
   }
+
+  handleSelectFilterModal = () => {
+    this.setState({
+      showSelectFilterModal: !this.state.showSelectFilterModal,
+    });
+  };
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });
   };
@@ -135,8 +143,8 @@ class SpendOverviewDetails extends Component {
     }
   };
   render() {
-    let { name, page } = this.getUrlDetails();
-    const { isGranularityDropDownOpen } = this.state;
+    let { name, page,  } = this.getUrlDetails();
+    const { isGranularityDropDownOpen, showSelectFilterModal } = this.state;
     return (
       <Box className="new-reports-container spend-overview-container">
         <Box className="list-heading">
@@ -181,7 +189,10 @@ class SpendOverviewDetails extends Component {
           <Box className="tabs">
             {this.renderTabMenu()}
             <Box className="d-flex ">
-              <Button className="light-btn p-l-15 p-r-15 m-r-3">
+              <Button
+                className="light-btn p-l-15 p-r-15 m-r-3"
+                onClick={this.handleSelectFilterModal}
+              >
                 <i className="fas fa-filter m-r-2"></i> Filter
               </Button>
               <Box className="fliter-button" onClick={this.toggleGranularity}>
@@ -214,6 +225,14 @@ class SpendOverviewDetails extends Component {
           </Box>
           {this.renderActiveTabOfComponent()}
         </Box>
+        {showSelectFilterModal ? (
+          <SelectFilterModal
+            showModal={showSelectFilterModal}
+            handleSelectFilterModal={this.handleSelectFilterModal}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }

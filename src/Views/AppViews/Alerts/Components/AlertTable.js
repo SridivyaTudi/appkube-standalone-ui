@@ -11,7 +11,12 @@ import {
   ListItem,
   List,
   Checkbox,
+  Button,
+  IconButton
 } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 //import AssetsSetUpModal from "./AssetsSetUpModal";
@@ -38,11 +43,25 @@ class AlertTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      actionButton: null,
       showAssetsSetUpModal: false,
       pg: 0,
       rpg: 10,
     };
   }
+
+  handleActionButton = (index) => {
+    const { actionButton } = this.state;
+    if (actionButton === null) {
+      this.setState({
+        actionButton: index,
+      });
+    } else {
+      this.setState({
+        actionButton: null,
+      });
+    }
+  };
 
   toggleAssetsSetUp = () => {
     this.setState({
@@ -113,13 +132,13 @@ class AlertTable extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    const { tagShowMenu, tagShowMenuList, rpg, pg } = this.state;
+    const { tagShowMenu, tagShowMenuList, rpg, pg, actionButton } = this.state;
     let alerts = this.props.data || [];
 
     return (
       <TableBody>
         {alerts.length ? (
-          alerts.slice(pg * rpg, pg * rpg + rpg).map((alert) => {
+          alerts.slice(pg * rpg, pg * rpg + rpg).map((alert,index) => {
             return (
               <TableRow>
                 <TableCell align="left">
@@ -153,9 +172,53 @@ class AlertTable extends Component {
                 <TableCell align="center">{alert.triggeredTime}</TableCell>
                 <TableCell align="center">{alert.assignedWorkflow}</TableCell>
                 <TableCell align="center">
-                  <button type="button" className="list-icon">
+                  {/* <button type="button" className="list-icon">
                     <i className="fas fa-ellipsis-v"></i>
-                  </button>
+                  </button> */}
+                  <IconButton
+                    className="action-btn"
+                    aria-label="morevertIcon"
+                    size="small"
+                    onClick={() => this.handleActionButton(index)}
+                  >
+                    <MoreVertIcon fontSize="small" />
+                  </IconButton>
+                  {actionButton === index && (
+                    <>
+                      <Box className="action-buttons">
+                        <Button
+                          startIcon={
+                            <DeleteOutlineOutlinedIcon className="icon" />
+                          }
+                          className="secondary-text-btn"
+                          onClick={() => {
+                            this.setState({
+                              showConfirmPopup: true,
+                              // roleId: row.id,
+                            });
+                          }}
+                        >
+                          Delete Role
+                        </Button>
+                        <Button
+                          startIcon={<EditCalendarIcon className="icon" />}
+                          className="secondary-text-btn"
+                          onClick={() => {
+                            this.setState({
+                              showCreateRoleControlModal: true,
+                              // editRoleId: row.id,
+                            });
+                          }}
+                        >
+                          Edit Role
+                        </Button>
+                      </Box>
+                      <Box
+                        className="action-buttons-bg"
+                        onClick={() => this.handleActionButton(index)}
+                      ></Box>
+                    </>
+                  )}
                 </TableCell>
               </TableRow>
             );
