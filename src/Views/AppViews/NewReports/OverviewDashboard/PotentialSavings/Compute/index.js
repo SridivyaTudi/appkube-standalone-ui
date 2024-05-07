@@ -385,12 +385,13 @@ class Compute extends Component {
               />
             </Grid>
             <Grid item xs={12} md={6} lg={8}>
-              <ChartWrapper
+              <ChartWrapper style={{maxHeight: 380}}
                 ChartComponent={
                   potentialMonthlySavingLoder ? (
                     this.renderLoder()
                   ) : potentialMonthlySavingData?.length ? (
                     <VerticalBarchart
+                      style={{maxHeight: 320, with: "100%"}}
                       data={potentialMonthlySavingData}
                       styleProp={{
                         color: "#53CA43",

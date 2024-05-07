@@ -108,7 +108,7 @@ const VerticalBarChart_NarrowBar = () => {
 
   return (
     <svg
-      style={{ width: "100%", height: "auto" }}
+      style={{ width: "100%", height: "295" }}
       ref={svgRef}
       viewBox={`-10 0 ${width} ${height + margin.top + margin.bottom}`}
     />

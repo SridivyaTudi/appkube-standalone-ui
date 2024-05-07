@@ -50,9 +50,9 @@ class BudgetDepartments extends Component {
           <TableCell>Department</TableCell>
           <TableCell>All Product</TableCell>
           <TableCell>Product With High Spending</TableCell>
-          <TableCell>Spend</TableCell>
-          <TableCell>Budget</TableCell>
-          <TableCell>Forecast</TableCell>
+          <TableCell align="center">Spend</TableCell>
+          <TableCell align="center">Budget</TableCell>
+          <TableCell align="center">Forecast</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -75,19 +75,23 @@ class BudgetDepartments extends Component {
             </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell>
-            <strong>$2120</strong>{" "}
-            <Box className="d-inline-block variance-count red ">
-              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+          <TableCell >
+            <Box className="d-flex align-items-center" justifyContent={"center"}>
+              <strong>$2120</strong>
+              <Box className="variance-count red ">
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+              </Box>
             </Box>
           </TableCell>
-          <TableCell>
+          <TableCell align="center">
             <strong>$1200</strong>
           </TableCell>
-          <TableCell>
-            <strong>$2120</strong>{" "}
-            <Box className="d-inline-block variance-count red ">
-              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+          <TableCell >
+            <Box className="d-flex align-items-center" justifyContent={"center"}>
+              <strong>$2120</strong>
+              <Box className="variance-count red ">
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+              </Box>
             </Box>
           </TableCell>
         </TableRow>
@@ -104,19 +108,23 @@ class BudgetDepartments extends Component {
             </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell>
-            <strong>$2120</strong>{" "}
-            <Box className="d-inline-block variance-count red ">
-              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+          <TableCell >
+            <Box className="d-flex align-items-center" justifyContent={"center"}>
+              <strong>$2120</strong>
+              <Box className="variance-count red ">
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+              </Box>
             </Box>
           </TableCell>
-          <TableCell>
+          <TableCell align="center">
             <strong>$1200</strong>
           </TableCell>
-          <TableCell>
-            <strong>$2120</strong>{" "}
-            <Box className="d-inline-block variance-count red ">
-              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+          <TableCell >
+            <Box className="d-flex align-items-center" justifyContent={"center"}>
+              <strong>$2120</strong>
+              <Box className="variance-count red ">
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+              </Box>
             </Box>
           </TableCell>
         </TableRow>
@@ -133,19 +141,23 @@ class BudgetDepartments extends Component {
             </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell>
-            <strong>$2120</strong>{" "}
-            <Box className="d-inline-block variance-count red ">
-              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+          <TableCell >
+            <Box className="d-flex align-items-center" justifyContent={"center"}>
+              <strong>$2120</strong>
+              <Box className="variance-count red ">
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+              </Box>
             </Box>
           </TableCell>
-          <TableCell>
+          <TableCell align="center">
             <strong>$1200</strong>
           </TableCell>
-          <TableCell>
-            <strong>$2120</strong>{" "}
-            <Box className="d-inline-block variance-count red ">
-              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+          <TableCell >
+            <Box className="d-flex align-items-center" justifyContent={"center"}>
+              <strong>$2120</strong>
+              <Box className="variance-count red ">
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+              </Box>
             </Box>
           </TableCell>
         </TableRow>
@@ -162,19 +174,23 @@ class BudgetDepartments extends Component {
             </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell>
-            <strong>$2120</strong>{" "}
-            <Box className="d-inline-block variance-count red ">
-              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+          <TableCell >
+            <Box className="d-flex align-items-center" justifyContent={"center"}>
+              <strong>$2120</strong>
+              <Box className="variance-count red ">
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+              </Box>
             </Box>
           </TableCell>
-          <TableCell>
+          <TableCell align="center">
             <strong>$1200</strong>
           </TableCell>
-          <TableCell>
-            <strong>$2120</strong>{" "}
-            <Box className="d-inline-block variance-count red ">
-              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+          <TableCell >
+            <Box className="d-flex align-items-center" justifyContent={"center"}>
+              <strong>$2120</strong>
+              <Box className="variance-count red ">
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+              </Box>
             </Box>
           </TableCell>
         </TableRow>
@@ -191,19 +207,23 @@ class BudgetDepartments extends Component {
             </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell>
-            <strong>$2120</strong>{" "}
-            <Box className="d-inline-block variance-count red ">
-              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+          <TableCell >
+            <Box className="d-flex align-items-center" justifyContent={"center"}>
+              <strong>$2120</strong>
+              <Box className="variance-count red ">
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+              </Box>
             </Box>
           </TableCell>
-          <TableCell>
+          <TableCell align="center">
             <strong>$1200</strong>
           </TableCell>
-          <TableCell>
-            <strong>$2120</strong>{" "}
-            <Box className="d-inline-block variance-count red ">
-              <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+          <TableCell >
+            <Box className="d-flex align-items-center" justifyContent={"center"}>
+              <strong>$2120</strong>
+              <Box className="variance-count red ">
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+              </Box>
             </Box>
           </TableCell>
         </TableRow>
