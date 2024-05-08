@@ -75,22 +75,29 @@ class BudgetDepartments extends Component {
             </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell >
-            <Box className="d-flex align-items-center" justifyContent={"center"}>
+          <TableCell>
+            <Box
+              className="d-flex align-items-center"
+              justifyContent={"center"}
+            >
               <strong>$2120</strong>
               <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i>
+                <strong>10% </strong>
               </Box>
             </Box>
           </TableCell>
           <TableCell align="center">
             <strong>$1200</strong>
           </TableCell>
-          <TableCell >
-            <Box className="d-flex align-items-center" justifyContent={"center"}>
+          <TableCell>
+            <Box
+              className="d-flex align-items-center"
+              justifyContent={"center"}
+            >
               <strong>$2120</strong>
               <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
               </Box>
             </Box>
           </TableCell>
@@ -108,22 +115,28 @@ class BudgetDepartments extends Component {
             </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell >
-            <Box className="d-flex align-items-center" justifyContent={"center"}>
+          <TableCell>
+            <Box
+              className="d-flex align-items-center"
+              justifyContent={"center"}
+            >
               <strong>$2120</strong>
               <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
               </Box>
             </Box>
           </TableCell>
           <TableCell align="center">
             <strong>$1200</strong>
           </TableCell>
-          <TableCell >
-            <Box className="d-flex align-items-center" justifyContent={"center"}>
+          <TableCell>
+            <Box
+              className="d-flex align-items-center"
+              justifyContent={"center"}
+            >
               <strong>$2120</strong>
               <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
               </Box>
             </Box>
           </TableCell>
@@ -141,22 +154,28 @@ class BudgetDepartments extends Component {
             </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell >
-            <Box className="d-flex align-items-center" justifyContent={"center"}>
+          <TableCell>
+            <Box
+              className="d-flex align-items-center"
+              justifyContent={"center"}
+            >
               <strong>$2120</strong>
               <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
               </Box>
             </Box>
           </TableCell>
           <TableCell align="center">
             <strong>$1200</strong>
           </TableCell>
-          <TableCell >
-            <Box className="d-flex align-items-center" justifyContent={"center"}>
+          <TableCell>
+            <Box
+              className="d-flex align-items-center"
+              justifyContent={"center"}
+            >
               <strong>$2120</strong>
               <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
               </Box>
             </Box>
           </TableCell>
@@ -174,22 +193,28 @@ class BudgetDepartments extends Component {
             </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell >
-            <Box className="d-flex align-items-center" justifyContent={"center"}>
+          <TableCell>
+            <Box
+              className="d-flex align-items-center"
+              justifyContent={"center"}
+            >
               <strong>$2120</strong>
               <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
               </Box>
             </Box>
           </TableCell>
           <TableCell align="center">
             <strong>$1200</strong>
           </TableCell>
-          <TableCell >
-            <Box className="d-flex align-items-center" justifyContent={"center"}>
+          <TableCell>
+            <Box
+              className="d-flex align-items-center"
+              justifyContent={"center"}
+            >
               <strong>$2120</strong>
               <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
               </Box>
             </Box>
           </TableCell>
@@ -207,22 +232,28 @@ class BudgetDepartments extends Component {
             </Link>
           </TableCell>
           <TableCell>Internal CRM Tool</TableCell>
-          <TableCell >
-            <Box className="d-flex align-items-center" justifyContent={"center"}>
+          <TableCell>
+            <Box
+              className="d-flex align-items-center"
+              justifyContent={"center"}
+            >
               <strong>$2120</strong>
               <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
               </Box>
             </Box>
           </TableCell>
           <TableCell align="center">
             <strong>$1200</strong>
           </TableCell>
-          <TableCell >
-            <Box className="d-flex align-items-center" justifyContent={"center"}>
+          <TableCell>
+            <Box
+              className="d-flex align-items-center"
+              justifyContent={"center"}
+            >
               <strong>$2120</strong>
               <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
               </Box>
             </Box>
           </TableCell>

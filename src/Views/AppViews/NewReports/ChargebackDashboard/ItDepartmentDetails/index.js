@@ -187,13 +187,13 @@ class ItDepartmentDetails extends Component {
           data.map((details) => {
             return (
               <TableRow>
-                <TableCell align="left">{details.quantity}</TableCell>
+                <TableCell align="left"><strong>{details.quantity}</strong></TableCell>
                 <TableCell align="left">
                   <Link to={`#`}>{details.instanceType}</Link>
                 </TableCell>
-                <TableCell align="center">{details.instanceStatus}</TableCell>
-                <TableCell align="center">{details.instanceMemory}</TableCell>
-                <TableCell align="center">{details.vcpus}</TableCell>
+                <TableCell align="center"><strong>{details.instanceStatus}</strong></TableCell>
+                <TableCell align="center"><strong>{details.instanceMemory}</strong></TableCell>
+                <TableCell align="center"><strong>{details.vcpus}</strong></TableCell>
                 <TableCell align="center">{details.instanceStorage}</TableCell>
                 <TableCell align="center">
                   <strong>{details.perHrCost}</strong>

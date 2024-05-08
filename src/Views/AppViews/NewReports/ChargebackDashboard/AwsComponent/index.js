@@ -338,14 +338,21 @@ class AwsComponent extends Component {
             return (
               <TableRow>
                 <TableCell align="left">{details.month}</TableCell>
-                <TableCell align="center">{details.accountId}</TableCell>
-                <TableCell align="left">{details.department} </TableCell>
-                <TableCell align="center">{details.budget}</TableCell>
                 <TableCell align="center">
-                  {details.currentMonthSpend}
+                  <strong>{details.accountId}</strong>
+                </TableCell>
+                <TableCell align="left">{details.department} </TableCell>
+                <TableCell align="center">
+                  <strong>{details.budget}</strong>
                 </TableCell>
                 <TableCell align="center">
-                  <Box className="d-flex align-center" justifyContent={"center"}>
+                  <strong>{details.currentMonthSpend}</strong>
+                </TableCell>
+                <TableCell align="center">
+                  <Box
+                    className="d-flex align-center"
+                    justifyContent={"center"}
+                  >
                     <Box className="variance-count red d-inline-block">
                       <i class="fas fa-sort-down p-r-5"></i>
                     </Box>

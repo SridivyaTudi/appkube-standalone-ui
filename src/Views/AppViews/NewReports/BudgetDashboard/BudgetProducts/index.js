@@ -126,9 +126,9 @@ class BudgetProducts extends Component {
               justifyContent={"center"}
             >
               <strong>$20,000</strong>
-              <Box className="variance-count red ">
+              {/* <Box className="variance-count red ">
                 <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box>
+              </Box> */}
             </Box>
           </TableCell>
           <TableCell align="center">
@@ -140,9 +140,9 @@ class BudgetProducts extends Component {
               justifyContent={"center"}
             >
               <strong>$30,000</strong>
-              <Box className="variance-count red ">
+              {/* <Box className="variance-count red ">
                 <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box>
+              </Box> */}
             </Box>
           </TableCell>
         </TableRow>
@@ -191,9 +191,9 @@ class BudgetProducts extends Component {
               justifyContent={"center"}
             >
               <strong>$20,000</strong>
-              <Box className="variance-count red ">
+              {/* <Box className="variance-count red ">
                 <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box>
+              </Box> */}
             </Box>
           </TableCell>
           <TableCell align="center">
@@ -205,9 +205,9 @@ class BudgetProducts extends Component {
               justifyContent={"center"}
             >
               <strong>$30,000</strong>
-              <Box className="variance-count red ">
+              {/* <Box className="variance-count red ">
                 <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box>
+              </Box> */}
             </Box>
           </TableCell>
         </TableRow>
@@ -256,9 +256,9 @@ class BudgetProducts extends Component {
               justifyContent={"center"}
             >
               <strong>$20,000</strong>
-              <Box className="variance-count red ">
+              {/* <Box className="variance-count red ">
                 <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box>
+              </Box> */}
             </Box>
           </TableCell>
           <TableCell align="center">
@@ -270,9 +270,9 @@ class BudgetProducts extends Component {
               justifyContent={"center"}
             >
               <strong>$30,000</strong>
-              <Box className="variance-count red ">
+              {/* <Box className="variance-count red ">
                 <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box>
+              </Box> */}
             </Box>
           </TableCell>
         </TableRow>
@@ -321,9 +321,9 @@ class BudgetProducts extends Component {
               justifyContent={"center"}
             >
               <strong>$20,000</strong>
-              <Box className="variance-count red ">
+              {/* <Box className="variance-count red ">
                 <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box>
+              </Box> */}
             </Box>
           </TableCell>
           <TableCell align="center">
@@ -335,9 +335,9 @@ class BudgetProducts extends Component {
               justifyContent={"center"}
             >
               <strong>$30,000</strong>
-              <Box className="variance-count red ">
+              {/* <Box className="variance-count red ">
                 <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box>
+              </Box> */}
             </Box>
           </TableCell>
         </TableRow>
@@ -386,9 +386,9 @@ class BudgetProducts extends Component {
               justifyContent={"center"}
             >
               <strong>$20,000</strong>
-              <Box className="variance-count red ">
+              {/* <Box className="variance-count red ">
                 <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box>
+              </Box> */}
             </Box>
           </TableCell>
           <TableCell align="center">
@@ -400,9 +400,9 @@ class BudgetProducts extends Component {
               justifyContent={"center"}
             >
               <strong>$30,000</strong>
-              <Box className="variance-count red ">
+              {/* <Box className="variance-count red ">
                 <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box>
+              </Box> */}
             </Box>
           </TableCell>
         </TableRow>

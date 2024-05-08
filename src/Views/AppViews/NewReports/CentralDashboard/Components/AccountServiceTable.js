@@ -81,7 +81,7 @@ export class AccountTable extends Component {
                 </TableCell>
                 <TableCell align="center">
                   <Box className="variance-count red">
-                    {details.varience}{" "}
+                    <strong>{details.varience}</strong>
                     <i className="fas fa-sort-down p-l-5 m-r-1"></i>
                   </Box>
                 </TableCell>

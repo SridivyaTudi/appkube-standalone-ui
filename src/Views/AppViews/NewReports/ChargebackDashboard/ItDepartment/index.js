@@ -111,11 +111,11 @@ class ItDepartment extends Component {
                   </Box>
                   {details.name}
                 </TableCell>
-                <TableCell align="center"> {details.lastMonthSpend}</TableCell>
-                <TableCell align="center"> {details.monthSpend}</TableCell>
+                <TableCell align="center"><strong>{details.lastMonthSpend}</strong></TableCell>
+                <TableCell align="center"><strong>{details.monthSpend}</strong></TableCell>
                 <TableCell align="center">
                   <Box className="variance-count red">
-                    {details.variance} <i class="fas fa-sort-down p-l-5"></i>
+                  <strong>{details.variance}</strong> <i class="fas fa-sort-down p-l-5"></i>
                   </Box>
                 </TableCell>
                 <TableCell align="center">

@@ -32,22 +32,20 @@ export class AccountTable extends Component {
     );
   };
 
- 
-
   //  Render table head
   renderTableHead = () => {
     let headers = this.props.headers || [];
     return (
       <TableHead>
         <TableRow>
-        <TableCell>Account name</TableCell>
-        <TableCell>Account ID</TableCell>
-        <TableCell>Organization unit</TableCell>
-        <TableCell align="center">Current quarter spend</TableCell>
-        <TableCell align="center">Last quarter spend</TableCell>
-        <TableCell align="center">Variance</TableCell>
-        <TableCell align="center">Avg daily spend</TableCell>
-        <TableCell align="center">Actions</TableCell>
+          <TableCell>Account name</TableCell>
+          <TableCell>Account ID</TableCell>
+          <TableCell>Organization unit</TableCell>
+          <TableCell align="center">Current quarter spend</TableCell>
+          <TableCell align="center">Last quarter spend</TableCell>
+          <TableCell align="center">Variance</TableCell>
+          <TableCell align="center">Avg daily spend</TableCell>
+          <TableCell align="center">Actions</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -69,7 +67,10 @@ export class AccountTable extends Component {
                 {this.props?.notShowingField?.includes("id") ? (
                   <></>
                 ) : (
-                  <TableCell>{details.id}</TableCell>
+                  <TableCell>
+                    {" "}
+                    <strong>{details.id}</strong>
+                  </TableCell>
                 )}
                 {this.props?.notShowingField?.includes("orgUnit") ? (
                   <></>
@@ -85,7 +86,7 @@ export class AccountTable extends Component {
                 </TableCell>
                 <TableCell align="center">
                   <Box className="variance-count red">
-                    {details.varience}{" "}
+                    <strong>{details.varience}</strong>
                     <i className="fas fa-sort-down p-l-5 m-r-1"></i>
                   </Box>
                 </TableCell>

@@ -35,14 +35,14 @@ export class AccountTable extends Component {
     return (
       <TableHead>
         <TableRow>
-        <TableCell>Account ID</TableCell>
-            <TableCell>Department</TableCell>
-            <TableCell>Vpc</TableCell>
-            <TableCell align="center">Service count</TableCell>
-            <TableCell>High spending region</TableCell>
-            <TableCell align="center">Spending</TableCell>
-            <TableCell align="center">Variance</TableCell>
-            <TableCell align="center">Budget</TableCell>
+          <TableCell>Account ID</TableCell>
+          <TableCell>Department</TableCell>
+          <TableCell>Vpc</TableCell>
+          <TableCell align="center">Service count</TableCell>
+          <TableCell>High spending region</TableCell>
+          <TableCell align="center">Spending</TableCell>
+          <TableCell align="center">Variance</TableCell>
+          <TableCell align="center">Budget</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -62,36 +62,33 @@ export class AccountTable extends Component {
                   <Link
                     to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-services-account`}
                   >
-                    {" "}
-                    {details.id}
+                    <strong>{details.id}</strong>
                   </Link>
                 </TableCell>
                 {this.props?.notShowingField?.includes("id") ? (
                   <></>
                 ) : (
-                  <TableCell >{details.department}</TableCell>
+                  <TableCell>{details.department}</TableCell>
                 )}
                 {this.props?.notShowingField?.includes("orgUnit") ? (
                   <></>
                 ) : (
-                  <TableCell > {details.vpc}</TableCell>
+                  <TableCell> {details.vpc}</TableCell>
                 )}
 
                 <TableCell align="center">
                   <strong>{details.serviceCount}</strong>
                 </TableCell>
-                <TableCell>
-                  <strong> {details.region}</strong>
-                </TableCell>
+                <TableCell>{details.region}</TableCell>
                 <TableCell align="center">
                   <strong> {details.spending}</strong>
                 </TableCell>
                 <TableCell align="center">
                   <Box className="variance-count red">
-                    {details.varience}{" "}
-                    <i className="fas fa-sort-down p-l-5 m-r-1"></i>
+                    <strong>{details.varience}</strong>
+                    <i className="fas fa-sort-down p-l-5 "></i>
                   </Box>
-                </TableCell> 
+                </TableCell>
                 <TableCell align="center">
                   <strong>{details.budget}</strong>
                 </TableCell>
