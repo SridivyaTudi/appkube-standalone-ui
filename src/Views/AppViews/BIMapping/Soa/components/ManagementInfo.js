@@ -11,10 +11,12 @@ import {
   MenuItem,
   Select,
   IconButton,
+  Grid
 } from "@mui/material";
 import { ADD_PRODUCT_ENUMS } from "Utils";
 import CloseIcon from "@mui/icons-material/Close";
 import { connect } from "react-redux";
+
 
 const MANAGEMENT_ENDPOINT__DROP_DOWN = [
   {
@@ -515,14 +517,30 @@ class ManagementInfo extends Component {
     let { style } = this.props;
     return (
       <>
-        <Box className="tier-table-section" style={style}>
+        <Box className="d-block p-b-20 m-t-2" style={style}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6} lg={6}>
+              <Box className="prometheus-endpoint">
+                <label className="">Prometheus Endpoint</label>
+                <input type="text" className="form-control "  />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <Box className="prometheus-endpoint">
+                <label className="">Query</label>
+                <input type="text" className="form-control "  />
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+        {/* <Box className="tier-table-section" style={style}>
           <TableContainer className="table">
             <Table className="overview">
               {this.renderTableHead()}
               {this.renderTableBody()}
             </Table>
           </TableContainer>
-        </Box>
+        </Box> */}
       </>
     );
   }

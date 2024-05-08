@@ -11,6 +11,7 @@ import {
   MenuItem,
   Select,
   IconButton,
+  Grid
 } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -366,14 +367,38 @@ class ConfigInfo extends Component {
   render() {
     let { style } = this.props;
     return (
-      <Box className="tier-table-section" style={style}>
-        <TableContainer className="table">
-          <Table className="overview">
-            {this.renderTableHead()}
-            {this.renderTableBody()}
-          </Table>
-        </TableContainer>
+      <Box className="d-block p-b-20 m-t-2"style={style}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6} lg={6}>
+            <Box className="prometheus-endpoint">
+              <label className="">Config Endpoint</label>
+              <input
+                type="text"
+                className="form-control m-t-1"
+                
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6} lg={6}>
+            <Box className="prometheus-endpoint">
+              <label className="">Query</label>
+              <input
+                type="text"
+                className="form-control m-t-1"
+                
+              />
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
+      // <Box className="tier-table-section" style={style}>
+      //   <TableContainer className="table">
+      //     <Table className="overview">
+      //       {this.renderTableHead()}
+      //       {this.renderTableBody()}
+      //     </Table>
+      //   </TableContainer>
+      // </Box>
     );
   }
 }

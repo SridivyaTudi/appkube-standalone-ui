@@ -1256,7 +1256,7 @@ class Tier extends Component {
                   rowSpacing={1}
                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 >
-                  <Grid item xs={4} alignItems={"flex-start"}>
+                  {/* <Grid item xs={4} alignItems={"flex-start"}>
                     <Button
                       className={` primary-btn min-width-inherit`}
                       variant="contained"
@@ -1280,8 +1280,8 @@ class Tier extends Component {
                       <i className="fa-sharp fa-solid fa-plus m-r-1"></i>
                       Add Entry
                     </Button>
-                  </Grid>
-                  <Grid item xs={4}>
+                  </Grid> */}
+                  <Grid item xs={12} alignContent={"center"}>
                     <Box className="d-block text-center">
                       <LoadingButton
                         className={`primary-btn min-width-inherit`}

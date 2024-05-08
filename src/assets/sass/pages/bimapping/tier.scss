@@ -524,8 +524,20 @@
       }
 
       .tabs-content {
-        padding: 0 10px;
+        padding: 0 20px;
         margin: 0;
+        .prometheus-endpoint{
+          label{
+            display: flex;
+            width: 100%;
+            font-size: 14px;
+            color: #344054;
+            line-height: 20px;
+            font-weight: 500;
+            margin-bottom: 10px;
+           
+          }
+        }
         .ports-content {
           width: 100%;
           display: block;
