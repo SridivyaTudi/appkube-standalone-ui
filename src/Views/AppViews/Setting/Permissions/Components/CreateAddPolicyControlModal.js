@@ -94,7 +94,7 @@ class CreateAddPolicyControlModal extends Component {
     let updatePoliciesStatus = roleUpdation?.status === status.IN_PROGRESS;
     return (
       <ModalBody>
-        <Box className="setting-common-searchbar p-t-5 p-b-0">
+        <Box className="setting-common-searchbar p-t-20 p-b-0">
           <Grid container>
             <Grid item xs={12}>
               <Box className="top-search">

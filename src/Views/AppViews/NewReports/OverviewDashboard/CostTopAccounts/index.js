@@ -128,7 +128,7 @@ class CostTopAccounts extends Component {
                   <Link
                     to={`${APP_PREFIX_PATH}/new-reports/over-view-dashboard/cost-top-accounts/${details.accountId}`}
                   >
-                    {details.accountId}
+                    <strong> {details.accountId}</strong>
                   </Link>
                 </TableCell>
                 <TableCell>{details.department}</TableCell>
@@ -137,15 +137,18 @@ class CostTopAccounts extends Component {
                     {details.vpc}
                   </HtmlTooltip>
                 </TableCell>
-                <TableCell align="center">{details.serviceCount}</TableCell>
+                <TableCell align="center">
+                  <strong>{details.serviceCount} </strong>
+                </TableCell>
                 <TableCell>{details.highSpendingRegion}</TableCell>
-                <TableCell align="center">{details.spending}</TableCell>
+                <TableCell align="center"> <strong>{details.spending}</strong></TableCell>
                 <TableCell align="center">
                   <Box
-                    className={`variance-count ${details.variance > 0 ? "" : "red"
-                      }`}
+                    className={`variance-count ${
+                      details.variance > 0 ? "" : "red"
+                    }`}
                   >
-                    {details.variance}{" "}
+                    <strong>{details.variance}</strong>
                     {details.variance ? (
                       details.variance > 0 ? (
                         <i className="fas fa-sort-up p-l-5 " />
@@ -157,7 +160,7 @@ class CostTopAccounts extends Component {
                     )}
                   </Box>
                 </TableCell>
-                <TableCell align="center">{details.budget}</TableCell>
+                <TableCell align="center"><strong>{details.budget}</strong></TableCell>
               </TableRow>
             );
           })
@@ -294,7 +297,9 @@ class CostTopAccounts extends Component {
             <ul>
               <li
                 onClick={() =>
-                  this.props.navigate(`${APP_PREFIX_PATH}/new-reports/over-view-dashboard`)
+                  this.props.navigate(
+                    `${APP_PREFIX_PATH}/new-reports/over-view-dashboard`
+                  )
                 }
               >
                 Overview Dashboard
@@ -344,7 +349,7 @@ class CostTopAccounts extends Component {
           </Box>
         </Box>
         {this.props.costTopAccountsDetailList.status ===
-          APIstatus.IN_PROGRESS ? (
+        APIstatus.IN_PROGRESS ? (
           renderLoader()
         ) : (
           <Box className="reports-tab-section m-t-4">

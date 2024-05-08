@@ -93,11 +93,11 @@ export class SpendingTable extends Component {
                 <TableCell>{status}</TableCell>
                 <TableCell>{priceModel}</TableCell>
                 <TableCell>{availabilityZone}</TableCell>
-                <TableCell align="center">{onDemandCostHr}</TableCell>
-                <TableCell>{RICostHr}</TableCell>
-                <TableCell align="center">{usageHrs}</TableCell>
+                <TableCell align="center"><strong>{onDemandCostHr}</strong></TableCell>
+                <TableCell><strong>{RICostHr}</strong></TableCell>
+                <TableCell align="center"><strong>{usageHrs}</strong></TableCell>
                 <TableCell align="center">{addOns}</TableCell>
-                <TableCell align="center">{totalSpend}</TableCell>
+                <TableCell align="center"><strong>{totalSpend}</strong></TableCell>
               </TableRow>
             );
           })

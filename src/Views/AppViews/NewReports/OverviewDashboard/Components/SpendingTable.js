@@ -52,7 +52,7 @@ export class SpendingTable extends Component {
   //  Render table body
   renderTableBody = () => {
     let { data } = this.props;
-   
+
     return (
       <TableBody>
         {data?.length ? (
@@ -74,16 +74,18 @@ export class SpendingTable extends Component {
                   {name}
                 </TableCell>
                 <TableCell align="center">
-                  {last_month_spend ? `$${last_month_spend}` : 0}
+                  <strong>
+                    {last_month_spend ? `$${last_month_spend}` : 0}
+                  </strong>
                 </TableCell>
                 <TableCell align="center">
-                  {month_spend ? `$${month_spend}` : 0}
+                  <strong>{month_spend ? `$${month_spend}` : 0}</strong>
                 </TableCell>
                 <TableCell align="center">
                   <Box
                     className={`variance-count ${variance > 0 ? "" : "red"} `}
                   >
-                    {Math.abs(variance)}
+                    <strong> {Math.abs(variance)}</strong>
                     {variance > 0 ? (
                       <i className="fas fa-sort-up p-l-5 " />
                     ) : (

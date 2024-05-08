@@ -75,7 +75,6 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-
 class Compute extends Component {
   constructor(props) {
     super(props);
@@ -295,10 +294,18 @@ class Compute extends Component {
                 <TableCell align="center">{obj.recommendedInstance}</TableCell>
                 <TableCell align="center">{obj.terms} </TableCell>
                 <TableCell align="center">{obj.paymentMode}</TableCell>
-                <TableCell align="center">{obj.upfrontCost}</TableCell>
-                <TableCell align="center">{obj.perHourCost}</TableCell>
-                <TableCell align="center">{obj.estimatedSavings}</TableCell>
-                <TableCell align="center">{obj.totalSpend}</TableCell>
+                <TableCell align="center"><strong>{obj.upfrontCost}</strong></TableCell>
+                <TableCell align="center">
+                  <strong>{obj.perHourCost}</strong>
+                </TableCell>
+                <TableCell align="center">
+                  {" "}
+                  <strong>{obj.estimatedSavings}</strong>
+                </TableCell>
+                <TableCell align="center">
+                  {" "}
+                  <strong>{obj.totalSpend}</strong>
+                </TableCell>
               </TableRow>
             );
           })
@@ -385,13 +392,14 @@ class Compute extends Component {
               />
             </Grid>
             <Grid item xs={12} md={6} lg={8}>
-              <ChartWrapper style={{maxHeight: 380}}
+              <ChartWrapper
+                style={{ maxHeight: 380 }}
                 ChartComponent={
                   potentialMonthlySavingLoder ? (
                     this.renderLoder()
                   ) : potentialMonthlySavingData?.length ? (
                     <VerticalBarchart
-                      style={{maxHeight: 320, with: "100%"}}
+                      style={{ maxHeight: 320, with: "100%" }}
                       data={potentialMonthlySavingData}
                       styleProp={{
                         color: "#53CA43",
