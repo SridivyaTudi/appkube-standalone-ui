@@ -12,7 +12,7 @@ import {
   List,
   Checkbox,
   Button,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
@@ -43,24 +43,47 @@ class AlertTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      actionButton: null,
+      //actionButton: null,
       showAssetsSetUpModal: false,
       pg: 0,
       rpg: 10,
+      isBulkActionDropDownOpen: false,
     };
   }
 
-  handleActionButton = (index) => {
-    const { actionButton } = this.state;
-    if (actionButton === null) {
-      this.setState({
-        actionButton: index,
-      });
-    } else {
-      this.setState({
-        actionButton: null,
-      });
-    }
+  // handleActionButton = (index) => {
+  //   const { actionButton } = this.state;
+  //   if (actionButton === null) {
+  //     this.setState({
+  //       actionButton: index,
+  //     });
+  //   } else {
+  //     this.setState({
+  //       actionButton: null,
+  //     });
+  //   }
+  // };
+  toggleBulkAction = (index) => {
+    this.setState({
+      isBulkActionDropDownOpen: index,
+    });
+  };
+  renderDropDownData = () => {
+    let { selectedTimeFrame, selectedDates } = this.state;
+    return [
+      "Execute Workfolw",
+      "Ignore Alert",
+      "Create Ticket",
+      "Edit Ticket",
+    ].map((data, index) => {
+      return (
+        <ListItem key={index}>
+          {" "}
+          <i className="fa-solid fa-circle-dot"></i>
+          {data}
+        </ListItem>
+      );
+    });
   };
 
   toggleAssetsSetUp = () => {
@@ -132,13 +155,14 @@ class AlertTable extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    const { tagShowMenu, tagShowMenuList, rpg, pg, actionButton } = this.state;
+    const { tagShowMenu, tagShowMenuList, rpg, pg, isBulkActionDropDownOpen } =
+      this.state;
     let alerts = this.props.data || [];
 
     return (
       <TableBody>
         {alerts.length ? (
-          alerts.slice(pg * rpg, pg * rpg + rpg).map((alert,index) => {
+          alerts.slice(pg * rpg, pg * rpg + rpg).map((alert, index) => {
             return (
               <TableRow>
                 <TableCell align="left">
@@ -152,12 +176,16 @@ class AlertTable extends Component {
                         onChange={this.handleCheckBox}
                       />
                       <Link to={`/app/alerts/alert-percentage`}>
-                        {alert.name}
+                        <strong>{alert.name}</strong>
                       </Link>
                     </Box>
                   </HtmlTooltip>
                 </TableCell>
-                <TableCell align="left">{alert.ticketID}</TableCell>
+                <TableCell align="left">
+                  <Box className="resource-name">
+                    <strong>{alert.ticketID}</strong>
+                  </Box>
+                </TableCell>
                 <TableCell align="left">{alert.ticketStatus}</TableCell>
                 <TableCell align="left">
                   <Box
@@ -179,46 +207,30 @@ class AlertTable extends Component {
                     className="action-btn"
                     aria-label="morevertIcon"
                     size="small"
-                    onClick={() => this.handleActionButton(index)}
+                    onClick={() => this.toggleBulkAction(index)}
                   >
                     <MoreVertIcon fontSize="small" />
                   </IconButton>
-                  {actionButton === index && (
-                    <>
-                      <Box className="action-buttons">
-                        <Button
-                          startIcon={
-                            <DeleteOutlineOutlinedIcon className="icon" />
-                          }
-                          className="secondary-text-btn"
-                          onClick={() => {
-                            this.setState({
-                              showConfirmPopup: true,
-                              // roleId: row.id,
-                            });
-                          }}
-                        >
-                          Delete Role
-                        </Button>
-                        <Button
-                          startIcon={<EditCalendarIcon className="icon" />}
-                          className="secondary-text-btn"
-                          onClick={() => {
-                            this.setState({
-                              showCreateRoleControlModal: true,
-                              // editRoleId: row.id,
-                            });
-                          }}
-                        >
-                          Edit Role
-                        </Button>
-                      </Box>
-                      <Box
-                        className="action-buttons-bg"
-                        onClick={() => this.handleActionButton(index)}
-                      ></Box>
-                    </>
+                  {isBulkActionDropDownOpen === index && (
+                    <div
+                      className={
+                        isBulkActionDropDownOpen === index
+                          ? "fliter-collapse active"
+                          : "fliter-collapse"
+                      }
+                    >
+                      <List>{this.renderDropDownData()}</List>
+                    </div>
                   )}
+
+                  <div
+                    className={
+                      isBulkActionDropDownOpen === index
+                        ? "fliters-collapse-bg active"
+                        : "fliters-collapse-bg"
+                    }
+                    onClick={() => this.toggleBulkAction(null)}
+                  />
                 </TableCell>
               </TableRow>
             );

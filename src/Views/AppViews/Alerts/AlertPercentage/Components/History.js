@@ -93,11 +93,11 @@ class History extends Component {
             Action group <a href="">email to Siddhesh</a> executed (configured
             on alert rule)
           </TableCell>
-          <TableCell align="left">09-03-2024; 11:29:02</TableCell>
+          <TableCell align="left"><strong>09-03-2024; 11:29:02</strong></TableCell>
         </TableRow>
         <TableRow>
           <TableCell align="left">Alert fired</TableCell>
-          <TableCell align="left">09-03-2024; 11:28:56</TableCell>
+          <TableCell align="left"><strong>09-03-2024; 11:28:56</strong></TableCell>
         </TableRow>
       </TableBody>
     );

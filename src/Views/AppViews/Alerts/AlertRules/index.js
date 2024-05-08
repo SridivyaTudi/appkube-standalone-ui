@@ -20,6 +20,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { isAction } from "@reduxjs/toolkit";
 const tableData = [
   {
     name: "Percentage CPU 1",
@@ -167,11 +168,20 @@ class AlertRules extends Component {
       </>
     );
   };
-  toggleBulkAction = () => {
+  toggleActions = (isAction = 0, index) => {
+    let { isBulkActionDropDownOpen, isActionDropDownOpen } = this.state;
+    if (isAction) {
+      isActionDropDownOpen = index;
+    } else {
+      isBulkActionDropDownOpen = !isBulkActionDropDownOpen;
+    }
+
     this.setState({
-      isBulkActionDropDownOpen: !this.state.isBulkActionDropDownOpen,
+      isBulkActionDropDownOpen,
+      isActionDropDownOpen,
     });
   };
+
   renderDropDownData = () => {
     return ["Delete", "Archive", "Processed", "Disable Rule"].map(
       (data, index) => {
@@ -202,7 +212,8 @@ class AlertRules extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    let { alertsData, pg, rpg, actionButton } = this.state;
+    let { alertsData, pg, rpg, actionButton, isActionDropDownOpen } =
+      this.state;
     return (
       <TableBody>
         {alertsData.length ? (
@@ -232,46 +243,31 @@ class AlertRules extends Component {
                     className="action-btn"
                     aria-label="morevertIcon"
                     size="small"
-                    onClick={() => this.handleActionButton(index)}
+                    onClick={() => this.toggleActions(1, index)}
                   >
                     <MoreVertIcon fontSize="small" />
                   </IconButton>
-                  {actionButton === index && (
-                    <>
-                      <Box className="action-buttons">
-                        <Button
-                          startIcon={
-                            <DeleteOutlineOutlinedIcon className="icon" />
-                          }
-                          className="secondary-text-btn"
-                          onClick={() => {
-                            this.setState({
-                              showConfirmPopup: true,
-                              // roleId: row.id,
-                            });
-                          }}
-                        >
-                          Delete Role
-                        </Button>
-                        <Button
-                          startIcon={<EditCalendarIcon className="icon" />}
-                          className="secondary-text-btn"
-                          onClick={() => {
-                            this.setState({
-                              showCreateRoleControlModal: true,
-                              // editRoleId: row.id,
-                            });
-                          }}
-                        >
-                          Edit Role
-                        </Button>
-                      </Box>
-                      <Box
-                        className="action-buttons-bg"
-                        onClick={() => this.handleActionButton(index)}
-                      ></Box>
-                    </>
+
+                  {isActionDropDownOpen === index && (
+                    <div
+                      className={
+                        isActionDropDownOpen === index
+                          ? "fliter-collapse active"
+                          : "fliter-collapse"
+                      }
+                    >
+                      <List>{this.renderDropDownData()}</List>
+                    </div>
                   )}
+
+                  <div
+                    className={
+                      isActionDropDownOpen === index
+                        ? "fliters-collapse-bg active"
+                        : "fliters-collapse-bg"
+                    }
+                    onClick={() => this.toggleActions(1, null)}
+                  />
                 </TableCell>
               </TableRow>
             );
@@ -415,7 +411,7 @@ class AlertRules extends Component {
             <Box className="fliter-button">
               <Button
                 className="light-btn p-l-15 p-r-15"
-                onClick={this.toggleBulkAction}
+                onClick={() => this.toggleActions()}
               >
                 Bulk Action
               </Button>
@@ -437,7 +433,7 @@ class AlertRules extends Component {
                     ? "fliters-collapse-bg active"
                     : "fliters-collapse-bg"
                 }
-                onClick={this.toggleBulkAction}
+                onClick={() => this.toggleActions()}
               />
             </Box>
           </Box>
