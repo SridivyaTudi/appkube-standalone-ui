@@ -198,32 +198,42 @@ export class AlertHandler extends Component {
                       </ListItem>
                       <ListItem>
                         <Link to={`#`}>
-                          exec <i className="fas fa-times"></i>
+                        log <i className="fas fa-times"></i>
                         </Link>
                       </ListItem>
                       <ListItem>
                         <Link to={`#`}>
-                          exec <i className="fas fa-times"></i>
+                        slack (default) <i className="fas fa-times"></i>
                         </Link>
                       </ListItem>
                       <ListItem>
                         <Link to={`#`}>
-                          exec <i className="fas fa-times"></i>
+                        email <i className="fas fa-times"></i>
                         </Link>
                       </ListItem>
                       <ListItem>
                         <Link to={`#`}>
-                          exec <i className="fas fa-times"></i>
+                        alert <i className="fas fa-times"></i>
                         </Link>
                       </ListItem>
                       <ListItem>
                         <Link to={`#`}>
-                          exec <i className="fas fa-times"></i>
+                        hipchart <i className="fas fa-times"></i>
                         </Link>
                       </ListItem>
                       <ListItem>
                         <Link to={`#`}>
-                          exec <i className="fas fa-times"></i>
+                        kafka (local host) <i className="fas fa-times"></i>
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link to={`#`}>
+                        opsGenie <i className="fas fa-times"></i>
+                        </Link>
+                      </ListItem>
+                      <ListItem>
+                        <Link to={`#`}>
+                        Pushover <i className="fas fa-times"></i>
                         </Link>
                       </ListItem>
                     </List>

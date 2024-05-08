@@ -22,12 +22,12 @@ class HorizontalBarChart extends Component {
 
   renderChart = () => {
     let { data } = this.props;
-    const barHeight = 28;
+    const barHeight = 25;
 
     const marginTop = 0;
     const marginRight = 10;
     const marginBottom = 0;
-    const marginLeft = 130;
+    const marginLeft = 150;
     const width = 800;
     const height =
       Math.ceil(data.length * barHeight) + marginTop + marginBottom;
@@ -154,7 +154,7 @@ class HorizontalBarChart extends Component {
       <>
         <Box className="top-used-service-chrt">
           {this.props.chardBeforeRenderHTML}
-          <svg ref={this.ref}></svg>
+          <svg ref={this.ref} style={{width: '100%', height:"auto"}}></svg>
         </Box>{" "}
       </>
     );

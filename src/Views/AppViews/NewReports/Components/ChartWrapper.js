@@ -24,7 +24,7 @@ class ChartWrapper extends Component {
     let { title, labelOfBtn, link } = data;
     return (
       <Box className="reports-chart-box">
-        <Box className="heading p-b-15">
+        <Box className="heading p-b-10">
           <Box className="chart-title">
             <h4 className="title">
               <HtmlTooltip className="table-tooltip" title={title}>

@@ -844,6 +844,9 @@
               .templates-text {
                 display: block;
                 margin-top: 15px;
+                max-height: 110px;
+                overflow: auto;
+                overflow-y: auto;
 
                 li {
                   color: #3b4859;
