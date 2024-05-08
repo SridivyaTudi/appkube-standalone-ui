@@ -1281,7 +1281,7 @@ class Tier extends Component {
                       Add Entry
                     </Button>
                   </Grid> */}
-                  <Grid item xs={12} alignContent={"center"}>
+                  <Grid item xs={12} >
                     <Box className="d-block text-center">
                       <LoadingButton
                         className={`primary-btn min-width-inherit`}
