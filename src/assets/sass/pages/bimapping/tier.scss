@@ -323,7 +323,7 @@
               padding: 0;
               margin: 0;
               li {
-                margin: 55px 0 0 0;
+                margin: 0 0 55px 0;
                 padding: 0;
                 .check-icon {
                   background: #00b929;
@@ -344,8 +344,8 @@
                  height: 32px;
                 }
 
-                &:first-child {
-                  margin-top: 85px;
+                &:last-child {
+                  margin-bottom: 0;
                 }
               }
             }
