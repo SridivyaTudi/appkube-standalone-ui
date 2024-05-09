@@ -47,6 +47,7 @@ import BIMapping from "./AppViews/BIMapping";
 import ProductCategory from "./AppViews/BIMapping/ProductCategory";
 import Tier from "./AppViews/BIMapping/Tier";
 import Soa from "./AppViews/BIMapping/Soa";
+import Lambda from "./AppViews/BIMapping/Lambda";
 import AddDepartment from "./AppViews/BIMapping/AddDepartment";
 import AddProduct from "./AppViews/BIMapping/AddProduct";
 import DiscoveredAssets from "./AppViews/DiscoveredAssets";
@@ -365,6 +366,7 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category/soa`}
             element={<Soa />}
           />
+          <Route path={`${APP_PREFIX_PATH}/bim/lambda`} element={<Lambda/>} />
           <Route
             path={`${APP_PREFIX_PATH}/bim/create-department`}
             element={<AddDepartment />}
