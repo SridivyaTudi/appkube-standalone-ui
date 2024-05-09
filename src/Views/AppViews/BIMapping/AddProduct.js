@@ -320,7 +320,7 @@ class AddProduct extends Component {
                                   {PRODUCT_CATEGORY_ENUM.THREE_TIER}
                                 </label>
                               </Box>
-                              <Box className="d-flex align-items-center">
+                              <Box className="d-flex align-items-center m-r-3">
                                 <input
                                   type="radio"
                                   name="category"
@@ -335,6 +335,23 @@ class AddProduct extends Component {
                                 />
                                 <label htmlFor={PRODUCT_CATEGORY_ENUM.SOA}>
                                   {PRODUCT_CATEGORY_ENUM.SOA}
+                                </label>
+                              </Box>
+                              <Box className="d-flex align-items-center">
+                                <input
+                                  type="radio"
+                                  name="category"
+                                  //id={PRODUCT_CATEGORY_ENUM.SOA}
+                                  className="radio-btn"
+                                  //value={PRODUCT_CATEGORY_ENUM.SOA}
+                                  // checked={
+                                  //   formData.category ===
+                                  //   PRODUCT_CATEGORY_ENUM.SOA
+                                  // }
+                                  //onChange={this.handleInputChange}
+                                />
+                                <label >
+                                 LAMBDA
                                 </label>
                               </Box>
                             </Box>
