@@ -155,6 +155,8 @@ class Soa extends Component {
       activeTabEks: 0,
       deployedInstances: [],
       selectedServiceData: {
+        SSL: "",
+        APIGATEWAY: "",
         app: "",
         data: "",
         other: "",
@@ -164,6 +166,8 @@ class Soa extends Component {
       selectedService: [],
       savedData: [],
       savedService: {
+        SSL: false,
+        APIGATEWAY: false,
         app: false,
         data: false,
         other: false,
@@ -191,6 +195,7 @@ class Soa extends Component {
   componentDidMount = () => {
     window.addEventListener("load", this.redirectPage);
     let { serviceType, moduleName } = this.props.createProductFormData;
+
     if (serviceType === SERVICE_TYPE.COMMON.toLowerCase()) {
       this.props.getServicesFromServiceModule({ serviceType, moduleName });
     } else {
@@ -304,7 +309,7 @@ class Soa extends Component {
   // Toggle app service dropdown.
   toggleAppService = () => {
     let { savedService } = this.state;
-    if (!savedService.app) {
+    if (savedService.APIGATEWAY && !savedService.app) {
       this.setState({
         isSelectSpringBootOpen: !this.state.isSelectSpringBootOpen,
       });
@@ -580,6 +585,8 @@ class Soa extends Component {
       } catch (error) {
         console.log(error);
       }
+    } else {
+      this.onClickServiceDropDown("SSL", "SSL");
     }
   };
 
@@ -602,8 +609,13 @@ class Soa extends Component {
     } = this.state;
     let { createProductFormData } = this.props;
     let serviceName = "";
-
-    if (!savedService.app) {
+    if (!savedService.SSL) {
+      savedService.SSL = true;
+      serviceName = "SSL";
+    } else if (!savedService.APIGATEWAY) {
+      savedService.APIGATEWAY = true;
+      serviceName = "APIGATEWAY";
+    } else if (!savedService.app) {
       savedService.app = true;
       serviceName = "app";
     } else if (!savedService.data) {
@@ -623,6 +635,7 @@ class Soa extends Component {
       configInfo,
       managementInfo,
     };
+
     if (editStatus) {
       savedData = savedData.map((previousData) => {
         if (previousData.serviceName === serviceName) {
@@ -633,6 +646,8 @@ class Soa extends Component {
     } else {
       savedData.push(currentData);
     }
+
+    
 
     selectedInstance = -1;
     selectedDeployedInstance = "";
@@ -899,7 +914,7 @@ class Soa extends Component {
     return (
       <Box className="content-middle">
         <List>
-          <ListItem>
+          <ListItem className={``}>
             <Box className="application-balancer">
               <Button className="secondary-btn min-width" variant="contained">
                 SSL
@@ -913,9 +928,19 @@ class Soa extends Component {
               </Box>
             </Box>
           </ListItem>
-          <ListItem className={`active`}>
+          <ListItem className={``}>
             <Box className="application-balancer">
-              <Button className="secondary-btn min-width" variant="contained">
+              <Button
+                className="secondary-btn min-width"
+                variant="contained"
+                onClick={() =>
+                  savedService.SSL && !savedService.APIGATEWAY ? (
+                    this.onClickServiceDropDown("APIGATEWAY", "APIGATEWAY")
+                  ) : (
+                    <></>
+                  )
+                }
+              >
                 API Gateway
               </Button>
               <Box className="balancer-boxs">
@@ -1167,17 +1192,6 @@ class Soa extends Component {
         </List>
         <Box className="check-icons-box">
           <List>
-            <ListItem>
-              <Box className="d-flex align-items-center">
-                <IconButton className="check-icon">
-                  <i class="fas fa-check"></i>
-                </IconButton>
-                <IconButton className="edit-icon">
-                  <i class="fas fa-edit"></i>
-                </IconButton>
-              </Box>
-            </ListItem>
-
             {Object.keys(selectedServiceData).map((key) => {
               return (
                 <ListItem>
@@ -1230,6 +1244,7 @@ class Soa extends Component {
   };
 
   render() {
+    console.log(this.props.createProductFormData);
     let {
       selectedInstance,
       cloudElementType,
@@ -1308,10 +1323,6 @@ class Soa extends Component {
                   </List>
                   <Box className="tabs-content">
                     <ManagementInfo
-                      setNextTab={(activeTabEcs) => {
-                        this.setState({ activeTabEcs });
-                      }}
-                      onClickAddEntryBtn={clickManInfoIdAddEntry}
                       style={{ display: activeTabEcs === 0 ? "" : "none" }}
                       setManagentInfo={(managementInfo) => {
                         this.setState({ managementInfo });
@@ -1320,11 +1331,6 @@ class Soa extends Component {
                     />
 
                     <ConfigInfo
-                      setNextTab={(activeTabEcs) => {
-                        this.setState({ activeTabEcs });
-                      }}
-                      selectedCloudElement={cloudElementType?.toUpperCase()}
-                      onClickAddEntryBtn={clickConfigInfoIdAddEntry}
                       style={{ display: activeTabEcs === 1 ? "" : "none" }}
                       setConfigInfo={(configInfo) => {
                         this.setState({ configInfo });
@@ -1340,32 +1346,8 @@ class Soa extends Component {
                   rowSpacing={1}
                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 >
-                  {/* <Grid item xs={4} alignItems={"flex-start"}>
-                    <Button
-                      className={` primary-btn min-width-inherit`}
-                      variant="contained"
-                      onClick={() => {
-                        let {
-                          clickConfigInfoIdAddEntry,
-                          clickManInfoIdAddEntry,
-                        } = this.state;
-
-                        if (activeTabEcs === 0) {
-                          clickManInfoIdAddEntry = v4();
-                        } else {
-                          clickConfigInfoIdAddEntry = v4();
-                        }
-                        this.setState({
-                          clickConfigInfoIdAddEntry,
-                          clickManInfoIdAddEntry,
-                        });
-                      }}
-                    >
-                      <i className="fa-sharp fa-solid fa-plus m-r-1"></i>
-                      Add Entry
-                    </Button>
-                  </Grid> */}
-                  <Grid item xs={12} >
+                
+                  <Grid item xs={12}>
                     <Box className="d-block text-center">
                       <LoadingButton
                         className={` primary-btn min-width-inherit`}

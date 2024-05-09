@@ -334,24 +334,21 @@ class ProductCategory extends Component {
               id: service.selectedInstance,
               managementInfo: service.managementInfo
                 .map((management) => {
-                  let { isSubValue, key, value } = management;
-                  if (!isSubValue) {
-                    let formatData = {
-                      key,
-                      value,
-                    };
-                    return formatData;
-                  } else {
-                    return null;
-                  }
+                  let { endPoint, query } = management;
+
+                  let formatData = {
+                    key: endPoint,
+                    value: query,
+                  };
+                  return formatData;
                 })
                 .filter((obj) => obj),
               configInfo: service.configInfo.map((config) => {
-                let { key, value } = config;
+                let { endPoint, query } = config;
 
                 let formatData = {
-                  key,
-                  value,
+                  key: endPoint,
+                  value: query,
                 };
                 return formatData;
               }),
