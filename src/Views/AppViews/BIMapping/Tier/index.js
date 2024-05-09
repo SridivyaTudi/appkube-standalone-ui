@@ -130,6 +130,7 @@ class Tier extends Component {
       cloudServices: [],
       savedData: [],
       selectedLayer: {
+        SSL: "",
         web: "",
         app: "",
         data: "",
@@ -140,6 +141,7 @@ class Tier extends Component {
       selectedDeployedInstance: "",
       selectedService: [],
       savedLayer: {
+        SSL: false,
         web: false,
         app: false,
         data: false,
@@ -189,6 +191,8 @@ class Tier extends Component {
       } catch (error) {
         console.log(error);
       }
+    } else {
+      this.onClickLayerDropDown("SSL", "SSL");
     }
   };
 
@@ -281,7 +285,7 @@ class Tier extends Component {
   // Toggle web layer  dropdown.
   toggleWebLayer = () => {
     let { savedLayer } = this.state;
-    if (!savedLayer.web) {
+    if (savedLayer.SSL && !savedLayer.web) {
       this.setState({
         isSelectNginxOpen: !this.state.isSelectNginxOpen,
       });
@@ -512,7 +516,10 @@ class Tier extends Component {
     let { createProductFormData } = this.props;
     let layerName = "";
 
-    if (!savedLayer.web) {
+    if (!savedLayer.SSL) {
+      savedLayer.SSL = true;
+      layerName = "SSL";
+    } else if (!savedLayer.web) {
       savedLayer.web = true;
       layerName = "web";
     } else if (!savedLayer.app) {
@@ -695,26 +702,21 @@ class Tier extends Component {
                   type: service.layerName?.toUpperCase(),
                   cloudElementMapping: {
                     id: service.selectedInstance,
-                    managementInfo: service.managementInfo
-                      .map((management) => {
-                        let { isSubValue, key, value } = management;
-                        if (!isSubValue) {
-                          let formatData = {
-                            key,
-                            value,
-                          };
-                          return formatData;
-                        } else {
-                          return null;
-                        }
-                      })
-                      .filter((obj) => obj),
-                    configInfo: service.configInfo.map((config) => {
-                      let { key, value } = config;
+                    managementInfo: service.managementInfo.map((management) => {
+                      let { endPoint, query } = management;
 
                       let formatData = {
-                        key,
-                        value,
+                        key: endPoint,
+                        value: query,
+                      };
+                      return formatData;
+                    }),
+                    configInfo: service.configInfo.map((config) => {
+                      let { endPoint, query } = config;
+
+                      let formatData = {
+                        key: endPoint,
+                        value: query,
                       };
                       return formatData;
                     }),
@@ -1281,7 +1283,7 @@ class Tier extends Component {
                       Add Entry
                     </Button>
                   </Grid> */}
-                  <Grid item xs={12} >
+                  <Grid item xs={12}>
                     <Box className="d-block text-center">
                       <LoadingButton
                         className={`primary-btn min-width-inherit`}
