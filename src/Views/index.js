@@ -366,7 +366,10 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category/soa`}
             element={<Soa />}
           />
-          <Route path={`${APP_PREFIX_PATH}/bim/lambda`} element={<Lambda/>} />
+          <Route
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category/${PRODUCT_CATEGORY_ENUM.LAMBDA}`}
+            element={<Lambda />}
+          />
           <Route
             path={`${APP_PREFIX_PATH}/bim/create-department`}
             element={<AddDepartment />}
@@ -387,11 +390,23 @@ export const Views = (props) => {
             path={`${APP_PREFIX_PATH}/discovered-assets/events-history`}
             element={<Eventhistory />}
           />
-          <Route path={`${APP_PREFIX_PATH}/alerts`} element={<Alerts/>} />
-          <Route path={`${APP_PREFIX_PATH}/alerts/monitor-alerts`} element={<MonitorAlerts/>} />
-          <Route path={`${APP_PREFIX_PATH}/alerts/alert-percentage`} element={<AlertPercentage/>}/>
-          <Route path={`${APP_PREFIX_PATH}/alerts/alert-rules`} element={<AlertRules/>}/>
-          <Route path={`${APP_PREFIX_PATH}/alerts/new-alert-rules`} element={<NewAlertRules/>} />
+          <Route path={`${APP_PREFIX_PATH}/alerts`} element={<Alerts />} />
+          <Route
+            path={`${APP_PREFIX_PATH}/alerts/monitor-alerts`}
+            element={<MonitorAlerts />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/alerts/alert-percentage`}
+            element={<AlertPercentage />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/alerts/alert-rules`}
+            element={<AlertRules />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/alerts/new-alert-rules`}
+            element={<NewAlertRules />}
+          />
           <Route path={`/error`} element={<Error />} />
         </Routes>
         <ToastContainer

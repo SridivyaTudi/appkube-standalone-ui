@@ -335,6 +335,7 @@ export const isAlphabet = (str) => {
 export const PRODUCT_CATEGORY_ENUM = {
   THREE_TIER: "3 TIER",
   SOA: "SOA",
+  LAMBDA: "LAMBDA",
 };
 
 export const SERVICES_CATEGORY_OF_THREE_TIER_ENUM = {

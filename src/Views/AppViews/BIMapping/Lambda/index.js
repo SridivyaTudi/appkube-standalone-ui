@@ -9,33 +9,41 @@ import Postgresql from "assets/img/assetmanager/postgresql.png";
 import Opensearch from "assets/img/assetmanager/opensearch.png";
 import bottomArrow from "assets/img/assetmanager/bottom-arrow.png";
 import RightArrow from "assets/img/assetmanager/right-arrow.png";
-import Nglnx from "assets/img/assetmanager/nglnx.png";
-import PostgreSql from "assets/img/assetmanager/postgresql.png";
-import Aws from "assets/img/aws.png";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
 
-class index extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          currentActiveNode: "",
-          activeLayer: "SSL",
-        };
-      }
+class Lambda extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentActiveNode: "",
+      activeLayer: "SSL",
+    };
+  }
   // Render heading
   renderHeading = () => {
-    // let { name, id, landingZoneId } = this.getUrlDetails();
+    let { name, id, landingZoneId } = this.getUrlDetails();
     let { activeLayer } = this.state;
     return (
       <Box className="list-heading">
         <h3>Lambda</h3>
         <Box className="breadcrumbs">
           <ul>
-            <li>BI-Mapping</li>
+            <li onClick={() => this.props.navigate(`${APP_PREFIX_PATH}/bim`)}>
+              BI-Mapping
+            </li>
             <li>
               <i className="fa-solid fa-chevron-right"></i>
             </li>
-            <li>Add Product</li>
+            <li
+              onClick={() =>
+                this.props.navigate(
+                  `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}`
+                )
+              }
+            >
+              Add Product
+            </li>
             <li>
               <i className="fa-solid fa-chevron-right"></i>
             </li>
@@ -45,6 +53,14 @@ class index extends Component {
       </Box>
     );
   };
+
+  /** Get url details. */
+  getUrlDetails() {
+    let name = this.props.params.name;
+    let id = this.props.params.id;
+    let landingZoneId = this.props.params.landingZoneId;
+    return { name, id, landingZoneId };
+  }
   render() {
     let { activeLayer } = this.state;
     return (
@@ -59,7 +75,7 @@ class index extends Component {
             <Grid item xs={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
-                <h4 class="m-t-0 m-b-0">MODULE : Requirements</h4>
+                  {/* <h4 class="m-t-0 m-b-0">MODULE : Requirements</h4> */}
                   <Box className="topology-inner-content">
                     <Box className="content-left lambda-layer">
                       <List>
@@ -111,7 +127,6 @@ class index extends Component {
                               variant="contained"
                               onClick={() => {
                                 this.setState({ activeLayer: "SSL" });
-                                this.props.setActiveLayer("SSL");
                               }}
                             >
                               SSL
@@ -136,7 +151,6 @@ class index extends Component {
                               variant="contained"
                               onClick={() => {
                                 this.setState({ activeLayer: "NGINX" });
-                                this.props.setActiveLayer("NGINX");
                               }}
                             >
                               <img src={Nginx} alt="" /> Api Gateway
@@ -161,7 +175,6 @@ class index extends Component {
                               variant="contained"
                               onClick={() => {
                                 this.setState({ activeLayer: "Springboot" });
-                                this.props.setActiveLayer("Springboot");
                               }}
                             >
                               <img src={Springboot} alt="" /> Lambda
@@ -179,19 +192,13 @@ class index extends Component {
                                     this.setState({
                                       activeLayer: "Postgresql",
                                     });
-                                    this.props.setActiveLayer("Postgresql");
                                   }}
                                 >
                                   <img src={Postgresql} alt="" />
                                 </Box>
                                 <p>PostgreSQL</p>
                               </Box>
-                              <Box
-                                className="balancer-box"
-                                onClick={() => {
-                                  this.props.setActiveLayer("Opensearch");
-                                }}
-                              >
+                              <Box className="balancer-box" onClick={() => {}}>
                                 <span>
                                   <img src={bottomArrow} alt="" />
                                 </span>
@@ -203,7 +210,6 @@ class index extends Component {
                                     this.setState({
                                       activeLayer: "Opensearch",
                                     });
-                                    this.props.setActiveLayer("Opensearch");
                                   }}
                                 >
                                   <img src={Opensearch} alt="" />
@@ -219,9 +225,7 @@ class index extends Component {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={6}>
-              
-            </Grid>
+            <Grid item xs={6}></Grid>
           </Grid>
         </Box>
       </Box>
@@ -229,4 +233,4 @@ class index extends Component {
   }
 }
 
-export default index;
+export default navigateRouter(Lambda);

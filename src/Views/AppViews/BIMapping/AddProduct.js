@@ -77,6 +77,10 @@ class AddProduct extends Component {
                 "-"
               )}`
             );
+          } else if (formData.category === PRODUCT_CATEGORY_ENUM.LAMBDA) {
+            this.props.navigate(
+              `${APP_PREFIX_PATH}/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/product-category/${PRODUCT_CATEGORY_ENUM.LAMBDA.toLowerCase()}`
+            );
           } else {
             this.props.navigate(
               `${APP_PREFIX_PATH}/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/product-category`
@@ -341,17 +345,17 @@ class AddProduct extends Component {
                                 <input
                                   type="radio"
                                   name="category"
-                                  //id={PRODUCT_CATEGORY_ENUM.SOA}
+                                  id={PRODUCT_CATEGORY_ENUM.LAMBDA}
                                   className="radio-btn"
-                                  //value={PRODUCT_CATEGORY_ENUM.SOA}
-                                  // checked={
-                                  //   formData.category ===
-                                  //   PRODUCT_CATEGORY_ENUM.SOA
-                                  // }
-                                  //onChange={this.handleInputChange}
+                                  value={PRODUCT_CATEGORY_ENUM.LAMBDA}
+                                  checked={
+                                    formData.category ===
+                                    PRODUCT_CATEGORY_ENUM.LAMBDA
+                                  }
+                                  onChange={this.handleInputChange}
                                 />
-                                <label >
-                                 LAMBDA
+                                <label htmlFor={PRODUCT_CATEGORY_ENUM.LAMBDA}>
+                                  {PRODUCT_CATEGORY_ENUM.LAMBDA}
                                 </label>
                               </Box>
                             </Box>
