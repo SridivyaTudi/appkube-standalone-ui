@@ -56,11 +56,12 @@ class index extends Component {
             rowSpacing={1}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <Box className="topology-panel">
                 <Box className="topology-panel-body">
+                <h4 class="m-t-0 m-b-0">MODULE : Requirements</h4>
                   <Box className="topology-inner-content">
-                    <Box className="content-left">
+                    <Box className="content-left lambda-layer">
                       <List>
                         {/* <ListItem>
                           <Box className="button-box">
@@ -218,7 +219,7 @@ class index extends Component {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={6}>
               
             </Grid>
           </Grid>
