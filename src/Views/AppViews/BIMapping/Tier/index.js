@@ -157,8 +157,6 @@ class Tier extends Component {
       instancesServices: [],
       cloudElementType: "",
       activeTabEcs: 0,
-      clickConfigInfoIdAddEntry: "",
-      clickManInfoIdAddEntry: "",
       cloudName: "",
       editStatus: false,
       managementInfo: [],
@@ -1161,8 +1159,7 @@ class Tier extends Component {
       selectedInstance,
       activeTabEcs,
       isShowDepolyedSection,
-      clickConfigInfoIdAddEntry,
-      clickManInfoIdAddEntry,
+
       editStatus,
       configInfo,
       managementInfo,
@@ -1227,10 +1224,6 @@ class Tier extends Component {
                   </List>
                   <Box className="tabs-content">
                     <ManagementInfo
-                      setNextTab={(activeTabEcs) => {
-                        this.setState({ activeTabEcs });
-                      }}
-                      onClickAddEntryBtn={clickManInfoIdAddEntry}
                       style={{ display: activeTabEcs === 0 ? "block" : "none" }}
                       setManagentInfo={(managementInfo) => {
                         this.setState({ managementInfo });
@@ -1242,7 +1235,6 @@ class Tier extends Component {
                       setNextTab={(activeTabEcs) => {
                         this.setState({ activeTabEcs });
                       }}
-                      onClickAddEntryBtn={clickConfigInfoIdAddEntry}
                       style={{ display: activeTabEcs === 1 ? "block" : "none" }}
                       setConfigInfo={(configInfo) => {
                         this.setState({ configInfo });
@@ -1258,31 +1250,6 @@ class Tier extends Component {
                   rowSpacing={1}
                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 >
-                  {/* <Grid item xs={4} alignItems={"flex-start"}>
-                    <Button
-                      className={` primary-btn min-width-inherit`}
-                      variant="contained"
-                      onClick={() => {
-                        let {
-                          clickConfigInfoIdAddEntry,
-                          clickManInfoIdAddEntry,
-                        } = this.state;
-
-                        if (activeTabEcs === 0) {
-                          clickManInfoIdAddEntry = v4();
-                        } else {
-                          clickConfigInfoIdAddEntry = v4();
-                        }
-                        this.setState({
-                          clickConfigInfoIdAddEntry,
-                          clickManInfoIdAddEntry,
-                        });
-                      }}
-                    >
-                      <i className="fa-sharp fa-solid fa-plus m-r-1"></i>
-                      Add Entry
-                    </Button>
-                  </Grid> */}
                   <Grid item xs={12}>
                     <Box className="d-block text-center">
                       <LoadingButton

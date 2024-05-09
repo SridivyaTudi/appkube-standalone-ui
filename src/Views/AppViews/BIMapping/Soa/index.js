@@ -647,8 +647,6 @@ class Soa extends Component {
       savedData.push(currentData);
     }
 
-    
-
     selectedInstance = -1;
     selectedDeployedInstance = "";
     selectedService = [];
@@ -1247,10 +1245,7 @@ class Soa extends Component {
     console.log(this.props.createProductFormData);
     let {
       selectedInstance,
-      cloudElementType,
       activeTabEcs,
-      clickConfigInfoIdAddEntry,
-      clickManInfoIdAddEntry,
       isShowDepolyedSection,
       configInfo,
       managementInfo,
@@ -1346,7 +1341,6 @@ class Soa extends Component {
                   rowSpacing={1}
                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 >
-                
                   <Grid item xs={12}>
                     <Box className="d-block text-center">
                       <LoadingButton
