@@ -798,11 +798,16 @@ class Tier extends Component {
       selectedLayer,
       dropDownLayersData,
       savedLayer,
+      isShowDepolyedSection,
     } = this.state;
     return (
       <Box className="content-middle">
         <List>
-          <ListItem>
+          <ListItem
+            className={`${
+              !savedLayer.SSL && isShowDepolyedSection ? "active" : ""
+            }`}
+          >
             <Box className="application-balancer">
               <Button className="secondary-btn min-width" variant="contained">
                 SSL
