@@ -908,11 +908,12 @@ class Soa extends Component {
       selectedServiceData,
       dropDownServiceData,
       savedService,
+      isShowDepolyedSection,
     } = this.state;
     return (
       <Box className="content-middle">
         <List>
-          <ListItem className={``}>
+          <ListItem className={` ${!savedService.SSL ? "active" : ""}`}>
             <Box className="application-balancer">
               <Button className="secondary-btn min-width" variant="contained">
                 SSL
@@ -926,7 +927,15 @@ class Soa extends Component {
               </Box>
             </Box>
           </ListItem>
-          <ListItem className={``}>
+          <ListItem
+            className={`${
+              savedService.SSL &&
+              !savedService.APIGATEWAY &&
+              isShowDepolyedSection
+                ? "active"
+                : ""
+            }`}
+          >
             <Box className="application-balancer">
               <Button
                 className="secondary-btn min-width"
@@ -1242,7 +1251,6 @@ class Soa extends Component {
   };
 
   render() {
-    console.log(this.props.createProductFormData);
     let {
       selectedInstance,
       activeTabEcs,
