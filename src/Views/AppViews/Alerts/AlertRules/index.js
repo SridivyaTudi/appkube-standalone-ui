@@ -21,6 +21,24 @@ import { Link } from "react-router-dom";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { isAction } from "@reduxjs/toolkit";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
+
 const tableData = [
   {
     name: "Percentage CPU 1",
@@ -230,7 +248,16 @@ class AlertRules extends Component {
                   />
                   {alert.name}
                 </TableCell>
-                <TableCell align="left">{alert.Condition}</TableCell>
+                <TableCell align="left">
+                  <Box className="alert-condition">
+                    <HtmlTooltip
+                      className="table-tooltip"
+                      title={alert.Condition}
+                    >
+                      {alert.Condition}
+                    </HtmlTooltip>
+                  </Box>
+                </TableCell>
                 <TableCell align="left" className="status">
                   {alert.status}
                 </TableCell>
