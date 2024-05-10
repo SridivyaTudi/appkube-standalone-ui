@@ -1330,7 +1330,9 @@ class Soa extends Component {
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={6}>
               {isShowDepolyedSection ||
-              ["SSL", "APIGATEWAY"].includes(selectedDeployedInstance) ? (
+              [ADD_PRODUCT_ENUMS.SSL, ADD_PRODUCT_ENUMS.APIGATEWAY].includes(
+                selectedDeployedInstance
+              ) ? (
                 <Box className="nginx-cards">
                   {this.renderDeployedInstanceWrapper()}
                   {this.renderSelectedInstanceWrapper()}

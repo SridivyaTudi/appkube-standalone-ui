@@ -1194,7 +1194,6 @@ class Tier extends Component {
       selectedLayer,
     } = this.state;
     let { biServicesFromProductCategory, creationBiMapping } = this.props;
-    console.log(selectedLayer);
     return (
       <Box className="bimapping-container">
         {this.renderHeading()}
@@ -1221,7 +1220,8 @@ class Tier extends Component {
             </Grid>
 
             <Grid item xs={12} sm={6} md={6} lg={6}>
-              {isShowDepolyedSection || selectedDeployedInstance === "SSL" ? (
+              {isShowDepolyedSection ||
+              selectedDeployedInstance === ADD_PRODUCT_ENUMS.SSL ? (
                 <Box className="nginx-cards">
                   {this.renderDeployedInstanceWrapper()}
                   {this.renderSelectedInstanceWrapper()}
