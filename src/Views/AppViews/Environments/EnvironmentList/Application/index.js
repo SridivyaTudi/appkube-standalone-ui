@@ -71,13 +71,13 @@ class Application extends Component {
 
   getMetricColor = (number) => {
     if (number > 98) {
-      return <p style={{ color: "#53CA43" }}>{number}</p>;
+      return <p className="m-t-0 m-b-0" style={{ color: "#53CA43" }}>{number}</p>;
     }
     if (number > 90) {
-      return <p style={{ color: "#FAA24B" }}>{number}</p>;
+      return <p className="m-t-0 m-b-0" style={{ color: "#FAA24B" }}>{number}</p>;
     }
     if (number < 90) {
-      return <p style={{ color: "#FF2D2E" }}>{number}</p>;
+      return <p className="m-t-0 m-b-0" style={{ color: "#FF2D2E" }}>{number}</p>;
     }
   };
 

@@ -448,9 +448,9 @@ class Soa extends Component {
 
   // Render Selected Instance section
   renderSelectedInstanceWrapper = () => {
-    let { selectedDeployedInstance } = this.state;
+    let { selectedDeployedInstance,isShowDepolyedSection } = this.state;
     return selectedDeployedInstance ? (
-      <Box className="deployed-section m-t-4">
+      <Box className={`deployed-section ${isShowDepolyedSection ? 'm-t-4' : ''} `}>
         <Box className="deployed-head">
           <h4 className="m-t-0">Select Instance</h4>
         </Box>
