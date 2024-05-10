@@ -52,11 +52,11 @@ class Permission extends Component {
   renderTabsMenuComponent = () => {
     const { activeTab, permissionCategories } = this.state;
     return (
-      <TabsMenu
+      <TabsMenu 
         tabs={permissionCategories.length ? permissionCategories : []}
         setActiveTab={this.setActiveTab}
         activeTab={activeTab}
-        breakWidth={992}
+        breakWidth={767}
         key={v4()}
       />
     );

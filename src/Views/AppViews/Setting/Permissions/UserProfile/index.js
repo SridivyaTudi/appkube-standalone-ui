@@ -275,7 +275,7 @@ export class UserProfile extends Component {
                       item
                       xl={6}
                       lg={6}
-                      md={6}
+                      md={7}
                       sm={4}
                       xs={4}
                       className="text-center"
@@ -288,7 +288,7 @@ export class UserProfile extends Component {
                         key={v4()}
                       />
                     </Grid>
-                    <Grid item xl={3} lg={3} md={4} sm={4} xs={4}>
+                    <Grid item xl={3} lg={3} md={3} sm={4} xs={4}>
                       <Box className="overview-buttons">
                         <List>
                           {activeTab === 1 ? (

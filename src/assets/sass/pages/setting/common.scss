@@ -181,6 +181,30 @@
   }
 }
 
+.tabs-break-width {
+ display: inline-flex;
+  .tabs-menu {
+    display: inline-flex;
+    background: transparent;
+    padding: 0 10px 0 0;
+    div {
+      padding: 0;
+      font-size: 11px;
+      line-height: 28px;
+      padding-left: 15px;
+      padding-right: 25px;
+      color: #384cff;
+    }
+     svg {
+      right: 2px !important;
+      color: #384cff;
+  }
+    fieldset {
+      border-color: #384cff;
+    }
+  }
+}
+
 .check-box {
   color: #3247e5 !important;
 }
