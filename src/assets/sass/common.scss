@@ -1099,6 +1099,9 @@ a {
       font-family: "Poppins", sans-serif;
       border-bottom-color: #b3b3b3;
       border-bottom-style: dotted;
+      .check-box{
+        padding: 5px;
+      }
     }
 
     tbody {
@@ -1135,6 +1138,9 @@ a {
             overflow: hidden;
             text-overflow: ellipsis;
             width: 250px;
+          }
+          .check-box{
+            padding: 5px;
           }
 
           .roles-box {
