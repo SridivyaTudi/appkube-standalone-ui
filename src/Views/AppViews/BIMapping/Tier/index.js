@@ -24,6 +24,7 @@ import {
   SERVICES_CATEGORY_OF_THREE_TIER_ENUM,
   ADD_PRODUCT_ENUMS,
   getCurrentOrgId,
+  ENVIRONMENTS,
 } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { connect } from "react-redux";
@@ -190,7 +191,11 @@ class Tier extends Component {
         console.log(error);
       }
     } else {
-      this.onClickLayerDropDown("SSL", "SSL");
+      this.onClickDeployedCard(
+        ADD_PRODUCT_ENUMS.SSL,
+        ENVIRONMENTS.AWS,
+        ADD_PRODUCT_ENUMS.SSL
+      );
     }
   };
 
@@ -364,13 +369,24 @@ class Tier extends Component {
   // Click on deployed card
   onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
     let { landingZoneId } = this.getUrlDetails();
-    this.props.getInstancesServices({ cloudName, elementType, landingZoneId });
+    let { selectedLayer } = this.state;
+
+    if (selectedDeployedInstance === ADD_PRODUCT_ENUMS.SSL) {
+      selectedLayer[ADD_PRODUCT_ENUMS.SSL] = ADD_PRODUCT_ENUMS.SSL;
+    }
+
+    this.props.getInstancesServices({
+      cloudName,
+      elementType,
+      landingZoneId,
+    });
     this.setState({
       selectedDeployedInstance,
       selectedInstance: -1,
       activeTabEks: 0,
       cloudElementType: elementType,
       cloudName,
+      selectedLayer,
     });
   };
 
@@ -629,7 +645,8 @@ class Tier extends Component {
 
   // Click on edit btn.
   onClickEditBtn = (layerName) => {
-    let { savedData, savedLayer } = this.state;
+    let { savedData, savedLayer, isShowDepolyedSection, selectedLayer } =
+      this.state;
 
     let findSaveData = savedData.find((data) => data.layerName === layerName);
 
@@ -642,6 +659,7 @@ class Tier extends Component {
         cloudName,
         managementInfo,
         configInfo,
+        layerName,
       } = findSaveData;
       let { landingZoneId } = this.getUrlDetails();
 
@@ -664,15 +682,23 @@ class Tier extends Component {
         }
       });
 
+      if (selectedDeployedInstance === ADD_PRODUCT_ENUMS.SSL) {
+        isShowDepolyedSection = false;
+      } else {
+        isShowDepolyedSection = true;
+        this.onClickLayerDropDown(layerName, selectedLayer[layerName]);
+      }
+
       this.setState({
         selectedInstance,
         selectedDeployedInstance,
         selectedService,
         savedLayer,
         cloudElementType: elementType,
-        isShowDepolyedSection: true,
+        isShowDepolyedSection,
         managementInfo,
         configInfo,
+        isShowDepolyedSection,
       });
     }
   };
@@ -803,11 +829,7 @@ class Tier extends Component {
     return (
       <Box className="content-middle">
         <List>
-          <ListItem
-            className={`${
-              !savedLayer.SSL && isShowDepolyedSection ? "active" : ""
-            }`}
-          >
+          <ListItem className={`${!savedLayer.SSL ? "active" : ""}`}>
             <Box className="application-balancer">
               <Button className="secondary-btn min-width" variant="contained">
                 SSL
@@ -1164,12 +1186,15 @@ class Tier extends Component {
       selectedInstance,
       activeTabEcs,
       isShowDepolyedSection,
-
+      selectedDeployedInstance,
+      savedLayer,
       editStatus,
       configInfo,
       managementInfo,
+      selectedLayer,
     } = this.state;
     let { biServicesFromProductCategory, creationBiMapping } = this.props;
+    console.log(selectedLayer);
     return (
       <Box className="bimapping-container">
         {this.renderHeading()}
@@ -1196,7 +1221,7 @@ class Tier extends Component {
             </Grid>
 
             <Grid item xs={12} sm={6} md={6} lg={6}>
-              {isShowDepolyedSection ? (
+              {isShowDepolyedSection || selectedDeployedInstance === "SSL" ? (
                 <Box className="nginx-cards">
                   {this.renderDeployedInstanceWrapper()}
                   {this.renderSelectedInstanceWrapper()}

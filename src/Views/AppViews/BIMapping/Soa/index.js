@@ -38,6 +38,7 @@ import {
   PRODUCT_CATEGORY_ENUM,
   SERVICES_CATEGORY_OF_SOA_ENUM,
   ADD_PRODUCT_ENUMS,
+  ENVIRONMENTS,
 } from "Utils";
 import { connect } from "react-redux";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -586,7 +587,11 @@ class Soa extends Component {
         console.log(error);
       }
     } else {
-      this.onClickServiceDropDown("SSL", "SSL");
+      this.onClickDeployedCard(
+        ADD_PRODUCT_ENUMS.SSL,
+        ENVIRONMENTS.AWS,
+        ADD_PRODUCT_ENUMS.SSL
+      );
     }
   };
 
@@ -718,6 +723,7 @@ class Soa extends Component {
           moduleName: "",
         })
       );
+
       this.props.setProductIntoDepartment(passData);
       let { name, id, landingZoneId } = this.getUrlDetails();
       this.props.navigate(
@@ -734,19 +740,39 @@ class Soa extends Component {
   // Click on deployed card
   onClickDeployedCard = (selectedDeployedInstance, cloudName, elementType) => {
     let { landingZoneId } = this.getUrlDetails();
-    this.props.getInstancesServices({ cloudName, elementType, landingZoneId });
+    let { selectedServiceData } = this.state;
+
+    if (
+      [ADD_PRODUCT_ENUMS.SSL, ADD_PRODUCT_ENUMS.APIGATEWAY].includes(
+        selectedDeployedInstance
+      )
+    ) {
+      selectedServiceData[selectedDeployedInstance] = selectedDeployedInstance;
+    }
+
+    this.props.getInstancesServices({
+      cloudName,
+      elementType,
+      landingZoneId,
+    });
     this.setState({
       selectedDeployedInstance,
       selectedInstance: -1,
       activeTabEks: 0,
       cloudElementType: elementType,
       cloudName,
+      selectedServiceData,
     });
   };
 
   // Click on edit btn.
   onClickEditBtn = (serviceName) => {
-    let { savedData, savedService, activeServiceCategory } = this.state;
+    let {
+      savedData,
+      savedService,
+      activeServiceCategory,
+      isShowDepolyedSection,
+    } = this.state;
     let findSaveData = savedData.find(
       (data) => data.serviceName === serviceName
     );
@@ -763,10 +789,19 @@ class Soa extends Component {
       } = findSaveData;
       let { landingZoneId } = this.getUrlDetails();
 
-      this.props.getCloudServices({
-        serviceCategory: serviceName,
-        productCategory: PRODUCT_CATEGORY_ENUM.SOA,
-      });
+      if (
+        [ADD_PRODUCT_ENUMS.SSL, ADD_PRODUCT_ENUMS.APIGATEWAY].includes(
+          selectedDeployedInstance
+        )
+      ) {
+        isShowDepolyedSection = false;
+      } else {
+        isShowDepolyedSection = true;
+        this.props.getCloudServices({
+          serviceCategory: serviceName,
+          productCategory: PRODUCT_CATEGORY_ENUM.SOA,
+        });
+      }
 
       activeServiceCategory = serviceName;
 
@@ -795,7 +830,7 @@ class Soa extends Component {
         selectedService,
         savedService,
         cloudElementType: elementType,
-        isShowDepolyedSection: true,
+        isShowDepolyedSection,
         managementInfo,
         configInfo,
         activeServiceCategory,
@@ -929,11 +964,7 @@ class Soa extends Component {
           </ListItem>
           <ListItem
             className={`${
-              savedService.SSL &&
-              !savedService.APIGATEWAY &&
-              isShowDepolyedSection
-                ? "active"
-                : ""
+              savedService.SSL && !savedService.APIGATEWAY ? "active" : ""
             }`}
           >
             <Box className="application-balancer">
@@ -942,7 +973,11 @@ class Soa extends Component {
                 variant="contained"
                 onClick={() =>
                   savedService.SSL && !savedService.APIGATEWAY ? (
-                    this.onClickServiceDropDown("APIGATEWAY", "APIGATEWAY")
+                    this.onClickDeployedCard(
+                      ADD_PRODUCT_ENUMS.APIGATEWAY,
+                      ENVIRONMENTS.AWS,
+                      ADD_PRODUCT_ENUMS.APIGATEWAY
+                    )
                   ) : (
                     <></>
                   )
@@ -1258,6 +1293,7 @@ class Soa extends Component {
       configInfo,
       managementInfo,
       editStatus,
+      selectedDeployedInstance,
     } = this.state;
     let {
       biServicesFromProductCategory,
@@ -1293,7 +1329,8 @@ class Soa extends Component {
               </Box>
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={6}>
-              {isShowDepolyedSection ? (
+              {isShowDepolyedSection ||
+              ["SSL", "APIGATEWAY"].includes(selectedDeployedInstance) ? (
                 <Box className="nginx-cards">
                   {this.renderDeployedInstanceWrapper()}
                   {this.renderSelectedInstanceWrapper()}

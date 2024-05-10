@@ -372,6 +372,8 @@ export const ADD_PRODUCT_ENUMS = {
   LAMBDA: "LAMBDA",
   S3: "S3",
   CDN: "CDN",
+  SSL: "SSL",
+  APIGATEWAY: "APIGATEWAY",
 };
 
 export const ENVIRONMENTS = {
