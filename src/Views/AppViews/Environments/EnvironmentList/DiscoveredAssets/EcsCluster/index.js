@@ -374,7 +374,7 @@ class EcsCluster extends React.Component {
               this.renderLoder()
             ) : (
               <Table
-                sx={{ minWidth: 500 }}
+                sx={{ minWidth: 850 }}
                 aria-label="custom pagination table"
                 className="table"
               >

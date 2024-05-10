@@ -164,7 +164,7 @@ class AlertRules extends Component {
     ) : (
       <>
         <TableContainer className="table">
-          <Table style={{ minWidth: 1300 }}>
+          <Table style={{ minWidth: 1200}}>
             {this.renderTableHead()}
             {this.renderTableBody()}
           </Table>

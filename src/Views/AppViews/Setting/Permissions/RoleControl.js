@@ -210,9 +210,17 @@ class RoleControl extends Component {
               <></>
             )}
           </TableCell>
-          <TableCell>{row?.description}</TableCell>
           <TableCell>
-            <Link to={`${APP_PREFIX_PATH}/setting/role-details/${row.id}`}>View Policy</Link>
+            <Box className="role-description">
+              <HtmlTooltip className="table-tooltip" title={row?.description}>
+                {row?.description}
+              </HtmlTooltip>
+            </Box>
+          </TableCell>
+          <TableCell>
+            <Link to={`${APP_PREFIX_PATH}/setting/role-details/${row.id}`}>
+              View Policy
+            </Link>
           </TableCell>
           <TableCell align="center">
             <IconButton
