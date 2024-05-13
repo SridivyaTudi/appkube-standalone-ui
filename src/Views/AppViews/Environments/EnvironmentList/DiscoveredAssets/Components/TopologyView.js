@@ -84,16 +84,16 @@ class TopologyView extends Component {
             zoomElement = zoomToElement;
             return (
               <>
-                <div className="gmnoprint">
-                  <div className="gmnoprint-plus-minus">
+                <Box className="gmnoprint">
+                  <Box className="gmnoprint-plus-minus">
                     <button className="btn btn-plus" onClick={() => zoomIn()}>
                       <i className="fa-solid fa-plus"></i>
                     </button>
                     <button className="btn btn-minus" onClick={() => zoomOut()}>
                       <i className="fa-solid fa-minus"></i>
                     </button>
-                  </div>
-                  <div
+                  </Box>
+                  <Box
                     className="gmnoprint-map"
                     onClick={() => {
                       this.zoomToElementCallback(300);
@@ -102,8 +102,8 @@ class TopologyView extends Component {
                     <button className="btn btn-map">
                       <i className="fa-solid fa-map-marker-alt"></i>
                     </button>
-                  </div>
-                </div>
+                  </Box>
+                </Box>
                 <TransformComponent
                   wrapperStyle={{
                     width: `100%`,
@@ -131,15 +131,15 @@ class TopologyView extends Component {
                     ]}
                     key={v4()}
                   >
-                    <div
+                    <Box
                       className="services-text-box active"
                       id={`${data.label}`}
                     >
-                      <div className="d-flex align-items-center">
-                        <div className="account-image">
+                      <Box className="d-flex align-items-center">
+                        <Box className="account-image">
                           <img src={data.image} alt={cloudName} />
-                        </div>
-                        <div className="account-id">
+                        </Box>
+                        <Box className="account-id">
                           <span className="d-block">{data.label}</span>
                           <HtmlTooltip
                             className="table-tooltip"
@@ -149,9 +149,9 @@ class TopologyView extends Component {
                               {data.landingZone}
                             </span>
                           </HtmlTooltip>
-                        </div>
-                      </div>
-                    </div>
+                        </Box>
+                      </Box>
+                    </Box>
                   </ArcherElement>
                   {productEnclaveList.length ? (
                     this.renderChildNodes(
@@ -290,13 +290,13 @@ class TopologyView extends Component {
         }
       });
       retData = [
-        <div
+        <Box
           className="global-servies"
           style={{ marginLeft: "50px" }}
           key={v4()}
         >
           {retData}
-        </div>,
+        </Box>,
       ];
       if (childJSX.length > 0) {
         retData.push(childJSX);
