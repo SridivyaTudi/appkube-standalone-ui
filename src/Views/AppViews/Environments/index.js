@@ -14,6 +14,7 @@ import FilterPopup from "Views/AppViews/Environments/Components/FilterPopup";
 import {
   getEnvironmentCount,
   getEnvsSummary,
+  getElements,
 } from "Redux/Environments/EnvironmentsThunk";
 import status from "Redux/Constants/CommonDS";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
@@ -38,7 +39,6 @@ import { styled } from "@mui/material/styles";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
 import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
-import { USER_RBAC_TYPE } from "CommonData";
 import RBAC_MAPPING from "Utils/RbacMapping";
 import Rbac from "Views/AppViews/Rbac";
 
@@ -89,6 +89,7 @@ class Environments extends Component {
         ToastMessage.error("There is some issue.");
       }
     }
+
     if (prevProps.envSummary.status !== this.props.envSummary.status) {
       const envSummary = this.props.envSummary;
       if (envSummary.status === status.SUCCESS && envSummary.data) {
@@ -101,78 +102,20 @@ class Environments extends Component {
         ToastMessage.error("There is some issue.");
       }
     }
-  }
 
-  // renderEnvironmentCountData = () => {
-  //   const environmentCount = this.props.environmentCountData;
-  //   if (environmentCount.status === status.IN_PROGRESS) {
-  //     return <Loader className={"environment-loader w-100"} />;
-  //   } else if (environmentCount.status === status.SUCCESS) {
-  //     const { environmentCountData } = this.state;
-  //     let retData = [];
-  //     if (environmentCountData?.length > 0) {
-  //       environmentCountData.forEach((env) => {
-  //         retData.push(
-  //           <Box className="environment-box" key={v4()}>
-  //             <Box className="environment-title">
-  //               <Box className="environment-image">
-  //                 <img src={LOGOS[env?.cloud?.toUpperCase()]} alt={env.cloud} />
-  //               </Box>
-  //               <Box className="title-name">{env?.cloud?.toUpperCase()}</Box>
-  //             </Box>
-  //             <Box className="data-contant">
-  //               <List>
-  //                 <ListItem>
-  //                   <Box className="data-text">
-  //                     <span style={{ backgroundColor: "#ff9900" }}></span>
-  //                     <p>Environments</p>
-  //                   </Box>
-  //                   <label>{env.environments}</label>
-  //                 </ListItem>
-  //                 <ListItem>
-  //                   <Box className="data-text">
-  //                     <span style={{ backgroundColor: "#0089d6" }}></span>
-  //                     <p>Assets</p>
-  //                   </Box>
-  //                   <label>{env.assets}</label>
-  //                 </ListItem>
-  //                 <ListItem>
-  //                   <Box className="data-text">
-  //                     <span style={{ backgroundColor: "#da4f44" }}></span>
-  //                     <p>Alerts</p>
-  //                   </Box>
-  //                   <label>{env.alerts}</label>
-  //                 </ListItem>
-  //                 <ListItem>
-  //                   <Box className="data-text">
-  //                     <span style={{ backgroundColor: "#00b929" }}></span>
-  //                     <p>Total Billing</p>
-  //                   </Box>
-  //                   <label>
-  //                     {env.totalBilling ? `&#65284;${env.totalBilling}` : ""}
-  //                   </label>
-  //                 </ListItem>
-  //               </List>
-  //             </Box>
-  //           </Box>
-  //         );
-  //       });
-  //     } else {
-  //       retData = (
-  //         <Box className="environment-loader w-100">
-  //           There are no data available.
-  //         </Box>
-  //       );
-  //     }
-  //     return retData;
-  //   } else {
-  //     return (
-  //       <Box className="environment-loader w-100">
-  //         There is some issue. Try again later.
-  //       </Box>
-  //     );
-  //   }
-  // };
+    if (prevProps.elementData.status !== this.props.elementData.status) {
+      const elementData = this.props.elementData;
+      if (
+        elementData.status === status.SUCCESS &&
+        elementData?.data?.toUpperCase() === "OK"
+      ) {
+        this.handleMenuToggle(null,null)
+        this.props.getEnvsSummary();
+      } else if (elementData.status === status.FAILURE) {
+        ToastMessage.error("There is some issue.");
+      }
+    }
+  }
 
   renderEnvironmentCountData = () => {
     const environmentCount = this.props.environmentCountData;
@@ -252,6 +195,7 @@ class Environments extends Component {
 
   renderEnvironmentTable() {
     const envSummaryStatus = this.props.envSummary.status;
+    const elementStatus = this.props.elementData.status;
 
     const {
       DELETE_LANDING_ZONE,
@@ -392,11 +336,21 @@ class Environments extends Component {
                       ></div>
                       <Box className="menu-list">
                         <List>
-                          <ListItem>Add New datasource</ListItem>
-                          <ListItem>Add CompListItemance</ListItem>
-                          <ListItem>Associate to OU</ListItem>
-                          <ListItem>Add New VPC</ListItem>
-                          <ListItem>Add New Product</ListItem>
+                          <ListItem
+                            onClick={() =>
+                              elementStatus === status.IN_PROGRESS
+                                ? ""
+                                : this.props.getElements({
+                                    landingZone: account.landingZone,
+                                    landingZoneId: account.landingZoneId,
+                                  })
+                            }
+                          >
+                            {elementStatus === status.IN_PROGRESS
+                              ? this.renderLoder()
+                              : "Get Elements"}
+                            
+                          </ListItem>
                         </List>
                       </Box>
                     </>
@@ -616,6 +570,11 @@ class Environments extends Component {
     );
   };
 
+  // Render loder
+  renderLoder = () => {
+    return <Loader className="" />;
+  };
+
   render() {
     const {
       isRecentVisitedEnvMenuOpen,
@@ -785,16 +744,18 @@ class Environments extends Component {
 }
 
 function mapStateToProps(state) {
-  const { environmentCountData, envSummary } = state.environments;
+  const { environmentCountData, envSummary, elementData } = state.environments;
   return {
     environmentCountData,
     envSummary,
+    elementData,
   };
 }
 
 const mapDispatchToProps = {
   getEnvironmentCount,
   getEnvsSummary,
+  getElements,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Environments);
