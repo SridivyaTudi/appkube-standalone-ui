@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import config from "Views/AppViews/Config";
 import { postLoginService } from "Services";
+import { getCurrentOrgId } from "Utils";
 
 export const getEnvironmentCount = createAsyncThunk(
   "environments/getEnvironmentCount",
@@ -67,6 +68,26 @@ export const getCloudWiseLandingZoneCount = createAsyncThunk(
   async (depId) => {
     const url = config.CLOUD_WISE_LANDINGZONE_COUNT;
     try {
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getElements = createAsyncThunk(
+  "environments/getElements",
+  async (params) => {
+    try {
+      let { landingZone, landingZoneId } = params;
+      let url = config.GET_ELEMENTS_FROM_ENVIRONMENTS.replace(
+        "#org-id#",
+        getCurrentOrgId()
+      )
+        .replace("#landing-zone#", landingZone)
+        .replace("#landing-zone-id#", landingZoneId);
+
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {

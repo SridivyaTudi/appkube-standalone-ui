@@ -5,6 +5,7 @@ import {
   getOrgWiseDepartments,
   getProductsByDepId,
   getCloudWiseLandingZoneCount,
+  getElements,
 } from "Redux/Environments/EnvironmentsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -32,6 +33,10 @@ export const environmentSlice = createSlice({
       data: [],
     },
     cloudWiseLandingZoneCount: {
+      status: null,
+      data: [],
+    },
+    elementData: {
       status: null,
       data: [],
     },
@@ -159,6 +164,30 @@ export const environmentSlice = createSlice({
       return {
         ...state,
         cloudWiseLandingZoneCount: {
+          status: status.FAILURE,
+        },
+      };
+    },
+
+    [getElements.pending]: (state, action) => {
+      return {
+        ...state,
+        elementData: { status: status.IN_PROGRESS },
+      };
+    },
+    [getElements.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        elementData: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getElements.rejected]: (state, action) => {
+      return {
+        ...state,
+        elementData: {
           status: status.FAILURE,
         },
       };
