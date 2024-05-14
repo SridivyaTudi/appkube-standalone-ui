@@ -27,7 +27,7 @@ class TopologyView extends Component {
           <Box className="topology-panel">
             <Box className="topology-panel-body">
               <Box className="topology-inner-content">
-                <Box className="content-left lambda-layer">
+                <Box className="content-left tier-layer">
                   <List>
                     <ListItem>
                       <Box className="button-box">

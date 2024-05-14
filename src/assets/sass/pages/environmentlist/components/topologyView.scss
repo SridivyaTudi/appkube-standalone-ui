@@ -319,6 +319,16 @@
             }
           }
         }
+        &.tier-layer{
+          ul{
+            li{
+              margin-bottom: 50px;
+              &:last-child{
+                margin-bottom: 20px;
+              }
+            }
+          }
+        }
         ul {
           display: block;
           padding: 0;
