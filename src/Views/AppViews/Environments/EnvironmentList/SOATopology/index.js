@@ -429,7 +429,7 @@ class SOATopology extends Component {
           </Box>
         </Box>
         <Box className="services-panel-tabs">
-          <Box className="tabs-head ">
+          <Box className="tabs-head text-center ">
             <TabsMenu
               tabs={this.tabMapping}
               setActiveTab={this.setActiveTab}

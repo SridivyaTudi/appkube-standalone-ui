@@ -109,7 +109,7 @@ class Environments extends Component {
         elementData.status === status.SUCCESS &&
         elementData?.data?.toUpperCase() === "OK"
       ) {
-        this.handleMenuToggle(null,null)
+        this.handleMenuToggle(null, null);
         this.props.getEnvsSummary();
       } else if (elementData.status === status.FAILURE) {
         ToastMessage.error("There is some issue.");
@@ -148,7 +148,7 @@ class Environments extends Component {
         });
       } else {
         retData = (
-          <Box className="environment-loader w-100">
+          <Box className="environment-loader w-100" style={{ minHeight: 150 }}>
             There are no data available.
           </Box>
         );
@@ -349,7 +349,6 @@ class Environments extends Component {
                             {elementStatus === status.IN_PROGRESS
                               ? this.renderLoder()
                               : "Get Elements"}
-                            
                           </ListItem>
                         </List>
                       </Box>
@@ -421,7 +420,10 @@ class Environments extends Component {
         });
       } else {
         retData = (
-          <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">
+          <Box
+            className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20"
+            style={{ minHeight: 268 }}
+          >
             No environments found.
           </Box>
         );

@@ -474,7 +474,7 @@ class CloudManagedDetails extends React.Component {
     return (
       <Box className="global-service-penal">
         <Box className="services-panel-tabs">
-          <Box className="tabs-head">
+          <Box className="tabs-head text-center">
             <TabsMenu
               tabs={this.tableMapping}
               setActiveTab={this.setActiveTab}
