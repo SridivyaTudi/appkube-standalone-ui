@@ -239,16 +239,16 @@ class WorkspaceDetails extends Component {
                 </button>
               </Box>
               <Box className="tags-boxs">
-                <div className="tag-btn">Readme</div>
-                <div className="tag-btn">CI/CD Configuration</div>
-                <div className="tag-btn">Add License</div>
-                <div className="tag-btn">add Changelog</div>
-                <div className="tag-btn">Add Contributing</div>
-                <div className="tag-btn">Auto DevOp Enabled</div>
-                <div className="tag-btn">Add Kubernetes Cluster</div>
-                <div className="tag-btn">Add Wiki</div>
-                <div className="tag-btn">Configure Integration</div>
-                <div className="tag-btn">CI/CD Configuration</div>
+                <Box className="tag-btn">Readme</Box>
+                <Box className="tag-btn">CI/CD Configuration</Box>
+                <Box className="tag-btn">Add License</Box>
+                <Box className="tag-btn">add Changelog</Box>
+                <Box className="tag-btn">Add Contributing</Box>
+                <Box className="tag-btn">Auto DevOp Enabled</Box>
+                <Box className="tag-btn">Add Kubernetes Cluster</Box>
+                <Box className="tag-btn">Add Wiki</Box>
+                <Box className="tag-btn">Configure Integration</Box>
+                <Box className="tag-btn">CI/CD Configuration</Box>
               </Box>
             </Box>
           </Box>

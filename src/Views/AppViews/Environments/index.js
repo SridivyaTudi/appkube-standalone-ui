@@ -41,6 +41,7 @@ import { v4 } from "uuid";
 import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 import RBAC_MAPPING from "Utils/RbacMapping";
 import Rbac from "Views/AppViews/Rbac";
+import { style } from "d3";
 
 class Environments extends Component {
   constructor(props) {
@@ -148,7 +149,7 @@ class Environments extends Component {
         });
       } else {
         retData = (
-          <Box className="environment-loader w-100" style={{ minHeight: 150 }}>
+          <Box className="environment-loader w-100">
             There are no data available.
           </Box>
         );
