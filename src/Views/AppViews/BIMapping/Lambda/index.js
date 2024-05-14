@@ -79,17 +79,6 @@ class Lambda extends Component {
                   <Box className="topology-inner-content">
                     <Box className="content-left lambda-layer">
                       <List>
-                        {/* <ListItem>
-                          <Box className="button-box">
-                            <span>
-                              <img src={ChartWebLayerIcon} alt="" />
-                            </span>
-                            <p>Api Gateway</p>
-                          </Box>
-                          <span>
-                            <img src={RightArrow} alt="" />
-                          </span>
-                        </ListItem> */}
                         <ListItem>
                           <Box className="button-box">
                             <span>
@@ -147,7 +136,7 @@ class Lambda extends Component {
                         >
                           <Box className="application-balancer">
                             <Button
-                              className="secondary-btn min-width"
+                              className="secondary-btn min-width" style={{width: 140}}
                               variant="contained"
                               onClick={() => {
                                 this.setState({ activeLayer: "NGINX" });

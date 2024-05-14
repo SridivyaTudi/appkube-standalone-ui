@@ -27,7 +27,7 @@ class TopologyView extends Component {
           <Box className="topology-panel">
             <Box className="topology-panel-body">
               <Box className="topology-inner-content">
-                <Box className="content-left">
+                <Box className="content-left lambda-layer">
                   <List>
                     <ListItem>
                       <Box className="button-box">
@@ -64,7 +64,7 @@ class TopologyView extends Component {
                     </ListItem>
                   </List>
                 </Box>
-                <Box className="content-right">
+                <Box className="content-middle">
                   <List>
                     <ListItem
                       className={` ${activeLayer === "SSL" ? "active" : ""}`}
@@ -94,7 +94,7 @@ class TopologyView extends Component {
                     >
                       <Box className="application-balancer">
                         <Button
-                          className="secondary-btn min-width"
+                          className="secondary-btn min-width" 
                           variant="contained"
                           onClick={() => {
                             this.setState({ activeLayer: "NGINX" });
