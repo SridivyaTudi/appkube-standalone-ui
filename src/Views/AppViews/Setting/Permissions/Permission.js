@@ -78,8 +78,8 @@ class Permission extends Component {
   render() {
     return (
       <Box className="permission-container">
-        <Box className="services-panel-tabs">
-          <Box className="tabs-head">{this.renderTabsMenuComponent()}</Box>
+        <Box className="services-panel-tabs text-center" >
+          <Box className="tabs-head  m-t-0">{this.renderTabsMenuComponent()}</Box>
           <Box className="permission-tabs-content">
             {this.renderActiveTabComponent()}
           </Box>

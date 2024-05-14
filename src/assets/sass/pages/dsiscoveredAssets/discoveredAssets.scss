@@ -1,57 +1,16 @@
 .discovered-assets-container {
-  .services-panel-tabs {
-    display: block;
+  .discovered-assets-inner-tabs {
     width: 100%;
-    .tabs-head {
-      margin-top: 25px;
-      margin-bottom: 25px;
-      ul {
-        display: inline-flex;
-        width: auto;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 8px;
-        padding-right: 8px;
-        border-radius: 30px;
-        background-color: #dbdff1;
-        li {
-          width: auto;
-          display: inline-block;
-          vertical-align: top;
-          font-size: 11px;
-          line-height: 20px;
-          font-weight: 500;
-          color: #000000;
-          padding-top: 4px;
-          padding-bottom: 4px;
-          padding-left: 25px;
-          padding-right: 25px;
-          border-radius: 30px;
-          cursor: pointer;
-          &.active {
-            color: #ffffff;
-            background-color: #3247e5;
-          }
-        }
-      }
-    }
-    .tabs-content {
-      display: block;
+    display: block;
+    .assets-sevices-tabs {
+      display: flex;
+      flex-wrap: wrap;
       width: 100%;
-      .discovered-assets-inner-tabs {
+      padding: 0;
+      .tabs-content {
         width: 100%;
-        display: block;
-        .assets-sevices-tabs {
-          display: flex;
-          flex-wrap: wrap;
-          width: 100%;
-          padding: 0;
-          .tabs-content {
-            width: 100%;
-            display: block; 
-            margin-top: 15px;
-          }
-        }
+        display: block; 
+        margin-top: 15px;
       }
     }
   }

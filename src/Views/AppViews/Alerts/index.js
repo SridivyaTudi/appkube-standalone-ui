@@ -89,7 +89,7 @@ class index extends Component {
         </Box>
         <Box className="alerts-charts">
           <Grid container spacing={2}>
-            <Grid item xs={12} md={5} lg={5}>
+            <Grid item xs={12} sm={6} md={6} lg={5}>
               <ChartWrapper
                 // ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{
@@ -101,7 +101,7 @@ class index extends Component {
                 }}
               />
             </Grid>
-            <Grid item xs={12} md={5} lg={5}>
+            <Grid item xs={12} sm={6} md={6} lg={5}>
               <ChartWrapper
                 // ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{
@@ -113,7 +113,7 @@ class index extends Component {
                 }}
               />
             </Grid>
-            <Grid item xs={12} md={5} lg={2}>
+            <Grid item xs={12} sm={6} md={6} lg={2}>
               <Box className="team-metrics">
                 <Box className="heading">Team Metrics</Box>
                 <List>
@@ -150,7 +150,7 @@ class index extends Component {
                 </List>
               </Box>
             </Grid>
-            <Grid item xs={12} md={5} lg={2}>
+            <Grid item xs={12} sm={6} md={6} lg={2}>
               <Box className="top-alert">
                 <Box className="heading">Top Alerts Today</Box>
                 <List>
@@ -205,7 +205,7 @@ class index extends Component {
                 </List>
               </Box>
             </Grid>
-            <Grid item xs={12} md={5} lg={5}>
+            <Grid item xs={12} sm={6} md={6} lg={5}>
               <ChartWrapper
                 // ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{
@@ -217,7 +217,7 @@ class index extends Component {
                 }}
               />
             </Grid>
-            <Grid item xs={12} md={5} lg={5}>
+            <Grid item xs={12} sm={6} md={6} lg={5}>
               <ChartWrapper
                 // ChartComponent={<LineChart data={[]} color="pink" />}
                 data={{

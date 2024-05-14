@@ -1,46 +1,46 @@
 .environment-container {
   .services-panel-tabs {
-    display: block;
-    width: 100%;
-    margin-top: 25px;
+    // display: block;
+    // width: 100%;
+    // margin-top: 25px;
 
-    .tabs-head {
-      display: block;
-      width: 100%;
-      text-align: center;
+    // .tabs-head {
+    //   display: block;
+    //   width: 100%;
+    //   text-align: center;
 
-      ul {
-        display: inline-block;
-        width: auto;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 8px;
-        padding-right: 8px;
-        border-radius: 30px;
-        background-color: #dbdff1;
+    //   ul {
+    //     display: inline-block;
+    //     width: auto;
+    //     padding-top: 0px;
+    //     padding-bottom: 0px;
+    //     padding-left: 8px;
+    //     padding-right: 8px;
+    //     border-radius: 30px;
+    //     background-color: #dbdff1;
 
-        li {
-          width: auto;
-          display: inline-block;
-          vertical-align: top;
-          font-size: 11px;
-          line-height: 20px;
-          font-weight: 500;
-          color: #000000;
-          padding-top: 4px;
-          padding-bottom: 4px;
-          padding-left: 20px;
-          padding-right: 20px;
-          border-radius: 30px;
-          cursor: pointer;
+    //     li {
+    //       width: auto;
+    //       display: inline-block;
+    //       vertical-align: top;
+    //       font-size: 11px;
+    //       line-height: 20px;
+    //       font-weight: 500;
+    //       color: #000000;
+    //       padding-top: 4px;
+    //       padding-bottom: 4px;
+    //       padding-left: 20px;
+    //       padding-right: 20px;
+    //       border-radius: 30px;
+    //       cursor: pointer;
 
-          &.active {
-            color: #ffffff;
-            background-color: #3247e5;
-          }
-        }
-      }
-    }
+    //       &.active {
+    //         color: #ffffff;
+    //         background-color: #3247e5;
+    //       }
+    //     }
+    //   }
+    // }
 
     .tabs-content {
       display: block;

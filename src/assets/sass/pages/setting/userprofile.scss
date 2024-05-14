@@ -56,8 +56,6 @@
     display: block;
     width: 100%;
     .tabs-head {
-      display: block;
-      margin: 20px 0;
       h4 {
         width: 100%;
         white-space: nowrap;
@@ -82,37 +80,6 @@
             &:last-child {
               margin-right: 0;
             }
-          }
-        }
-      }
-      ul {
-        display: inline-block;
-        width: auto;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 8px;
-        padding-right: 8px;
-        border-radius: 30px;
-        background-color: #dbdff1;
-
-        li {
-          width: auto;
-          display: inline-block;
-          vertical-align: top;
-          font-size: 11px;
-          line-height: 20px;
-          font-weight: 500;
-          color: #000000;
-          padding-top: 4px;
-          padding-bottom: 4px;
-          padding-left: 30px;
-          padding-right: 30px;
-          border-radius: 30px;
-          cursor: pointer;
-
-          &.active {
-            color: #ffffff;
-            background-color: #3247e5;
           }
         }
       }
