@@ -274,7 +274,7 @@ class DrTopology extends Component {
   render() {
     const { showCreateFailoverPopup } = this.state;
     return (
-      <>
+      <Box className="dr-Topology-container">
         <Box className="generated-box">
           <i className="fa-solid fa-check"></i> Your Request Number Has been
           Generated # <strong>5336412</strong>
@@ -286,7 +286,7 @@ class DrTopology extends Component {
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             alignItems="flex-start"
           >
-            <Grid item lg={9} md={8}>
+            <Grid item lg={9} md={8} xs={12}>
               <Box className="chart">
                 <Box className="heading">
                   <h3>Realtime Disaster Recovery Mode</h3>
@@ -311,7 +311,7 @@ class DrTopology extends Component {
                 </Box>
               </Box>
             </Grid>
-            <Grid item lg={3} md={4}>
+            <Grid item lg={3} md={4} xs={12}>
               <Box className="failover-box">
                 <Box className="heading">
                   <h3>Failover Activity Status</h3>
@@ -424,7 +424,7 @@ class DrTopology extends Component {
         ) : (
           <></>
         )}
-      </>
+      </Box>
     );
   }
 }
