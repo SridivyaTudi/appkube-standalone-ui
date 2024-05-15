@@ -660,71 +660,6 @@
 
 .permission-container {
   .services-panel-tabs {
-    display: block;
-    width: 100%;
-
-    .tabs-head {
-      display: block;
-      width: 100%;
-      text-align: center;
-
-      ul {
-        display: inline-block;
-        width: auto;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 8px;
-        padding-right: 8px;
-        border-radius: 30px;
-        background-color: #dbdff1;
-
-        li {
-          width: auto;
-          display: inline-block;
-          vertical-align: top;
-          font-size: 11px;
-          line-height: 20px;
-          font-weight: 500;
-          color: #000000;
-          padding-top: 4px;
-          padding-bottom: 4px;
-          padding-left: 30px;
-          padding-right: 30px;
-          border-radius: 30px;
-          cursor: pointer;
-
-          &.active {
-            color: #ffffff;
-            background-color: #3247e5;
-          }
-        }
-      }
-      .tabs-break-width {
-        float: left;
-        margin-bottom: 15px;
-        .tabs-menu {
-          display: inline-flex;
-          background: transparent;
-          padding: 0 10px 0 0;
-          div {
-            padding: 0;
-            font-size: 11px;
-            line-height: 28px;
-            padding-left: 15px;
-            padding-right: 25px;
-            color: #384cff;
-          }
-           svg {
-            right: 2px !important;
-            color: #384cff;
-        }
-          fieldset {
-            border-color: #384cff;
-          }
-        }
-      }
-    }
-
     .permission-tabs-content {
       display: block;
       width: 100%;
@@ -780,20 +715,7 @@
     }
   }
 }
-@media only screen and (max-width: 992px) {
-  .permission-container {
-    .services-panel-tabs {
-      .tabs-head {
-        ul {
-          li {
-            padding-left: 15px;
-            padding-right: 15px;
-          }
-        }
-      }
-    }
-  }
-}
+
 
 @media only screen and (max-width: 850px) {
   .setting-container {

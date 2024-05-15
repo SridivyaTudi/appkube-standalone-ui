@@ -34,9 +34,43 @@
       }
     }
   }
+ 
   .tabs-content {
     display: block;
     width: 100%;
-    
+  }
+}
+@media only screen and (max-width: 1280px) {
+  .services-panel-tabs {
+    .tabs-head {
+      ul {
+        li {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+      }
+      .tabs-break-width {
+        display: block;
+        text-align: left;
+      }
+      .tabs-menu {
+        display: inline-flex!important;
+        > div {
+          padding: 0;
+          font-size: 11px;
+          line-height: 28px;
+          padding-left: 15px;
+          padding-right: 25px;
+          color: #384cff;
+        }
+        > svg {
+          right: 2px !important;
+          color: #384cff;
+        }
+        > fieldset {
+          border-color: #384cff;
+        }
+      }
+    }
   }
 }

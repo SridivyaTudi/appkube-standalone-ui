@@ -56,7 +56,7 @@ class Permission extends Component {
         tabs={permissionCategories.length ? permissionCategories : []}
         setActiveTab={this.setActiveTab}
         activeTab={activeTab}
-        breakWidth={767}
+        breakWidth={881}
         key={v4()}
       />
     );
