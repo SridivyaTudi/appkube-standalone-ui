@@ -23,16 +23,16 @@ class ActivityLogViewDetails extends Component {
           {({ zoomIn, zoomOut, instance, zoomToElement, ...rest }) => {
             return (
               <React.Fragment>
-                <div className="gmnoprint">
-                  <div className="gmnoprint-plus-minus">
+                <Box className="gmnoprint">
+                  <Box className="gmnoprint-plus-minus">
                     <button className="btn btn-plus" onClick={() => zoomIn()}>
                       <i className="fa-solid fa-plus"></i>
                     </button>
                     <button className="btn btn-minus" onClick={() => zoomOut()}>
                       <i className="fa-solid fa-minus"></i>
                     </button>
-                  </div>
-                </div>
+                  </Box>
+                </Box>
                 <TransformComponent
                   wrapperStyle={{
                     width: "100%",
@@ -155,9 +155,9 @@ class ActivityLogViewDetails extends Component {
   };
   render() {
     return (
-      <Box className="services-panel-tabs">
-        <Box className="tabs-head">
-          <h3>Failover Graph</h3>
+      <Box className="activityLogViewDetails-container">
+        <Box className="list-heading">
+          <h4 className="m-t-0 m-b-0">Failover Graph</h4>
           <Button
             className="primary-btn min-width"
             variant="contained"
@@ -166,11 +166,9 @@ class ActivityLogViewDetails extends Component {
             Back
           </Button>
         </Box>
-        <Box className="tabs-content">
-          <Box className="topology-panel">
-            <Box className="topology-panel-body" style={{ height: "auto" }}>
-              {this.renderSteps()}
-            </Box>
+        <Box className="topology-panel">
+          <Box className="topology-panel-body" style={{ height: "auto" }}>
+            {this.renderSteps()}
           </Box>
         </Box>
       </Box>
