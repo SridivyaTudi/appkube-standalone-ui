@@ -1,8 +1,68 @@
 import React, { Component } from "react";
 import { Box, Grid, Button, List, ListItem } from "@mui/material";
 import { Link } from "react-router-dom";
+import Post from "./Componets/Post";
 
 export class AlertHandler extends Component {
+  tabMapping = [
+    {
+      name: "Post",
+      dataKey: "post",
+      index: 0,
+    },
+    {
+      name: "Tcp",
+      dataKey: "tcp",
+      index: 1,
+    },
+    {
+      name: "Exec",
+      dataKey: "exec",
+      index: 2,
+    },
+    {
+      name: "Log",
+      dataKey: "log",
+      index: 3,
+    },
+    {
+      name: "Slack (default)",
+      dataKey: "Slack",
+      index: 4,
+    },
+    {
+      name: "Email",
+      dataKey: "email",
+      index: 5,
+    },
+    {
+      name: "Alert",
+      dataKey: "alert",
+      index: 6,
+    },
+    {
+      name: "Hipchart",
+      dataKey: "hipchart",
+      index: 7,
+    },
+    {
+      name: "kafka (local host)",
+      dataKey: "kafka",
+      index: 8,
+    },
+    {
+      name: "OpsGenie",
+      dataKey: "opsGenie",
+      index: 9,
+    },
+    {
+      name: "Pushover",
+      dataKey: "pushover",
+      index: 10,
+    }
+    
+   
+  ];
   tabComponentsList;
   constructor(props) {
     super(props);
@@ -112,6 +172,65 @@ export class AlertHandler extends Component {
     }
     return retData;
   };
+
+  setActiveTab = (activeTab) => {
+    this.setState({ activeTab });
+  };
+
+  // Render tabs
+  renderTabMenu = () => {
+    const { activeTab } = this.state;
+    return (
+      <List>
+        {this.tabMapping.map((tabData, index) => {
+          return (
+            <ListItem
+              key={`ops-tab-${index}`}
+              className={index === activeTab ? "active" : ""}
+              onClick={() => this.setActiveTab(index)}
+            >
+              {tabData.name} <i className="fas fa-times"></i>
+            </ListItem>
+          );
+        })}
+      </List>
+    );
+  };
+
+  // Render active tab component
+  renderActiveTabOfComponent = () => {
+    const { activeTab, selectedGranularity } = this.state;
+    return (
+      <Box className="tab-content">
+        {activeTab === 0 ? (
+          <Post />
+        ) : activeTab === 1 ? (
+          <Box> Tcp</Box>
+        ) : activeTab === 2 ? (
+          <Box> Exec</Box>
+        ) : activeTab === 3 ? (
+          <Box> Log</Box>
+        ): activeTab === 4 ?(
+          <Box> slack (default)</Box>
+        ): activeTab === 5 ?(
+          <Box>email</Box>
+        ): activeTab === 6 ?(
+          <Box>Alert</Box>
+        ): activeTab === 7 ?(
+          <Box>Hipchart</Box>
+        ): activeTab === 8 ?(
+          <Box> kafka</Box>
+        ): activeTab === 9 ?(
+          <Box>opsGenie</Box>
+        ): activeTab === 10 ?(
+          <Box>Pushover</Box>
+        ):(
+          <></>
+        )}
+      </Box>
+    );
+  };
+
   render() {
     let { isBulkActionDropDownOpen } = this.state;
     return (
@@ -131,8 +250,8 @@ export class AlertHandler extends Component {
                   className="fliter-toggel p-l-15 p-r-15"
                   onClick={this.toggleBulkAction}
                 >
-                  Select time series
-                  <i className="fas fa-angle-down"></i>
+                  Add another handler
+                  <i className="fas fa-angle-down "></i>
                 </Box>
                 {isBulkActionDropDownOpen && (
                   <div
@@ -180,109 +299,11 @@ export class AlertHandler extends Component {
               <Grid container spacing={2}>
                 <Grid item lg={2} md={3} sm={6} sx={12}>
                   <Box className="alert-left-box">
-                    <List>
-                      <ListItem>
-                        <Link to={`#`} className="active">
-                          Post<i className="fas fa-times"></i>
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                          tcp <i className="fas fa-times"></i>
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                          exec <i className="fas fa-times"></i>
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                        log <i className="fas fa-times"></i>
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                        slack (default) <i className="fas fa-times"></i>
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                        email <i className="fas fa-times"></i>
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                        alert <i className="fas fa-times"></i>
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                        hipchart <i className="fas fa-times"></i>
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                        kafka (local host) <i className="fas fa-times"></i>
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                        opsGenie <i className="fas fa-times"></i>
-                        </Link>
-                      </ListItem>
-                      <ListItem>
-                        <Link to={`#`}>
-                        Pushover <i className="fas fa-times"></i>
-                        </Link>
-                      </ListItem>
-                    </List>
+                    {this.renderTabMenu()}
                   </Box>
                 </Grid>
                 <Grid item lg={10} md={9} sm={6} sx={12}>
-                  <Box className="tab-content">
-                    <Box className="alert-handler-span">
-                      Parameters for this Alert Handler
-                    </Box>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <Box className="form-group">
-                          <label className="alert-handler-label">
-                            HTTP endpoint for POST request
-                          </label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Placeholder"
-                          />
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box className="form-group">
-                          <label className="alert-handler-label">
-                            Header Key
-                          </label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Placeholder"
-                          />
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box className="form-group">
-                          <label className="alert-handler-label">
-                            Header Value
-                          </label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Placeholder"
-                          />
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </Box>
+                  {this.renderActiveTabOfComponent()}
                 </Grid>
               </Grid>
             </Box>

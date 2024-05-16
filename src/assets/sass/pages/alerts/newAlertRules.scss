@@ -571,7 +571,7 @@
                   display: flex;
                   align-items: center;
                   justify-content: space-between;
-                  width: 160px;
+                  width: 180px;
                   border: none;
                   background: #dde1f8;
                   color: #383874;
@@ -682,31 +682,27 @@
                   li {
                     width: 100%;
                     display: block;
-                    padding: 0;
-                    a {
-                      width: 100%;
-                      display: block;
-                      left: 0;
-                      padding: 7px 15px;
-                      color: #3b4859;
-                      font-size: 12px;
-                      line-height: 18px;
-                      font-weight: 400;
-                      position: relative;
-                      i {
-                        position: absolute;
-                        top: 10px;
-                        right: 15px;
-                        color: red;
-                      }
-                      &:hover {
-                        background-color: #f8f9fb;
-                        color: #2662f0;
-                      }
-                      &.active {
-                        background-color: #f8f9fb;
-                        color: #2662f0;
-                      }
+                    padding: 7px 15px;
+                    color: #3b4859;
+                    font-size: 12px;
+                    line-height: 18px;
+                    font-weight: 400;
+                    position: relative;
+                    cursor: pointer;
+                    i {
+                      position: absolute;
+                      top: 10px;
+                      right: 15px;
+                      color: red;
+                    }
+
+                    &:hover {
+                      background-color: #f8f9fb;
+                      color: #2662f0;
+                    }
+                    &.active {
+                      background-color: #f8f9fb;
+                      color: #2662f0;
                     }
                   }
                 }
