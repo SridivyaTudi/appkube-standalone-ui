@@ -71,34 +71,46 @@ class index extends Component {
   ];
   topAlertsMapping = [
     {
+      stateClassList: "green",
       name: "CPU Utilization",
       time: "3:24",
-      button: "HIGH",
+      button: "High",
+      stateClass: "high",
     },
     {
+      stateClassList: "orange",
       name: "AWS S3",
       time: "3:11",
       button: "Medium",
+      stateClass: "medium",
     },
     {
+      stateClassList: "purple",
       name: "Dard Disk",
       time: "3:00",
-      button: "LOW",
+      button: "Low",
+      stateClass: "low",
     },
     {
+      stateClassList: "aqua-green",
       name: "Network IN",
       time: "23:08",
-      button: "HIGH",
+      button: "High",
+      stateClass: "high",
     },
     {
+      stateClassList: "neon-pink",
       name: "Network OUT",
       time: "21:06",
       button: "Medium",
+      stateClass: "medium",
     },
     {
+      stateClassList: "yellow",
       name: "VCenter",
       time: "20:03",
-      button: "LOW",
+      button: "Low",
+      stateClass: "low",
     },
   ];
 
@@ -137,15 +149,25 @@ class index extends Component {
           return (
             <ListItem>
               <Box className="d-flex align-items-center">
-                <span className="green orange purple aqua-green neon-pink yellow" ></span>
-                <Box className="title" >
+                <span
+                  className={` ${
+                    topAlerts.stateClassList ? topAlerts.stateClassList : ""
+                  }`}
+                ></span>
+                <Box className="title">
                   <HtmlTooltip className="table-tooltip" title={topAlerts.name}>
                     {topAlerts.name}
                   </HtmlTooltip>
                 </Box>
               </Box>
               <Box className="alert-count">{topAlerts.time}</Box>
-              <Box className="alert-button high medium low">{topAlerts.button}</Box>
+              <Box
+                className={`alert-button ${
+                  topAlerts.stateClass ? topAlerts.stateClass : ""
+                }`}
+              >
+                {topAlerts.button}
+              </Box>
             </ListItem>
           );
         })}
