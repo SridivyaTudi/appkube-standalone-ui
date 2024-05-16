@@ -217,8 +217,8 @@
             font-weight: 500;
             display: inline-block;
             vertical-align: top;
-            width: 50px;
-            min-width: 50px;
+            min-width: 40px;
+            width: 40px;
             margin-right: 5px;
             white-space: nowrap;
             overflow: hidden;
@@ -229,6 +229,24 @@
             height: 10px;
             border-radius: 50%;
             margin-right: 5px;
+            &.orange{
+              background: #FF6A2A;
+            }
+            &.purple{
+              background: #AE2AFF;
+            }
+            &.aqua-green{
+              background: #20DFB1;
+            }
+            &.neon-pink{
+              background: #FF2AB7;
+            }
+            &.yellow{
+              background: #FFC32A;
+            }
+            &.green{
+              background: #17D74D;
+            }
           }
           .alert-count {
             font-size: 12px;
@@ -237,7 +255,8 @@
             font-weight: 400;
             display: inline-block;
             vertical-align: top;
-            width: 60px;
+            min-width: 40px;
+            width: 40px;
           }
           .alert-button {
             display: flex;
@@ -251,7 +270,10 @@
             width: 50px;
             min-width: 50px;
             height: 20px;
-            border: 1px solid #ff2d2e;
+            border: 1px solid;
+            &.high{
+              border-color: #ff2d2e;
+            }
             &.medium {
               border-color: #ffba69;
             }

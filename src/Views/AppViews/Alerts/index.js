@@ -7,6 +7,23 @@ import LineChart from "./Components/LineChart";
 import { List } from "reactstrap";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 class index extends Component {
   constructor(props) {
@@ -20,12 +37,119 @@ class index extends Component {
     };
   }
 
+  teamMetricsMapping = [
+    {
+      name: "John",
+      price: "650",
+      time: "17 Mins",
+    },
+    {
+      name: "Bill",
+      price: "612",
+      time: "17 Mins",
+    },
+    {
+      name: "Lyna",
+      price: "598",
+      time: "17 Mins",
+    },
+    {
+      name: "Steyn",
+      price: "513",
+      time: "17 Mins",
+    },
+    {
+      name: "Bob",
+      price: "498",
+      time: "17 Mins",
+    },
+    {
+      name: "bill",
+      price: "321",
+      time: "17 Mins",
+    },
+  ];
+  topAlertsMapping = [
+    {
+      name: "CPU Utilization",
+      time: "3:24",
+      button: "HIGH",
+    },
+    {
+      name: "AWS S3",
+      time: "3:11",
+      button: "Medium",
+    },
+    {
+      name: "Dard Disk",
+      time: "3:00",
+      button: "LOW",
+    },
+    {
+      name: "Network IN",
+      time: "23:08",
+      button: "HIGH",
+    },
+    {
+      name: "Network OUT",
+      time: "21:06",
+      button: "Medium",
+    },
+    {
+      name: "VCenter",
+      time: "20:03",
+      button: "LOW",
+    },
+  ];
+
   // Render no data html
   renderNoDataHtml = () => {
     return (
       <Box className="chart-loader">
         <h5 className="m-t-0 m-b-0">There are no data available.</h5>
       </Box>
+    );
+  };
+  // Render TeamMetrics
+  renderTeamMetrics = () => {
+    const {} = this.state;
+    return (
+      <List>
+        {this.teamMetricsMapping.map((teamMetrics) => {
+          return (
+            <ListItem>
+              <Box className="title">{teamMetrics.name}</Box>
+              <span>{teamMetrics.price}</span>
+              <label>{teamMetrics.time}</label>
+            </ListItem>
+          );
+        })}
+      </List>
+    );
+  };
+
+  // Render TopAlerts
+  renderTopAlerts = () => {
+    const {} = this.state;
+    return (
+      <List>
+        {this.topAlertsMapping.map((topAlerts) => {
+          return (
+            <ListItem>
+              <Box className="d-flex align-items-center">
+                <span className="green orange purple aqua-green neon-pink yellow" ></span>
+                <Box className="title" >
+                  <HtmlTooltip className="table-tooltip" title={topAlerts.name}>
+                    {topAlerts.name}
+                  </HtmlTooltip>
+                </Box>
+              </Box>
+              <Box className="alert-count">{topAlerts.time}</Box>
+              <Box className="alert-button high medium low">{topAlerts.button}</Box>
+            </ListItem>
+          );
+        })}
+      </List>
     );
   };
 
@@ -48,7 +172,9 @@ class index extends Component {
         <Box className="alert-sevice-boxs">
           <Box
             className="alert-service-box"
-            onClick={() => this.props.navigate(`${APP_PREFIX_PATH}/alerts/monitor-alerts`)}
+            onClick={() =>
+              this.props.navigate(`${APP_PREFIX_PATH}/alerts/monitor-alerts`)
+            }
           >
             <Box class="container">
               <Box class="ui-widgets">
@@ -66,8 +192,11 @@ class index extends Component {
               </Box>
             </Box>
           </Box>
-          <Box className="alert-service-box"
-          onClick={() => this.props.navigate(`${APP_PREFIX_PATH}/alerts/alert-rules`)}
+          <Box
+            className="alert-service-box"
+            onClick={() =>
+              this.props.navigate(`${APP_PREFIX_PATH}/alerts/alert-rules`)
+            }
           >
             <Box className="service-image">
               <img src={AlertServiceIcon1} alt="" />
@@ -116,48 +245,22 @@ class index extends Component {
             <Grid item xs={12} sm={6} md={6} lg={2}>
               <Box className="team-metrics">
                 <Box className="heading">Team Metrics</Box>
-                <List>
-                  <ListItem>
-                    <Box className="title">John</Box>
-                    <span>650</span>
-                    <label>17 Mins</label>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="title">Bill</Box>
-                    <span>612</span>
-                    <label>17 Mins</label>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="title">Lyna</Box>
-                    <span>598</span>
-                    <label>17 Mins</label>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="title">Steyn</Box>
-                    <span>513</span>
-                    <label>17 Mins</label>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="title">Bob</Box>
-                    <span>498</span>
-                    <label>17 Mins</label>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="title">bill</Box>
-                    <span>321</span>
-                    <label>17 Mins</label>
-                  </ListItem>
-                </List>
+                {this.renderTeamMetrics()}
               </Box>
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={2}>
               <Box className="top-alert">
                 <Box className="heading">Top Alerts Today</Box>
-                <List>
+                {this.renderTopAlerts()}
+                {/* <List>
                   <ListItem>
                     <Box className="d-flex align-items-center">
                       <span style={{ backgroundColor: "#17D74D" }}></span>
-                      <Box className="title">CPU Utilization</Box>
+                      <Box className="title">
+                        <HtmlTooltip className="table-tooltip">
+                          CPU Utilization
+                        </HtmlTooltip>
+                      </Box>
                     </Box>
                     <Box className="alert-count">654</Box>
                     <Box className="alert-button">High</Box>
@@ -202,7 +305,7 @@ class index extends Component {
                     <Box className="alert-count">654</Box>
                     <Box className="alert-button low">Low</Box>
                   </ListItem>
-                </List>
+                </List> */}
               </Box>
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={5}>
