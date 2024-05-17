@@ -18,6 +18,70 @@ import { styled } from "@mui/material/styles";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
+let data = [
+  {
+    product: "Internal CRM Tool",
+    date: "2/12/2023",
+    category: "3-Tier",
+    region: "US-East (N.virginia)",
+    environment: "Production +3",
+    stateClass: "production",
+    spending: "$20,000",
+    budget: "$30,000",
+    forecast: "$30,000",
+
+  },
+  {
+    product: "Internal CRM Tool",
+    date: "2/12/2023",
+    category: "3-Tier",
+    region: "US-East (N.virginia)",
+    environment: "Testing +1",
+    stateClass: "testing",
+    spending: "$20,000",
+    budget: "$30,000",
+    forecast: "$30,000",
+
+  },
+  {
+    product: "Internal CRM Tool",
+    date: "2/12/2023",
+    category: "3-Tier",
+    region: "US-East (N.virginia)",
+    environment: "Staging",
+    stateClass: "staging",
+    spending: "$20,000",
+    budget: "$30,000",
+    forecast: "$30,000",
+
+  },
+  {
+    product: "Internal CRM Tool",
+    date: "2/12/2023",
+    category: "3-Tier",
+    region: "US-East (N.virginia)",
+    environment: "Production +3",
+    stateClass: "staging",
+    spending: "$20,000",
+    budget: "$30,000",
+    forecast: "$30,000",
+
+  },
+  {
+    product: "Internal CRM Tool",
+    date: "2/12/2023",
+    category: "3-Tier",
+    region: "US-East (N.virginia)",
+    environment: "Development +1",
+    stateClass: "development",
+    spending: "$20,000",
+    budget: "$30,000",
+    forecast: "$30,000",
+
+  },
+  
+];
+
 class BudgetProducts extends Component {
   constructor(props) {
     super(props);
@@ -77,335 +141,89 @@ class BudgetProducts extends Component {
         border: "1px solid #dadde9",
       },
     }));
-    let { data } = this.props;
+    // let { data } = this.props;
     return (
       <TableBody>
-        <TableRow>
-          <TableCell>Internal CRM Tool</TableCell>
-          <TableCell align="center">22/12/2023 </TableCell>
-          <TableCell>3-Tier</TableCell>
-          <TableCell>US-East (N.virginia)</TableCell>
-          <TableCell>
-            <HtmlTooltip
-              className="table-tooltip"
-              title={
-                <React.Fragment>
-                  <Box className="report-tooltip-list">
-                    <List>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status production"></Box>{" "}
-                        Production
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status testing"></Box> Testing
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status staging"></Box>{" "}
-                        Development
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status development"></Box>{" "}
-                        Staging
-                      </ListItem>
-                    </List>
+        {data?.length ? (
+          data.map((details) => {
+            return (
+              <TableRow>
+                <TableCell>{details.product}</TableCell>
+                <TableCell align="center">2{details.date} </TableCell>
+                <TableCell>{details.category}</TableCell>
+                <TableCell> {details.region}</TableCell>
+                <TableCell>
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={
+                      <React.Fragment>
+                        <Box className="report-tooltip-list">
+                          <List>
+                            <ListItem>
+                              {" "}
+                              <Box className="payment-status production"></Box>{" "}
+                              Production
+                            </ListItem>
+                            <ListItem>
+                              {" "}
+                              <Box className="payment-status testing"></Box>{" "}
+                              Testing
+                            </ListItem>
+                            <ListItem>
+                              {" "}
+                              <Box className="payment-status staging"></Box>{" "}
+                              Development
+                            </ListItem>
+                            <ListItem>
+                              {" "}
+                              <Box className="payment-status development"></Box>{" "}
+                              Staging
+                            </ListItem>
+                          </List>
+                        </Box>
+                      </React.Fragment>
+                    }
+                  >
+                    <Box className={`payment-status ${details.stateClass ? details.stateClass : "" }`}></Box>
+                    
+                    {details.environment}
+                  </HtmlTooltip>
+                </TableCell>
+                <TableCell align="center">
+                  <Box
+                    className="d-flex align-items-center"
+                    justifyContent={"center"}
+                  >
+                    <strong> {details.spending}</strong>
+                    {/* <Box className="variance-count red ">
+                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
+              </Box> */}
                   </Box>
-                </React.Fragment>
-              }
-            >
-              <Box className="payment-status production"></Box>
-              Production +3
-            </HtmlTooltip>
-          </TableCell>
-          <TableCell align="center">
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$20,000</strong>
-              {/* <Box className="variance-count red ">
+                </TableCell>
+                <TableCell align="center">
+                  <strong>{details.budget}</strong>
+                </TableCell>
+                <TableCell align="center">
+                  <Box
+                    className="d-flex align-items-center"
+                    justifyContent={"center"}
+                  >
+                    <strong>{details.forecast} </strong>
+                    {/* <Box className="variance-count red ">
                 <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
               </Box> */}
-            </Box>
-          </TableCell>
-          <TableCell align="center">
-            <strong>$30,000</strong>
-          </TableCell>
-          <TableCell align="center">
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$30,000</strong>
-              {/* <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box> */}
-            </Box>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Internal CRM Tool</TableCell>
-          <TableCell align="center">22/12/2023 </TableCell>
-          <TableCell>3-Tier</TableCell>
-          <TableCell>US-East (N.virginia)</TableCell>
-          <TableCell>
-            <HtmlTooltip
-              className="table-tooltip"
-              title={
-                <React.Fragment>
-                  <Box className="report-tooltip-list">
-                    <List>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status production"></Box>{" "}
-                        Production
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status testing"></Box> Testing
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status staging"></Box>{" "}
-                        Development
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status development"></Box>{" "}
-                        Staging
-                      </ListItem>
-                    </List>
                   </Box>
-                </React.Fragment>
-              }
-            >
-              <Box className="payment-status testing"></Box>Production +3
-            </HtmlTooltip>
-          </TableCell>
-          <TableCell align="center">
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$20,000</strong>
-              {/* <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box> */}
+                </TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <Box className="d-blck text-center w-100 h-100 ">
+            <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+              <h5 className="m-t-0 m-b-0">There are no data available.</h5>
             </Box>
-          </TableCell>
-          <TableCell align="center">
-            <strong>$30,000</strong>
-          </TableCell>
-          <TableCell align="center">
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$30,000</strong>
-              {/* <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box> */}
-            </Box>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Internal CRM Tool</TableCell>
-          <TableCell align="center">22/12/2023 </TableCell>
-          <TableCell>3-Tier</TableCell>
-          <TableCell>US-East (N.virginia)</TableCell>
-          <TableCell>
-            <HtmlTooltip
-              className="table-tooltip"
-              title={
-                <React.Fragment>
-                  <Box className="report-tooltip-list">
-                    <List>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status production"></Box>{" "}
-                        Production
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status testing"></Box> Testing
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status staging"></Box>{" "}
-                        Development
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status development"></Box>{" "}
-                        Staging
-                      </ListItem>
-                    </List>
-                  </Box>
-                </React.Fragment>
-              }
-            >
-              <Box className="payment-status staging"></Box> Production +3
-            </HtmlTooltip>
-          </TableCell>
-          <TableCell align="center">
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$20,000</strong>
-              {/* <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box> */}
-            </Box>
-          </TableCell>
-          <TableCell align="center">
-            <strong>$30,000</strong>
-          </TableCell>
-          <TableCell align="center">
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$30,000</strong>
-              {/* <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box> */}
-            </Box>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Internal CRM Tool</TableCell>
-          <TableCell align="center">22/12/2023 </TableCell>
-          <TableCell>3-Tier</TableCell>
-          <TableCell>US-East (N.virginia)</TableCell>
-          <TableCell>
-            <HtmlTooltip
-              className="table-tooltip"
-              title={
-                <React.Fragment>
-                  <Box className="report-tooltip-list">
-                    <List>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status production"></Box>{" "}
-                        Production
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status testing"></Box> Testing
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status staging"></Box>{" "}
-                        Development
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status development"></Box>{" "}
-                        Staging
-                      </ListItem>
-                    </List>
-                  </Box>
-                </React.Fragment>
-              }
-            >
-              <Box className="payment-status staging"></Box> Production +3
-            </HtmlTooltip>
-          </TableCell>
-          <TableCell align="center">
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$20,000</strong>
-              {/* <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box> */}
-            </Box>
-          </TableCell>
-          <TableCell align="center">
-            <strong>$30,000</strong>
-          </TableCell>
-          <TableCell align="center">
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$30,000</strong>
-              {/* <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box> */}
-            </Box>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Internal CRM Tool</TableCell>
-          <TableCell align="center">22/12/2023 </TableCell>
-          <TableCell>3-Tier</TableCell>
-          <TableCell>US-East (N.virginia)</TableCell>
-          <TableCell>
-            <HtmlTooltip
-              className="table-tooltip"
-              title={
-                <React.Fragment>
-                  <Box className="report-tooltip-list">
-                    <List>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status production"></Box>{" "}
-                        Production
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status testing"></Box> Testing
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status staging"></Box>{" "}
-                        Development
-                      </ListItem>
-                      <ListItem>
-                        {" "}
-                        <Box className="payment-status development"></Box>{" "}
-                        Staging
-                      </ListItem>
-                    </List>
-                  </Box>
-                </React.Fragment>
-              }
-            >
-              <Box className="payment-status development"></Box> Production +3
-            </HtmlTooltip>
-          </TableCell>
-          <TableCell align="center">
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$20,000</strong>
-              {/* <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box> */}
-            </Box>
-          </TableCell>
-          <TableCell align="center">
-            <strong>$30,000</strong>
-          </TableCell>
-          <TableCell align="center">
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$30,000</strong>
-              {/* <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> 10%
-              </Box> */}
-            </Box>
-          </TableCell>
-        </TableRow>
+          </Box>
+        )}
       </TableBody>
     );
   };
