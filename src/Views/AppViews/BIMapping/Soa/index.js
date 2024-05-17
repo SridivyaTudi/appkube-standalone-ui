@@ -38,7 +38,6 @@ import {
   PRODUCT_CATEGORY_ENUM,
   SERVICES_CATEGORY_OF_SOA_ENUM,
   ADD_PRODUCT_ENUMS,
-  ENVIRONMENTS,
 } from "Utils";
 import { connect } from "react-redux";
 import CommonTooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -216,9 +215,9 @@ class Soa extends Component {
 
   // Redirect page
   redirectPage = () => {
-    let { name, id, landingZoneId } = this.getUrlDetails();
+    let { name, id, landingZoneId, cloud } = this.getUrlDetails();
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}`
+      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/${cloud}`
     );
   };
 
@@ -448,9 +447,11 @@ class Soa extends Component {
 
   // Render Selected Instance section
   renderSelectedInstanceWrapper = () => {
-    let { selectedDeployedInstance,isShowDepolyedSection } = this.state;
+    let { selectedDeployedInstance, isShowDepolyedSection } = this.state;
     return selectedDeployedInstance ? (
-      <Box className={`deployed-section ${isShowDepolyedSection ? 'm-t-4' : ''} `}>
+      <Box
+        className={`deployed-section ${isShowDepolyedSection ? "m-t-4" : ""} `}
+      >
         <Box className="deployed-head">
           <h4 className="m-t-0">Select Instance</h4>
         </Box>
@@ -587,9 +588,10 @@ class Soa extends Component {
         console.log(error);
       }
     } else {
+      let { cloud } = this.getUrlDetails();
       this.onClickDeployedCard(
         ADD_PRODUCT_ENUMS.SSL,
-        ENVIRONMENTS.AWS,
+        cloud?.toUpperCase(),
         ADD_PRODUCT_ENUMS.SSL
       );
     }
@@ -725,9 +727,9 @@ class Soa extends Component {
       );
 
       this.props.setProductIntoDepartment(passData);
-      let { name, id, landingZoneId } = this.getUrlDetails();
+      let { name, id, landingZoneId, cloud } = this.getUrlDetails();
       this.props.navigate(
-        `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/product-category`
+        `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/${cloud}/product-category`
       );
     }
   };
@@ -861,12 +863,14 @@ class Soa extends Component {
     let name = this.props.params.name;
     let id = this.props.params.id;
     let landingZoneId = this.props.params.landingZoneId;
-    return { name, id, landingZoneId };
+    let cloud = this.props.params.cloud;
+
+    return { name, id, landingZoneId, cloud };
   }
 
   // Render heading
   renderHeading = () => {
-    let { name, id, landingZoneId } = this.getUrlDetails();
+    let { name, id, landingZoneId, cloud } = this.getUrlDetails();
     return (
       <Box className="list-heading">
         <h3>Soa</h3>
@@ -881,7 +885,7 @@ class Soa extends Component {
             <li
               onClick={() =>
                 this.props.navigate(
-                  `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}`
+                  `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/${cloud}`
                 )
               }
             >
@@ -893,7 +897,7 @@ class Soa extends Component {
             <li
               onClick={() =>
                 this.props.navigate(
-                  `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/product-category`
+                  `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/${cloud}/product-category`
                 )
               }
             >
@@ -943,8 +947,8 @@ class Soa extends Component {
       selectedServiceData,
       dropDownServiceData,
       savedService,
-      isShowDepolyedSection,
     } = this.state;
+    let { cloud } = this.getUrlDetails();
     return (
       <Box className="content-middle">
         <List>
@@ -975,7 +979,7 @@ class Soa extends Component {
                   savedService.SSL && !savedService.APIGATEWAY ? (
                     this.onClickDeployedCard(
                       ADD_PRODUCT_ENUMS.APIGATEWAY,
-                      ENVIRONMENTS.AWS,
+                      cloud?.toUpperCase(),
                       ADD_PRODUCT_ENUMS.APIGATEWAY
                     )
                   ) : (

@@ -351,23 +351,23 @@ export const Views = (props) => {
 
           <Route path={`${APP_PREFIX_PATH}/bim`} element={<BIMapping />} />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/:cloud/product-category`}
             element={<ProductCategory />}
           />
 
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category/${PRODUCT_CATEGORY_ENUM.THREE_TIER.toLowerCase().replace(
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/:cloud/product-category/${PRODUCT_CATEGORY_ENUM.THREE_TIER.toLowerCase().replace(
               " ",
               "-"
             )}`}
             element={<Tier />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category/soa`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/:cloud/product-category/soa`}
             element={<Soa />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/product-category/${PRODUCT_CATEGORY_ENUM.LAMBDA}`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/:cloud/product-category/${PRODUCT_CATEGORY_ENUM.LAMBDA}`}
             element={<Lambda />}
           />
           <Route
@@ -375,7 +375,7 @@ export const Views = (props) => {
             element={<AddDepartment />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId`}
+            path={`${APP_PREFIX_PATH}/bim/add-product/:name?/:id/:landingZoneId/:cloud`}
             element={<AddProduct />}
           />
           <Route

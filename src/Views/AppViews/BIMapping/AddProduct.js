@@ -56,7 +56,7 @@ class AddProduct extends Component {
           let {
             name: departmentName,
             id: depanrtmentId,
-            landingZoneId,
+            landingZoneId,cloud
           } = this.getUrlDetails();
           let { createProductFormData } = this.props;
           let productData = {
@@ -72,18 +72,18 @@ class AddProduct extends Component {
           this.props.setProductIntoDepartment(productData);
           if (formData.category === PRODUCT_CATEGORY_ENUM.THREE_TIER) {
             this.props.navigate(
-              `${APP_PREFIX_PATH}/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/product-category/${PRODUCT_CATEGORY_ENUM.THREE_TIER.toLowerCase().replace(
+              `${APP_PREFIX_PATH}/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/${cloud}/product-category/${PRODUCT_CATEGORY_ENUM.THREE_TIER.toLowerCase().replace(
                 " ",
                 "-"
               )}`
             );
           } else if (formData.category === PRODUCT_CATEGORY_ENUM.LAMBDA) {
             this.props.navigate(
-              `${APP_PREFIX_PATH}/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/product-category/${PRODUCT_CATEGORY_ENUM.LAMBDA.toLowerCase()}`
+              `${APP_PREFIX_PATH}/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/${cloud}/product-category/${PRODUCT_CATEGORY_ENUM.LAMBDA.toLowerCase()}`
             );
           } else {
             this.props.navigate(
-              `${APP_PREFIX_PATH}/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/product-category`
+              `${APP_PREFIX_PATH}/bim/add-product/${departmentName}/${depanrtmentId}/${landingZoneId}/${cloud}/product-category`
             );
           }
         }
@@ -205,7 +205,9 @@ class AddProduct extends Component {
     let id = this.props.params.id;
     let landingZoneId = this.props.params.landingZoneId;
     name = name?.replaceAll("-", " ");
-    return { name, id, landingZoneId };
+    let cloud = this.props.params.cloud;
+
+    return { name, id, landingZoneId, cloud };
   }
 
   render() {

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Box, Grid, List, ListItem, Button } from "@mui/material";
-import ChartWebLayerIcon from "assets/img/assetmanager/chart-web-layer-icon.png";
 import ChartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png";
 import DataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png";
 import Springboot from "assets/img/assetmanager/springboot.png";
@@ -22,8 +21,8 @@ class Lambda extends Component {
   }
   // Render heading
   renderHeading = () => {
-    let { name, id, landingZoneId } = this.getUrlDetails();
-    let { activeLayer } = this.state;
+    let { name, id, landingZoneId, cloud } = this.getUrlDetails();
+
     return (
       <Box className="list-heading">
         <h3>Lambda</h3>
@@ -38,7 +37,7 @@ class Lambda extends Component {
             <li
               onClick={() =>
                 this.props.navigate(
-                  `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}`
+                  `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/${cloud}`
                 )
               }
             >
@@ -59,7 +58,9 @@ class Lambda extends Component {
     let name = this.props.params.name;
     let id = this.props.params.id;
     let landingZoneId = this.props.params.landingZoneId;
-    return { name, id, landingZoneId };
+    let cloud = this.props.params.cloud;
+
+    return { name, id, landingZoneId, cloud };
   }
   render() {
     let { activeLayer } = this.state;
@@ -136,7 +137,8 @@ class Lambda extends Component {
                         >
                           <Box className="application-balancer">
                             <Button
-                              className="secondary-btn min-width" style={{width: 140}}
+                              className="secondary-btn min-width"
+                              style={{ width: 140 }}
                               variant="contained"
                               onClick={() => {
                                 this.setState({ activeLayer: "NGINX" });

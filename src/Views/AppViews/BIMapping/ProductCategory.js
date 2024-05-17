@@ -85,10 +85,15 @@ class ProductCategory extends Component {
     }
   }
   redirectPage = () => {
-    let { name: departMentName, id, landingZoneId } = this.getUrlDetails();
+    let {
+      name: departMentName,
+      id,
+      landingZoneId,
+      cloud,
+    } = this.getUrlDetails();
 
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}`
+      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}/${cloud}`
     );
   };
 
@@ -103,14 +108,20 @@ class ProductCategory extends Component {
     let name = this.props.params.name;
     let id = this.props.params.id;
     let landingZoneId = this.props.params.landingZoneId;
+    let cloud = this.props.params.cloud;
 
-    return { name, id, landingZoneId };
+    return { name, id, landingZoneId, cloud };
   }
 
   // Move to next page
   moveToNextPage = (serviceType) => {
     let { createProductFormData } = this.props;
-    let { name: departMentName, id, landingZoneId } = this.getUrlDetails();
+    let {
+      name: departMentName,
+      id,
+      landingZoneId,
+      cloud,
+    } = this.getUrlDetails();
     let { activeCommonService } = this.state;
 
     if (serviceType === SERVICE_TYPE.BUSINESS.toLowerCase()) {
@@ -125,7 +136,7 @@ class ProductCategory extends Component {
     }
 
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}/product-category/${createProductFormData?.category
+      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}/${cloud}/product-category/${createProductFormData?.category
         ?.toLowerCase()
         ?.replace(" ", "-")}`
     );
@@ -192,9 +203,9 @@ class ProductCategory extends Component {
       })
     );
     this.props.setProductIntoDepartment(passData);
-    let { name, id, landingZoneId } = this.getUrlDetails();
+    let { name, id, landingZoneId, cloud } = this.getUrlDetails();
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/product-category/soa`
+      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/${cloud}/product-category/soa`
     );
   };
 
@@ -211,9 +222,9 @@ class ProductCategory extends Component {
     );
 
     this.props.setProductIntoDepartment(passData);
-    let { name, id, landingZoneId } = this.getUrlDetails();
+    let { name, id, landingZoneId, cloud } = this.getUrlDetails();
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/product-category/soa`
+      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/${cloud}/product-category/soa`
     );
   };
 
@@ -305,12 +316,7 @@ class ProductCategory extends Component {
   onClickSave = () => {
     let { id } = this.getUrlDetails();
     let {
-      createProductFormData: {
-        productName,
-        environment,
-        moduleName,
-        soaData = [],
-      },
+      createProductFormData: { productName, environment, soaData = [] },
     } = this.props;
 
     let modules = [];
@@ -415,11 +421,16 @@ class ProductCategory extends Component {
 
   onClickAddModule = (moduleName) => {
     let { createProductFormData } = this.props;
-    let { name: departMentName, id, landingZoneId } = this.getUrlDetails();
+    let {
+      name: departMentName,
+      id,
+      landingZoneId,
+      cloud,
+    } = this.getUrlDetails();
     let { activeCommonService } = this.state;
 
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}/product-category/${createProductFormData?.category
+      `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}/${cloud}/product-category/${createProductFormData?.category
         ?.toLowerCase()
         ?.replace(" ", "-")}`
     );
@@ -506,10 +517,14 @@ class ProductCategory extends Component {
     );
   }
   render() {
-    const { showServiceModal, activeCommonService, showCreateModuleModal } =
-      this.state;
-    let { createProductFormData, creationBiMapping } = this.props;
-    let { name: departMentName, id, landingZoneId } = this.getUrlDetails();
+    const { showServiceModal, showCreateModuleModal } = this.state;
+    let { creationBiMapping } = this.props;
+    let {
+      name: departMentName,
+      id,
+      landingZoneId,
+      cloud,
+    } = this.getUrlDetails();
     return (
       <Box className="bimapping-container">
         <Box className="list-heading">
@@ -525,7 +540,7 @@ class ProductCategory extends Component {
               <li
                 onClick={() =>
                   this.props.navigate(
-                    `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}`
+                    `${APP_PREFIX_PATH}/bim/add-product/${departMentName}/${id}/${landingZoneId}/${cloud}`
                   )
                 }
               >

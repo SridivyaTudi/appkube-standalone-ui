@@ -86,7 +86,8 @@ const config = {
     "/reporting/organization/#org-id#/cost-top-accounts",
 
   /* Discovered Assets*/
-  GET_DISCOVERED_ASSETS: "/cloud-element/org/#org-id#/all-elements",
+  GET_DISCOVERED_ASSETS:
+    "/cloud-element/org/#org-id#/all-elements?pageNo=#page-no#&pageSize=#page-size#",
 };
 
 export default config;

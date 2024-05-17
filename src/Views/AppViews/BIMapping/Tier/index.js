@@ -24,7 +24,6 @@ import {
   SERVICES_CATEGORY_OF_THREE_TIER_ENUM,
   ADD_PRODUCT_ENUMS,
   getCurrentOrgId,
-  ENVIRONMENTS,
 } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { connect } from "react-redux";
@@ -191,9 +190,10 @@ class Tier extends Component {
         console.log(error);
       }
     } else {
+      let { cloud } = this.getUrlDetails();
       this.onClickDeployedCard(
         ADD_PRODUCT_ENUMS.SSL,
-        ENVIRONMENTS.AWS,
+        cloud,
         ADD_PRODUCT_ENUMS.SSL
       );
     }
@@ -205,9 +205,9 @@ class Tier extends Component {
 
   // Redirect of the page
   redirectPage = () => {
-    let { name, id, landingZoneId } = this.getUrlDetails();
+    let { name, id, landingZoneId, cloud } = this.getUrlDetails();
     this.props.navigate(
-      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}`
+      `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/${cloud}`
     );
   };
 
@@ -450,7 +450,9 @@ class Tier extends Component {
     let { selectedDeployedInstance, isShowDepolyedSection } = this.state;
 
     return selectedDeployedInstance ? (
-      <Box className={`deployed-section ${isShowDepolyedSection ? 'm-t-4' : ''} `}>
+      <Box
+        className={`deployed-section ${isShowDepolyedSection ? "m-t-4" : ""} `}
+      >
         <Box className="deployed-head">
           <h4 className="m-t-0">Select Instance</h4>
         </Box>
@@ -640,7 +642,9 @@ class Tier extends Component {
     let name = this.props.params.name;
     let id = this.props.params.id;
     let landingZoneId = this.props.params.landingZoneId;
-    return { name, id, landingZoneId };
+    let cloud = this.props.params.cloud;
+
+    return { name, id, landingZoneId, cloud };
   }
 
   // Click on edit btn.
@@ -698,7 +702,6 @@ class Tier extends Component {
         isShowDepolyedSection,
         managementInfo,
         configInfo,
-        isShowDepolyedSection,
       });
     }
   };
@@ -758,7 +761,7 @@ class Tier extends Component {
 
   // Render heading
   renderHeading = () => {
-    let { name, id, landingZoneId } = this.getUrlDetails();
+    let { name, id, landingZoneId, cloud } = this.getUrlDetails();
     return (
       <Box className="list-heading">
         <h3>3 Tier</h3>
@@ -773,7 +776,7 @@ class Tier extends Component {
             <li
               onClick={() =>
                 this.props.navigate(
-                  `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}`
+                  `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/${cloud}`
                 )
               }
             >
@@ -824,7 +827,6 @@ class Tier extends Component {
       selectedLayer,
       dropDownLayersData,
       savedLayer,
-      isShowDepolyedSection,
     } = this.state;
     return (
       <Box className="content-middle">
@@ -1187,11 +1189,9 @@ class Tier extends Component {
       activeTabEcs,
       isShowDepolyedSection,
       selectedDeployedInstance,
-      savedLayer,
       editStatus,
       configInfo,
       managementInfo,
-      selectedLayer,
     } = this.state;
     let { biServicesFromProductCategory, creationBiMapping } = this.props;
     return (

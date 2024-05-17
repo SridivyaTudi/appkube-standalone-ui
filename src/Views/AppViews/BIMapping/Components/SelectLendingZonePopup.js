@@ -19,6 +19,7 @@ class SelectLendingZonePopup extends Component {
       landingZones: [],
       selectedLandingzone: 0,
       errorMessage: "",
+      selectedCloudName: "",
     };
   }
   componentDidMount() {
@@ -39,7 +40,9 @@ class SelectLendingZonePopup extends Component {
         this.props.navigate(
           `${APP_PREFIX_PATH}/bim/add-product/${makeSlugForString(
             createProductFormData?.departmentName
-          )}/${createProductFormData?.departmentId}/${landingZones[0]?.id}`
+          )}/${createProductFormData?.departmentId}/${landingZones[0]?.id}/${
+            landingZones[0]?.cloud?.toLowerCase()
+          }`
         );
       } else {
         this.setState({ landingZones });
@@ -52,11 +55,15 @@ class SelectLendingZonePopup extends Component {
     this.props.handleSelectLendingModal();
   };
 
-  onClickCard = (selectedLandingzone) => {
+  onClickCard = (selectedLandingzone, selectedCloudName) => {
     if (this.state.selectedLandingzone === selectedLandingzone) {
-      this.setState({ selectedLandingzone: 0 });
+      this.setState({ selectedLandingzone: 0, selectedCloudName: "" });
     } else {
-      this.setState({ selectedLandingzone, errorMessage: "" });
+      this.setState({
+        selectedLandingzone,
+        errorMessage: "",
+        selectedCloudName,
+      });
     }
   };
 
@@ -76,7 +83,7 @@ class SelectLendingZonePopup extends Component {
               md={4}
               sm={4}
               xs={6}
-              onClick={() => this.onClickCard(data.id)}
+              onClick={() => this.onClickCard(data.id, data.selectedCloudName)}
               key={v4()}
             >
               <Card
@@ -135,7 +142,7 @@ class SelectLendingZonePopup extends Component {
   }
 
   onClickSelect = () => {
-    let { selectedLandingzone } = this.state;
+    let { selectedLandingzone, selectedCloudName } = this.state;
     if (selectedLandingzone === 0) {
       this.setState({ errorMessage: "Please select landingzone." });
     } else {
@@ -143,7 +150,9 @@ class SelectLendingZonePopup extends Component {
       this.props.navigate(
         `${APP_PREFIX_PATH}/bim/add-product/${makeSlugForString(
           createProductFormData?.departmentName
-        )}/${createProductFormData?.departmentId}/${selectedLandingzone}`
+        )}/${
+          createProductFormData?.departmentId
+        }/${selectedLandingzone}/${selectedCloudName?.toLowerCase()}`
       );
     }
   };
