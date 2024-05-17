@@ -185,7 +185,7 @@ class SpendOverviewDetails extends Component {
             </ul>
           </Box>
         </Box>
-        <Box className="reports-tab-section">
+        <Box className="appkube-tabs">
           <Box className="tabs">
             {this.renderTabMenu()}
             <Box className="d-flex ">

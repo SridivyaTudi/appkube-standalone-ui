@@ -1,0 +1,179 @@
+.appkube-tabs {
+  width: 100%;
+  display: block;
+  .tabs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #b3b3b3;
+    .tabs-menu {
+      padding-bottom: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      li {
+        padding-bottom: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #383874;
+        cursor: pointer;
+        width: 150px;
+        display: inline-block;
+        text-align: center;
+        position: relative;
+
+        &::after {
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 4px;
+          content: "";
+          opacity: 0;
+          position: absolute;
+          background-color: #8676ff;
+          border-top-left-radius: 50px;
+          border-top-right-radius: 50px;
+          box-shadow: rgba(134, 118, 255, 0.15) 0px 2px 1px,
+            rgba(134, 118, 255, 0.15) 0px 4px 2px,
+            rgba(134, 118, 255, 0.15) 0px 8px 4px,
+            rgba(134, 118, 255, 0.15) 0px 16px 8px,
+            rgba(134, 118, 255, 0.15) 0px 32px 16px;
+        }
+
+        &.active {
+          &::after {
+            opacity: 1;
+          }
+        }
+      }
+    }
+    // .fliter-button {
+    //   position: relative;
+    //   .light-btn{
+    //     width: 140px;
+    //   }
+
+    //   .fliter-toggel {
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: space-between;
+    //     border: none;
+    //     background: #dde1f8;
+    //     color: #383874;
+    //     font-size: 12px;
+    //     font-weight: 600;
+    //     height: 36px;
+    //     padding: 0 15px;
+    //     border-radius: 4px;
+    //     cursor: pointer;
+    //     white-space: nowrap;
+    //     overflow: hidden;
+    //     text-overflow: ellipsis;
+
+    //     .arrow-icon {
+    //       margin-left: 20px;
+    //     }
+    //   }
+
+    //   .fliter-collapse {
+    //     background-color: #ffffff;
+    //     border-radius: 5px;
+    //     padding: 3px;
+    //     display: none;
+    //     position: absolute;
+    //     top: 38px;
+    //     width: 100%;
+    //     right: 0;
+    //     z-index: 10;
+    //     overflow: hidden;
+    //     overflow-y: auto;
+    //     max-height: 200px;
+    //     box-shadow: 0px 4px 32px 0px #00103d29;
+
+    //     &.active {
+    //       display: block;
+    //     }
+
+    //     > ul {
+    //       display: block;
+    //       list-style: none;
+    //       padding: 0;
+    //       margin: 0;
+
+    //       li {
+    //         width: 100%;
+    //         display: flex;
+    //         align-items: center;
+    //         justify-content: flex-start;
+    //         padding: 0;
+    //         margin-bottom: 0;
+    //         color: #383874;
+    //         font-size: 12px;
+    //         line-height: 16px;
+    //         font-weight: 500;
+    //         padding: 7px 10px;
+    //         border-radius: 3px;
+    //         cursor: pointer;
+
+    //         span {
+    //           white-space: nowrap;
+    //           overflow: hidden;
+    //           text-overflow: ellipsis;
+    //         }
+
+    //         &:hover {
+    //           color: #383874;
+    //           background-color: #dde1f8;
+    //         }
+
+    //         &.active {
+    //           color: #383874;
+    //           background-color: #dde1f8;
+    //         }
+
+    //         i {
+    //           margin-right: 7px;
+    //         }
+    //       }
+    //     }
+    //   }
+
+    //   .fliters-collapse-bg {
+    //     position: fixed;
+    //     width: 100%;
+    //     height: 100%;
+    //     left: 0;
+    //     top: 0;
+    //     z-index: 1;
+    //     display: none;
+
+    //     &.active {
+    //       display: block;
+    //     }
+    //   }
+    // }
+  }
+  .tabs-content {
+    width: 100%;
+    display: block;
+    padding-top: 25px;
+    .reports-loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 420px;
+    }
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .appkube-tabs {
+    .tabs {
+      .tabs-menu {
+        li {
+          width: auto;
+        }
+      }
+    }
+  }
+}

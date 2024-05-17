@@ -26,6 +26,16 @@ let data = [
     currentMonthSpend: "$12,800",
     difference: "$2,800",
     paymentStatus: "Pending",
+    stateClass: "pending"
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Invoece sent",
+    stateClass: "sent"
   },
   {
     month: "January, 2023",
@@ -34,6 +44,16 @@ let data = [
     currentMonthSpend: "$12,800",
     difference: "$2,800",
     paymentStatus: "Pending",
+    stateClass: "pending"
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Invoece sent",
+    stateClass: "sent"
   },
   {
     month: "January, 2023",
@@ -42,6 +62,16 @@ let data = [
     currentMonthSpend: "$12,800",
     difference: "$2,800",
     paymentStatus: "Pending",
+    stateClass: "pending"
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Invoece sent",
+    stateClass: "sent"
   },
   {
     month: "January, 2023",
@@ -50,6 +80,16 @@ let data = [
     currentMonthSpend: "$12,800",
     difference: "$2,800",
     paymentStatus: "Pending",
+    stateClass: "pending"
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Invoece sent",
+    stateClass: "sent"
   },
   {
     month: "January, 2023",
@@ -58,6 +98,16 @@ let data = [
     currentMonthSpend: "$12,800",
     difference: "$2,800",
     paymentStatus: "Pending",
+    stateClass: "pending"
+  },
+  {
+    month: "January, 2023",
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Invoece sent",
+    stateClass: "sent"
   },
   {
     month: "January, 2023",
@@ -66,46 +116,7 @@ let data = [
     currentMonthSpend: "$12,800",
     difference: "$2,800",
     paymentStatus: "Pending",
-  },
-  {
-    month: "January, 2023",
-    department: "Information Technology",
-    budget: "$10,000",
-    currentMonthSpend: "$12,800",
-    difference: "$2,800",
-    paymentStatus: "Pending",
-  },
-  {
-    month: "January, 2023",
-    department: "Information Technology",
-    budget: "$10,000",
-    currentMonthSpend: "$12,800",
-    difference: "$2,800",
-    paymentStatus: "Pending",
-  },
-  {
-    month: "January, 2023",
-    department: "Information Technology",
-    budget: "$10,000",
-    currentMonthSpend: "$12,800",
-    difference: "$2,800",
-    paymentStatus: "Pending",
-  },
-  {
-    month: "January, 2023",
-    department: "Information Technology",
-    budget: "$10,000",
-    currentMonthSpend: "$12,800",
-    difference: "$2,800",
-    paymentStatus: "Pending",
-  },
-  {
-    month: "January, 2023",
-    department: "Information Technology",
-    budget: "$10,000",
-    currentMonthSpend: "$12,800",
-    difference: "$2,800",
-    paymentStatus: "Pending",
+    stateClass: "pending"
   },
 ];
 class HistoryDepartments extends Component {
@@ -158,7 +169,8 @@ class HistoryDepartments extends Component {
                   </Box>
                 </TableCell>
                 <TableCell align="left">
-                  <Box className="payment-status sent pending"></Box>
+                  <Box className={`payment-status ${details.stateClass ? details.stateClass : "" }`}></Box>
+                 
                   {details.paymentStatus}
                 </TableCell>
               </TableRow>

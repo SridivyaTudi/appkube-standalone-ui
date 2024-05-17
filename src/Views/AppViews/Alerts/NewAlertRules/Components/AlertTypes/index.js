@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Box, Button, List, ListItem } from "@mui/material";
 import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
 import Threshold from "./Components/Threshold";
-import Relative from "./Components/Relative";
-import Availability from "./Components/Availability";
+
 
 export class AlertTypes extends Component {
   tabMapping = [
@@ -63,9 +62,9 @@ export class AlertTypes extends Component {
         {activeTab === 0 ? (
           <Threshold />
         ) : activeTab === 1 ? (
-          <Relative />
+          <Box>Relative</Box>
         ) : activeTab === 2 ? (
-          <Availability />
+          <Box>Availability</Box>
         ) : (
           <></>
         )}

@@ -198,6 +198,18 @@ let data = [
     difference: "$2,800",
     paymentStatus: "Pending",
     actions: "",
+    stateClass: "pending"
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Invoece sent",
+    actions: "",
+    stateClass: "sent"
   },
   {
     month: "January, 2023",
@@ -208,6 +220,18 @@ let data = [
     difference: "$2,800",
     paymentStatus: "Pending",
     actions: "",
+    stateClass: "pending"
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Invoece sent",
+    actions: "",
+    stateClass: "sent"
   },
   {
     month: "January, 2023",
@@ -218,6 +242,18 @@ let data = [
     difference: "$2,800",
     paymentStatus: "Pending",
     actions: "",
+    stateClass: "pending"
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Invoece sent",
+    actions: "",
+    stateClass: "sent"
   },
   {
     month: "January, 2023",
@@ -228,6 +264,18 @@ let data = [
     difference: "$2,800",
     paymentStatus: "Pending",
     actions: "",
+    stateClass: "pending"
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Invoece sent",
+    actions: "",
+    stateClass: "sent"
   },
   {
     month: "January, 2023",
@@ -238,6 +286,18 @@ let data = [
     difference: "$2,800",
     paymentStatus: "Pending",
     actions: "",
+    stateClass: "pending"
+  },
+  {
+    month: "January, 2023",
+    accountId: 160079380622,
+    department: "Information Technology",
+    budget: "$10,000",
+    currentMonthSpend: "$12,800",
+    difference: "$2,800",
+    paymentStatus: "Invoece sent",
+    actions: "",
+    stateClass: "sent"
   },
   {
     month: "January, 2023",
@@ -248,6 +308,7 @@ let data = [
     difference: "$2,800",
     paymentStatus: "Pending",
     actions: "",
+    stateClass: "pending"
   },
   {
     month: "January, 2023",
@@ -256,58 +317,9 @@ let data = [
     budget: "$10,000",
     currentMonthSpend: "$12,800",
     difference: "$2,800",
-    paymentStatus: "Pending",
+    paymentStatus: "Invoece sent",
     actions: "",
-  },
-  {
-    month: "January, 2023",
-    accountId: 160079380622,
-    department: "Information Technology",
-    budget: "$10,000",
-    currentMonthSpend: "$12,800",
-    difference: "$2,800",
-    paymentStatus: "Pending",
-    actions: "",
-  },
-  {
-    month: "January, 2023",
-    accountId: 160079380622,
-    department: "Information Technology",
-    budget: "$10,000",
-    currentMonthSpend: "$12,800",
-    difference: "$2,800",
-    paymentStatus: "Pending",
-    actions: "",
-  },
-  {
-    month: "January, 2023",
-    accountId: 160079380622,
-    department: "Information Technology",
-    budget: "$10,000",
-    currentMonthSpend: "$12,800",
-    difference: "$2,800",
-    paymentStatus: "Pending",
-    actions: "",
-  },
-  {
-    month: "January, 2023",
-    accountId: 160079380622,
-    department: "Information Technology",
-    budget: "$10,000",
-    currentMonthSpend: "$12,800",
-    difference: "$2,800",
-    paymentStatus: "Pending",
-    actions: "",
-  },
-  {
-    month: "January, 2023",
-    accountId: 160079380622,
-    department: "Information Technology",
-    budget: "$10,000",
-    currentMonthSpend: "$12,800",
-    difference: "$2,800",
-    paymentStatus: "Pending",
-    actions: "",
+    stateClass: "sent"
   },
 ];
 class AwsComponent extends Component {
@@ -360,7 +372,7 @@ class AwsComponent extends Component {
                   </Box>
                 </TableCell>
                 <TableCell align="left">
-                  <Box className="payment-status pending"></Box>
+                  <Box className={`payment-status ${details.stateClass ? details.stateClass : ""}`}></Box>
                   {details.paymentStatus}
                 </TableCell>
                 <TableCell align="center">

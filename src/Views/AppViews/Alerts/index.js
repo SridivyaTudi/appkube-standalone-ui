@@ -274,60 +274,6 @@ class index extends Component {
               <Box className="top-alert">
                 <Box className="heading">Top Alerts Today</Box>
                 {this.renderTopAlerts()}
-                {/* <List>
-                  <ListItem>
-                    <Box className="d-flex align-items-center">
-                      <span style={{ backgroundColor: "#17D74D" }}></span>
-                      <Box className="title">
-                        <HtmlTooltip className="table-tooltip">
-                          CPU Utilization
-                        </HtmlTooltip>
-                      </Box>
-                    </Box>
-                    <Box className="alert-count">654</Box>
-                    <Box className="alert-button">High</Box>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="d-flex align-items-center">
-                      <span style={{ backgroundColor: "#FF6A2A" }}></span>
-                      <Box className="title">AWS S3</Box>
-                    </Box>
-                    <Box className="alert-count">654</Box>
-                    <Box className="alert-button medium">Medium</Box>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="d-flex align-items-center">
-                      <span style={{ backgroundColor: "#AE2AFF" }}></span>
-                      <Box className="title"> Dard Disk </Box>
-                    </Box>
-                    <Box className="alert-count">654</Box>
-                    <Box className="alert-button low">Low</Box>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="d-flex align-items-center">
-                      <span style={{ backgroundColor: "#20DFB1" }}></span>
-                      <Box className="title"> Network IN </Box>
-                    </Box>
-                    <Box className="alert-count">654</Box>
-                    <Box className="alert-button"> High</Box>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="d-flex align-items-center">
-                      <span style={{ backgroundColor: "#FF2AB7" }}></span>
-                      <Box className="title">Network OUT </Box>
-                    </Box>
-                    <Box className="alert-count">654</Box>
-                    <Box className="alert-button medium">Medium</Box>
-                  </ListItem>
-                  <ListItem>
-                    <Box className="d-flex align-items-center">
-                      <span style={{ backgroundColor: "#FFC32A" }}></span>
-                      <Box className="title"> VCenter</Box>
-                    </Box>
-                    <Box className="alert-count">654</Box>
-                    <Box className="alert-button low">Low</Box>
-                  </ListItem>
-                </List> */}
               </Box>
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={5}>

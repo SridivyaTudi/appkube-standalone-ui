@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Box, Button, List, ListItem } from "@mui/material";
 import AwsComponent from "./AwsComponent";
-import AzureComponent from "./AzureComponent";
-import GcpComponent from "./GcpComponent";
+
 
 class ChargebackDashboard extends Component {
   tabMapping = [
@@ -75,9 +74,9 @@ class ChargebackDashboard extends Component {
         {activeTab === 0 ? (
           <AwsComponent />
         ) : activeTab === 1 ? (
-          <AzureComponent />
+          <Box>AzureComponent</Box>
         ) : activeTab === 2 ? (
-          <GcpComponent />
+          <Box>GcpComponent</Box>
         ) : (
           <></>
         )}
@@ -96,7 +95,7 @@ class ChargebackDashboard extends Component {
             </Button>
           </Box>
         </Box>
-        <Box className="reports-tab-section">
+        <Box className="appkube-tabs">
           <Box className="tabs">{this.renderTabMenu()}</Box>
           {this.renderActiveTabOfComponent()}
         </Box>

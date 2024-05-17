@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Box, Button, List, ListItem } from "@mui/material";
 import AwsComponent from "./AwsComponent";
-import AzureComponent from "./AzureComponent";
-import GcpComponent from "./GcpComponent";
+
 
 class CentralDashboard extends Component {
   tabMapping = [
@@ -76,9 +75,9 @@ class CentralDashboard extends Component {
         {activeTab === 0 ? (
           <AwsComponent />
         ) : activeTab === 1 ? (
-          <AzureComponent />
+          <Box>Azure Component</Box>
         ) : activeTab === 2 ? (
-          <GcpComponent />
+          <Box>Gcp Component</Box>
         ) : (
           <></>
         )}
@@ -97,7 +96,7 @@ class CentralDashboard extends Component {
             </Button>
           </Box>
         </Box>
-        <Box className="reports-tab-section">
+        <Box className="appkube-tabs">
           <Box className="tabs">{this.renderTabMenu()}</Box>
           {this.renderActiveTabOfComponent()}
         </Box>

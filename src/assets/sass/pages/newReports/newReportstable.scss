@@ -221,7 +221,9 @@
             background: #1b4dff;
             display: inline-block;
             margin-right: 5px;
-
+            &.sent{
+              background: #307bec;
+            }
             &.pending {
               background: #f5c853;
             }
