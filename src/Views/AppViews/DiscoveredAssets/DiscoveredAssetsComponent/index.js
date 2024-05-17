@@ -13,68 +13,6 @@ import status from "Redux/Constants/CommonDS";
 import { getDiscoveredAssets } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
 
 
-let data = [
-  {
-    name: "45sdf28d",
-    elementType: "EKS",
-    landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
-  },
-  {
-    name: "45sdf28d",
-    elementType: "EKS",
-    landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
-  },
-  {
-    name: "45sdf28d",
-    elementType: "EKS",
-    landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
-  },
-  {
-    name: "45sdf28d",
-    elementType: "EKS",
-    landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
-  },
-  {
-    name: "45sdf28d",
-    elementType: "EKS",
-    landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
-  },
-  {
-    name: "45sdf28d",
-    elementType: "EKS",
-    landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
-  },
-  {
-    name: "45sdf28d",
-    elementType: "EKS",
-    landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
-    logClass: "setting-icon",
-    traceClass: "orange",
-    eventClass: "orange",
-  },
-  {
-    name: "45sdf28d",
-    elementType: "EKS",
-    landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
-    tagStatusClass: "setting-icon",
-  },
-  {
-    name: "45sdf28d",
-    elementType: "EKS",
-    landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
-    tagStatusClass: "setting-icon",
-  },
-];
-
 let filterData = [
   {
     name: "Region",
@@ -130,12 +68,14 @@ class DiscoveredAssetsComponent extends Component {
       activeTab: 0,
       assestsData: [],
       selectedFilters: filterData,
+      assestsDataLength: 0,
+      assestsDataPage: 1,
     };
   }
 
   componentDidMount = () => {
     const orgId = getCurrentOrgId();
-    this.props.getDiscoveredAssets(orgId);
+    this.props.getDiscoveredAssets({ orgId, pageSize: 10, pageNo: 1 });
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -153,7 +93,7 @@ class DiscoveredAssetsComponent extends Component {
   setActiveTab = (activeTab) => {
     this.setState({ activeTab, selectedFilters: filterData }, () => {
       const discoveredData = this.props.discoveredAssetsData?.data || [];
-      this.manipulateDiscoveredData(discoveredData);
+      this.manipulateDiscoveredData(discoveredData, 1);
     });
   };
 
@@ -163,16 +103,18 @@ class DiscoveredAssetsComponent extends Component {
     this.setState({ selectedFilters });
   };
 
-  manipulateDiscoveredData = (data) => {
-    let assestsData = [];
-    let { activeTab } = this.state;
+  manipulateDiscoveredData = (data, isTabChange = 0) => {
+    let { totalRecords = 0, totalPages = 1, cloudElementList = [] } = data;
+    let { activeTab, assestsData: prevData,assestsDataPage } = this.state;
+
+    let assestsData = isTabChange || assestsDataPage === 1 ? [] : prevData;
 
     let cloud = this.controlMapping.find(
       (details, index) => index === activeTab
     );
 
-    if (data.length) {
-      data.forEach((assest) => {
+    if (cloudElementList.length) {
+      cloudElementList.forEach((assest) => {
         if (assest.cloud?.toUpperCase() === cloud?.key) {
           assestsData.push({
             name: assest.instanceName,
@@ -183,10 +125,20 @@ class DiscoveredAssetsComponent extends Component {
         }
       });
     }
-    this.setState({ assestsData });
+    this.setState({
+      assestsData,
+      assestsDataLength: totalRecords,
+      assestsDataPage: totalPages,
+    });
   };
   render() {
-    const { activeTab, selectedFilters, assestsData } = this.state;
+    const {
+      activeTab,
+      selectedFilters,
+      assestsData,
+      assestsDataLength,
+      assestsDataPage,
+    } = this.state;
     let { discoveredAssetsData } = this.props;
     return (
       <Box className="discovered-assets-inner-tabs">
@@ -205,6 +157,16 @@ class DiscoveredAssetsComponent extends Component {
             <AssetsTable
               data={assestsData}
               loderStatus={discoveredAssetsData?.status === status.IN_PROGRESS}
+              totalRecords={assestsDataLength}
+              totalPages={assestsDataPage}
+              handleChangePage={(pageNo, pageSize) => {
+                const orgId = getCurrentOrgId();
+                this.props.getDiscoveredAssets({
+                  orgId,
+                  pageSize,
+                  pageNo,
+                });
+              }}
             />
           </Box>
         </Box>

@@ -11,7 +11,6 @@ import {
   ListItem,
   List,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import AssetsSetUpModal from "./AssetsSetUpModal";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -60,7 +59,8 @@ class AssetsTable extends Component {
 
   //  Render table
   renderTable = () => {
-    let environmentList = this.props.data || [];
+    let { data: assestData, totalRecords } = this.props;
+
     let { rpg, pg } = this.state;
 
     return this.props.loderStatus ? (
@@ -73,11 +73,11 @@ class AssetsTable extends Component {
             {this.renderTableBody()}
           </Table>
         </TableContainer>
-        {environmentList?.length ? (
+        {assestData?.length ? (
           <TablePagination
             rowsPerPageOptions={[10, 20, 30]}
             component="div"
-            count={environmentList.length}
+            count={totalRecords || 0}
             rowsPerPage={rpg}
             page={pg}
             className="access-control-pagination"
@@ -126,22 +126,28 @@ class AssetsTable extends Component {
       this.setState({ tagShowMenuList: envKey });
     }
   };
-  toggleSelectDepartment = (index,isStatus=0) => {
-    let { isSelectDepartmentOpen,isSelectStatusOpen } = this.state;
+  toggleSelectDepartment = (index, isStatus = 0) => {
+    let { isSelectDepartmentOpen, isSelectStatusOpen } = this.state;
     if (isStatus) {
-      isSelectStatusOpen = index
+      isSelectStatusOpen = index;
     } else {
-      isSelectDepartmentOpen = index
+      isSelectDepartmentOpen = index;
     }
     this.setState({
-      isSelectDepartmentOpen,isSelectStatusOpen
+      isSelectDepartmentOpen,
+      isSelectStatusOpen,
     });
   };
 
   //  Render table body
   renderTableBody = () => {
-    const { tagShowMenu, tagShowMenuList, rpg, pg, isSelectDepartmentOpen,isSelectStatusOpen } =
-      this.state;
+    const {
+      
+      rpg,
+      pg,
+      isSelectDepartmentOpen,
+      isSelectStatusOpen,
+    } = this.state;
     let environmentList = this.props.data || [];
 
     return (
@@ -183,9 +189,7 @@ class AssetsTable extends Component {
                     </HtmlTooltip>{" "}
                   </TableCell>
                   <TableCell align="center">
-                    <Box
-                      className={`${tagStatusClass || "tag"} tag-status	`}
-                    >
+                    <Box className={`${tagStatusClass || "tag"} tag-status	`}>
                       <i
                         className={
                           tagStatusClass ? "fas fa-cog " : "fas fa-tag "
@@ -336,7 +340,14 @@ class AssetsTable extends Component {
   };
 
   handleChangePage = (event, newpage) => {
+    let { rpg } = this.state;
     this.setState({ pg: newpage });
+
+    try {
+      this.props.handleChangePage({ pageNo: newpage, pageSize: rpg });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   handleChangeRowsPerPage = (event) => {
