@@ -38,7 +38,7 @@ class AlertFilterSection extends Component {
     if (width > 1400) {
       noOfRow = 4;
     } else if (width >= 1290 && width < 1500) {
-      noOfRow = 3;
+      noOfRow = 2;
     } else if (width >= 1100 && width < 1120) {
       noOfRow = 2;
     } else if (width >= 1100 && width < 1290) {
