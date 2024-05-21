@@ -17,7 +17,25 @@ import {
   deleteUrlDetailsOfPage,
 } from "Utils";
 import { v4 } from "uuid";
-import { CleaningServices } from "@mui/icons-material";
+import { CleaningServices, Margin } from "@mui/icons-material";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#384cff",
+    display:"none",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#384cff",
+    color: "#ffffffff",
+    maxWidth: 200,
+    fontSize: theme.typography.pxToRem(12),
+  },
+}));
+
 function SideBar() {
   let location = useLocation();
   let currentLocation = location.pathname;
@@ -57,77 +75,105 @@ function SideBar() {
           <KeyboardArrowLeftIcon fontSize="inherit" />
         )}
       </IconButton>
-      <Box className="sidebar-inner">
-        <List>
-          {sideBarMenu.menu.map((item) => {
-            return (
-              <ListItem
-                className={currentLocation.includes(item.link) ? "active" : ""}
-                key={v4()}
-              >
-                <Link
-                  to={`${APP_PREFIX_PATH}${
-                    item?.subMenu?.[0]?.link ? item?.subMenu[0]?.link : item.link
-                  } `}
-                  onClick={() => {
-                    deleteSelectedInfraTopologyView();
-                    deleteActiveTab();
-                    deleteUrlDetailsOfPage();
-                  }}
+      <Box style={{ height: "100%", width: "100%", overflow: "auto" }}>
+        <Box className="sidebar-inner" id="side-manu-parent">
+          <List>
+            {sideBarMenu.menu.map((item) => {
+              return (
+                <ListItem
+                  className={
+                    currentLocation.includes(item.link) ? "active" : ""
+                  }
+                  key={v4()}
                 >
-                  <span className={`icon ${Parser(item.icon)}`}></span>
-                  <span className="name">{Parser(item.name)}</span>
-                  {item.subMenu && (
-                    <IconButton
-                      aria-label={
-                        !isActiveSubMenu
-                          ? "KeyboardArrowRightIcon"
-                          : "KeyboardArrowUpIcon"
-                      }
-                      size="small"
-                      className=""
-                      onClick={toggleSubMenuOpenClose}
-                    >
-                      {!isActiveSubMenu ? (
-                        <KeyboardArrowDownIcon fontSize="inherit" />
-                      ) : (
-                        <KeyboardArrowUpIcon fontSize="inherit" />
-                      )}
-                    </IconButton>
-                  )}
-                </Link>
-                {item.subMenu && (
-                  <List
-                    className={`${
-                      isActiveSubMenu ? "submenuopen" : "submenuclose"
-                    }`}
+                  <Link
+                    to={`${APP_PREFIX_PATH}${
+                      item?.subMenu?.[0]?.link
+                        ? item?.subMenu[0]?.link
+                        : item.link
+                    } `}
+                    onClick={() => {
+                      deleteSelectedInfraTopologyView();
+                      deleteActiveTab();
+                      deleteUrlDetailsOfPage();
+                    }}
                   >
-                    {item.subMenu &&
-                      item.subMenu.map((subItem) => {
-                        return (
-                          <ListItem
-                            key={v4()}
-                            className={`${
-                              currentLocation.includes(subItem.link)
-                                ? "active"
-                                : ""
-                            }`}
-                          >
-                            <Link to={`${APP_PREFIX_PATH}${subItem.link}`}>
-                              {Parser(subItem.name)}
-                              <span>
-                                <KeyboardArrowRightIcon fontSize="inherit" />
-                              </span>
-                            </Link>
-                          </ListItem>
-                        );
-                      })}
-                  </List>
-                )}
-              </ListItem>
-            );
-          })}
-        </List>
+                    <HtmlTooltip
+                      className="sidebar-tooltip"
+                      title={Parser(item.name)}
+                    >
+                      <span className={`icon ${Parser(item.icon)}`}></span>
+                    </HtmlTooltip>
+
+                    <span className="name">{Parser(item.name)}</span>
+                    {item.subMenu && (
+                      <IconButton
+                        aria-label={
+                          !isActiveSubMenu
+                            ? "KeyboardArrowRightIcon"
+                            : "KeyboardArrowUpIcon"
+                        }
+                        size="small"
+                        className=""
+                        onClick={toggleSubMenuOpenClose}
+                      >
+                        {!isActiveSubMenu ? (
+                          <KeyboardArrowDownIcon fontSize="inherit" />
+                        ) : (
+                          <KeyboardArrowUpIcon fontSize="inherit" />
+                        )}
+                      </IconButton>
+                    )}
+                  </Link>
+                  {item.subMenu && (
+                    <List
+                      className={`${
+                        isActiveSubMenu ? "submenuopen" : "submenuclose"
+                      }`}
+                      style={{
+                        transform: `translate(
+                        ${
+                          document.getElementById("side-manu-parent")
+                            ? document.getElementById("side-manu-parent")
+                                .scrollTop
+                            : 0
+                        } px,
+                        ${
+                          document.getElementById("side-manu-parent")
+                            ? document.getElementById("side-manu-parent")
+                                .scrollLeft
+                            : 0
+                        } px
+                      )`,
+                      }}
+                    >
+                      {item.subMenu &&
+                        item.subMenu.map((subItem) => {
+                          return (
+                            <ListItem
+                              key={v4()}
+                              className={`${
+                                currentLocation.includes(subItem.link)
+                                  ? "active"
+                                  : ""
+                              }`}
+                            >
+                              <Link to={`${APP_PREFIX_PATH}${subItem.link}`}>
+                                {Parser(subItem.name)}
+                                <span>
+                                  <KeyboardArrowRightIcon fontSize="inherit" />
+                                </span>
+                              </Link>
+                            </ListItem>
+                          );
+                        })}
+                    </List>
+                  )}
+                </ListItem>
+              );
+            })}
+          </List>
+        </Box>
       </Box>
     </Box>
   );

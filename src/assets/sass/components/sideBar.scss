@@ -13,7 +13,6 @@
   transition: width 0.2s;
   flex: 1;
   flex-direction: column;
-    
 
   &.open {
     width: 200px;
@@ -21,6 +20,7 @@
     .sidebar-inner {
       overflow: hidden;
       overflow-y: scroll;
+      display: inline;
       > ul {
         > li {
           .name {
@@ -38,17 +38,16 @@
         > li {
           > a {
             .name {
-              display: none;
-              position: absolute;
-              left: 50px;
-              top: 7px;
-              font-size: 11px;
-              line-height: 16px;
-              font-weight: 400;
-              color: #ffffff;
-              border-radius: 5px;
-              padding: 5px 10px;
-              background-color: #384cff;
+              // display: none;
+              // width: fit-content;
+              // margin: 0px;
+              // font-size: 11px;
+              // line-height: 16px;
+              // font-weight: 400;
+              // color: #ffffff;
+              // border-radius: 5px;
+              // padding: 5px 10px;
+              // background-color: #384cff;
             }
             button {
               display: none;
@@ -56,10 +55,7 @@
           }
           > ul {
             display: none;
-            position: absolute;
-            z-index: 10;
-            top: 30px;
-            left: 30px;
+
             width: 180px;
             padding: 10px;
             border-radius: 5px;
@@ -105,20 +101,29 @@
                 &.preferences {
                   background-image: url("../../img/sidebar/preferences-h.png");
                 }
-                &.bimapping{
+                &.bimapping {
                   background-image: url("../../img//sidebar/bimapping-h.png");
                 }
                 &.report {
                   background-image: url("../../img/sidebar/reporting-h.png");
                 }
               }
-              .name {
-                display: inline-flex;
-                color: #ffffff;
-              }
+              // .name {
+              //   display: inline-flex;
+              //   color: #ffffff;
+              //   position: fixed;
+              //   visibility: visible;
+              //   inset: auto 0px auto 60px;
+              //   z-index: 10;
+              // }
             }
             ul {
               display: block;
+              position: fixed;
+              inset: auto 0px auto 60px;
+              margin: 0px;
+              visibility: visible;
+              z-index: 1000;
               li {
                 a {
                   background-color: #ffffff;
@@ -133,7 +138,6 @@
       }
     }
   }
-
   .open-close {
     position: absolute;
     z-index: 10;
@@ -152,10 +156,8 @@
       background-color: #ffffff;
     }
   }
-
   .sidebar-inner {
-    height: 100%;
-    width: 100%;
+    z-index: 1000;
     > ul {
       display: flex;
       width: 100%;
@@ -220,10 +222,10 @@
             &.preferences {
               background-image: url("../../img/sidebar/preferences.png");
             }
-            &.bimapping{
+            &.bimapping {
               background-image: url("../../img//sidebar/bimapping.png");
             }
-            &.report{
+            &.report {
               background-image: url("../../img//sidebar/reporting.png");
             }
           }
@@ -268,10 +270,10 @@
               &.preferences {
                 background-image: url("../../img/sidebar/preferences-h.png");
               }
-              &.bimapping{
+              &.bimapping {
                 background-image: url("../../img//sidebar/bimapping-h.png");
               }
-              &.report{
+              &.report {
                 background-image: url("../../img//sidebar/reporting-h.png");
               }
             }
@@ -302,10 +304,10 @@
             &.preferences {
               background-image: url("../../img/sidebar/preferences-h.png");
             }
-            &.bimapping{
+            &.bimapping {
               background-image: url("../../img//sidebar/bimapping-h.png");
             }
-            &.report{
+            &.report {
               background-image: url("../../img//sidebar/reporting-h.png");
             }
           }
@@ -387,4 +389,29 @@
       }
     }
   }
+}
+
+.sidebar-tooltip {
+  border-radius: 6px;
+  
+  .MuiTooltip-tooltip {
+    inset: -38px auto auto 60px!important;
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    text-transform: lowercase;
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+  .css-kudwh-MuiTooltip-arrow::before {
+    border: 1px solid #dadde9;
+  }
+}
+
+@media (max-width: 1280px) {
 }
