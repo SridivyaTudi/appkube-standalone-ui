@@ -124,6 +124,11 @@
               margin: 0px;
               visibility: visible;
               z-index: 1000;
+              .submenu-title{
+                font-size: 14px;
+                font-weight: 500;
+                color: #1b4dffed;
+              }
               li {
                 a {
                   background-color: #ffffff;
@@ -393,24 +398,20 @@
 
 .sidebar-tooltip {
   border-radius: 6px;
-  
   .MuiTooltip-tooltip {
-    inset: -38px auto auto 60px!important;
+     inset: auto -5px auto auto;
     font-size: 11px;
     line-height: 16px;
     font-weight: 400;
     color: #ffffff;
-    border-radius: 5px;
     padding: 5px 10px;
-    border-radius: 3px;
+    border-radius: 4px;
     text-transform: lowercase;
     &::first-letter {
       text-transform: uppercase;
     }
   }
-  .css-kudwh-MuiTooltip-arrow::before {
-    border: 1px solid #dadde9;
-  }
+ 
 }
 
 @media (max-width: 1280px) {

@@ -49,6 +49,7 @@
       "link": "#",
       "icon": "appcatalogue",
       "name": "App Catalogue"
+      
     },
     {
       "link": "/alerts",
@@ -70,5 +71,6 @@
       "icon": "report",
       "name": "Reports"
     }
+    
   ]
 }

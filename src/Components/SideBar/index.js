@@ -26,7 +26,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 ))(({ theme }) => ({
   [`& .${tooltipClasses.arrow}`]: {
     color: "#384cff",
-    display:"none",
+    display: "none",
   },
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "#384cff",
@@ -100,7 +100,8 @@ function SideBar() {
                   >
                     <HtmlTooltip
                       className="sidebar-tooltip"
-                      title={Parser(item.name)}
+                      placement="right"
+                      title={item.subMenu || isActive ? "" : Parser(item.name)}
                     >
                       <span className={`icon ${Parser(item.icon)}`}></span>
                     </HtmlTooltip>
@@ -147,6 +148,7 @@ function SideBar() {
                       )`,
                       }}
                     >
+                      {isActive ? '': <Box className="submenu-title">{Parser(item.name)}</Box> }
                       {item.subMenu &&
                         item.subMenu.map((subItem) => {
                           return (
