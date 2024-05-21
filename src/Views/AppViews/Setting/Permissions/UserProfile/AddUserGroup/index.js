@@ -336,7 +336,7 @@ class AddUserGroup extends Component {
           this.renderLoder()
         ) : (
           <>
-            <Box className="setting-common-searchbar p-b-20">
+            <Box className="setting-common-searchbar">
               <Grid container className="h-100" alignItems={"center"}>
                 <Grid item xs={6}>
                   <Box className="top-search">

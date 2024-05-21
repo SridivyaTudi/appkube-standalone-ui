@@ -95,7 +95,7 @@ class ChargebackDashboard extends Component {
             </Button>
           </Box>
         </Box>
-        <Box className="appkube-tabs">
+        <Box className="reports-tab-section">
           <Box className="tabs">{this.renderTabMenu()}</Box>
           {this.renderActiveTabOfComponent()}
         </Box>

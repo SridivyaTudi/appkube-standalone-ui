@@ -130,7 +130,7 @@ class TopUsedServicesDetails extends Component {
             </ul>
           </Box>
         </Box>
-        <Box className="appkube-tabs">
+        <Box className="reports-tab-section">
           <Box className="tabs">
             {this.renderTabMenu()}
             <Box className="d-flex ">
