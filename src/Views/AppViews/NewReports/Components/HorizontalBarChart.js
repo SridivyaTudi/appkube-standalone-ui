@@ -28,12 +28,9 @@ class HorizontalBarChart extends Component {
     const marginRight = 10;
     const marginBottom = 0;
     const marginLeft = 150;
-    const width = 800;
+    const width = 1200;
     let dataHeight = Math.ceil(data.length * barHeight);
-    const height =
-      dataHeight > 200
-        ? Math.ceil(data.length * barHeight) + marginTop + marginBottom
-        : 300 + marginTop + marginBottom;
+    const height = 280 + marginTop + marginBottom;
 
     // Create the SVG container.
     const svg = d3
@@ -41,10 +38,7 @@ class HorizontalBarChart extends Component {
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [0, 10, width, height])
-      .attr(
-        "style",
-        "max-width: 100%;  font: 12px sans-serif; "
-      );
+      .attr("style", "max-width: 100%;  font: 12px sans-serif; ");
 
     svg.selectAll("*").remove();
 

@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import { Box } from "@mui/material";
 
 let margin = { top: 0, right: 0, bottom: 0, left: 0 },
-  width = 1200 - margin.left - margin.right,
+  width = 1100 - margin.left - margin.right,
   height = 335 - margin.top - margin.bottom;
 
 class GroupedBarplotChart extends Component {
@@ -171,11 +171,12 @@ class GroupedBarplotChart extends Component {
     //   legend text
     lg.append("text")
       .style("font-family", "'Poppins', sans-serif")
-      .style("font-size", "17px").style('text-transform','capitalize')
+      .style("font-size", "17px")
+      .style("text-transform", "capitalize")
       .attr("x", -60)
       .attr("y", 30)
       .text((d, index) => {
-        let name = restKey[index]
+        let name = restKey[index];
         return `${restKey[index]} ${this.props.granularity}`;
       });
   };
