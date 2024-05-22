@@ -399,7 +399,7 @@ class Compute extends Component {
                     this.renderLoder()
                   ) : potentialMonthlySavingData?.length ? (
                     <VerticalBarchart
-                      style={{ maxHeight: 320, with: "100%" }}
+                      style={{ maxHeight: 300, with: "100%" }}
                       data={potentialMonthlySavingData}
                       styleProp={{
                         color: "#53CA43",

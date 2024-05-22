@@ -9,6 +9,7 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
+import { v4 } from "uuid";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SelectFilterModal from "../../Components/SelectFilterModal";
 import { Link } from "react-router-dom";
@@ -16,11 +17,114 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
+let departmentsData = [
+  {
+    vpc: "vpc-d24664bb",
+    department: "sales & Marketing",
+    allProduct: "12",
+    spending: "Internal CRM Tool",
+    spend: "$2120",
+    budget: "$1200",
+    forecast: "$2120",
+  },
+  {
+    vpc: "vpc-d24664bb",
+    department: "R&D",
+    allProduct: "12",
+    spending: "jira",
+    spend: "$3200",
+    budget: "$2200",
+    forecast: "$3200",
+  },
+  {
+    vpc: "vpc-d24664bb",
+    department: "sales & Marketing",
+    allProduct: "12",
+    spending: "Internal CRM Tool",
+    spend: "$2120",
+    budget: "$1200",
+    forecast: "$2120",
+  },
+  {
+    vpc: "vpc-d24664bb",
+    department: "R&D",
+    allProduct: "12",
+    spending: "jira",
+    spend: "$3200",
+    budget: "$2200",
+    forecast: "$3200",
+  },
+  {
+    vpc: "vpc-d24664bb",
+    department: "sales & Marketing",
+    allProduct: "12",
+    spending: "Internal CRM Tool",
+    spend: "$2120",
+    budget: "$1200",
+    forecast: "$2120",
+  },
+  {
+    vpc: "vpc-d24664bb",
+    department: "R&D",
+    allProduct: "12",
+    spending: "jira",
+    spend: "$3200",
+    budget: "$2200",
+    forecast: "$3200",
+  },
+  {
+    vpc: "vpc-d24664bb",
+    department: "R&D",
+    allProduct: "12",
+    spending: "jira",
+    spend: "$3200",
+    budget: "$2200",
+    forecast: "$3200",
+  },
+  {
+    vpc: "vpc-d24664bb",
+    department: "sales & Marketing",
+    allProduct: "12",
+    spending: "Internal CRM Tool",
+    spend: "$2120",
+    budget: "$1200",
+    forecast: "$2120",
+  },
+  {
+    vpc: "vpc-d24664bb",
+    department: "R&D",
+    allProduct: "12",
+    spending: "jira",
+    spend: "$3200",
+    budget: "$2200",
+    forecast: "$3200",
+  },
+  {
+    vpc: "vpc-d24664bb",
+    department: "sales & Marketing",
+    allProduct: "12",
+    spending: "Internal CRM Tool",
+    spend: "$2120",
+    budget: "$1200",
+    forecast: "$2120",
+  },
+  {
+    vpc: "vpc-d24664bb",
+    department: "R&D",
+    allProduct: "12",
+    spending: "jira",
+    spend: "$3200",
+    budget: "$2200",
+    forecast: "$3200",
+  },
+];
+
 class BudgetDepartments extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 0,
+      departmentsData,
     };
   }
 
@@ -60,204 +164,68 @@ class BudgetDepartments extends Component {
 
   //  Render table body
   renderTableBody = () => {
+    let { departmentsData } = this.state;
+    console.log(departmentsData);
     return (
       <TableBody>
-        <TableRow>
-          <TableCell>vpc-d24664bb</TableCell>
-          <TableCell>sales & Marketing </TableCell>
-          <TableCell>
-            <Link
-              to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
-            >
-              <Box className="d-flex align-items-center">
-                12 <OpenInNewIcon className="p-l-5" />
+        {departmentsData?.length ? (
+          departmentsData.map((data) => {
+            return (
+              <TableRow key={v4()}>
+                <TableCell>{data.vpc}</TableCell>
+                <TableCell>{data.department}</TableCell>
+                <TableCell>
+                  <Link
+                    to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
+                  >
+                    <Box className="d-flex align-items-center">
+                      {data.allProduct}{" "}
+                      <OpenInNewIcon className="p-l-5" />
+                    </Box>
+                  </Link>
+                </TableCell>
+                <TableCell>{data.spending}</TableCell>
+                <TableCell>
+                  <Box
+                    className="d-flex align-items-center"
+                    justifyContent={"center"}
+                  >
+                    <strong>{data.spend}</strong>
+                    <Box className="variance-count red ">
+                      <i className="fas fa-sort-up red p-l-5 p-r-5"> </i>
+                      <strong>10% </strong>
+                    </Box>
+                  </Box>
+                </TableCell>
+                <TableCell align="center">
+                  <strong>{data.budget}</strong>
+                </TableCell>
+                <TableCell>
+                  <Box
+                    className="d-flex align-items-center"
+                    justifyContent={"center"}
+                  >
+                    <strong>{data.forecast}</strong>
+                    <Box className="variance-count red ">
+                      <i className="fas fa-sort-up red p-l-5 p-r-5"> </i>{" "}
+                      <strong>10% </strong>
+                    </Box>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <TableRow>
+            <TableCell colSpan={12}>
+              <Box className="d-blck text-center w-100 h-100 ">
+                <Box className="environment-loader  align-item-center justify-center p-t-10 p-b-10 ">
+                  <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+                </Box>
               </Box>
-            </Link>
-          </TableCell>
-          <TableCell>Internal CRM Tool</TableCell>
-          <TableCell>
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$2120</strong>
-              <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i>
-                <strong>10% </strong>
-              </Box>
-            </Box>
-          </TableCell>
-          <TableCell align="center">
-            <strong>$1200</strong>
-          </TableCell>
-          <TableCell>
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$2120</strong>
-              <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
-              </Box>
-            </Box>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>vpc-d24664bb</TableCell>
-          <TableCell>sales & Marketing </TableCell>
-          <TableCell>
-            <Link
-              to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
-            >
-              <Box className="d-flex align-items-center">
-                12 <OpenInNewIcon className="p-l-5" />
-              </Box>
-            </Link>
-          </TableCell>
-          <TableCell>Internal CRM Tool</TableCell>
-          <TableCell>
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$2120</strong>
-              <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
-              </Box>
-            </Box>
-          </TableCell>
-          <TableCell align="center">
-            <strong>$1200</strong>
-          </TableCell>
-          <TableCell>
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$2120</strong>
-              <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
-              </Box>
-            </Box>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>vpc-d24664bb</TableCell>
-          <TableCell>sales & Marketing </TableCell>
-          <TableCell>
-            <Link
-              to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
-            >
-              <Box className="d-flex align-items-center">
-                12 <OpenInNewIcon className="p-l-5" />
-              </Box>
-            </Link>
-          </TableCell>
-          <TableCell>Internal CRM Tool</TableCell>
-          <TableCell>
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$2120</strong>
-              <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
-              </Box>
-            </Box>
-          </TableCell>
-          <TableCell align="center">
-            <strong>$1200</strong>
-          </TableCell>
-          <TableCell>
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$2120</strong>
-              <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
-              </Box>
-            </Box>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>vpc-d24664bb</TableCell>
-          <TableCell>sales & Marketing </TableCell>
-          <TableCell>
-            <Link
-              to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
-            >
-              <Box className="d-flex align-items-center">
-                12 <OpenInNewIcon className="p-l-5" />
-              </Box>
-            </Link>
-          </TableCell>
-          <TableCell>Internal CRM Tool</TableCell>
-          <TableCell>
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$2120</strong>
-              <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
-              </Box>
-            </Box>
-          </TableCell>
-          <TableCell align="center">
-            <strong>$1200</strong>
-          </TableCell>
-          <TableCell>
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$2120</strong>
-              <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
-              </Box>
-            </Box>
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>vpc-d24664bb</TableCell>
-          <TableCell>sales & Marketing </TableCell>
-          <TableCell>
-            <Link
-              to={`${APP_PREFIX_PATH}/new-reports/budget-dashboard/budget-products`}
-            >
-              <Box className="d-flex align-items-center">
-                12 <OpenInNewIcon className="p-l-5" />
-              </Box>
-            </Link>
-          </TableCell>
-          <TableCell>Internal CRM Tool</TableCell>
-          <TableCell>
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$2120</strong>
-              <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
-              </Box>
-            </Box>
-          </TableCell>
-          <TableCell align="center">
-            <strong>$1200</strong>
-          </TableCell>
-          <TableCell>
-            <Box
-              className="d-flex align-items-center"
-              justifyContent={"center"}
-            >
-              <strong>$2120</strong>
-              <Box className="variance-count red ">
-                <i className="fas fa-sort-up red p-l-5 p-r-5"> </i> <strong>10% </strong>
-              </Box>
-            </Box>
-          </TableCell>
-        </TableRow>
+            </TableCell>
+          </TableRow>
+        )}
       </TableBody>
     );
   };
