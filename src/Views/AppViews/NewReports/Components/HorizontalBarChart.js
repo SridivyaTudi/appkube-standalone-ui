@@ -29,8 +29,11 @@ class HorizontalBarChart extends Component {
     const marginBottom = 0;
     const marginLeft = 150;
     const width = 800;
+    let dataHeight = Math.ceil(data.length * barHeight);
     const height =
-      Math.ceil(data.length * barHeight) + marginTop + marginBottom;
+      dataHeight > 200
+        ? Math.ceil(data.length * barHeight) + marginTop + marginBottom
+        : 300 + marginTop + marginBottom;
 
     // Create the SVG container.
     const svg = d3
@@ -38,7 +41,10 @@ class HorizontalBarChart extends Component {
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [0, 10, width, height])
-      .attr("style", "max-width: 100%;  font: 12px sans-serif; ");
+      .attr(
+        "style",
+        "max-width: 100%;  font: 12px sans-serif; "
+      );
 
     svg.selectAll("*").remove();
 
@@ -154,7 +160,7 @@ class HorizontalBarChart extends Component {
       <>
         <Box className="top-used-service-chrt">
           {this.props.chardBeforeRenderHTML}
-          <svg ref={this.ref} style={{width: '100%', height:"auto"}}></svg>
+          <svg ref={this.ref} style={{ width: "100%", height: "auto" }}></svg>
         </Box>{" "}
       </>
     );
