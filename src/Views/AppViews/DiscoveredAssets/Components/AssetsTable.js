@@ -169,9 +169,10 @@ class AssetsTable extends Component {
               return (
                 <TableRow key={v4()}>
                   <TableCell align="left">
-                    <HtmlTooltip className="table-tooltip" title={name}>
-                      <Box className="resource-name">{name}</Box>
-                    </HtmlTooltip>
+                  {name}
+                    {/* <HtmlTooltip className="table-tooltip" title={name}>
+                      <Box className="resource-name"> {name}</Box>
+                    </HtmlTooltip> */}
                   </TableCell>
                   <TableCell align="left">{elementType}</TableCell>
                   <TableCell align="left">
