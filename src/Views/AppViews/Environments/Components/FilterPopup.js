@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import {Box,IconButton} from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { connect } from "react-redux";
 import {
@@ -13,6 +13,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
 import CloseIcon from "@mui/icons-material/Close";
+import { NO_DATA_FOUND,API_ERROR_MESSAGE } from "CommonData";
 
 const deploymentImgs = {
   DEV: "department",
@@ -115,6 +116,7 @@ class FilterPopup extends Component {
 
   renderDepartments = () => {
     let { departments, selectedDepartment } = this.state;
+    let organizationStatus = this.props.organizationWiseDepartments.status;
     if (departments.length) {
       return departments.map((department, index) => {
         return (
@@ -137,7 +139,21 @@ class FilterPopup extends Component {
           </Grid>
         );
       });
+    } else {
+      return this.renderNoDataHtml(
+        organizationStatus === status.FAILURE
+          ? API_ERROR_MESSAGE
+          : NO_DATA_FOUND
+      );
     }
+  };
+
+  renderNoDataHtml = (text) => {
+    return (
+      <Box className="group-loader text-center  h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
+        <h5 className="m-t-0 m-b-0">{text}</h5>
+      </Box>
+    );
   };
 
   renderProducts = () => {
