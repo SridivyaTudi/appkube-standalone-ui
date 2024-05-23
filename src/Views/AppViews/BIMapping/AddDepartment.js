@@ -29,7 +29,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import status from "Redux/Constants/CommonDS";
 import { ToastMessage } from "Toast/ToastMessage";
 import Loader from "Components/Loader";
-import { LOGOS } from "CommonData";
+import { API_ERROR_MESSAGE, LOGOS } from "CommonData";
 
 class AddDepartment extends Component {
   steps = {
@@ -578,7 +578,7 @@ class AddDepartment extends Component {
                       ) : (
                         <Box className="environment-loader text-center  align-item-center justify-center p-t-20 p-b-20 ">
                           <h5 className="m-t-0 m-b-0">
-                            There are no data available.
+                           {this.props.landingZones.status === status.FAILURE ? API_ERROR_MESSAGE :'There are no data available.'} 
                           </h5>
                         </Box>
                       )}

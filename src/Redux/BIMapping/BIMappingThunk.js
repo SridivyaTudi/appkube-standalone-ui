@@ -79,11 +79,10 @@ export const getInstancesServices = createAsyncThunk(
   "BIMapping/getInstancesServices",
   async (params) => {
     try {
-      let { cloudName, elementType,landingZoneId } = params;
-      let url = config.GET_INSTANCES_SERVICES.replace(
-        "#cloud-name#",
-        cloudName
-      ).replace("#element-type#", elementType).replace("#landingzone-id#", landingZoneId);
+      let { cloudName, elementType, landingZoneId } = params;
+      let url = config.GET_INSTANCES_SERVICES.replace("#cloud-name#", cloudName)
+        .replace("#element-type#", elementType)
+        .replace("#landingzone-id#", landingZoneId);
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
@@ -130,7 +129,7 @@ export const getLandingzone = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );

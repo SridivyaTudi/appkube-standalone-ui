@@ -136,6 +136,7 @@ export const TIME_FRAME = {
   WEEK: "WEEK",
   CUSTOM: "CUSTOM",
 };
+
 export const TIME_FRAME_DROPDOWN_DATA = [
   {
     key: TIME_FRAME.TODAY,
@@ -154,3 +155,5 @@ export const TIME_FRAME_DROPDOWN_DATA = [
     value: "Custom",
   },
 ];
+
+export const API_ERROR_MESSAGE = "There is some error.";

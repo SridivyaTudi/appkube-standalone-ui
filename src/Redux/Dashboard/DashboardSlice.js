@@ -438,7 +438,7 @@ export const dashboardSlice = createSlice({
         ...state,
         slaMetrics: {
           status: status.FAILURE,
-          data: [],
+          data: "",
         },
       };
     },

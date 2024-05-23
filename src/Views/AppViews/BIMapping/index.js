@@ -26,7 +26,7 @@ import { getCloudWiseLandingZoneCount } from "Redux/Environments/EnvironmentsThu
 import CloudElementInstancePopup from "./Components/CloudElementInstancePopup";
 import SelectLendingZonePopup from "./Components/SelectLendingZonePopup";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
-import { BI_MAPPING_TYPE } from "CommonData";
+import { API_ERROR_MESSAGE, BI_MAPPING_TYPE } from "CommonData";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 
 const orgId = getCurrentOrgId();
@@ -603,7 +603,11 @@ class BIMapping extends Component {
               onLinkClick={(data) => this.onLinkClick(data)}
             />
           ) : (
-            this.renderNoDataHtml("There are no data available.")
+            this.renderNoDataHtml(
+              organization.status === status.FAILURE
+                ? API_ERROR_MESSAGE
+                : "There are no data available."
+            )
           )}
         </Box>
         {showInstanceModal ? (

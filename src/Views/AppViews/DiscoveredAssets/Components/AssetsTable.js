@@ -141,86 +141,73 @@ class AssetsTable extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    const {
-      
-      rpg,
-      pg,
-      isSelectDepartmentOpen,
-      isSelectStatusOpen,
-    } = this.state;
-    let environmentList = this.props.data || [];
+    const { rpg, pg, isSelectDepartmentOpen, isSelectStatusOpen } = this.state;
 
+    let { data = [], errorMessage } = this.props;
     return (
       <TableBody>
-        {environmentList.length ? (
-          environmentList
-            .slice(pg * rpg, pg * rpg + rpg)
-            .map((environment, index) => {
-              let {
-                name,
-                elementType,
-                landingZone,
-                productEnclave,
-                tagStatusClass,
-                logClass,
-                traceClass,
-                eventClass,
-              } = environment;
-              return (
-                <TableRow key={v4()}>
-                  <TableCell align="left">
+        {data.length ? (
+          data.slice(pg * rpg, pg * rpg + rpg).map((environment, index) => {
+            let {
+              name,
+              elementType,
+              landingZone,
+              productEnclave,
+              tagStatusClass,
+              logClass,
+              traceClass,
+              eventClass,
+            } = environment;
+            return (
+              <TableRow key={v4()}>
+                <TableCell align="left">
                   {name}
-                    {/* <HtmlTooltip className="table-tooltip" title={name}>
+                  {/* <HtmlTooltip className="table-tooltip" title={name}>
                       <Box className="resource-name"> {name}</Box>
                     </HtmlTooltip> */}
-                  </TableCell>
-                  <TableCell align="left">{elementType}</TableCell>
-                  <TableCell align="left">
-                    <HtmlTooltip className="table-tooltip" title={landingZone}>
-                      <Box className="resource-name">{landingZone}</Box>
-                    </HtmlTooltip>
-                  </TableCell>
-                  <TableCell align="left">
-                    {" "}
-                    <HtmlTooltip
-                      className="table-tooltip"
-                      title={productEnclave}
-                    >
-                      <Box className="resource-name">{productEnclave}</Box>
-                    </HtmlTooltip>{" "}
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className={`${tagStatusClass || "tag"} tag-status	`}>
-                      <i
-                        className={
-                          tagStatusClass ? "fas fa-cog " : "fas fa-tag "
-                        }
-                        onClick={() => this.toggleSelectDepartment(index, 1)}
-                      ></i>
-                      {isSelectStatusOpen === index && (
-                        <div
-                          className={
-                            isSelectStatusOpen === index
-                              ? "fliter-collapse active"
-                              : "fliter-collapse"
-                          }
-                        >
-                          <List menu-list>
-                            <ListItem>
-                              <i className="fa-solid fa-circle-dot"></i> Tag
-                            </ListItem>
-                          </List>
-                        </div>
-                      )}
+                </TableCell>
+                <TableCell align="left">{elementType}</TableCell>
+                <TableCell align="left">
+                  <HtmlTooltip className="table-tooltip" title={landingZone}>
+                    <Box className="resource-name">{landingZone}</Box>
+                  </HtmlTooltip>
+                </TableCell>
+                <TableCell align="left">
+                  {" "}
+                  <HtmlTooltip className="table-tooltip" title={productEnclave}>
+                    <Box className="resource-name">{productEnclave}</Box>
+                  </HtmlTooltip>{" "}
+                </TableCell>
+                <TableCell align="center">
+                  <Box className={`${tagStatusClass || "tag"} tag-status	`}>
+                    <i
+                      className={tagStatusClass ? "fas fa-cog " : "fas fa-tag "}
+                      onClick={() => this.toggleSelectDepartment(index, 1)}
+                    ></i>
+                    {isSelectStatusOpen === index && (
                       <div
                         className={
                           isSelectStatusOpen === index
-                            ? "fliters-collapse-bg active"
-                            : "fliters-collapse-bg"
+                            ? "fliter-collapse active"
+                            : "fliter-collapse"
                         }
-                        onClick={() => this.toggleSelectDepartment(null, 1)}
-                      />
-                      {/* {tagShowMenu === index ? (
+                      >
+                        <List menu-list>
+                          <ListItem>
+                            <i className="fa-solid fa-circle-dot"></i> Tag
+                          </ListItem>
+                        </List>
+                      </div>
+                    )}
+                    <div
+                      className={
+                        isSelectStatusOpen === index
+                          ? "fliters-collapse-bg active"
+                          : "fliters-collapse-bg"
+                      }
+                      onClick={() => this.toggleSelectDepartment(null, 1)}
+                    />
+                    {/* {tagShowMenu === index ? (
                         <>
                           <div
                             className="open-create-menu-close"
@@ -239,63 +226,63 @@ class AssetsTable extends Component {
                       ) : (
                         <></>
                       )} */}
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box
-                      className={logClass || "log-eye-icon"}
-                      onClick={this.toggleAssetsSetUp}
+                  </Box>
+                </TableCell>
+                <TableCell align="center">
+                  <Box
+                    className={logClass || "log-eye-icon"}
+                    onClick={this.toggleAssetsSetUp}
+                  >
+                    <i className={logClass ? "fas fa-cog" : "fas fa-eye"}></i>
+                  </Box>
+                </TableCell>
+                <TableCell align="center">
+                  <span className={traceClass || "green"}>
+                    <i
+                      className={logClass ? "fas fa-times" : "fas fa-check"}
+                    ></i>
+                  </span>
+                </TableCell>
+                <TableCell align="center">
+                  <span className={eventClass || "green"}>
+                    <i
+                      className={eventClass ? "fas fa-times" : "fas fa-check"}
+                    ></i>
+                  </span>
+                </TableCell>
+                <TableCell align="center">
+                  <Box className="tag-status">
+                    <button
+                      type="button"
+                      className="list-icon"
+                      onClick={() => this.toggleSelectDepartment(index)}
                     >
-                      <i className={logClass ? "fas fa-cog" : "fas fa-eye"}></i>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className={traceClass || "green"}>
-                      <i
-                        className={logClass ? "fas fa-times" : "fas fa-check"}
-                      ></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <span className={eventClass || "green"}>
-                      <i
-                        className={eventClass ? "fas fa-times" : "fas fa-check"}
-                      ></i>
-                    </span>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Box className="tag-status">
-                      <button
-                        type="button"
-                        className="list-icon"
-                        onClick={() => this.toggleSelectDepartment(index)}
-                      >
-                        <i className="fas fa-ellipsis-v"></i>
-                      </button>
-                      {isSelectDepartmentOpen === index && (
-                        <div
-                          className={
-                            isSelectDepartmentOpen === index
-                              ? "fliter-collapse active"
-                              : "fliter-collapse"
-                          }
-                        >
-                          <List menu-list>
-                            <ListItem>
-                              <i className="fa-solid fa-circle-dot"></i> Set Up
-                            </ListItem>
-                          </List>
-                        </div>
-                      )}
+                      <i className="fas fa-ellipsis-v"></i>
+                    </button>
+                    {isSelectDepartmentOpen === index && (
                       <div
                         className={
                           isSelectDepartmentOpen === index
-                            ? "fliters-collapse-bg active"
-                            : "fliters-collapse-bg"
+                            ? "fliter-collapse active"
+                            : "fliter-collapse"
                         }
-                        onClick={() => this.toggleSelectDepartment(null)}
-                      />
-                      {/* {tagShowMenuList === index ? (
+                      >
+                        <List menu-list>
+                          <ListItem>
+                            <i className="fa-solid fa-circle-dot"></i> Set Up
+                          </ListItem>
+                        </List>
+                      </div>
+                    )}
+                    <div
+                      className={
+                        isSelectDepartmentOpen === index
+                          ? "fliters-collapse-bg active"
+                          : "fliters-collapse-bg"
+                      }
+                      onClick={() => this.toggleSelectDepartment(null)}
+                    />
+                    {/* {tagShowMenuList === index ? (
                         <>
                           <div
                             className="open-create-menu-close"
@@ -320,17 +307,19 @@ class AssetsTable extends Component {
                         }
                         onClick={this.handleMenuListToggle}
                       /> */}
-                    </Box>
-                  </TableCell>
-                </TableRow>
-              );
-            })
+                  </Box>
+                </TableCell>
+              </TableRow>
+            );
+          })
         ) : (
           <TableRow>
             <TableCell colSpan={12}>
               <Box className="d-blck text-center w-100 h-100 ">
                 <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-                  <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+                  <h5 className="m-t-0 m-b-0">
+                    {errorMessage || "There are no data available."}
+                  </h5>
                 </Box>
               </Box>
             </TableCell>

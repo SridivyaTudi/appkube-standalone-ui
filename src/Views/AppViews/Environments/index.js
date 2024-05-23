@@ -33,7 +33,7 @@ import {
   deleteSelectedInfraTopologyView,
 } from "Utils";
 import { ToastMessage } from "Toast/ToastMessage";
-import { LOGOS } from "CommonData";
+import { LOGOS, API_ERROR_MESSAGE } from "CommonData";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import Loader from "Components/Loader";
@@ -41,7 +41,6 @@ import { v4 } from "uuid";
 import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 import RBAC_MAPPING from "Utils/RbacMapping";
 import Rbac from "Views/AppViews/Rbac";
-import { style } from "d3";
 
 class Environments extends Component {
   constructor(props) {
@@ -158,7 +157,9 @@ class Environments extends Component {
     } else {
       return (
         <Box className="environment-loader w-100">
-          There is some issue. Try again later.
+          {environmentCount?.status === status.FAILURE
+            ? API_ERROR_MESSAGE
+            : "There is some issue. Try again later."}
         </Box>
       );
     }
@@ -433,7 +434,9 @@ class Environments extends Component {
     } else {
       return (
         <Box className="chart-spinner d-flex text-center w-100 p-t-20 p-b-20">
-          There is some issue. Try again later.
+          {envSummaryStatus === status.FAILURE
+            ? API_ERROR_MESSAGE
+            : "There is some issue. Try again later."}
         </Box>
       );
     }

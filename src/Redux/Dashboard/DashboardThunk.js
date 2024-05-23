@@ -11,7 +11,7 @@ export const getCurrentHourSpendRate = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 );

@@ -30,12 +30,12 @@ export const DiscoveredAssetsSlice = createSlice({
         },
       };
     },
-    [getDiscoveredAssets.rejected]: (state, action) => {
+    [getDiscoveredAssets.rejected]: (state, { error }) => {
       return {
         ...state,
         discoveredAssetsData: {
           status: status.FAILURE,
-          data: [],
+          data: error?.message,
         },
       };
     },

@@ -12,7 +12,7 @@ export const getEnvironmentCount = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -41,7 +41,7 @@ export const getOrgWiseDepartments = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );

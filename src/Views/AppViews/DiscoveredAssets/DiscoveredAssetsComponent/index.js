@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { getDiscoveredAssets } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
-
+import { API_ERROR_MESSAGE } from "CommonData";
 
 let filterData = [
   {
@@ -105,7 +105,7 @@ class DiscoveredAssetsComponent extends Component {
 
   manipulateDiscoveredData = (data, isTabChange = 0) => {
     let { totalRecords = 0, totalPages = 1, cloudElementList = [] } = data;
-    let { activeTab, assestsData: prevData,assestsDataPage } = this.state;
+    let { activeTab, assestsData: prevData, assestsDataPage } = this.state;
 
     let assestsData = isTabChange || assestsDataPage === 1 ? [] : prevData;
 
@@ -167,6 +167,7 @@ class DiscoveredAssetsComponent extends Component {
                   pageNo,
                 });
               }}
+              errorMessage={this.props.discoveredAssetsData.status === status.FAILURE ? API_ERROR_MESSAGE : ''}
             />
           </Box>
         </Box>
