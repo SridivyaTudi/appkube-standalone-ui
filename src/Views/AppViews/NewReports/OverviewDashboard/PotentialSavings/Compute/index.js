@@ -26,7 +26,12 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { REPORT_PAGE_TYPE, SUMMARY_INSTANCE_TYPE } from "CommonData";
+import {
+  API_ERROR_MESSAGE,
+  NO_DATA_FOUND,
+  REPORT_PAGE_TYPE,
+  SUMMARY_INSTANCE_TYPE,
+} from "CommonData";
 const { CURRENT_TOTAL } = SUMMARY_INSTANCE_TYPE;
 // let donutData = [
 //   {
@@ -242,10 +247,10 @@ class Compute extends Component {
     );
   };
 
-  renderNoDataHtml = () => {
+  renderNoDataHtml = (message) => {
     return (
       <Box className="chart-loader">
-        <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+        <h5 className="m-t-0 m-b-0">{message}</h5>
       </Box>
     );
   };
@@ -273,9 +278,10 @@ class Compute extends Component {
   //  Render table body
   renderTableBody = () => {
     let { topRiRecommendationsData } = this.state;
+    let topRiRecommendationsStatus = this.props.topRiRecommendationsData.status;
     return (
       <TableBody>
-        {this.props.topRiRecommendationsData.status === status.IN_PROGRESS ? (
+        {topRiRecommendationsStatus === status.IN_PROGRESS ? (
           <div className="p-t-15">{this.renderLoder()}</div>
         ) : topRiRecommendationsData?.length ? (
           topRiRecommendationsData.map((obj) => {
@@ -294,7 +300,9 @@ class Compute extends Component {
                 <TableCell align="center">{obj.recommendedInstance}</TableCell>
                 <TableCell align="center">{obj.terms} </TableCell>
                 <TableCell align="center">{obj.paymentMode}</TableCell>
-                <TableCell align="center"><strong>{obj.upfrontCost}</strong></TableCell>
+                <TableCell align="center">
+                  <strong>{obj.upfrontCost}</strong>
+                </TableCell>
                 <TableCell align="center">
                   <strong>{obj.perHourCost}</strong>
                 </TableCell>
@@ -311,7 +319,11 @@ class Compute extends Component {
           })
         ) : (
           <Box className="environment-loader text-center  align-item-center justify-center p-t-15 p-b-15">
-            <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+            <h5 className="m-t-0 m-b-0">
+              {topRiRecommendationsStatus === status.FAILURE
+                ? API_ERROR_MESSAGE
+                : NO_DATA_FOUND}
+            </h5>
           </Box>
         )}
       </TableBody>
@@ -363,7 +375,14 @@ class Compute extends Component {
         {computeSummaryLoder ? (
           this.renderLoder()
         ) : (
-          <TimeSpendComponent data={computeSummaryData} />
+          <TimeSpendComponent
+            data={computeSummaryData}
+            error={
+              computeSummaryProps.status === status.FAILURE
+                ? API_ERROR_MESSAGE
+                : ""
+            }
+          />
         )}
         <Box className="reports-charts">
           <Grid container spacing={3}>
@@ -386,7 +405,11 @@ class Compute extends Component {
                       }}
                     />
                   ) : (
-                    this.renderNoDataHtml()
+                    this.renderNoDataHtml(
+                      potentialTotalSavingProps.status === status.FAILURE
+                        ? API_ERROR_MESSAGE
+                        : NO_DATA_FOUND
+                    )
                   )
                 }
               />
@@ -406,7 +429,11 @@ class Compute extends Component {
                       }}
                     />
                   ) : (
-                    this.renderNoDataHtml()
+                    this.renderNoDataHtml(
+                      potentialMonthlySavingProps.status === status.FAILURE
+                        ? API_ERROR_MESSAGE
+                        : NO_DATA_FOUND
+                    )
                   )
                 }
                 data={{

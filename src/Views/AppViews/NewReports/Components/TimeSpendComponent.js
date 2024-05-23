@@ -4,6 +4,7 @@ import DollerIcon from "assets/img/report/doller-icon.png";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { v4 } from "uuid";
+import { NO_DATA_FOUND } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -84,7 +85,7 @@ class TimeSpendComponent extends Component {
               );
             })
           : this.renderNoDataHtml(
-              error ? error : "There are no data available."
+              error ? error : NO_DATA_FOUND
             )}
       </Box>
     );

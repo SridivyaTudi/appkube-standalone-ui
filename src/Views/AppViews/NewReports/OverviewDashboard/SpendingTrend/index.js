@@ -8,7 +8,12 @@ import { getSpendingTrend } from "Redux/Reports/ReportsThunk";
 import status from "Redux/Constants/CommonDS";
 import { getCurrentOrgId } from "Utils";
 import Loader from "Components/Loader";
-import { GRANULARITY_DROPDOWN_DATA, GRANULARITY_TYPE } from "CommonData";
+import {
+  API_ERROR_MESSAGE,
+  GRANULARITY_DROPDOWN_DATA,
+  GRANULARITY_TYPE,
+  NO_DATA_FOUND,
+} from "CommonData";
 import { v4 } from "uuid";
 import { getDateInWeek } from "Utils";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
@@ -255,9 +260,18 @@ class SpendingTrend extends Component {
     }
   };
 
+  renderNoDataHtml = (message) => {
+    return (
+      <Box className="chart-loader">
+        <h5 className="m-t-0 m-b-0">{message}</h5>
+      </Box>
+    );
+  };
+
   render() {
     const { isGranularityOpen, showSelectFilterModal, spendingTrendChartData } =
       this.state;
+    const spendingTrendStatus = this.props.spendingTrendData.status;
     return (
       <Box className="new-reports-container">
         <Box className="breadcrumbs">
@@ -329,8 +343,15 @@ class SpendingTrend extends Component {
                     labelOfBtn: " View Details",
                   }}
                   ChartComponent={
-                    this.props.spendingTrendData.status === status.IN_PROGRESS
+                    spendingTrendStatus === status.IN_PROGRESS
                       ? this.renderLoder()
+                      : Object.keys(spendingTrendChartData)?.length === 0 ||
+                        spendingTrendStatus === status.FAILURE
+                      ? this.renderNoDataHtml(
+                          spendingTrendStatus === status.FAILURE
+                            ? API_ERROR_MESSAGE
+                            : NO_DATA_FOUND
+                        )
                       : this.renderMultipleChart(spendingTrendChartData)
                   }
                   // style={{ height: '450px', width: '840px' }}
