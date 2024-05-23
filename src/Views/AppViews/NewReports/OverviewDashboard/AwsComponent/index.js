@@ -16,7 +16,11 @@ import {
 import status from "Redux/Constants/CommonDS";
 import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
 import Loader from "Components/Loader";
-import { SUMMARY_INSTANCE_TYPE, TENURE_TYPE } from "CommonData";
+import {
+  API_ERROR_MESSAGE,
+  SUMMARY_INSTANCE_TYPE,
+  TENURE_TYPE,
+} from "CommonData";
 import LineChart from "../../Components/LineChart";
 
 const totalUsedServiceColor = {
@@ -218,13 +222,13 @@ class AwsComponent extends Component {
             spendingTrendData[key].push({
               date: new Date(obj.dates),
               value: obj.total,
-              dateStr:obj.dates
+              dateStr: obj.dates,
             });
           }
         });
       }
     });
-    
+
     this.setState({ spendingTrendData });
   };
 
@@ -281,10 +285,12 @@ class AwsComponent extends Component {
   };
 
   // Render no data html
-  renderNoDataHtml = () => {
+  renderNoDataHtml = (errMsg) => {
     return (
       <Box className="chart-loader">
-        <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+        <h5 className="m-t-0 m-b-0">
+          {errMsg || "There are no data available."}
+        </h5>
       </Box>
     );
   };
@@ -337,7 +343,11 @@ class AwsComponent extends Component {
                       }}
                     />
                   ) : (
-                    this.renderNoDataHtml()
+                    this.renderNoDataHtml(
+                      spendoverviewProps.status === status.FAILURE
+                        ? API_ERROR_MESSAGE
+                        : ""
+                    )
                   )
                 }
               />
@@ -369,7 +379,11 @@ class AwsComponent extends Component {
                       }
                     />
                   ) : (
-                    this.renderNoDataHtml()
+                    this.renderNoDataHtml(
+                      topUsedServiceProps.status === status.FAILURE
+                        ? API_ERROR_MESSAGE
+                        : ""
+                    )
                   )
                 }
               />
@@ -392,7 +406,11 @@ class AwsComponent extends Component {
                       }}
                     />
                   ) : (
-                    this.renderNoDataHtml()
+                    this.renderNoDataHtml(
+                      potentialSavingsProps.status === status.FAILURE
+                        ? API_ERROR_MESSAGE
+                        : ""
+                    )
                   )
                 }
               />
@@ -413,7 +431,11 @@ class AwsComponent extends Component {
                       // style={{ width: "100%", height: "350" }}
                     />
                   ) : (
-                    this.renderNoDataHtml()
+                    this.renderNoDataHtml(
+                      costTopAccountsProps.status === status.FAILURE
+                        ? API_ERROR_MESSAGE
+                        : ""
+                    )
                   )
                 }
               />
@@ -424,9 +446,16 @@ class AwsComponent extends Component {
                   spendingTrendLoder ? (
                     this.renderLoder()
                   ) : spendingTrendData.previous?.length ? (
-                    <LineChart data={spendingTrendData.previous} color='orange' />
+                    <LineChart
+                      data={spendingTrendData.previous}
+                      color="orange"
+                    />
                   ) : (
-                    this.renderNoDataHtml()
+                    this.renderNoDataHtml(
+                      spendingTrendProps.status === status.FAILURE
+                        ? API_ERROR_MESSAGE
+                        : ""
+                    )
                   )
                 }
                 data={{
@@ -442,9 +471,16 @@ class AwsComponent extends Component {
                   spendingTrendLoder ? (
                     this.renderLoder()
                   ) : spendingTrendData.current?.length ? (
-                    <LineChart data={spendingTrendData.current} color='steelblue' />
+                    <LineChart
+                      data={spendingTrendData.current}
+                      color="steelblue"
+                    />
                   ) : (
-                    this.renderNoDataHtml()
+                    this.renderNoDataHtml(
+                      spendingTrendProps.status === status.FAILURE
+                        ? API_ERROR_MESSAGE
+                        : ""
+                    )
                   )
                 }
                 data={{
@@ -460,9 +496,13 @@ class AwsComponent extends Component {
                   spendingTrendLoder ? (
                     this.renderLoder()
                   ) : spendingTrendData.forcast?.length ? (
-                    <LineChart data={spendingTrendData.forcast} color='pink' />
+                    <LineChart data={spendingTrendData.forcast} color="pink" />
                   ) : (
-                    this.renderNoDataHtml()
+                    this.renderNoDataHtml(
+                      spendingTrendProps.status === status.FAILURE
+                        ? API_ERROR_MESSAGE
+                        : ""
+                    )
                   )
                 }
                 data={{

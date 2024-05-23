@@ -15,6 +15,7 @@ import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { API_ERROR_MESSAGE, NO_DATA_FOUND } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -89,7 +90,7 @@ class SLAMetrics extends Component {
           <TableRow key={uuidv4()}>
             <TableCell className="products">
               <HtmlTooltip className="table-tooltip" title={productData.name}>
-               <span>{productData.name}</span>
+                <span>{productData.name}</span>
               </HtmlTooltip>
             </TableCell>
             <TableCell
@@ -117,6 +118,16 @@ class SLAMetrics extends Component {
         );
       });
       return tableHTML;
+    } else {
+      return (
+        <TableRow colSpan={12}>
+          <TableCell className="products">
+            {slaMetricsStatus === status.FAILURE
+              ? API_ERROR_MESSAGE
+              : NO_DATA_FOUND}
+          </TableCell>
+        </TableRow>
+      );
     }
   };
 

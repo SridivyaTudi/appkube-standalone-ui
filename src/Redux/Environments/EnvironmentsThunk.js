@@ -27,7 +27,7 @@ export const getEnvsSummary = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );

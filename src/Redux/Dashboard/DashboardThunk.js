@@ -25,7 +25,7 @@ export const getCurrentDaySpendRate = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 );
@@ -39,7 +39,7 @@ export const getTodaySpendAnalytics = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 );
@@ -53,7 +53,7 @@ export const getYesterdaySpendAnalytics = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 );
@@ -65,7 +65,7 @@ export const getTotalSpend = createAsyncThunk(
       const response = await postLoginService.get(config.GET_TOTAL_SPEND);
       return response;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 );
@@ -79,7 +79,7 @@ export const getTotalCloudWiseSpend = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 );
@@ -93,7 +93,7 @@ export const getMonthlyCloudWiseSpend = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 );
@@ -105,7 +105,7 @@ export const getTotalBudget = createAsyncThunk(
       const response = await postLoginService.get(config.GET_TOTAL_BUDGET);
       return response;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 );
@@ -119,7 +119,7 @@ export const getMonthlyStatistics = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 );
@@ -131,7 +131,7 @@ export const getProductWiseCost = createAsyncThunk(
       const response = await postLoginService.get(config.PRODUCT_WISE_COST);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -143,7 +143,7 @@ export const getProductionVsOther = createAsyncThunk(
       const response = await postLoginService.get(config.PRODUCTION_VS_OTHERS);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -157,7 +157,7 @@ export const getServiceTypeWiseCost = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -169,7 +169,7 @@ export const getSlaMetrics = createAsyncThunk(
       const response = await postLoginService.get(config.SLA_METRICS);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -181,7 +181,7 @@ export const getProcessCentral = createAsyncThunk(
       const response = await postLoginService.get(config.PROCESS_CENTRAL);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );

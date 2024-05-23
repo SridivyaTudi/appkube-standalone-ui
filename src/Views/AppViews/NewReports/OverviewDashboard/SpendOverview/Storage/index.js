@@ -7,7 +7,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { getCurrentOrgId, ENVIRONMENTS } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
-import { REPORT_PAGE_TYPE } from "CommonData";
+import { REPORT_PAGE_TYPE, API_ERROR_MESSAGE } from "CommonData";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { connect } from "react-redux";
 import { getSpendOverviewComputeDetails } from "Redux/Reports/ReportsThunk";
@@ -146,13 +146,17 @@ class Storage extends Component {
   render() {
     let { accounts, searchedKey, timerSpendData } = this.state;
     let { spendOverviewComputeDetailsData } = this.props;
+    const isError = spendOverviewComputeDetailsData.status === status.FAILURE;
     return (
       <>
         {spendOverviewComputeDetailsData.status === status.IN_PROGRESS ? (
           this.renderLoder()
         ) : (
           <>
-            <TimeSpendComponent data={timerSpendData} />
+            <TimeSpendComponent
+              data={timerSpendData}
+              error={isError ? API_ERROR_MESSAGE : ""}
+            />
             <Box className="table-head" alignItems={"end"}>
               <Box className="d-block">
                 <h3>STORAGE SPENDINGS</h3>
@@ -177,6 +181,7 @@ class Storage extends Component {
             <SpendingTable
               data={accounts}
               selectedGranularity={this.props.selectedGranularity}
+              error={isError ? API_ERROR_MESSAGE : ""}
             />
           </>
         )}

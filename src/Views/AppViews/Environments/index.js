@@ -85,9 +85,7 @@ class Environments extends Component {
         this.setState({
           environmentCountData: environmentCountData.data,
         });
-      } else if (environmentCountData.status === status.FAILURE) {
-        ToastMessage.error("There is some issue.");
-      }
+      } 
     }
 
     if (prevProps.envSummary.status !== this.props.envSummary.status) {
@@ -98,9 +96,7 @@ class Environments extends Component {
           searchedEnvSummary: JSON.parse(JSON.stringify(envSummary.data)),
           showFilterPopup: false,
         });
-      } else if (envSummary.status === status.FAILURE) {
-        ToastMessage.error("There is some issue.");
-      }
+      } 
     }
 
     if (prevProps.elementData.status !== this.props.elementData.status) {
@@ -111,8 +107,6 @@ class Environments extends Component {
       ) {
         this.handleMenuToggle(null, null);
         this.props.getEnvsSummary();
-      } else if (elementData.status === status.FAILURE) {
-        ToastMessage.error("There is some issue.");
       }
     }
   }

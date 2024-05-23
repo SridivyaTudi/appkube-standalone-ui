@@ -30,7 +30,7 @@ class TimeSpendComponent extends Component {
     );
   };
   render() {
-    let { data } = this.props;
+    let { data, error } = this.props;
     return (
       <Box className="spend-control-cards">
         {data?.length
@@ -83,7 +83,9 @@ class TimeSpendComponent extends Component {
                 </Box>
               );
             })
-          : this.renderNoDataHtml("There are no data available.")}
+          : this.renderNoDataHtml(
+              error ? error : "There are no data available."
+            )}
       </Box>
     );
   }

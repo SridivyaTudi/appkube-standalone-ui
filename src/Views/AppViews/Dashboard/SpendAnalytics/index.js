@@ -30,6 +30,7 @@ import {
   getTotalBudget,
 } from "Redux/Dashboard/DashboardThunk";
 import Loader from "Components/Loader";
+import { API_ERROR_MESSAGE } from "CommonData";
 
 ChartJS.register(
   CategoryScale,
@@ -187,7 +188,7 @@ class SpendAnalytics extends Component {
             tension: 0,
           },
         },
-        maintainAspectRatio : false
+        maintainAspectRatio: false,
       },
       totalSpend: "",
     };
@@ -244,7 +245,11 @@ class SpendAnalytics extends Component {
     ) : (
       <Box className="spend-contant">
         <label>Per Hour</label>
-        <Box className="spend-price">{this.currentHourSpendRate()}</Box>
+        <Box className="spend-price">
+          {hourStatus === status.FAILURE
+            ? API_ERROR_MESSAGE
+            : this.currentHourSpendRate()}
+        </Box>
       </Box>
     );
   };
@@ -266,7 +271,11 @@ class SpendAnalytics extends Component {
     ) : (
       <Box className="spend-contant">
         <label>Per Day</label>
-        <Box className="spend-price">{this.getCurrentDaySpendRate()}</Box>
+        <Box className="spend-price">
+          {dayStatus === status.FAILURE
+            ? API_ERROR_MESSAGE
+            : this.getCurrentDaySpendRate()}
+        </Box>
       </Box>
     );
   };
@@ -282,7 +291,8 @@ class SpendAnalytics extends Component {
     if (data && Object.keys(data).length) {
       let { sumCurrentDate, percentage } = data;
 
-      if (sumCurrentDate) renderHtml.push(<strong key={v4()}>${sumCurrentDate}</strong>);
+      if (sumCurrentDate)
+        renderHtml.push(<strong key={v4()}>${sumCurrentDate}</strong>);
 
       if (percentage)
         renderHtml.push(
@@ -304,7 +314,11 @@ class SpendAnalytics extends Component {
     ) : (
       <>
         <label>Spends Today</label>
-        <Box className="spend-price">{this.getTodaySpendAnalytics()}</Box>
+        <Box className="spend-price">
+          {todayStatus === status.FAILURE
+            ? API_ERROR_MESSAGE
+            : this.getTodaySpendAnalytics()}
+        </Box>
       </>
     );
   };
@@ -320,7 +334,8 @@ class SpendAnalytics extends Component {
     if (data && Object.keys(data).length) {
       let { sumCurrentDate, percentage } = data;
 
-      if (sumCurrentDate) renderHtml.push(<strong key={v4()}>${sumCurrentDate}</strong>);
+      if (sumCurrentDate)
+        renderHtml.push(<strong key={v4()}>${sumCurrentDate}</strong>);
 
       if (percentage)
         renderHtml.push(
@@ -341,7 +356,11 @@ class SpendAnalytics extends Component {
     ) : (
       <>
         <label>Spends Yesterday</label>
-        <Box className="spend-price">{this.getYesterdaySpendAnalytics()}</Box>
+        <Box className="spend-price">
+          {yesterdayStatus === status.FAILURE
+            ? API_ERROR_MESSAGE
+            : this.getYesterdaySpendAnalytics()}
+        </Box>
       </>
     );
   };
@@ -352,6 +371,14 @@ class SpendAnalytics extends Component {
     const renderHtml = [];
     if (totalSpend) {
       renderHtml.push(<h1 key={v4()}>{totalSpend ? `$${totalSpend}` : ""}</h1>);
+    } else {
+      renderHtml.push(
+        <Box className="error-message">
+          {this.props.totalSpend.status === status.FAILURE
+            ? API_ERROR_MESSAGE
+            : "There are no data available."}
+        </Box>
+      );
     }
     return renderHtml;
   };
@@ -421,11 +448,17 @@ class SpendAnalytics extends Component {
   /** Render the monthly CloudWise spend. */
   renderMonthlyCloudWiseSpendHtml = () => {
     let monthlyCloudWiseSpendStatus = this.props.monthlyCloudWiseSpend.status;
-    let {monthlyCloudWiseOptions, monthlyCloudWiseData } = this.state;
+    let { monthlyCloudWiseOptions, monthlyCloudWiseData } = this.state;
     return monthlyCloudWiseSpendStatus === status.IN_PROGRESS ? (
-    <Box className="d-flex align-items-center" justifyContent={"center"} style={{height: "100%"}}>
+      <Box
+        className="d-flex align-items-center"
+        justifyContent={"center"}
+        style={{ height: "100%" }}
+      >
         <Loader />
-    </Box>
+      </Box>
+    ) : monthlyCloudWiseSpendStatus === status.FAILURE ? (
+      <Box className="error-message">{API_ERROR_MESSAGE}</Box>
     ) : (
       <Line
         options={monthlyCloudWiseOptions}
@@ -502,7 +535,11 @@ class SpendAnalytics extends Component {
           <span>{this.getProgressBarTotalCloudwiseSpend()}</span>
         </Box>
         <Box className="progress-bar-contant" key={v4()}>
-          <List>{this.getTotalCloudwiseSpend()}</List>
+          {totalCloudWiseSpendStatus === status.FAILURE ? (
+            <Box className="error-message">{API_ERROR_MESSAGE}</Box>
+          ) : (
+            <List>{this.getTotalCloudwiseSpend()}</List>
+          )}
         </Box>
       </>
     );
@@ -518,11 +555,11 @@ class SpendAnalytics extends Component {
       remainingBudgetPercentage,
     } = totalBudgetData;
 
-    // Temp 
+    // Temp
     budgetUsed = parseInt(totalBudget / 2);
     remainingBudget = totalBudget - budgetUsed;
     remainingBudgetPercentage = 50;
-    
+
     totalBudget = totalBudget > 0 ? `$${totalBudget}` : "";
     remainingBudget = remainingBudget > 0 ? `$${remainingBudget}` : "";
     remainingBudgetPercentage =
@@ -568,9 +605,15 @@ class SpendAnalytics extends Component {
           </Box>
         </Box>
         {totalBudgetStatus === status.IN_PROGRESS ? (
-          <Box className="d-flex align-items-center width-100" justifyContent={"center"} style={{height: "50px"}}>
+          <Box
+            className="d-flex align-items-center width-100"
+            justifyContent={"center"}
+            style={{ height: "50px" }}
+          >
             <Loader />
           </Box>
+        ) : totalBudgetStatus === status.FAILURE ? (
+          <Box className="error-message">{API_ERROR_MESSAGE}</Box>
         ) : (
           <Box className="content">
             <Box className="gauge">
@@ -643,7 +686,7 @@ class SpendAnalytics extends Component {
           </ListItem>
         );
       } else {
-        return null
+        return null;
       }
     });
   }
@@ -670,7 +713,11 @@ class SpendAnalytics extends Component {
           </Box>
           <Box className="monthly-avrage">
             <List>
-              {(monthlyData?.length && this.getMonthlyStatistics()) || ""}
+              {monthlyData?.length ? (
+                this.getMonthlyStatistics()
+              ) : (
+                <Box className="error-message">{API_ERROR_MESSAGE}</Box>
+              )}
             </List>
           </Box>
         </>

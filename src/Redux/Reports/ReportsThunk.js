@@ -16,7 +16,7 @@ export const getSpendOverview = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -38,7 +38,7 @@ export const getSpendOverviewComputeDetails = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -67,7 +67,7 @@ export const getTopUsedService = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -104,7 +104,7 @@ export const getPotentialSavings = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -133,7 +133,7 @@ export const getCostTopAccounts = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -152,7 +152,7 @@ export const getSpendingTrend = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );

@@ -157,3 +157,5 @@ export const TIME_FRAME_DROPDOWN_DATA = [
 ];
 
 export const API_ERROR_MESSAGE = "There is some error.";
+
+export const NO_DATA_FOUND = "There are no data available.";
