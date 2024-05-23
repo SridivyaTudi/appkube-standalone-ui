@@ -165,7 +165,6 @@ class BudgetDepartments extends Component {
   //  Render table body
   renderTableBody = () => {
     let { departmentsData } = this.state;
-    console.log(departmentsData);
     return (
       <TableBody>
         {departmentsData?.length ? (

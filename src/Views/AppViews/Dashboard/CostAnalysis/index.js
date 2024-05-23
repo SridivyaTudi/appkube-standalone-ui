@@ -182,7 +182,7 @@ class CostAnalysis extends Component {
   // Render html when data is no available
   renderNoDataHtml = (text) => {
     return (
-      <Box className="group-loader text-center  h-100  m-r-auto m-l-auto  p-t-20 p-b-20">
+      <Box className="spend-loading">
         <h5 className="m-t-0 m-b-0">{text}</h5>
       </Box>
     );
@@ -226,34 +226,38 @@ class CostAnalysis extends Component {
                             <span>10%</span>
                           </Box>
                         </Box>
-                        <Box className="chart-contant">
-                          <Box
-                            className="d-flex chart"
-                            style={{ width: "60%" }}
-                            justifyContent={"center"}
-                          >
-                            {productWiseCostData &&
-                            productWiseCostData.length ? (
-                              <Doughnut
-                                data={this.manipulateDoughData(
-                                  productWiseCostData
-                                )}
-                                options={this.appendTooltipPercentage()}
-                              />
-                            ) : (
-                              this.renderNoDataHtml(
-                                productWiseCost.status === status.FAILURE
-                                  ? API_ERROR_MESSAGE
-                                  : NO_DATA_FOUND
-                              )
-                            )}
+                        {productWiseCostData && productWiseCostData.length ? (
+                          <Box className="chart-contant">
+                            <Box
+                              className="d-flex chart"
+                              style={{ width: "60%" }}
+                              justifyContent={"center"}
+                            >
+                              {productWiseCostData &&
+                              productWiseCostData.length ? (
+                                <Doughnut
+                                  data={this.manipulateDoughData(
+                                    productWiseCostData
+                                  )}
+                                  options={this.appendTooltipPercentage()}
+                                />
+                              ) : (
+                                <></>
+                              )}
+                            </Box>
+                            <Box className="d-block chart-details">
+                              <List>
+                                {this.renderBarsData(productWiseCostData)}
+                              </List>
+                            </Box>
                           </Box>
-                          <Box className="d-block chart-details">
-                            <List>
-                              {this.renderBarsData(productWiseCostData)}
-                            </List>
-                          </Box>
-                        </Box>
+                        ) : (
+                          this.renderNoDataHtml(
+                            productWiseCost.status === status.FAILURE
+                              ? API_ERROR_MESSAGE
+                              : NO_DATA_FOUND
+                          )
+                        )}
                       </>
                     )}
                   </Box>
@@ -288,29 +292,33 @@ class CostAnalysis extends Component {
                             <span>10%</span>
                           </Box>
                         </Box>
-                        <Box className="chart-contant">
-                          <Box
-                            className="d-flex chart"
-                            justifyContent={"center"}
-                            style={{ width: "60%" }}
-                          >
-                            {productionVsOther.status === status.FAILURE ? (
-                              this.renderNoDataHtml(API_ERROR_MESSAGE)
-                            ) : (
+                        {productionVsOthersData?.length ? (
+                          <Box className="chart-contant">
+                            <Box
+                              className="d-flex chart"
+                              justifyContent={"center"}
+                              style={{ width: "60%" }}
+                            >
                               <Doughnut
                                 data={this.manipulateDoughData(
                                   productionVsOthersData
                                 )}
                                 options={this.appendTooltipPercentage()}
                               />
-                            )}
+                            </Box>
+                            <Box className="d-block chart-details">
+                              <List>
+                                {this.renderBarsData(productionVsOthersData)}
+                              </List>
+                            </Box>
                           </Box>
-                          <Box className="d-block chart-details">
-                            <List>
-                              {this.renderBarsData(productionVsOthersData)}
-                            </List>
-                          </Box>
-                        </Box>
+                        ) : (
+                          this.renderNoDataHtml(
+                            productionVsOther.status === status.FAILURE
+                              ? API_ERROR_MESSAGE
+                              : NO_DATA_FOUND
+                          )
+                        )}
                       </>
                     )}
                   </Box>
@@ -342,29 +350,31 @@ class CostAnalysis extends Component {
                             <span>10%</span>
                           </Box>
                         </Box>
-                        <Box className="chart-contant">
-                          <Box
-                            className="d-flex chart"
-                            justifyContent={"center"}
-                            style={{ width: "60%" }}
-                          >
-                            {serviceTypeWiseCost.status === status.FAILURE ? (
-                              this.renderNoDataHtml(API_ERROR_MESSAGE)
-                            ) : (
+                        {serviceTypeWiseCostData.length ? (
+                          <Box className="chart-contant">
+                            <Box
+                              className="d-flex chart"
+                              justifyContent={"center"}
+                              style={{ width: "60%" }}
+                            >
                               <Doughnut
                                 data={this.manipulateDoughData(
                                   serviceTypeWiseCostData
                                 )}
                                 options={this.appendTooltipPercentage()}
                               />
-                            )}
+                            </Box>
+                            <Box className="d-block chart-details">
+                              <List>
+                                {this.renderBarsData(serviceTypeWiseCostData)}
+                              </List>
+                            </Box>
                           </Box>
-                          <Box className="d-block chart-details">
-                            <List>
-                              {this.renderBarsData(serviceTypeWiseCostData)}
-                            </List>
-                          </Box>
-                        </Box>
+                        ) : (
+                          this.renderNoDataHtml( serviceTypeWiseCost.status === status.FAILURE
+                            ? API_ERROR_MESSAGE
+                            : NO_DATA_FOUND)
+                        )}
                       </>
                     )}
                   </Box>

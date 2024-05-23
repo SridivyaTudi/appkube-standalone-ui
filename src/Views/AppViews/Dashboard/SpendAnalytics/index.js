@@ -247,9 +247,10 @@ class SpendAnalytics extends Component {
         <label>Per Hour</label>
         <Box className="spend-price">
           {hourStatus === status.FAILURE
-            ? API_ERROR_MESSAGE
+            ?  <Box className="error-message">{API_ERROR_MESSAGE}</Box> 
             : this.currentHourSpendRate()}
         </Box>
+      
       </Box>
     );
   };
@@ -273,7 +274,7 @@ class SpendAnalytics extends Component {
         <label>Per Day</label>
         <Box className="spend-price">
           {dayStatus === status.FAILURE
-            ? API_ERROR_MESSAGE
+            ? <Box className="error-message"> {API_ERROR_MESSAGE}</Box> 
             : this.getCurrentDaySpendRate()}
         </Box>
       </Box>
@@ -316,9 +317,10 @@ class SpendAnalytics extends Component {
         <label>Spends Today</label>
         <Box className="spend-price">
           {todayStatus === status.FAILURE
-            ? API_ERROR_MESSAGE
+            ? <Box className="error-message">{API_ERROR_MESSAGE}</Box> 
             : this.getTodaySpendAnalytics()}
         </Box>
+       
       </>
     );
   };
@@ -358,7 +360,7 @@ class SpendAnalytics extends Component {
         <label>Spends Yesterday</label>
         <Box className="spend-price">
           {yesterdayStatus === status.FAILURE
-            ? API_ERROR_MESSAGE
+            ? <Box className="error-message"> {API_ERROR_MESSAGE} </Box>
             : this.getYesterdaySpendAnalytics()}
         </Box>
       </>
@@ -373,7 +375,7 @@ class SpendAnalytics extends Component {
       renderHtml.push(<h1 key={v4()}>{totalSpend ? `$${totalSpend}` : ""}</h1>);
     } else {
       renderHtml.push(
-        <Box className="error-message">
+        <Box className="error-message m-t-1">
           {this.props.totalSpend.status === status.FAILURE
             ? API_ERROR_MESSAGE
             : "There are no data available."}
@@ -458,7 +460,13 @@ class SpendAnalytics extends Component {
         <Loader />
       </Box>
     ) : monthlyCloudWiseSpendStatus === status.FAILURE ? (
-      <Box className="error-message">{API_ERROR_MESSAGE}</Box>
+      <Box
+        className="d-flex align-items-center"
+        justifyContent={"center"}
+        style={{ height: "100%" }}
+      >
+        <h5>{API_ERROR_MESSAGE}</h5>
+      </Box>
     ) : (
       <Line
         options={monthlyCloudWiseOptions}
@@ -536,7 +544,7 @@ class SpendAnalytics extends Component {
         </Box>
         <Box className="progress-bar-contant" key={v4()}>
           {totalCloudWiseSpendStatus === status.FAILURE ? (
-            <Box className="error-message">{API_ERROR_MESSAGE}</Box>
+            <Box className="error-message m-t-1">{API_ERROR_MESSAGE}</Box>
           ) : (
             <List>{this.getTotalCloudwiseSpend()}</List>
           )}
@@ -608,12 +616,18 @@ class SpendAnalytics extends Component {
           <Box
             className="d-flex align-items-center width-100"
             justifyContent={"center"}
-            style={{ height: "50px" }}
+            style={{ height: "125px" }}
           >
             <Loader />
           </Box>
         ) : totalBudgetStatus === status.FAILURE ? (
-          <Box className="error-message">{API_ERROR_MESSAGE}</Box>
+          <Box
+            className="d-flex align-items-center width-100"
+            justifyContent={"center"}
+            style={{ height: "125px" }}
+          >
+            <Box className="error-message">{API_ERROR_MESSAGE}</Box>
+          </Box>
         ) : (
           <Box className="content">
             <Box className="gauge">
@@ -716,7 +730,7 @@ class SpendAnalytics extends Component {
               {monthlyData?.length ? (
                 this.getMonthlyStatistics()
               ) : (
-                <Box className="error-message">{API_ERROR_MESSAGE}</Box>
+                <Box className="error-message loader">{API_ERROR_MESSAGE}</Box>
               )}
             </List>
           </Box>

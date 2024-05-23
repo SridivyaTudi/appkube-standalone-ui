@@ -2,8 +2,123 @@ import React, { Component } from "react";
 import { Box, Button, Grid, List, ListItem } from "@mui/material";
 import ChartWrapper from "../../Components/ChartWrapper";
 import LineChart from "../../Components/LineChart";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+import { v4 } from "uuid";
+
+let alertData = [
+  {
+    titile: "Metric Name",
+    text: "Percentage CPU",
+  },
+  {
+    titile: "Metric Namespace",
+    text: "Microsoft.Compute/VirtualMachines",
+  },
+  {
+    titile: "Time Aggregation",
+    text: "Average",
+    description: "Threshold : 0.2%",
+  },
+  {
+    titile: "Operator",
+    text: "GreaterThan",
+    description: "Metric value (when alert fired) : 0.62%",
+  },
+  {
+    titile: "Dimension Name",
+    text: "microsoft.resourceID",
+    description: "microsoft.resourceType",
+  },
+  {
+    titile: "Dimension Value",
+    text: "subscriptions/5be0a6dc-5104-4088-bd4-86b6587deb36/Res",
+    description: "Microsoft.Compute/virtualmachines",
+  },
+  {
+    titile: "Description",
+    text: "CPU alert, greater than 80.0%",
+  },
+  {
+    titile: "Target Resource Type",
+    text: "microsoft.compute/virtualmachines",
+  },
+  {
+    titile: "Monitor Service",
+    text: "Platform",
+  },
+  {
+    titile: "Single Type",
+    text: "Metric",
+  },
+  {
+    titile: "Alert ID",
+    text: "9e8b7d58-1d16-4983-b882-e22ae68ef7a2",
+  },
+  {
+    titile: "Alert Rule",
+    text: "CPU Alert",
+  },
+  {
+    titile: "Suppression Status",
+    text: "None",
+  },
+];
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 200,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 
 class Summary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      alertData,
+    };
+  }
+
+  renderAlertDetails = () => {
+    let { alertData } = this.state;
+    return (
+      <List>
+        {alertData?.length ? (
+          alertData.map((data) => {
+            return (
+              <ListItem key={v4()}>
+                <label>{data.titile}</label>
+                <span>
+                  <HtmlTooltip className="table-tooltip" title={data.text}>
+                    {data.text}
+                  </HtmlTooltip>
+                </span>
+                <span>
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={data.description}
+                  >
+                    {data.description}
+                  </HtmlTooltip>
+                </span>
+              </ListItem>
+            );
+          })
+        ) : (
+          <></>
+        )}
+      </List>
+    );
+  };
   render() {
     return (
       <>
@@ -34,10 +149,10 @@ class Summary extends Component {
             </ListItem>
           </List>
         </Box>
-        <Box className="alerts-charts" >
+        <Box className="alerts-charts">
           <Grid container spacing={2}>
             <Grid item xs={12} md={12} lg={12}>
-              <ChartWrapper  
+              <ChartWrapper
                 data={{
                   title: `Usage`,
                   description:
@@ -54,10 +169,14 @@ class Summary extends Component {
           <Box className="details-head">
             <List>
               <ListItem>
-                <label>Affected Resource : <span>Prod_DB_SYN14</span></label>
+                <label>
+                  Affected Resource : <span>Prod_DB_SYN14</span>
+                </label>
               </ListItem>
               <ListItem>
-                <label>Affected Resource : <span>Prod_DB_SYN14</span></label>
+                <label>
+                  Affected Resource : <span>Prod_DB_SYN14</span>
+                </label>
               </ListItem>
             </List>
             <List>
@@ -73,64 +192,7 @@ class Summary extends Component {
           </Box>
           <Box className="title"> Criterion</Box>
           <Box className="alert-details-content">
-            <List>
-              <ListItem>
-                <label>Metric Name</label>
-                <span>Percentage CPU</span>
-              </ListItem>
-              <ListItem>
-                <label>Metric Namespace</label>
-                <span>Microsoft.Compute/VirtualMachines</span>
-              </ListItem>
-              <ListItem>
-                <label>Time Aggregation</label>
-                <span>Average</span>
-                <span>Threshold : 0.2%</span>
-              </ListItem>
-              <ListItem>
-                <label>Operator</label>
-                <span>GreaterThan</span>
-                <span>Metric value (when alert fired) : 0.62%</span>
-              </ListItem>
-              <ListItem>
-                <label>Dimension Name</label>
-                <span>microsoft.resourceID</span>
-                <span>microsoft.resourceType</span>
-              </ListItem>
-              <ListItem>
-                <label>Dimension Value</label>
-                <span>/subscriptions/5be0a6dc-5104-4088-bd4-86b6587deb36/Res...</span>
-                <span>Microsoft.Compute/virtualmachines</span>
-              </ListItem>
-              <ListItem>
-                <label>Description</label>
-                <span>CPU alert, greater than 80.0%</span>
-              </ListItem>
-              <ListItem>
-                <label>Target Resource Type</label>
-                <span>microsoft.compute/virtualmachines</span>
-              </ListItem>
-              <ListItem>
-                <label>Monitor Service</label>
-                <span>Platform</span>
-              </ListItem>
-              <ListItem>
-                <label>Single Type</label>
-                <span>Metric</span>
-              </ListItem>
-              <ListItem>
-                <label>Alert ID</label>
-                <span>9e8b7d58-1d16-4983-b882-e22ae68ef7a2</span>
-              </ListItem>
-              <ListItem>
-                <label>Alert Rule</label>
-                <span>CPU Alert</span>
-              </ListItem>
-              <ListItem>
-                <label>Suppression Status</label>
-                <span>None</span>
-              </ListItem>
-            </List>
+            {this.renderAlertDetails()}
           </Box>
         </Box>
       </>

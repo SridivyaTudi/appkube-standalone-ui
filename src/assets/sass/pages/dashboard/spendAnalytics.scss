@@ -685,6 +685,12 @@
       }
     }
   }
+  .error-message{
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    color: #3b4859;
+  }
 
   @media only screen and (max-width: 1280px) {
     .spend-analytics-container {

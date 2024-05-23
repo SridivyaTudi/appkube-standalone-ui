@@ -122,9 +122,11 @@ class SLAMetrics extends Component {
       return (
         <TableRow colSpan={12}>
           <TableCell className="products">
-            {slaMetricsStatus === status.FAILURE
-              ? API_ERROR_MESSAGE
-              : NO_DATA_FOUND}
+            <Box className="metrics-loading">
+              {slaMetricsStatus === status.FAILURE
+                ? API_ERROR_MESSAGE
+                : NO_DATA_FOUND}
+            </Box>
           </TableCell>
         </TableRow>
       );
