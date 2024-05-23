@@ -15,6 +15,7 @@ import {
   GRANULARITY_TYPE,
   REPORT_PAGE_TYPE,
   GRANULARITY_DROPDOWN_DATA,
+  API_ERROR_MESSAGE,
 } from "CommonData";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
@@ -308,6 +309,7 @@ class TopUsedServices extends Component {
       showSelectFilterModal,
     } = this.state;
     let { topUsedServiceDetailsData } = this.props;
+    const isError = topUsedServiceDetailsData.status === status.FAILURE;
     return (
       <Box className="new-reports-container">
         <Box className="list-heading">
@@ -371,7 +373,10 @@ class TopUsedServices extends Component {
           this.renderLoder()
         ) : (
           <Box className="reports-tab-section m-t-4">
-            <TimeSpendComponent data={spendOverAllDetails} />
+            <TimeSpendComponent
+              data={spendOverAllDetails}
+              error={isError ? API_ERROR_MESSAGE : ""}
+            />
             <Box className="table-head" alignItems={"end"}>
               <Box className="d-block">
                 <h3>Spendings Of Top Used Services</h3>
@@ -395,6 +400,7 @@ class TopUsedServices extends Component {
               data={accounts}
               selectedGranularity={this.state.selectedGranularity}
               page={"top-use-service"}
+              error={isError ? API_ERROR_MESSAGE : ""}
             />
           </Box>
         )}

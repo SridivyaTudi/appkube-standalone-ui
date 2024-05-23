@@ -86,7 +86,7 @@ export const getTopUsedServiceDetails = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -170,7 +170,7 @@ export const getComputeSummary = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -188,7 +188,7 @@ export const getPotentialTotalSaving = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+       throw new Error(error);
     }
   }
 );
@@ -206,7 +206,7 @@ export const getPotentialMonthlySaving = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+       throw new Error(error);
     }
   }
 );
@@ -224,7 +224,7 @@ export const getTopRiRecommendations = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+       throw new Error(error);
     }
   }
 );
@@ -251,7 +251,7 @@ export const getElementSummary = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+       throw new Error(error);
     }
   }
 );
@@ -278,7 +278,7 @@ export const getElementDetails = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+       throw new Error(error);
     }
   }
 );
@@ -293,7 +293,7 @@ export const getCostTopAccountsDetails = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.log(error);
+       throw new Error(error);
     }
   }
 );
@@ -308,7 +308,7 @@ export const getCostTopAccountsByAccountId = createAsyncThunk(
       );
       return response;
     } catch (error) {
-      console.log(error);
+       throw new Error(error);
     }
   }
 );
