@@ -171,7 +171,11 @@ class ProcessCentral extends Component {
   };
   renderNoDataHtml = (text) => {
     return (
-      <Box className="spend-loading">
+      <Box
+        className="d-flex  align-items-center spend-loading"
+        justifyContent={"center"}
+        style={{ height: 306 }}
+      >
         <h5 className="m-t-0 m-b-0">{text}</h5>
       </Box>
     );
