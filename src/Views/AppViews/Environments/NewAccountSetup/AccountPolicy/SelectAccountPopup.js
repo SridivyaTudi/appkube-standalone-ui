@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import {Box, IconButton} from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { ToastMessage } from "Toast/ToastMessage";
 import Button from "@mui/material/Button";
@@ -8,8 +8,9 @@ import { getOrgWiseDepartments } from "Redux/Environments/EnvironmentsThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
-import {  } from "@mui/material";
+import {} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { API_ERROR_MESSAGE, NO_DATA_FOUND } from "CommonData";
 
 class SelectAccountPopup extends Component {
   constructor(props) {
@@ -33,10 +34,12 @@ class SelectAccountPopup extends Component {
       this.props.organizationWiseDepartments &&
       this.props.organizationWiseDepartments.status !==
         prevProps.organizationWiseDepartments.status &&
-      this.props.organizationWiseDepartments.status === status.SUCCESS && this.props.organizationWiseDepartments.data
+      this.props.organizationWiseDepartments.status === status.SUCCESS &&
+      this.props.organizationWiseDepartments.data
     ) {
       this.setState({
-        departments: this.props.organizationWiseDepartments?.data?.departments || [],
+        departments:
+          this.props.organizationWiseDepartments?.data?.departments || [],
       });
     }
   };
@@ -74,9 +77,15 @@ class SelectAccountPopup extends Component {
       </>
     );
   }
-
+  renderNoDataHtml = (text) => {
+    return (
+      <Box className="spend-loading">
+        <h5 className="m-t-0 m-b-0">{text}</h5>
+      </Box>
+    );
+  };
   render() {
-    const { selectAccountPopupShow } = this.props;
+    const { selectAccountPopupShow, organizationWiseDepartments } = this.props;
     const { departments, currentSelectedDepId } = this.state;
     return (
       <Modal
@@ -93,7 +102,7 @@ class SelectAccountPopup extends Component {
             className="close-btn"
             onClick={this.props.toggleSelectAccountPopup}
           >
-           <CloseIcon fontSize="inherit" />
+            <CloseIcon fontSize="inherit" />
           </IconButton>
         </ModalHeader>
         <ModalBody
@@ -105,8 +114,7 @@ class SelectAccountPopup extends Component {
           }}
         >
           <h4 className="text-left m-b-1">Select OU</h4>
-          {this.props?.organizationWiseDepartments?.status ===
-          status.IN_PROGRESS ? (
+          {organizationWiseDepartments?.status === status.IN_PROGRESS ? (
             <Loader className="text-center align-self-center p-t-20 p-b-20" />
           ) : (
             <Box sx={{ width: "100%" }}>
@@ -117,11 +125,13 @@ class SelectAccountPopup extends Component {
                 alignItems={"center"}
                 justifyContent={"flex-start"}
               >
-                {departments && departments.length ? (
-                  this.renderDepartments()
-                ) : (
-                  <></>
-                )}
+                {departments && departments.length
+                  ? this.renderDepartments()
+                  : this.renderNoDataHtml(
+                      organizationWiseDepartments?.status === status.FAILURE
+                        ? API_ERROR_MESSAGE
+                        : NO_DATA_FOUND
+                    )}
               </Grid>
             </Box>
           )}

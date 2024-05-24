@@ -33,6 +33,7 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { ToastMessage } from "Toast/ToastMessage";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { API_ERROR_MESSAGE, NO_DATA_FOUND } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -187,7 +188,7 @@ export class CreateGroup extends Component {
   // render Roles data
   renderRoles = () => {
     const { roles, pg, rpg, formData } = this.state;
-
+    const { status: rolesStatus } = this.props.userPermissionData;
     if (roles?.length) {
       return roles.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
         <TableRow key={index}>
@@ -233,7 +234,11 @@ export class CreateGroup extends Component {
           <TableCell colSpan={12}>
             <Box className="d-blck text-center w-100 h-100 ">
               <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-                <h5 className="m-t-0 m-b-0">There are no roles available.</h5>
+                <h5 className="m-t-0 m-b-0">
+                  {rolesStatus === status.FAILURE
+                    ? API_ERROR_MESSAGE
+                    : NO_DATA_FOUND}
+                </h5>
               </Box>
             </Box>
           </TableCell>
@@ -371,7 +376,9 @@ export class CreateGroup extends Component {
                   <Box className="d-blck text-center w-100 h-100 ">
                     <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
                       <h5 className="m-t-0 m-b-0">
-                        There are no users available.
+                        {usersStatus === status.FAILURE
+                          ? API_ERROR_MESSAGE
+                          : NO_DATA_FOUND}
                       </h5>
                     </Box>
                   </Box>
