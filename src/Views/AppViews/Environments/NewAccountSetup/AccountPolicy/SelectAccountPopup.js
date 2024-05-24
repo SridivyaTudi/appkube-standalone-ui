@@ -79,7 +79,7 @@ class SelectAccountPopup extends Component {
   }
   renderNoDataHtml = (text) => {
     return (
-      <Box className="spend-loading">
+      <Box className="text-center align-self-center width-100 p-t-20 p-b-20">
         <h5 className="m-t-0 m-b-0">{text}</h5>
       </Box>
     );
