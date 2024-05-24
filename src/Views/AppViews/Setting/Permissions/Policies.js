@@ -14,6 +14,7 @@ import {
 import { ToastMessage } from "Toast/ToastMessage";
 import { getCurrentUser } from "Utils";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { API_ERROR_MESSAGE, NO_DATA_FOUND } from "CommonData";
 
 let searchedData = [];
 class Policies extends Component {
@@ -277,7 +278,7 @@ class Policies extends Component {
           ) : (
             <Box className="group-control-boxs">
               <Box className="group-loader h-100  width-100 text-center  p-t-20 p-b-20">
-                <h5 className="m-t-0 m-b-0">There are no policy available.</h5>
+                <h5 className="m-t-0 m-b-0">{this.props.userPermissionData.status === status.FAILURE ? API_ERROR_MESSAGE : NO_DATA_FOUND}</h5>
               </Box>
             </Box>
           )}

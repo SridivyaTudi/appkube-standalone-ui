@@ -20,7 +20,7 @@ import {
 } from "Redux/Settings/SettingsThunk";
 import { ToastMessage } from "Toast/ToastMessage";
 import { getCurrentUser } from "Utils";
-
+import { API_ERROR_MESSAGE, NO_DATA_FOUND } from "CommonData";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -187,7 +187,7 @@ class GroupControl extends Component {
       } else {
         retData = (
           <Box className="group-loader h-100 width-100 text-center   p-t-20 p-b-20">
-            <h5 className="m-t-0 m-b-0">There are no groups available.</h5>
+            <h5 className="m-t-0 m-b-0">{this.props.userPermissionData.status === status.FAILURE ? API_ERROR_MESSAGE : NO_DATA_FOUND}</h5>
           </Box>
         );
       }

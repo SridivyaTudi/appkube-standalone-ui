@@ -11,6 +11,9 @@ import {
 } from "@mui/material";
 import { Component } from "react";
 import { v4 } from "uuid";
+import { API_ERROR_MESSAGE, NO_DATA_FOUND } from "CommonData";
+import { connect } from "react-redux";
+import status from "Redux/Constants/CommonDS";
 
 class PermissionTable extends Component {
   constructor(props) {
@@ -86,7 +89,11 @@ class PermissionTable extends Component {
             <TableCell colSpan={12}>
               <Box className="d-blck text-center w-100 h-100 ">
                 <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-                  <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+                  <h5 className="m-t-0 m-b-0">
+                    {this.props.userPermissionData.status === status.FAILURE
+                      ? API_ERROR_MESSAGE
+                      : NO_DATA_FOUND}
+                  </h5>
                 </Box>
               </Box>
             </TableCell>
@@ -141,4 +148,13 @@ class PermissionTable extends Component {
   }
 }
 
-export default PermissionTable;
+const mapStateToProps = (state) => {
+  const { userPermissionData } = state.settings;
+  return {
+    userPermissionData,
+  };
+};
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PermissionTable);

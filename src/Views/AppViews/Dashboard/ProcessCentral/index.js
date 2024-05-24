@@ -6,6 +6,7 @@ import { getProcessCentral } from "Redux/Dashboard/DashboardThunk";
 import { connect } from "react-redux";
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
+import { API_ERROR_MESSAGE, NO_DATA_FOUND } from "CommonData";
 
 const mappingData = {
   devCentral: "Dev Central",
@@ -151,16 +152,30 @@ class ProcessCentral extends Component {
           <Box className="heading">
             <h3>{this.mapping[tableKey]}</h3>
           </Box>
-          <Box className="contents">
-            <List className="tabs">{tabsJSX}</List>
-            {listJSX}
-          </Box>
+          {listJSX.length ? (
+            <Box className="contents">
+              <List className="tabs">{tabsJSX}</List>
+              {listJSX}
+            </Box>
+          ) : (
+            this.renderNoDataHtml(
+              this.props.processCentral.status === status.FAILURE
+                ? API_ERROR_MESSAGE
+                : NO_DATA_FOUND
+            )
+          )}
         </Box>
       </Grid>
     );
     return retData;
   };
-
+  renderNoDataHtml = (text) => {
+    return (
+      <Box className="spend-loading">
+        <h5 className="m-t-0 m-b-0">{text}</h5>
+      </Box>
+    );
+  };
   render() {
     const { centralTable } = this.state;
     let { processCentral } = this.props;

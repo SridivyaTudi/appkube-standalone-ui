@@ -32,6 +32,7 @@ import ConfirmationPopup from "Components/ConfirmationPopup";
 import { ToastMessage } from "Toast/ToastMessage";
 import { getCurrentUser } from "Utils";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
+import { API_ERROR_MESSAGE, NO_DATA_FOUND } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -274,7 +275,7 @@ class RoleControl extends Component {
           <TableCell colSpan={12}>
             <Box className="d-blck text-center w-100 h-100 ">
               <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-                <h5 className="m-t-0 m-b-0">There are no roles available.</h5>
+                <h5 className="m-t-0 m-b-0">{this.props.userPermissionData.status === status.FAILURE ? API_ERROR_MESSAGE : NO_DATA_FOUND}</h5>
               </Box>
             </Box>
           </TableCell>
