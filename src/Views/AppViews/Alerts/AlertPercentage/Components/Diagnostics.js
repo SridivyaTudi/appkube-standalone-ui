@@ -15,6 +15,23 @@ import { Link } from "react-router-dom";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 
+let diagnostics =[
+  {
+    name: "Percentage CPU",
+    severity: "High",
+    monitor: "Fired",
+    alertState: "New",
+    affectedResource: "Prod_DB_SYN14"
+  },
+  {
+    name: "Percentage CPU",
+    severity: "High",
+    monitor: "Fired",
+    alertState: "New",
+    affectedResource: "Prod_DB_SYN14"
+  }
+]
+
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -37,6 +54,7 @@ class Diagnostics extends Component {
       showAssetsSetUpModal: false,
       pg: 0,
       rpg: 10,
+      diagnostics,
     };
   }
   //  Render table
@@ -89,21 +107,40 @@ class Diagnostics extends Component {
 
   //  Render table body
   renderTableBody = () => {
+    let { diagnostics } = this.state;
     return (
       <TableBody>
-        <TableRow>
-          <TableCell align="left">Percentage CPU</TableCell>
-          <TableCell align="left"><span className="percentage-status"></span>High</TableCell>
-          <TableCell align="left">
-            <i
-              className="fas fa-exclamation-triangle m-r-1"
-              style={{ color: "#FF8E3E" }}
-            ></i>
-            Fired
-          </TableCell>
-          <TableCell align="left">New</TableCell>
-          <TableCell align="left">Prod_DB_SYN14</TableCell>
-        </TableRow>
+        {diagnostics?.length ? (
+          diagnostics.map((data) => {
+            return (
+              <TableRow>
+                <TableCell align="left">{data.name}</TableCell>
+                <TableCell align="left">
+                  <span className="percentage-status"></span>{data.severity}
+                </TableCell>
+                <TableCell align="left">
+                  <i
+                    className="fas fa-exclamation-triangle m-r-1"
+                    style={{ color: "#FF8E3E" }}
+                  ></i>
+                  {data.monitor}
+                </TableCell>
+                <TableCell align="left">{data.alertState}</TableCell>
+                <TableCell align="left">{data.affectedResource}</TableCell>
+              </TableRow>
+            );
+          })
+        ) : (
+          <TableRow>
+            <TableCell colSpan={12}>
+              <Box className="d-blck text-center w-100 h-100 ">
+                <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+                  <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+                </Box>
+              </Box>
+            </TableCell>
+          </TableRow>
+        )}
       </TableBody>
     );
   };

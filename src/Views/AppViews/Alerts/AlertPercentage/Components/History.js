@@ -14,6 +14,18 @@ import {
 import { Link } from "react-router-dom";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
+import { v4 } from "uuid";
+
+let percentage = [
+  {
+    name: <>Action group <a href='#'>email to Siddhesh</a> executed (configured on alert rule)</>,
+    date: "09-03-2024; 11:29:02",
+  },
+  {
+    name: "Alert fired",
+    date: "09-03-2024; 11:28:56",
+  },
+];
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -37,6 +49,7 @@ class History extends Component {
       showAssetsSetUpModal: false,
       pg: 0,
       rpg: 10,
+      percentage,
     };
   }
   //  Render table
@@ -86,19 +99,35 @@ class History extends Component {
 
   //  Render table body
   renderTableBody = () => {
+    let { percentage } = this.state;
     return (
       <TableBody>
-        <TableRow>
-          <TableCell align="left">
-            Action group <a href="">email to Siddhesh</a> executed (configured
-            on alert rule)
-          </TableCell>
-          <TableCell align="left"><strong>09-03-2024; 11:29:02</strong></TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell align="left">Alert fired</TableCell>
-          <TableCell align="left"><strong>09-03-2024; 11:28:56</strong></TableCell>
-        </TableRow>
+        {percentage?.length ? (
+          percentage.map((data) => {
+            return (
+              <TableRow key={v4()}>
+                <TableCell align="left">{data.name}</TableCell>
+                <TableCell align="left">
+                  <strong> {data.date} </strong>
+                </TableCell>
+              </TableRow>
+              // <TableRow>
+              //   <TableCell align="left">Alert fired</TableCell>
+              //   <TableCell align="left"><strong>09-03-2024; 11:28:56</strong></TableCell>
+              // </TableRow>
+            );
+          })
+        ) : (
+          <TableRow>
+            <TableCell colSpan={12}>
+              <Box className="d-blck text-center w-100 h-100 ">
+                <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
+                  <h5 className="m-t-0 m-b-0">There are no data available.</h5>
+                </Box>
+              </Box>
+            </TableCell>
+          </TableRow>
+        )}
       </TableBody>
     );
   };
