@@ -13,7 +13,7 @@ export const getEnvironmentDataByLandingZone = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -74,7 +74,7 @@ export const getInfraTopologyCategoryWiseViewData = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );
@@ -158,7 +158,7 @@ export const getEnvironmentsApplicationTableData = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 );

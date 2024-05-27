@@ -24,6 +24,7 @@ import {
 import status from "Redux/Constants/CommonDS";
 import Loader from "Components/Loader";
 import { v4 } from "uuid";
+import { API_ERROR_MESSAGE, NO_DATA_FOUND } from "CommonData";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -71,13 +72,25 @@ class Application extends Component {
 
   getMetricColor = (number) => {
     if (number > 98) {
-      return <p className="m-t-0 m-b-0" style={{ color: "#53CA43" }}>{number}</p>;
+      return (
+        <p className="m-t-0 m-b-0" style={{ color: "#53CA43" }}>
+          {number}
+        </p>
+      );
     }
     if (number > 90) {
-      return <p className="m-t-0 m-b-0" style={{ color: "#FAA24B" }}>{number}</p>;
+      return (
+        <p className="m-t-0 m-b-0" style={{ color: "#FAA24B" }}>
+          {number}
+        </p>
+      );
     }
     if (number < 90) {
-      return <p className="m-t-0 m-b-0" style={{ color: "#FF2D2E" }}>{number}</p>;
+      return (
+        <p className="m-t-0 m-b-0" style={{ color: "#FF2D2E" }}>
+          {number}
+        </p>
+      );
     }
   };
 
@@ -314,8 +327,15 @@ class Application extends Component {
               </Box>
             </>
           ) : (
-            <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20" style={{minHeight:340}}>
-              <h4 style={{ textAlign: "center" }}>No Data Found! </h4>
+            <Box
+              className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20"
+              style={{ minHeight: 340 }}
+            >
+              <h4 style={{ textAlign: "center" }}>
+                {this.props.applicationsTableData.status === status.FAILURE
+                  ? API_ERROR_MESSAGE
+                  : NO_DATA_FOUND}{" "}
+              </h4>
             </Box>
           )}
         </Box>

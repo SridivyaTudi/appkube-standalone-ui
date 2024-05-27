@@ -146,14 +146,14 @@ class AssetsTable extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    const { isSelectDepartmentOpen, isSelectStatusOpen,rpg } = this.state;
+    const { isSelectDepartmentOpen, isSelectStatusOpen, rpg } = this.state;
 
     let { data = [], errorMessage } = this.props;
 
     return (
       <TableBody>
         {data.length ? (
-          data.slice(0,rpg).map((environment, index) => {
+          data.slice(0, rpg).map((environment, index) => {
             let {
               name,
               elementType,
@@ -167,10 +167,9 @@ class AssetsTable extends Component {
             return (
               <TableRow key={v4()}>
                 <TableCell align="left">
-                  {name}
-                  {/* <HtmlTooltip className="table-tooltip" title={name}>
-                      <Box className="resource-name"> {name}</Box>
-                    </HtmlTooltip> */}
+                  <HtmlTooltip className="table-tooltip" title={name}>
+                    <Box className="resource-name">{name}</Box>
+                  </HtmlTooltip>
                 </TableCell>
                 <TableCell align="left">{elementType}</TableCell>
                 <TableCell align="left">

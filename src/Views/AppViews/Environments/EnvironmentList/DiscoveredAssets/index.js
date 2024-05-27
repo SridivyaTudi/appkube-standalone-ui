@@ -22,7 +22,7 @@ import TopologyView from "Views/AppViews/Environments/EnvironmentList/Discovered
 import ClusterDetails from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/ClusterDetails";
 import AssociateApp from "Views/AppViews/Environments/EnvironmentList/DiscoveredAssets/AssociateApp";
 import { v4 } from "uuid";
-import { LOGOS } from "CommonData";
+import { API_ERROR_MESSAGE, LOGOS, NO_DATA_FOUND } from "CommonData";
 import {
   getEnvironmentDataByLandingZone,
   GetInfraTopologyCloudElementList,
@@ -91,7 +91,7 @@ class DiscoveredAssets extends Component {
   };
 
   componentDidUpdate = async (prevProps, prevState) => {
-    const { landingZone, landingZoneId } = this.getUrlDetails();
+    const { landingZoneId } = this.getUrlDetails();
     if (
       prevProps.envDataByLandingZone.status !==
         this.props.envDataByLandingZone.status &&
@@ -548,13 +548,19 @@ class DiscoveredAssets extends Component {
   }
 
   renderCloudManagedDetails = () => {
-    if (!this.props.infraTopologyCategoryWiseData.data?.length) {
+    let { infraTopologyCategoryWiseData } = this.props;
+    if (!infraTopologyCategoryWiseData.data?.length) {
       return (
         <Box
           className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20"
           key={v4()}
         >
-          <h4>No Data Found!</h4>
+          <h4>
+            {" "}
+            {infraTopologyCategoryWiseData.status === status.FAILURE
+              ? API_ERROR_MESSAGE
+              : NO_DATA_FOUND}{" "}
+          </h4>
         </Box>
       );
     }
@@ -633,7 +639,13 @@ class DiscoveredAssets extends Component {
                           setCurrentActiveNode={this.setCurrentActiveNode}
                         />
                       ) : (
-                        <></>
+                        <Box className="chart-spinner discovered-loading text-center width-100 p-t-20 p-b-20">
+                          <h4>
+                            {envDataByLandingZone.status === status.FAILURE
+                              ? API_ERROR_MESSAGE
+                              : NO_DATA_FOUND}{" "}
+                          </h4>
+                        </Box>
                       )}
                     </Box>
                   </Box>
