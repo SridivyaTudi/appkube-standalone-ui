@@ -69,13 +69,13 @@ class DiscoveredAssetsComponent extends Component {
       assestsData: [],
       selectedFilters: filterData,
       assestsDataLength: 0,
-      assestsDataPage: 1,
+      assestsDataPage: 0,
     };
   }
 
   componentDidMount = () => {
     const orgId = getCurrentOrgId();
-    this.props.getDiscoveredAssets({ orgId, pageSize: 10, pageNo: 1 });
+    this.props.getDiscoveredAssets({ orgId, pageSize: 10, pageNo: 0 });
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -93,7 +93,7 @@ class DiscoveredAssetsComponent extends Component {
   setActiveTab = (activeTab) => {
     this.setState({ activeTab, selectedFilters: filterData }, () => {
       const discoveredData = this.props.discoveredAssetsData?.data || [];
-      this.manipulateDiscoveredData(discoveredData, 1);
+      this.manipulateDiscoveredData(discoveredData);
     });
   };
 
@@ -103,11 +103,11 @@ class DiscoveredAssetsComponent extends Component {
     this.setState({ selectedFilters });
   };
 
-  manipulateDiscoveredData = (data, isTabChange = 0) => {
-    let { totalRecords = 0, totalPages = 1, cloudElementList = [] } = data;
-    let { activeTab, assestsData: prevData, assestsDataPage } = this.state;
+  manipulateDiscoveredData = (data) => {
+    let { totalRecords = 0, totalPages = 0, cloudElementList = [] } = data;
+    let { activeTab } = this.state;
 
-    let assestsData = isTabChange || assestsDataPage === 1 ? [] : prevData;
+    let assestsData = [];
 
     let cloud = this.controlMapping.find(
       (details, index) => index === activeTab
@@ -115,16 +115,20 @@ class DiscoveredAssetsComponent extends Component {
 
     if (cloudElementList.length) {
       cloudElementList.forEach((assest) => {
-        if (assest.cloud?.toUpperCase() === cloud?.key) {
+        let isCloudMatch = assest.cloud?.toUpperCase() === cloud?.key;
+
+        if (isCloudMatch) {
           assestsData.push({
             name: assest.instanceName,
             elementType: assest.elementType,
             landingZone: assest.landingZone,
             productEnclave: assest.productEnclaveInstanceId,
+            id: assest.id,
           });
         }
       });
     }
+
     this.setState({
       assestsData,
       assestsDataLength: totalRecords,
@@ -132,7 +136,7 @@ class DiscoveredAssetsComponent extends Component {
     });
   };
   render() {
-    const {
+    let {
       activeTab,
       selectedFilters,
       assestsData,
@@ -159,7 +163,7 @@ class DiscoveredAssetsComponent extends Component {
               loderStatus={discoveredAssetsData?.status === status.IN_PROGRESS}
               totalRecords={assestsDataLength}
               totalPages={assestsDataPage}
-              handleChangePage={(pageNo, pageSize) => {
+              handleChangePage={({ pageNo, pageSize }) => {
                 const orgId = getCurrentOrgId();
                 this.props.getDiscoveredAssets({
                   orgId,
@@ -167,7 +171,12 @@ class DiscoveredAssetsComponent extends Component {
                   pageNo,
                 });
               }}
-              errorMessage={this.props.discoveredAssetsData.status === status.FAILURE ? API_ERROR_MESSAGE : ''}
+              activeTab={activeTab}
+              errorMessage={
+                discoveredAssetsData.status === status.FAILURE
+                  ? API_ERROR_MESSAGE
+                  : ""
+              }
             />
           </Box>
         </Box>

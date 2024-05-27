@@ -42,6 +42,11 @@ class AssetsTable extends Component {
     };
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps?.activeTab !== this.props?.activeTab) {
+      this.setState({ pg: 0, rpg: 10 });
+    }
+  }
   toggleAssetsSetUp = () => {
     this.setState({
       showAssetsSetUpModal: !this.state.showAssetsSetUpModal,
@@ -141,13 +146,14 @@ class AssetsTable extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    const { rpg, pg, isSelectDepartmentOpen, isSelectStatusOpen } = this.state;
+    const { isSelectDepartmentOpen, isSelectStatusOpen,rpg } = this.state;
 
     let { data = [], errorMessage } = this.props;
+
     return (
       <TableBody>
         {data.length ? (
-          data.slice(pg * rpg, pg * rpg + rpg).map((environment, index) => {
+          data.slice(0,rpg).map((environment, index) => {
             let {
               name,
               elementType,
@@ -341,7 +347,17 @@ class AssetsTable extends Component {
   };
 
   handleChangeRowsPerPage = (event) => {
-    this.setState({ pg: 0, rpg: parseInt(event.target.value, 10) });
+    let newRpg = parseInt(event.target.value, 10);
+
+    this.setState({ rpg: newRpg }, () => {
+      let { pg, rpg } = this.state;
+
+      try {
+        this.props.handleChangePage({ pageNo: pg, pageSize: rpg });
+      } catch (error) {
+        console.error(error);
+      }
+    });
   };
 
   render() {
