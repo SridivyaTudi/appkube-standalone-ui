@@ -334,6 +334,14 @@ class Environments extends Component {
                       menuSummaryShowMenu[1] === accountIndex
                     }
                     onClose={() => this.handleMenuToggle(null, null)}
+                    anchorOrigin={{
+                      // vertical: 'top',
+                      horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                      // vertical: 'top',
+                      horizontal: 'center',
+                    }}
                   >
                     <MenuItem
                       onClick={() =>
