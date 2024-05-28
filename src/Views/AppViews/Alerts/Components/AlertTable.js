@@ -23,7 +23,8 @@ import { v4 } from "uuid";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import Loader from "Components/Loader";
-
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -48,6 +49,7 @@ class AlertTable extends Component {
       pg: 0,
       rpg: 10,
       isBulkActionDropDownOpen: false,
+      anchorEl: null,
     };
   }
 
@@ -63,9 +65,10 @@ class AlertTable extends Component {
   //     });
   //   }
   // };
-  toggleBulkAction = (index) => {
+  toggleBulkAction = (index, anchorEl) => {
     this.setState({
       isBulkActionDropDownOpen: index,
+      anchorEl,
     });
   };
   renderDropDownData = () => {
@@ -204,33 +207,31 @@ class AlertTable extends Component {
                     <i className="fas fa-ellipsis-v"></i>
                   </button> */}
                   <IconButton
+                    // id={`basic-menu-${index}`}
                     className="action-btn"
                     aria-label="morevertIcon"
                     size="small"
-                    onClick={() => this.toggleBulkAction(index)}
+                    onClick={(e) =>{
+                      console.log(e.currentTarget)
+                      this.toggleBulkAction(index, e.currentTarget)
+                    }}
                   >
                     <MoreVertIcon fontSize="small" />
                   </IconButton>
-                  {isBulkActionDropDownOpen === index && (
-                    <div
-                      className={
-                        isBulkActionDropDownOpen === index
-                          ? "fliter-collapse active"
-                          : "fliter-collapse"
-                      }
-                    >
-                      <List>{this.renderDropDownData()}</List>
-                    </div>
-                  )}
 
-                  <div
-                    className={
-                      isBulkActionDropDownOpen === index
-                        ? "fliters-collapse-bg active"
-                        : "fliters-collapse-bg"
-                    }
-                    onClick={() => this.toggleBulkAction(null)}
-                  />
+                  <Menu
+                    id={`basic-menu-${index}`}
+                    anchorEl={this.state.anchorEl}
+                    open={isBulkActionDropDownOpen === index}
+                    onClose={() => this.toggleBulkAction(null, null)}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                  >
+                    <MenuItem>Profile</MenuItem>
+                    <MenuItem>My account</MenuItem>
+                    <MenuItem>Logout</MenuItem>
+                  </Menu>
                 </TableCell>
               </TableRow>
             );
