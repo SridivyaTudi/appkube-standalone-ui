@@ -347,7 +347,7 @@ class Environments extends Component {
                     >
                       {elementStatus === status.IN_PROGRESS
                         ? this.renderLoder()
-                        : `${ <i className="fa-solid fa-circle-dot"></i>} Get Elements`}
+                        : <><i className="fa-solid fa-circle-dot"></i> Get Elements</>}
                     </MenuItem>
                   </Menu>
                 </TableCell>
