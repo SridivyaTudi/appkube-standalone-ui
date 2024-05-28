@@ -129,6 +129,17 @@
               }
             }
 
+            .action-btn {
+              padding: 5px 5px;
+              border-radius: 5px;
+              color: #384cff;
+              position: relative;
+  
+              &:hover {
+                background-color: #d1d5ff;
+              }
+            }
+
             &:last-child {
               overflow: unset;
               text-overflow: unset;

@@ -80,11 +80,11 @@ class AlertTable extends Component {
       "Edit Ticket",
     ].map((data, index) => {
       return (
-        <ListItem key={index}>
+        <MenuItem key={index}>
           {" "}
           <i className="fa-solid fa-circle-dot"></i>
           {data}
-        </ListItem>
+        </MenuItem>
       );
     });
   };
@@ -211,15 +211,16 @@ class AlertTable extends Component {
                     className="action-btn"
                     aria-label="morevertIcon"
                     size="small"
-                    onClick={(e) =>{
-                      console.log(e.currentTarget)
-                      this.toggleBulkAction(index, e.currentTarget)
+                    onClick={(e) => {
+                      console.log(e.currentTarget);
+                      this.toggleBulkAction(index, e.currentTarget);
                     }}
                   >
                     <MoreVertIcon fontSize="small" />
                   </IconButton>
 
                   <Menu
+                    className="common-list-menu"
                     id={`basic-menu-${index}`}
                     anchorEl={this.state.anchorEl}
                     open={isBulkActionDropDownOpen === index}
@@ -228,9 +229,7 @@ class AlertTable extends Component {
                       "aria-labelledby": "basic-button",
                     }}
                   >
-                    <MenuItem>Profile</MenuItem>
-                    <MenuItem>My account</MenuItem>
-                    <MenuItem>Logout</MenuItem>
+                    {this.renderDropDownData()}
                   </Menu>
                 </TableCell>
               </TableRow>

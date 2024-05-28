@@ -326,7 +326,7 @@ class Environments extends Component {
                       <i className="fas fa-ellipsis-v"></i>
                     </button>
                   </Rbac>
-                  <Menu
+                  <Menu className="common-list-menu"
                     id={`env-menu-${accountIndex}`}
                     anchorEl={this.state.anchorEl}
                     open={
