@@ -237,7 +237,7 @@ class Environments extends Component {
           let accountsJSX = [];
           item.environmentSummaryList.forEach((account, accountIndex) => {
             accountsJSX.push(
-              <TableRow key={v4()}>
+              <TableRow key={accountIndex}>
                 <TableCell align="left">
                   <HtmlTooltip
                     className="table-tooltip"
