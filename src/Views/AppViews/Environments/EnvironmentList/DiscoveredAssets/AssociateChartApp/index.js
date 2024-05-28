@@ -31,8 +31,12 @@ import ConfirmationPopup from "Components/ConfirmationPopup";
 import Loader from "Components/Loader";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import { SERVICE_TYPE, THREE_TIER_LAYERS } from "CommonData";
-import { USER_RBAC_TYPE } from "CommonData";
+import {
+  API_ERROR_MESSAGE,
+  NO_DATA_FOUND,
+  SERVICE_TYPE,
+  THREE_TIER_LAYERS,
+} from "CommonData";
 import RBAC_MAPPING from "Utils/RbacMapping";
 import Rbac from "Views/AppViews/Rbac";
 
@@ -388,7 +392,7 @@ export class AssociateChartApp extends Component {
         </ul>
       ));
     } else {
-      return "There is no existing tag";
+      return tagStatus === status.FAILURE ? API_ERROR_MESSAGE : NO_DATA_FOUND;
     }
   }
 

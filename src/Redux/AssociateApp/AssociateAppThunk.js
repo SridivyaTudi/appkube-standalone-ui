@@ -129,7 +129,7 @@ export const getExistingTags = createAsyncThunk(
       const response = await postLoginService.get(url);
       return response;
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 );

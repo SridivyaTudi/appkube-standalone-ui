@@ -41,6 +41,7 @@ import { v4 } from "uuid";
 import TitleIconWithInfoOfCard from "Components/TitleIconWithInfoOfCard";
 import RBAC_MAPPING from "Utils/RbacMapping";
 import Rbac from "Views/AppViews/Rbac";
+import { Menu, MenuItem } from "@mui/material";
 
 class Environments extends Component {
   constructor(props) {
@@ -61,6 +62,7 @@ class Environments extends Component {
         selectedEnv: -1,
       },
       showFilterPopup: false,
+      anchorEl: null,
     };
   }
 
@@ -85,7 +87,7 @@ class Environments extends Component {
         this.setState({
           environmentCountData: environmentCountData.data,
         });
-      } 
+      }
     }
 
     if (prevProps.envSummary.status !== this.props.envSummary.status) {
@@ -96,7 +98,7 @@ class Environments extends Component {
           searchedEnvSummary: JSON.parse(JSON.stringify(envSummary.data)),
           showFilterPopup: false,
         });
-      } 
+      }
     }
 
     if (prevProps.elementData.status !== this.props.elementData.status) {
@@ -158,12 +160,12 @@ class Environments extends Component {
       );
     }
   };
-  handleMenuToggle = (envKey, accountIndex) => {
+  handleMenuToggle = (envKey, accountIndex, anchorEl) => {
     const { menuSummaryShowMenu } = this.state;
     if (menuSummaryShowMenu[0] !== null && menuSummaryShowMenu[1] !== null) {
-      this.setState({ menuSummaryShowMenu: [null, null] });
+      this.setState({ menuSummaryShowMenu: [null, null], anchorEl: null });
     } else {
-      this.setState({ menuSummaryShowMenu: [envKey, accountIndex] });
+      this.setState({ menuSummaryShowMenu: [envKey, accountIndex], anchorEl });
     }
   };
 
@@ -314,44 +316,40 @@ class Environments extends Component {
                       type="button"
                       className="list-icon"
                       onClick={(e) =>
-                        this.handleMenuToggle(envIndex, accountIndex)
+                        this.handleMenuToggle(
+                          envIndex,
+                          accountIndex,
+                          e.currentTarget
+                        )
                       }
                     >
                       <i className="fas fa-ellipsis-v"></i>
                     </button>
                   </Rbac>
-
-                  {menuSummaryShowMenu[0] === envIndex &&
-                  menuSummaryShowMenu[1] === accountIndex ? (
-                    <>
-                      <div
-                        className="open-create-menu-close"
-                        onClick={(e) => {
-                          this.handleMenuToggle(envIndex, accountIndex);
-                        }}
-                      ></div>
-                      <Box className="menu-list">
-                        <List>
-                          <ListItem
-                            onClick={() =>
-                              elementStatus === status.IN_PROGRESS
-                                ? ""
-                                : this.props.getElements({
-                                    landingZone: account.landingZone,
-                                    landingZoneId: account.landingZoneId,
-                                  })
-                            }
-                          >
-                            {elementStatus === status.IN_PROGRESS
-                              ? this.renderLoder()
-                              : "Get Elements"}
-                          </ListItem>
-                        </List>
-                      </Box>
-                    </>
-                  ) : (
-                    <></>
-                  )}
+                  <Menu
+                    id={`env-menu-${accountIndex}`}
+                    anchorEl={this.state.anchorEl}
+                    open={
+                      menuSummaryShowMenu[0] === envIndex &&
+                      menuSummaryShowMenu[1] === accountIndex
+                    }
+                    onClose={() => this.handleMenuToggle(null, null)}
+                  >
+                    <MenuItem
+                      onClick={() =>
+                        elementStatus === status.IN_PROGRESS
+                          ? ""
+                          : this.props.getElements({
+                              landingZone: account.landingZone,
+                              landingZoneId: account.landingZoneId,
+                            })
+                      }
+                    >
+                      {elementStatus === status.IN_PROGRESS
+                        ? this.renderLoder()
+                        : "Get Elements"}
+                    </MenuItem>
+                  </Menu>
                 </TableCell>
               </TableRow>
             );
@@ -370,7 +368,7 @@ class Environments extends Component {
             );
           }
           retData.push(
-            <div className="environment-table" key={v4()}>
+            <div className="environment-table"  >
               <TableContainer className="table">
                 <Table style={{ minWidth: 1220 }}>
                   <TableHead
