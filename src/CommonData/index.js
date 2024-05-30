@@ -108,7 +108,8 @@ export const THREE_TIER_LAYERS = {
   AUXILARY_LAYER: "Auxilary Layer",
 };
 
-export const APPKUBE_UI_ENDPOINT = "https://api.synectiks.net";
+// export const APPKUBE_UI_ENDPOINT = "https://api.synectiks.net";
+export const APPKUBE_UI_ENDPOINT = "http://localhost:3000";
 
 export const ELEMENT_EXPLORER_MAPPING = {
   EC2: "/ec2-explorer?var-elementId=#element-id#",
