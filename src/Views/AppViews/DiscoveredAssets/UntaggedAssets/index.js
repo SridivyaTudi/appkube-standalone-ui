@@ -92,7 +92,7 @@ class UntaggedAssets extends Component {
   }
 
   setActiveTab = (activeTab) => {
-    this.setState({ activeTab, selectedFilters: filterData },() => {
+    this.setState({ activeTab, selectedFilters: filterData }, () => {
       const discoveredData = this.props.discoveredAssetsData?.data || [];
       this.manipulateDiscoveredData(discoveredData);
     });
@@ -128,6 +128,9 @@ class UntaggedAssets extends Component {
             isLogEnabled: assest.isLogEnabled ? true : false,
             isTagged: assest.isTagged ? true : false,
             isTraceEnabled: assest.isTraceEnabled ? true : false,
+            instanceId: assest.instanceId,
+            landingZoneId: assest.landingzoneId,
+            cloud: assest.cloud,
           });
         }
       });

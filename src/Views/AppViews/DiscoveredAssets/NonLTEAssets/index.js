@@ -130,6 +130,12 @@ class NonLteAssets extends Component {
             isLogEnabled: assest.isLogEnabled ? true : false,
             isTagged: assest.isTagged ? true : false,
             isTraceEnabled: assest.isTraceEnabled ? true : false,
+            instanceId: assest.instanceId,
+            landingZoneId: assest.landingZoneId,
+            cloud: assest.cloud,
+            instanceId: assest.instanceId,
+            landingZoneId: assest.landingzoneId,
+            cloud: assest.cloud,
           });
         }
       });
