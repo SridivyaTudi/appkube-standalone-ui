@@ -124,6 +124,10 @@ class DiscoveredAssetsComponent extends Component {
             landingZone: assest.landingZone,
             productEnclave: assest.productEnclaveInstanceId,
             id: assest.id,
+            isEventEnabled: assest.isEventEnabled ? true : false,
+            isLogEnabled: assest.isLogEnabled ? true : false,
+            isTagged: assest.isTagged ? true : false,
+            isTraceEnabled: assest.isTraceEnabled ? true : false,
           });
         }
       });

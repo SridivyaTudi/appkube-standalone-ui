@@ -6,22 +6,12 @@ import Microsoftazure from "assets/img/microsoftazure.png";
 import AssetsEnvironmentTab from "Views/AppViews/DiscoveredAssets/Components/AssetsEnvironmentTab";
 import AssetsTable from "Views/AppViews/DiscoveredAssets/Components/AssetsTable";
 import AssetsFilterSection from "Views/AppViews/DiscoveredAssets/Components/AssetsFilterSection";
-let data = [
-  {
-    name: "45sdf28d",
-    elementType: "Lambda",
-    landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
-    tagStatusClass: "setting-icon",
-  },
-  {
-    name: "45sdf28d",
-    elementType: "Batch",
-    landingZone: "AWS (657907747554)",
-    productEnclave: "VPC-ds42es114",
-    tagStatusClass: "setting-icon",
-  },
-];
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { connect } from "react-redux";
+import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
+import status from "Redux/Constants/CommonDS";
+import { getDiscoveredAssets } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
+import { API_ERROR_MESSAGE } from "CommonData";
 
 let filterData = [
   {
@@ -52,16 +42,19 @@ class UntaggedAssets extends Component {
       image: Aws,
       label: "Amazon Web Services",
       dataKey: "amazonWebServices",
+      key: ENVIRONMENTS.AWS,
     },
     {
       image: GoogleCloud,
       label: "Google Cloud Platform",
       dataKey: "googleCloudPlatform",
+      key: ENVIRONMENTS.GCP,
     },
     {
       image: Microsoftazure,
       label: "Azure Cloud",
       dataKey: "azureCloud",
+      key: ENVIRONMENTS.AZURE,
     },
   ];
 
@@ -69,13 +62,40 @@ class UntaggedAssets extends Component {
     super(props);
     this.state = {
       activeTab: 0,
-      environmentList: data,
       selectedFilters: filterData,
+      assestsData: [],
+      assestsDataLength: 0,
+      assestsDataPage: 0,
     };
+  }
+  componentDidMount = () => {
+    const orgId = getCurrentOrgId();
+    this.props.getDiscoveredAssets({
+      orgId,
+      pageSize: 10,
+      pageNo: 0,
+      isTagged: false,
+      isTagOrUnTagOrLtePass: true,
+    });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.discoveredAssetsData.status !==
+        this.props.discoveredAssetsData.status &&
+      this.props.discoveredAssetsData.status === status.SUCCESS &&
+      this.props.discoveredAssetsData?.data
+    ) {
+      const discoveredData = this.props.discoveredAssetsData?.data || [];
+      this.manipulateDiscoveredData(discoveredData);
+    }
   }
 
   setActiveTab = (activeTab) => {
-    this.setState({ activeTab, selectedFilters: filterData });
+    this.setState({ activeTab, selectedFilters: filterData },() => {
+      const discoveredData = this.props.discoveredAssetsData?.data || [];
+      this.manipulateDiscoveredData(discoveredData);
+    });
   };
 
   onClickCloseIcon = (id) => {
@@ -83,9 +103,51 @@ class UntaggedAssets extends Component {
     selectedFilters = selectedFilters.filter((filter, index) => index !== id);
     this.setState({ selectedFilters });
   };
+  manipulateDiscoveredData = (data) => {
+    let { totalRecords = 0, totalPages = 0, cloudElementList = [] } = data;
+    let { activeTab } = this.state;
 
+    let assestsData = [];
+
+    let cloud = this.controlMapping.find(
+      (details, index) => index === activeTab
+    );
+
+    if (cloudElementList.length) {
+      cloudElementList.forEach((assest) => {
+        let isCloudMatch = assest.cloud?.toUpperCase() === cloud?.key;
+
+        if (isCloudMatch) {
+          assestsData.push({
+            name: assest.instanceName,
+            elementType: assest.elementType,
+            landingZone: assest.landingZone,
+            productEnclave: assest.productEnclaveInstanceId,
+            id: assest.id,
+            isEventEnabled: assest.isEventEnabled ? true : false,
+            isLogEnabled: assest.isLogEnabled ? true : false,
+            isTagged: assest.isTagged ? true : false,
+            isTraceEnabled: assest.isTraceEnabled ? true : false,
+          });
+        }
+      });
+    }
+
+    this.setState({
+      assestsData,
+      assestsDataLength: totalRecords,
+      assestsDataPage: totalPages,
+    });
+  };
   render() {
-    const { activeTab, environmentList, selectedFilters } = this.state;
+    const {
+      activeTab,
+      assestsData,
+      assestsDataLength,
+      assestsDataPage,
+      selectedFilters,
+    } = this.state;
+    let { discoveredAssetsData } = this.props;
     return (
       <Box className="discovered-assets-inner-tabs">
         <Box className="assets-sevices-tabs">
@@ -100,7 +162,28 @@ class UntaggedAssets extends Component {
               onClickCloseIcon={(id) => this.onClickCloseIcon(id)}
               onClickClearFilter={() => this.setState({ selectedFilters: [] })}
             />
-            <AssetsTable data={environmentList} />
+            <AssetsTable
+              data={assestsData}
+              loderStatus={discoveredAssetsData?.status === status.IN_PROGRESS}
+              totalRecords={assestsDataLength}
+              totalPages={assestsDataPage}
+              handleChangePage={({ pageNo, pageSize }) => {
+                const orgId = getCurrentOrgId();
+                this.props.getDiscoveredAssets({
+                  orgId,
+                  pageSize,
+                  pageNo,
+                  isTagged: false,
+                  isTagOrUnTagOrLtePass: true,
+                });
+              }}
+              activeTab={activeTab}
+              errorMessage={
+                discoveredAssetsData.status === status.FAILURE
+                  ? API_ERROR_MESSAGE
+                  : ""
+              }
+            />
           </Box>
         </Box>
       </Box>
@@ -108,4 +191,14 @@ class UntaggedAssets extends Component {
   }
 }
 
-export default UntaggedAssets;
+function mapStateToProps(state) {
+  const { discoveredAssetsData } = state.discoveredAssets;
+
+  return { discoveredAssetsData };
+}
+
+const mapDispatchToProps = { getDiscoveredAssets };
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(UntaggedAssets));

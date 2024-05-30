@@ -163,7 +163,12 @@ class AssetsTable extends Component {
               logClass,
               traceClass,
               eventClass,
+              isEventEnabled,
+              isLogEnabled,
+              isTagged,
+              isTraceEnabled,
             } = environment;
+            tagStatusClass = false;
             return (
               <TableRow key={v4()}>
                 <TableCell align="left">
@@ -184,12 +189,16 @@ class AssetsTable extends Component {
                   </HtmlTooltip>{" "}
                 </TableCell>
                 <TableCell align="center">
-                  <Box className={`${tagStatusClass || "tag"} tag-status	`}>
+                  <Box
+                    className={`${
+                      isTagged ? "tag " : "setting-icon"
+                    } tag-status	`}
+                  >
                     <i
-                      className={tagStatusClass ? "fas fa-cog " : "fas fa-tag "}
+                      className={isTagged ? "fas fa-tag " : "fas fa-cog "}
                       onClick={() => this.toggleSelectDepartment(index, 1)}
                     ></i>
-                    {isSelectStatusOpen === index && (
+                    {isSelectStatusOpen === index && !isTagged && (
                       <div
                         className={
                           isSelectStatusOpen === index
@@ -235,23 +244,25 @@ class AssetsTable extends Component {
                 </TableCell>
                 <TableCell align="center">
                   <Box
-                    className={logClass || "log-eye-icon"}
+                    className={isLogEnabled ? "log-eye-icon" : "setting-icon"}
                     onClick={this.toggleAssetsSetUp}
                   >
-                    <i className={logClass ? "fas fa-cog" : "fas fa-eye"}></i>
+                    <i
+                      className={isLogEnabled ? "fas fa-eye" : "fa-solid fa-eye-slash" }
+                    ></i>
                   </Box>
                 </TableCell>
                 <TableCell align="center">
-                  <span className={traceClass || "green"}>
+                  <span className={isTraceEnabled ? "green" : "orange"}>
                     <i
-                      className={logClass ? "fas fa-times" : "fas fa-check"}
+                      className={isTraceEnabled ?  "fas fa-check" :"fas fa-times"}
                     ></i>
                   </span>
                 </TableCell>
                 <TableCell align="center">
-                  <span className={eventClass || "green"}>
+                  <span className={isEventEnabled ? "green" : "orange"}>
                     <i
-                      className={eventClass ? "fas fa-times" : "fas fa-check"}
+                      className={isEventEnabled ?  "fas fa-check": "fas fa-times"}
                     ></i>
                   </span>
                 </TableCell>
