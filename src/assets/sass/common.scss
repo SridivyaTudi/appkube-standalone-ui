@@ -1377,6 +1377,8 @@ a {
 }
 .common-list-menu{
   display: block;
+  max-width: 180px;
+  min-width: 100px;
   ul {
     display: block;
     width: 100%;
