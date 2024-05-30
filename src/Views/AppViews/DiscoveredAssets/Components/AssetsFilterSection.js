@@ -38,7 +38,7 @@ class AssetsFilterSection extends Component {
     } else if (width >= 1100 && width < 1290) {
       noOfRow = 3;
     } else if (width >= 882 && width < 1100) {
-      noOfRow = 2;
+      noOfRow = 1;
     } else if (width >= 660 && width < 882) {
       noOfRow = 1;
     } else {

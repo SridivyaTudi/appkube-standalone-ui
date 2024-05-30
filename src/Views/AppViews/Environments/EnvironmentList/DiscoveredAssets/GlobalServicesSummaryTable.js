@@ -60,7 +60,7 @@ class GlobalServicesSummaryTable extends React.Component {
     });
     if (data.length) {
       JSX.push(
-        <Box className="cloud-managed-cards global-sarvices-card" key={v4()}>
+        <Box className="cloud-managed-cards global-sarvices-card" key={v4()} style={{marginTop:25}}>
           <Box className="cloud-managed-cards-scroll">{childJSX}</Box>
         </Box>
       );

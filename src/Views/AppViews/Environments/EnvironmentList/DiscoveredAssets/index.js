@@ -13,7 +13,11 @@ import {
   ListItem,
   Button,
   TableBody,
+  Menu,
+  MenuItem
 } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import status from "Redux/Constants/CommonDS";
@@ -305,10 +309,10 @@ class DiscoveredAssets extends Component {
     this.props.getGlobalServiceCloudElements({ elementType: category });
   };
 
-  toggleMenu = (index) => {
+  toggleMenu = (index, anchorEl) => {
     let { showMenu } = this.state;
     showMenu = showMenu === null ? index : null;
-    this.setState({ showMenu });
+    this.setState({ showMenu, anchorEl });
   };
 
   /** Render the BreadCrumbs of Topologyview. */
@@ -362,6 +366,24 @@ class DiscoveredAssets extends Component {
     this.renderCloudManagedDetails();
   };
 
+  renderDropDownData = () => {
+    return [
+      "Add New datasource",
+      "Add Compliance",
+      "Associate to OU",
+      "Add New VPC",
+      "Add New Product",
+    ].map((data, index) => {
+      return (
+        <MenuItem key={index}>
+          {" "}
+          <i className="fa-solid fa-circle-dot"></i>
+          {data}
+        </MenuItem>
+      );
+    });
+  };
+
   /** Render Table for 3 Tier Tab */
   render3TierTableData() {
     let {
@@ -373,7 +395,7 @@ class DiscoveredAssets extends Component {
     const tableBodyJSX = [];
     productEnclaveList?.forEach((vpc, index) => {
       tableBodyJSX.push(
-        <TableRow key={v4()}>
+        <TableRow >
           <TableCell align="center" className="vpcid">
             <HtmlTooltip className="table-tooltip" title={vpc.instanceId}>
               <span>{vpc.instanceId}</span>
@@ -388,45 +410,39 @@ class DiscoveredAssets extends Component {
             <IconButton
               aria-label="delete"
               size="small"
-              onClick={() => this.toggleMenu(index)}
+              onClick={(e) => this.toggleMenu(index,e.currentTarget)}
               className="list-icon"
             >
-              <i className="fas fa-ellipsis-v"></i>
+              <MoreVertIcon fontSize="small" />
             </IconButton>
+            <Menu
+              className="common-list-menu"
+              id={`basic-menu-${index}`}
+              anchorEl={this.state.anchorEl}
+              open={showMenu === index}
+              onClose={() => this.toggleMenu(null,null)}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+            >
+              {this.renderDropDownData()}
+            </Menu>
 
-            {showMenu === index && (
-              <>
-                <Box
-                  className="open-create-menu-close"
-                  onClick={() => this.toggleMenu(index)}
-                ></Box>
-                <Box className="menu-list">
-                  <List>
-                    <ListItem>
-                      <span>Add New datasource</span>
-                    </ListItem>
-                    <ListItem>
-                      <span>Add Compliance</span>
-                    </ListItem>
-                    <ListItem>
-                      <span>Associate to OU</span>
-                    </ListItem>
-                    <ListItem>
-                      <span>Add New VPC</span>
-                    </ListItem>
-                    <ListItem>
-                      <span>Add New Product</span>
-                    </ListItem>
-                  </List>
-                </Box>
-              </>
-            )}
+            
           </TableCell>
         </TableRow>
       );
     });
     const TableJSX = [
-      <Box className="discovered-table" style={{ height: "425px" }} key={v4()}>
+      <Box className="discovered-table" style={{ height: "425px" }}>
         <TableContainer className="table">
           <Table className="discovered-table-inner">
             <TableHead className="active">
