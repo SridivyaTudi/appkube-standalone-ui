@@ -13,7 +13,6 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { v4 } from "uuid";
 import AssetsSetUpModal from "./AssetsSetUpModal";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
@@ -149,18 +148,6 @@ class AssetsTable extends Component {
       isSelectDepartmentOpen,
       isSelectStatusOpen,
       anchorEl,
-    });
-  };
-
-  renderDropDownData = () => {
-    return ["Set up"].map((data, index) => {
-      return (
-        <MenuItem key={index}>
-          {" "}
-          <i className="fa-solid fa-circle-dot"></i>
-          {data}
-        </MenuItem>
-      );
     });
   };
 

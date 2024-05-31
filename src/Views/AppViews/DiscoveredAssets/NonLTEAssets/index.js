@@ -93,7 +93,7 @@ class NonLteAssets extends Component {
   }
 
   setActiveTab = (activeTab) => {
-    this.setState({ activeTab, selectedFilters: filterData },() => {
+    this.setState({ activeTab, selectedFilters: filterData }, () => {
       const discoveredData = this.props.discoveredAssetsData?.data || [];
       this.manipulateDiscoveredData(discoveredData);
     });
@@ -132,9 +132,6 @@ class NonLteAssets extends Component {
             isTraceEnabled: assest.isTraceEnabled ? true : false,
             instanceId: assest.instanceId,
             landingZoneId: assest.landingZoneId,
-            cloud: assest.cloud,
-            instanceId: assest.instanceId,
-            landingZoneId: assest.landingzoneId,
             cloud: assest.cloud,
           });
         }

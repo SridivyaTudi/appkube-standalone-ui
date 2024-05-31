@@ -8,18 +8,11 @@ import {
   TableCell,
   TableBody,
   TablePagination,
-  ListItem,
-  List,
   Checkbox,
-  Button,
   IconButton,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import EditCalendarIcon from "@mui/icons-material/EditCalendar";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { Link } from "react-router-dom";
-import { v4 } from "uuid";
-//import AssetsSetUpModal from "./AssetsSetUpModal";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import Loader from "Components/Loader";
@@ -72,7 +65,6 @@ class AlertTable extends Component {
     });
   };
   renderDropDownData = () => {
-    let { selectedTimeFrame, selectedDates } = this.state;
     return [
       "Execute Workfolw",
       "Ignore Alert",
@@ -158,8 +150,7 @@ class AlertTable extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    const { tagShowMenu, tagShowMenuList, rpg, pg, isBulkActionDropDownOpen } =
-      this.state;
+    const { rpg, pg, isBulkActionDropDownOpen } = this.state;
     let alerts = this.props.data || [];
 
     return (
@@ -229,12 +220,12 @@ class AlertTable extends Component {
                       "aria-labelledby": "basic-button",
                     }}
                     anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'center',
+                      vertical: "top",
+                      horizontal: "center",
                     }}
                     transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'center',
+                      vertical: "top",
+                      horizontal: "center",
                     }}
                   >
                     {this.renderDropDownData()}
