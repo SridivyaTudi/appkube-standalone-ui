@@ -11,12 +11,12 @@ import {
   Paper,
   IconButton,
   TablePagination,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import CreateRoleControlModal from "./Components/CreateRoleControlModal";
 import DefaultIcon from "../../../../assets/img/setting/default-icon.png";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -107,17 +107,11 @@ class RoleControl extends Component {
     });
   };
 
-  handleActionButton = (index) => {
-    const { actionButton } = this.state;
-    if (actionButton === null) {
-      this.setState({
-        actionButton: index,
-      });
-    } else {
-      this.setState({
-        actionButton: null,
-      });
-    }
+  handleActionButton = (index, anchorEl) => {
+    this.setState({
+      actionButton: index,
+      anchorEl,
+    });
   };
 
   // Render Loder
@@ -183,6 +177,35 @@ class RoleControl extends Component {
     }
   };
 
+  renderDropDownData = (roleId) => {
+    return [
+      { label: " Delete Role", icon: "fas fa-trash-alt" },
+      { label: " Edit Role", icon: "fas fa-edit" },
+    ].map((data, index) => {
+      return (
+        <MenuItem
+          key={index}
+          onClick={() => {
+            if (index) {
+              this.setState({
+                showCreateRoleControlModal: true,
+                editRoleId: roleId,
+              });
+            } else {
+              this.setState({
+                showConfirmPopup: true,
+                roleId,
+              });
+            }
+          }}
+        >
+          <i className={data.icon} />
+          {data.label}
+        </MenuItem>
+      );
+    });
+  };
+
   // render Roles data
   renderRoles = () => {
     const { roles, pg, rpg, actionButton } = this.state;
@@ -228,44 +251,30 @@ class RoleControl extends Component {
               className="action-btn"
               aria-label="morevertIcon"
               size="small"
-              onClick={() => this.handleActionButton(index)}
+              onClick={(e) => this.handleActionButton(row.id, e.currentTarget)}
             >
               <MoreVertIcon fontSize="small" />
             </IconButton>
-            {actionButton === index && (
-              <>
-                <Box className="action-buttons">
-                  <Button
-                    startIcon={<DeleteOutlineOutlinedIcon className="icon" />}
-                    className="secondary-text-btn"
-                    onClick={() => {
-                      this.setState({
-                        showConfirmPopup: true,
-                        roleId: row.id,
-                      });
-                    }}
-                  >
-                    Delete Role
-                  </Button>
-                  <Button
-                    startIcon={<EditCalendarIcon className="icon" />}
-                    className="secondary-text-btn"
-                    onClick={() => {
-                      this.setState({
-                        showCreateRoleControlModal: true,
-                        editRoleId: row.id,
-                      });
-                    }}
-                  >
-                    Edit Role
-                  </Button>
-                </Box>
-                <Box
-                  className="action-buttons-bg"
-                  onClick={() => this.handleActionButton(index)}
-                ></Box>
-              </>
-            )}
+            <Menu
+              className="common-list-menu"
+              id={`basic-menu-${row.id}`}
+              anchorEl={this.state.anchorEl}
+              open={actionButton === row.id}
+              onClose={() => this.handleActionButton(null, null)}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+            >
+              {this.renderDropDownData(row.id)}
+            </Menu>
           </TableCell>
         </TableRow>
       ));
@@ -275,7 +284,11 @@ class RoleControl extends Component {
           <TableCell colSpan={12}>
             <Box className="d-blck text-center w-100 h-100 ">
               <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-                <h5 className="m-t-0 m-b-0">{this.props.userPermissionData.status === status.FAILURE ? API_ERROR_MESSAGE : NO_DATA_FOUND}</h5>
+                <h5 className="m-t-0 m-b-0">
+                  {this.props.userPermissionData.status === status.FAILURE
+                    ? API_ERROR_MESSAGE
+                    : NO_DATA_FOUND}
+                </h5>
               </Box>
             </Box>
           </TableCell>

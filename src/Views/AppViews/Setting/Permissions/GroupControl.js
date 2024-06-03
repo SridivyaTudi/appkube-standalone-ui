@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -73,17 +73,38 @@ class GroupControl extends Component {
     }
   };
 
-  handleActionButton = (index) => {
-    const { actionButton } = this.state;
-    if (actionButton === null) {
-      this.setState({
-        actionButton: index,
-      });
-    } else {
-      this.setState({
-        actionButton: null,
-      });
-    }
+  handleActionButton = (index, anchorEl) => {
+    this.setState({
+      actionButton: index,
+      anchorEl,
+    });
+  };
+
+  renderDropDownData = (groupId) => {
+    return [
+      { label: "Delete Group", icon: "fas fa-trash-alt" },
+      { label: "Duplicate Group", icon: "fas fa-copy" },
+    ].map((data, index) => {
+      return (
+        <MenuItem
+          key={index}
+          onClick={() => {
+            index === 0 ? (
+              this.setState({
+                showConfirmPopup: true,
+                groupId,
+              })
+            ) : (
+              <></>
+            );
+            this.handleActionButton(null, null);
+          }}
+        >
+          <i className={data.icon} />
+          {data.label}
+        </MenuItem>
+      );
+    });
   };
 
   // Render Groups
@@ -97,7 +118,7 @@ class GroupControl extends Component {
       if (groupList?.length > 0) {
         groupList.forEach((groupData, index) => {
           retData.push(
-            <Box className="group-box" key={v4()}>
+            <Box className="group-box" key={index}>
               <Box className="heading">
                 <h4>{groupData.name}</h4>
                 {groupData.default ? (
@@ -125,40 +146,32 @@ class GroupControl extends Component {
                   className="action-btn"
                   aria-label="morevertIcon"
                   size="small"
-                  onClick={() => this.handleActionButton(index)}
+                  onClick={(e) =>
+                    this.handleActionButton(groupData.id, e.currentTarget)
+                  }
                 >
                   <MoreVertIcon fontSize="small" />
                 </IconButton>
-                {actionButton === index && (
-                  <>
-                    <Box className="action-buttons">
-                      <Button
-                        startIcon={
-                          <DeleteOutlineOutlinedIcon className="icon" />
-                        }
-                        className="secondary-text-btn"
-                        onClick={() => {
-                          this.setState({
-                            showConfirmPopup: true,
-                            groupId: groupData.id,
-                          });
-                        }}
-                      >
-                        Delete Group
-                      </Button>
-                      <Button
-                        startIcon={<ContentCopyIcon className="icon" />}
-                        className="secondary-text-btn"
-                      >
-                        Duplicate Group
-                      </Button>
-                    </Box>
-                    <Box
-                      className="action-buttons-bg"
-                      onClick={() => this.handleActionButton(index)}
-                    ></Box>
-                  </>
-                )}
+                <Menu
+                  className="common-list-menu"
+                  id={`basic-menu-${groupData.id}`}
+                  anchorEl={this.state.anchorEl}
+                  open={actionButton === groupData.id}
+                  onClose={() => this.handleActionButton(null, null)}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                  }}
+                >
+                  {this.renderDropDownData(groupData.id)}
+                </Menu>
               </Box>
               <Box className="group-data">
                 <Box className="data">
@@ -187,7 +200,11 @@ class GroupControl extends Component {
       } else {
         retData = (
           <Box className="group-loader h-100 width-100 text-center   p-t-20 p-b-20">
-            <h5 className="m-t-0 m-b-0">{this.props.userPermissionData.status === status.FAILURE ? API_ERROR_MESSAGE : NO_DATA_FOUND}</h5>
+            <h5 className="m-t-0 m-b-0">
+              {this.props.userPermissionData.status === status.FAILURE
+                ? API_ERROR_MESSAGE
+                : NO_DATA_FOUND}
+            </h5>
           </Box>
         );
       }

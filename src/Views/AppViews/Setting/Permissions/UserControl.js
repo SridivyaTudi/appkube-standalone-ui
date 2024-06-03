@@ -11,6 +11,8 @@ import {
   Paper,
   IconButton,
   TablePagination,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -123,17 +125,11 @@ class UserControl extends Component {
     });
   };
 
-  handleActionButton = (index) => {
-    const { actionButton } = this.state;
-    if (actionButton === null) {
-      this.setState({
-        actionButton: index,
-      });
-    } else {
-      this.setState({
-        actionButton: null,
-      });
-    }
+  handleActionButton = (index, anchorEl) => {
+    this.setState({
+      actionButton: index,
+      anchorEl,
+    });
   };
 
   //  Serach Users
@@ -211,6 +207,33 @@ class UserControl extends Component {
     );
   };
 
+  renderDropDownData = (userId) => {
+    return [
+      { label: " Disable User", icon: "fas fa-trash-alt" },
+      { label: " Edit User", icon: "fas fa-edit" },
+    ].map((data, index) => {
+      return (
+        <MenuItem
+          key={index}
+          onClick={() => {
+            index === 0 ? (
+              this.setState({
+                showConfirmPopup: true,
+                userId,
+              })
+            ) : (
+              <></>
+            );
+            this.handleActionButton(null, null);
+          }}
+        >
+          <i className={data.icon} />
+          {data.label}
+        </MenuItem>
+      );
+    });
+  };
+
   // Render body of table
   renderTableBody = () => {
     const { rows, pg, rpg, actionButton } = this.state;
@@ -218,7 +241,7 @@ class UserControl extends Component {
       <TableBody>
         {rows?.length ? (
           rows.slice(pg * rpg, pg * rpg + rpg).map((row, index) => (
-            <TableRow key={v4()}>
+            <TableRow key={index}>
               <TableCell>
                 <Link to={`${APP_PREFIX_PATH}/setting/user-profile/${row.id}`}>
                   {row.username}
@@ -250,40 +273,32 @@ class UserControl extends Component {
                   className="action-btn"
                   aria-label="morevertIcon"
                   size="small"
-                  onClick={() => this.handleActionButton(index)}
+                  onClick={(e) =>
+                    this.handleActionButton(row.id, e.currentTarget)
+                  }
                 >
                   <MoreVertIcon fontSize="small" />
                 </IconButton>
-                {actionButton === index && (
-                  <>
-                    <Box className="action-buttons">
-                      <Button
-                        startIcon={
-                          <DeleteOutlineOutlinedIcon className="icon" />
-                        }
-                        className="secondary-text-btn"
-                        onClick={() => {
-                          this.setState({
-                            showConfirmPopup: true,
-                            userId: row.id,
-                          });
-                        }}
-                      >
-                        Disable User
-                      </Button>
-                      <Button
-                        startIcon={<EditCalendarIcon className="icon" />}
-                        className="secondary-text-btn"
-                      >
-                        Edit User
-                      </Button>
-                    </Box>
-                    <Box
-                      className="action-buttons-bg"
-                      onClick={() => this.handleActionButton(index)}
-                    ></Box>
-                  </>
-                )}
+                <Menu
+                  className="common-list-menu"
+                  id={`basic-menu-${row.id}`}
+                  anchorEl={this.state.anchorEl}
+                  open={actionButton === row.id}
+                  onClose={() => this.handleActionButton(null, null)}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                  }}
+                >
+                  {this.renderDropDownData(row.id)}
+                </Menu>
               </TableCell>
             </TableRow>
           ))
@@ -292,7 +307,11 @@ class UserControl extends Component {
             <TableCell colSpan={12}>
               <Box className="d-blck text-center w-100 h-100 ">
                 <Box className="environment-loader  align-item-center justify-center p-t-20 p-b-20 ">
-                  <h5 className="m-t-0 m-b-0">{this.props.userPermissionData.status === status.FAILURE ? API_ERROR_MESSAGE : NO_DATA_FOUND}</h5>
+                  <h5 className="m-t-0 m-b-0">
+                    {this.props.userPermissionData.status === status.FAILURE
+                      ? API_ERROR_MESSAGE
+                      : NO_DATA_FOUND}
+                  </h5>
                 </Box>
               </Box>
             </TableCell>
