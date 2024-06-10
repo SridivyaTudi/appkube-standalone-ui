@@ -1295,8 +1295,7 @@ class Tier extends Component {
             >
               <Grid item xs={12}>
                 <Box className="d-block text-center">
-                  {(savedLayer.data && isShowDepolyedSection) ||
-                  selectedDeployedInstance === ADD_PRODUCT_ENUMS.SSL ? (
+                  {(savedLayer.data && isShowDepolyedSection) || selectedInstance >= 0 ? (
                     <LoadingButton
                       className={`primary-btn min-width-inherit  m-r-3`}
                       variant="contained"

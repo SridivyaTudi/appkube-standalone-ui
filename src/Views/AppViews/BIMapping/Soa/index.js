@@ -1405,7 +1405,7 @@ class Soa extends Component {
               >
                 <Grid item xs={12}>
                   <Box className="d-block text-center">
-                    {savedService.data ? (
+                    {savedService.data || selectedInstance >= 0 ? (
                       <LoadingButton
                         className={` primary-btn min-width-inherit m-r-3`}
                         variant="contained"
