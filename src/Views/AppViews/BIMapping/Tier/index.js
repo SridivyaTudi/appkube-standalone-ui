@@ -453,8 +453,14 @@ class Tier extends Component {
       <Box
         className={`deployed-section ${isShowDepolyedSection ? "m-t-4" : ""} `}
       >
-        <Box className="deployed-head">
-          <h4 className="m-t-0">Select Instance</h4>
+        <Box
+          className="deployed-head m-b-3 d-flex align-items-center"
+          justifyContent={"space-between"}
+        >
+          <h4 className="m-t-0 m-b-0">Select Instance</h4>
+          <Button className="primary-btn min-width" variant="contained">
+            Skip
+          </Button>
         </Box>
         <Box className="deployed-content">
           <Box className="instance-list-cards">
