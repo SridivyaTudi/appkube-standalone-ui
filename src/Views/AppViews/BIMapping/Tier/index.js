@@ -380,6 +380,7 @@ class Tier extends Component {
       elementType,
       landingZoneId,
     });
+
     this.setState({
       selectedDeployedInstance,
       selectedInstance: -1,
@@ -458,9 +459,6 @@ class Tier extends Component {
           justifyContent={"space-between"}
         >
           <h4 className="m-t-0 m-b-0">Select Instance</h4>
-          <Button className="primary-btn min-width" variant="contained">
-            Skip
-          </Button>
         </Box>
         <Box className="deployed-content">
           <Box className="instance-list-cards">
@@ -1229,6 +1227,13 @@ class Tier extends Component {
               {isShowDepolyedSection ||
               selectedDeployedInstance === ADD_PRODUCT_ENUMS.SSL ? (
                 <Box className="nginx-cards">
+                  <Button
+                    className="primary-btn min-width"
+                    variant="contained"
+                    onClick={this.onClickSave}
+                  >
+                    Skip
+                  </Button>
                   {this.renderDeployedInstanceWrapper()}
                   {this.renderSelectedInstanceWrapper()}
                 </Box>
@@ -1260,7 +1265,9 @@ class Tier extends Component {
                   </List>
                   <Box className="tabs-content">
                     <ManagementInfo
-                      style={{ display: activeTabEcs === 0 ? "block" : "none" }}
+                      style={{
+                        display: activeTabEcs === 0 ? "block" : "none",
+                      }}
                       setManagentInfo={(managementInfo) => {
                         this.setState({ managementInfo });
                       }}
@@ -1271,7 +1278,9 @@ class Tier extends Component {
                       setNextTab={(activeTabEcs) => {
                         this.setState({ activeTabEcs });
                       }}
-                      style={{ display: activeTabEcs === 1 ? "block" : "none" }}
+                      style={{
+                        display: activeTabEcs === 1 ? "block" : "none",
+                      }}
                       setConfigInfo={(configInfo) => {
                         this.setState({ configInfo });
                       }}

@@ -452,12 +452,11 @@ class Soa extends Component {
       <Box
         className={`deployed-section ${isShowDepolyedSection ? "m-t-4" : ""} `}
       >
-        <Box className="deployed-headm-b-3 d-flex align-items-center"
-          justifyContent={"space-between"}>
+        <Box
+          className="deployed-headm-b-3 d-flex align-items-center"
+          justifyContent={"space-between"}
+        >
           <h4 className="m-t-0 m-b-0">Select Instance</h4>
-          <Button className="primary-btn min-width" variant="contained">
-            Skip
-          </Button>
         </Box>
         <Box className="deployed-content">
           <Box className="instance-list-cards">
@@ -1342,6 +1341,13 @@ class Soa extends Component {
                 selectedDeployedInstance
               ) ? (
                 <Box className="nginx-cards">
+                  <Button
+                    className="primary-btn min-width"
+                    variant="contained"
+                    onClick={this.onClickSave}
+                  >
+                    Skip
+                  </Button>
                   {this.renderDeployedInstanceWrapper()}
                   {this.renderSelectedInstanceWrapper()}
                 </Box>
