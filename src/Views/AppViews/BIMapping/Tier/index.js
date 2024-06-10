@@ -1196,6 +1196,7 @@ class Tier extends Component {
       editStatus,
       configInfo,
       managementInfo,
+      savedLayer,
     } = this.state;
     let { biServicesFromProductCategory, creationBiMapping } = this.props;
     return (
@@ -1227,13 +1228,6 @@ class Tier extends Component {
               {isShowDepolyedSection ||
               selectedDeployedInstance === ADD_PRODUCT_ENUMS.SSL ? (
                 <Box className="nginx-cards">
-                  <Button
-                    className="primary-btn min-width"
-                    variant="contained"
-                    onClick={this.onClickSave}
-                  >
-                    Skip
-                  </Button>
                   {this.renderDeployedInstanceWrapper()}
                   {this.renderSelectedInstanceWrapper()}
                 </Box>
@@ -1289,36 +1283,48 @@ class Tier extends Component {
                   </Box>
                 </Box>
               </Box>
-              <Box className="width-100 m-t-3">
-                <Grid
-                  container
-                  rowSpacing={1}
-                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                >
-                  <Grid item xs={12}>
-                    <Box className="d-block text-center">
-                      <LoadingButton
-                        className={`primary-btn min-width-inherit`}
-                        variant="contained"
-                        disabled={
-                          creationBiMapping.status === status.IN_PROGRESS
-                        }
-                        loading={
-                          creationBiMapping.status === status.IN_PROGRESS
-                        }
-                        onClick={this.onClickSave}
-                      >
-                        Save
-                      </LoadingButton>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={4}></Grid>
-                </Grid>
-              </Box>
             </>
           ) : (
             <></>
           )}
+          <Box className="width-100 m-t-3">
+            <Grid
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            >
+              <Grid item xs={12}>
+                <Box className="d-block text-center">
+                  {(savedLayer.data && isShowDepolyedSection) ||
+                  selectedDeployedInstance === ADD_PRODUCT_ENUMS.SSL ? (
+                    <LoadingButton
+                      className={`primary-btn min-width-inherit  m-r-3`}
+                      variant="contained"
+                      disabled={creationBiMapping.status === status.IN_PROGRESS}
+                      loading={creationBiMapping.status === status.IN_PROGRESS}
+                      onClick={this.onClickSave}
+                    >
+                      Save
+                    </LoadingButton>
+                  ) : (
+                    <></>
+                  )}
+                  {isShowDepolyedSection || selectedDeployedInstance ? (
+                    <Button
+                      className="primary-btn min-width"
+                      variant="contained"
+                      onClick={this.onClickSave}
+                    >
+                      Skip
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={4}></Grid>
+            </Grid>
+          </Box>
         </Box>
       </Box>
     );

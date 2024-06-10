@@ -1300,7 +1300,7 @@ class Soa extends Component {
       configInfo,
       managementInfo,
       editStatus,
-      selectedDeployedInstance,
+      selectedDeployedInstance,savedService
     } = this.state;
     let {
       biServicesFromProductCategory,
@@ -1341,13 +1341,6 @@ class Soa extends Component {
                 selectedDeployedInstance
               ) ? (
                 <Box className="nginx-cards">
-                  <Button
-                    className="primary-btn min-width"
-                    variant="contained"
-                    onClick={this.onClickSave}
-                  >
-                    Skip
-                  </Button>
                   {this.renderDeployedInstanceWrapper()}
                   {this.renderSelectedInstanceWrapper()}
                 </Box>
@@ -1396,16 +1389,25 @@ class Soa extends Component {
                   </Box>
                 </Box>
               </Box>
-              <Box className="width-100 m-t-3">
-                <Grid
-                  container
-                  rowSpacing={1}
-                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                >
-                  <Grid item xs={12}>
-                    <Box className="d-block text-center">
+            </>
+          ) : (
+            <></>
+          )}
+          {isShowDepolyedSection ||
+          [ADD_PRODUCT_ENUMS.SSL, ADD_PRODUCT_ENUMS.APIGATEWAY].includes(
+            selectedDeployedInstance
+          ) ? (
+            <Box className="width-100 m-t-3">
+              <Grid
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={12}>
+                  <Box className="d-block text-center">
+                    {savedService.data ? (
                       <LoadingButton
-                        className={` primary-btn min-width-inherit`}
+                        className={` primary-btn min-width-inherit m-r-3`}
                         variant="contained"
                         onClick={this.onClickSave}
                         disabled={
@@ -1417,12 +1419,22 @@ class Soa extends Component {
                       >
                         Save
                       </LoadingButton>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={4}></Grid>
+                    ) : (
+                      <></>
+                    )}
+
+                    <Button
+                      className="primary-btn min-width"
+                      variant="contained"
+                      onClick={this.onClickSave}
+                    >
+                      Skip
+                    </Button>
+                  </Box>
                 </Grid>
-              </Box>
-            </>
+                <Grid item xs={4}></Grid>
+              </Grid>
+            </Box>
           ) : (
             <></>
           )}
