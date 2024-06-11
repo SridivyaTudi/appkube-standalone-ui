@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Box, Button, Grid, List, ListItem, IconButton } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  List,
+  ListItem,
+  IconButton,
+  skeletonClasses,
+} from "@mui/material";
 import ChartWebLayerIcon from "assets/img/assetmanager/chart-web-layer-icon.png";
 import ChartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png";
 import DataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png";
@@ -162,6 +170,13 @@ class Tier extends Component {
       managementInfo: [],
       configInfo: [],
       activeServiceCategory: "",
+      skipSteps: {
+        SSL: false,
+        web: false,
+        app: false,
+        data: false,
+        aux: false,
+      },
     };
   }
 
@@ -253,6 +268,17 @@ class Tier extends Component {
           this.props.navigate(`${APP_PREFIX_PATH}/bim`);
         }
       } else {
+        let resetData = {
+          SSL: false,
+          web: false,
+          app: false,
+          data: false,
+          aux: false,
+        };
+        this.setState({
+          skipSteps: resetData,
+          savedLayer: resetData,
+        });
         ToastMessage.error("Creation Of Add BI-mapping Failed.");
       }
     }
@@ -518,7 +544,7 @@ class Tier extends Component {
   };
 
   // Click on save btn
-  onClickSave = () => {
+  onClickSave = (isSkipStep = 0) => {
     let {
       savedLayer,
       savedData,
@@ -532,6 +558,7 @@ class Tier extends Component {
       configInfo,
       managementInfo,
       editStatus,
+      skipSteps,
     } = this.state;
     let { createProductFormData } = this.props;
     let layerName = "";
@@ -551,6 +578,10 @@ class Tier extends Component {
     } else if (!savedLayer.aux) {
       savedLayer.aux = true;
       layerName = "aux";
+    }
+
+    if (isSkipStep > 0) {
+      skipSteps[layerName] = true;
     }
     let currentSaveData = {
       layerName,
@@ -595,6 +626,7 @@ class Tier extends Component {
       managementInfo,
       editStatus: false,
       activeTabEcs: 0,
+      skipSteps,
     });
     let passData = JSON.parse(
       JSON.stringify({
@@ -831,6 +863,7 @@ class Tier extends Component {
       selectedLayer,
       dropDownLayersData,
       savedLayer,
+      skipSteps,
     } = this.state;
     return (
       <Box className="content-middle">
@@ -1157,7 +1190,8 @@ class Tier extends Component {
                       this.state.editStatus ? "delete-icons" : ""
                     }`}
                   >
-                    {selectedLayer[key] !== "" && savedLayer[key] ? (
+                    {(selectedLayer[key] !== "" && savedLayer[key]) ||
+                    (skipSteps[key] && !this.state.editStatus) ? (
                       <>
                         <IconButton className="check-icon">
                           <i class="fas fa-check"></i>
@@ -1197,8 +1231,10 @@ class Tier extends Component {
       configInfo,
       managementInfo,
       savedLayer,
+      skipSteps,
     } = this.state;
     let { biServicesFromProductCategory, creationBiMapping } = this.props;
+
     return (
       <Box className="bimapping-container">
         {this.renderHeading()}
@@ -1295,30 +1331,35 @@ class Tier extends Component {
             >
               <Grid item xs={12}>
                 <Box className="d-block text-center">
-                  {(savedLayer.data && isShowDepolyedSection) || selectedInstance >= 0 ? (
+                  {savedLayer.data || selectedInstance >= 0 ? (
                     <LoadingButton
                       className={`primary-btn min-width-inherit  m-r-3`}
                       variant="contained"
                       disabled={creationBiMapping.status === status.IN_PROGRESS}
-                      loading={creationBiMapping.status === status.IN_PROGRESS}
-                      onClick={this.onClickSave}
+                      loading={
+                        skipSteps.aux === false &&
+                        creationBiMapping.status === status.IN_PROGRESS
+                      }
+                      onClick={() => this.onClickSave()}
                     >
                       Save
                     </LoadingButton>
                   ) : (
                     <></>
                   )}
-                  {isShowDepolyedSection || selectedDeployedInstance ? (
-                    <Button
-                      className="primary-btn min-width"
-                      variant="contained"
-                      onClick={this.onClickSave}
-                    >
-                      Skip
-                    </Button>
-                  ) : (
-                    <></>
-                  )}
+
+                  <LoadingButton
+                    className="primary-btn min-width"
+                    variant="contained"
+                    disabled={creationBiMapping.status === status.IN_PROGRESS}
+                    loading={
+                      skipSteps.aux === true &&
+                      creationBiMapping.status === status.IN_PROGRESS
+                    }
+                    onClick={() => this.onClickSave(1)}
+                  >
+                    Skip
+                  </LoadingButton>
                 </Box>
               </Grid>
               <Grid item xs={4}></Grid>

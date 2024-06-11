@@ -172,6 +172,13 @@ class Soa extends Component {
         data: false,
         other: false,
       },
+      skipSteps: {
+        SSL: false,
+        APIGATEWAY: false,
+        app: false,
+        data: false,
+        other: false,
+      },
       dropDownServiceData: {
         appService: [],
         dataService: [],
@@ -578,14 +585,20 @@ class Soa extends Component {
 
     if (editId >= 0 && soaData[editId]?.values) {
       try {
-        let { savedService, savedData, selectedService, selectedServiceData } =
-          soaData[editId]?.values;
+        let {
+          savedService,
+          savedData,
+          selectedService,
+          selectedServiceData,
+          skipSteps,
+        } = soaData[editId]?.values;
 
         this.setState({
           savedService: JSON.parse(JSON.stringify(savedService)),
           savedData: JSON.parse(JSON.stringify(savedData)),
           selectedService: JSON.parse(JSON.stringify(selectedService)),
           selectedServiceData: JSON.parse(JSON.stringify(selectedServiceData)),
+          skipSteps: JSON.parse(JSON.stringify(skipSteps)),
         });
       } catch (error) {
         console.log(error);
@@ -601,7 +614,7 @@ class Soa extends Component {
   };
 
   // Click on save btn
-  onClickSave = () => {
+  onClickSave = (isSkipStep = 0) => {
     let {
       savedService,
       savedData,
@@ -616,6 +629,7 @@ class Soa extends Component {
       managementInfo,
       editStatus,
       commonServiceModules,
+      skipSteps,
     } = this.state;
     let { createProductFormData } = this.props;
     let serviceName = "";
@@ -656,6 +670,9 @@ class Soa extends Component {
     } else {
       savedData.push(currentData);
     }
+    if (isSkipStep) {
+      skipSteps[serviceName] = true;
+    }
 
     selectedInstance = -1;
     selectedDeployedInstance = "";
@@ -672,6 +689,7 @@ class Soa extends Component {
       isShowDepolyedSection,
       configInfo,
       managementInfo,
+      skipSteps,
     });
 
     if (savedService.other) {
@@ -680,6 +698,7 @@ class Soa extends Component {
         savedData,
         selectedService,
         selectedServiceData,
+        skipSteps,
       };
       let soaData = JSON.parse(
         JSON.stringify(createProductFormData.soaData || [])
@@ -950,6 +969,7 @@ class Soa extends Component {
       selectedServiceData,
       dropDownServiceData,
       savedService,
+      skipSteps,
     } = this.state;
     let { cloud } = this.getUrlDetails();
     return (
@@ -1249,7 +1269,8 @@ class Soa extends Component {
                       this.state.editStatus ? "delete-icons" : ""
                     }`}
                   >
-                    {selectedServiceData[key] !== "" && savedService[key] ? (
+                    {(selectedServiceData[key] !== "" && savedService[key]) ||
+                    skipSteps[key] ? (
                       <>
                         <IconButton className="check-icon">
                           <i class="fas fa-check"></i>
@@ -1300,7 +1321,9 @@ class Soa extends Component {
       configInfo,
       managementInfo,
       editStatus,
-      selectedDeployedInstance,savedService
+      selectedDeployedInstance,
+      savedService,
+      skipSteps,
     } = this.state;
     let {
       biServicesFromProductCategory,
@@ -1393,51 +1416,49 @@ class Soa extends Component {
           ) : (
             <></>
           )}
-          {isShowDepolyedSection ||
-          [ADD_PRODUCT_ENUMS.SSL, ADD_PRODUCT_ENUMS.APIGATEWAY].includes(
-            selectedDeployedInstance
-          ) ? (
-            <Box className="width-100 m-t-3">
-              <Grid
-                container
-                rowSpacing={1}
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              >
-                <Grid item xs={12}>
-                  <Box className="d-block text-center">
-                    {savedService.data || selectedInstance >= 0 ? (
-                      <LoadingButton
-                        className={` primary-btn min-width-inherit m-r-3`}
-                        variant="contained"
-                        onClick={this.onClickSave}
-                        disabled={
-                          creationBiMapping.status === status.IN_PROGRESS
-                        }
-                        loading={
-                          creationBiMapping.status === status.IN_PROGRESS
-                        }
-                      >
-                        Save
-                      </LoadingButton>
-                    ) : (
-                      <></>
-                    )}
 
-                    <Button
-                      className="primary-btn min-width"
+          <Box className="width-100 m-t-3">
+            <Grid
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            >
+              <Grid item xs={12}>
+                <Box className="d-block text-center">
+                  {savedService.data || selectedInstance >= 0 ? (
+                    <LoadingButton
+                      className={` primary-btn min-width-inherit m-r-3`}
                       variant="contained"
-                      onClick={this.onClickSave}
+                      onClick={() => this.onClickSave()}
+                      disabled={creationBiMapping.status === status.IN_PROGRESS}
+                      loading={
+                        !skipSteps.other &&
+                        creationBiMapping.status === status.IN_PROGRESS
+                      }
                     >
-                      Skip
-                    </Button>
-                  </Box>
-                </Grid>
-                <Grid item xs={4}></Grid>
+                      Save
+                    </LoadingButton>
+                  ) : (
+                    <></>
+                  )}
+
+                  <LoadingButton
+                    className="primary-btn min-width"
+                    variant="contained"
+                    onClick={() => this.onClickSave(1)}
+                    disabled={creationBiMapping.status === status.IN_PROGRESS}
+                    loading={
+                      skipSteps.other &&
+                      creationBiMapping.status === status.IN_PROGRESS
+                    }
+                  >
+                    Skip
+                  </LoadingButton>
+                </Box>
               </Grid>
-            </Box>
-          ) : (
-            <></>
-          )}
+              <Grid item xs={4}></Grid>
+            </Grid>
+          </Box>
         </Box>
       </Box>
     );
