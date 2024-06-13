@@ -194,12 +194,13 @@ class Tier extends Component {
 
     if (createProductFormData["3_tierData"]) {
       try {
-        let { savedLayer, savedData, selectedLayer } =
+        let { savedLayer, savedData, selectedLayer, skipSteps } =
           createProductFormData["3_tierData"];
         this.setState({
           savedLayer: JSON.parse(JSON.stringify(savedLayer)),
           savedData: JSON.parse(JSON.stringify(savedData)),
           selectedLayer: JSON.parse(JSON.stringify(selectedLayer)),
+          skipSteps: JSON.parse(JSON.stringify(skipSteps)),
         });
       } catch (error) {
         console.log(error);
@@ -355,7 +356,14 @@ class Tier extends Component {
 
   // Render Deployed cards
   renderDeployedInstances = () => {
-    let { cloudServices, selectedDeployedInstance } = this.state;
+    let {
+      cloudServices,
+      selectedDeployedInstance,
+      layerName,
+      selectedLayer,
+      editStatus,
+    } = this.state;
+
     let cloudStatus = this.props.cloudServices?.status;
     let instanceStatus =
       this.props.instancesServices?.status !== status.IN_PROGRESS;
@@ -372,17 +380,15 @@ class Tier extends Component {
           return (
             <VerticalTitleAndIconOfCard
               data={deployInstances}
-              onClickCard={(title) =>
-                instanceStatus ? (
+              onClickCard={(title) => {
+                if (instanceStatus) {
                   this.onClickDeployedCard(
                     instance.id,
                     instance.name,
                     instance.elementType
-                  )
-                ) : (
-                  <></>
-                )
-              }
+                  );
+                }
+              }}
             />
           );
         });
@@ -562,51 +568,76 @@ class Tier extends Component {
     } = this.state;
     let { createProductFormData } = this.props;
     let layerName = "";
+    let skipArr = Object.keys(skipSteps) || [];
+    let isAllSkipStep = true;
 
-    if (!savedLayer.SSL) {
-      savedLayer.SSL = true;
-      layerName = "SSL";
-    } else if (!savedLayer.web) {
-      savedLayer.web = true;
-      layerName = "web";
-    } else if (!savedLayer.app) {
-      savedLayer.app = true;
-      layerName = "app";
-    } else if (!savedLayer.data) {
-      savedLayer.data = true;
-      layerName = "data";
-    } else if (!savedLayer.aux) {
-      savedLayer.aux = true;
-      layerName = "aux";
-    }
-
-    if (isSkipStep > 0) {
-      skipSteps[layerName] = true;
-    }
-    let currentSaveData = {
-      layerName,
-      selectedInstance,
-      selectedDeployedInstance,
-      selectedService,
-      cloudElementType,
-      cloudName,
-      configInfo,
-      managementInfo,
-    };
-    if (editStatus) {
-      savedData = savedData.map((previousData) => {
-        if (previousData.layerName === layerName) {
-          return currentSaveData;
-        }
-        return previousData;
-      });
+    skipArr.forEach((skip) => {
+      if (!skipSteps[skip]) {
+        isAllSkipStep = false;
+      }
+    });
+    let saveBtnCheck =
+      savedLayer.SSL &&
+      savedLayer.web &&
+      savedLayer.app &&
+      savedLayer.data &&
+      savedLayer.aux &&
+      !isSkipStep;
+    if (saveBtnCheck) {
+      if (isAllSkipStep) {
+        ToastMessage.error("Please save the at least one layer.");
+        return 0;
+      } else {
+        this.addBiMappingAPICall(savedData);
+      }
     } else {
-      savedData.push(currentSaveData);
-    }
+      if (!savedLayer.SSL) {
+        savedLayer.SSL = true;
+        layerName = "SSL";
+      } else if (!savedLayer.web) {
+        savedLayer.web = true;
+        layerName = "web";
+      } else if (!savedLayer.app) {
+        savedLayer.app = true;
+        layerName = "app";
+      } else if (!savedLayer.data) {
+        savedLayer.data = true;
+        layerName = "data";
+      } else if (!savedLayer.aux) {
+        savedLayer.aux = true;
+        layerName = "aux";
+      }
+      let currentSaveData = {
+        layerName,
+        selectedInstance,
+        selectedDeployedInstance,
+        selectedService,
+        cloudElementType,
+        cloudName,
+        configInfo,
+        managementInfo,
+      };
 
-    if (savedLayer.aux) {
-      this.addBiMappingAPICall(savedData);
-    } else {
+      if (isSkipStep) {
+        currentSaveData["selectedInstance"] = -1;
+        currentSaveData["selectedDeployedInstance"] = "";
+        currentSaveData["selectedService"] = [];
+        currentSaveData["configInfo"] = [];
+        currentSaveData["managementInfo"] = [];
+        selectedLayer[layerName] = "";
+      }
+
+      if (editStatus) {
+        savedData = savedData.map((previousData) => {
+          if (previousData.layerName === layerName) {
+            return currentSaveData;
+          }
+          return previousData;
+        });
+      } else {
+        savedData.push(currentSaveData);
+      }
+
       selectedInstance = -1;
       selectedDeployedInstance = "";
       selectedService = [];
@@ -614,6 +645,8 @@ class Tier extends Component {
       configInfo = [];
       managementInfo = [];
     }
+
+    skipSteps[layerName] = isSkipStep > 0 ? true : false;
 
     this.setState({
       savedLayer,
@@ -631,7 +664,7 @@ class Tier extends Component {
     let passData = JSON.parse(
       JSON.stringify({
         ...createProductFormData,
-        "3_tierData": { savedLayer, savedData, selectedLayer },
+        "3_tierData": { savedLayer, savedData, selectedLayer, skipSteps },
         soaData: null,
       })
     );
@@ -685,8 +718,13 @@ class Tier extends Component {
 
   // Click on edit btn.
   onClickEditBtn = (layerName) => {
-    let { savedData, savedLayer, isShowDepolyedSection, selectedLayer } =
-      this.state;
+    let {
+      savedData,
+      savedLayer,
+      isShowDepolyedSection,
+      selectedLayer,
+      skipSteps,
+    } = this.state;
 
     let findSaveData = savedData.find((data) => data.layerName === layerName);
 
@@ -722,11 +760,15 @@ class Tier extends Component {
         }
       });
 
-      if (selectedDeployedInstance === ADD_PRODUCT_ENUMS.SSL) {
+      if (layerName === ADD_PRODUCT_ENUMS.SSL) {
         isShowDepolyedSection = false;
+        selectedLayer[ADD_PRODUCT_ENUMS.SSL] = ADD_PRODUCT_ENUMS.SSL;
+        selectedDeployedInstance = ADD_PRODUCT_ENUMS.SSL;
       } else {
-        isShowDepolyedSection = true;
-        this.onClickLayerDropDown(layerName, selectedLayer[layerName]);
+        if (!skipSteps[layerName]) {
+          isShowDepolyedSection = true;
+          this.onClickLayerDropDown(layerName, selectedLayer[layerName]);
+        }
       }
 
       this.setState({
@@ -738,6 +780,7 @@ class Tier extends Component {
         isShowDepolyedSection,
         managementInfo,
         configInfo,
+        layerName,
       });
     }
   };
@@ -1140,17 +1183,11 @@ class Tier extends Component {
                     <ListItem
                       key={v4()}
                       onClick={() =>
-                        layer?.status?.toUpperCase() === STATUS.ACTIVE ? (
-                          this.onClickLayerDropDown("aux", layer.name)
-                        ) : (
-                          <></>
-                        )
+                        this.onClickLayerDropDown("aux", layer.name)
                       }
-                      className={`${
-                        layer?.status?.toUpperCase() === STATUS.ACTIVE
-                          ? ""
-                          : "disabled"
-                      } ${selectedLayer.aux === layer.name ? "active" : ""}`}
+                      className={` ${
+                        selectedLayer.aux === layer.name ? "active" : ""
+                      }`}
                     >
                       <i className="fa-solid fa-circle-dot"></i>
                       <HtmlTooltip
@@ -1191,11 +1228,16 @@ class Tier extends Component {
                     }`}
                   >
                     {(selectedLayer[key] !== "" && savedLayer[key]) ||
-                    (skipSteps[key] && !this.state.editStatus) ? (
+                    (skipSteps[key] && savedLayer[key]) ? (
                       <>
-                        <IconButton className="check-icon">
-                          <i class="fas fa-check"></i>
-                        </IconButton>
+                        {skipSteps[key] ? (
+                          <></>
+                        ) : (
+                          <IconButton className="check-icon">
+                            <i class="fas fa-check"></i>
+                          </IconButton>
+                        )}
+
                         <IconButton
                           className="edit-icon"
                           onClick={() => {
@@ -1231,10 +1273,16 @@ class Tier extends Component {
       configInfo,
       managementInfo,
       savedLayer,
+      selectedLayer,
       skipSteps,
     } = this.state;
     let { biServicesFromProductCategory, creationBiMapping } = this.props;
-
+    let isSaveBtnShow =
+      savedLayer.SSL &&
+      savedLayer.web &&
+      savedLayer.app &&
+      savedLayer.data &&
+      savedLayer.aux;
     return (
       <Box className="bimapping-container">
         {this.renderHeading()}
@@ -1331,15 +1379,12 @@ class Tier extends Component {
             >
               <Grid item xs={12}>
                 <Box className="d-block text-center">
-                  {savedLayer.data || selectedInstance >= 0 ? (
+                  {selectedInstance >= 0 || isSaveBtnShow ? (
                     <LoadingButton
                       className={`primary-btn min-width-inherit  m-r-3`}
                       variant="contained"
                       disabled={creationBiMapping.status === status.IN_PROGRESS}
-                      loading={
-                        skipSteps.aux === false &&
-                        creationBiMapping.status === status.IN_PROGRESS
-                      }
+                      loading={creationBiMapping.status === status.IN_PROGRESS}
                       onClick={() => this.onClickSave()}
                     >
                       Save
@@ -1347,19 +1392,17 @@ class Tier extends Component {
                   ) : (
                     <></>
                   )}
-
-                  <LoadingButton
-                    className="primary-btn min-width"
-                    variant="contained"
-                    disabled={creationBiMapping.status === status.IN_PROGRESS}
-                    loading={
-                      skipSteps.aux === true &&
-                      creationBiMapping.status === status.IN_PROGRESS
-                    }
-                    onClick={() => this.onClickSave(1)}
-                  >
-                    Skip
-                  </LoadingButton>
+                  {isSaveBtnShow ? (
+                    <></>
+                  ) : (
+                    <LoadingButton
+                      className="primary-btn min-width"
+                      variant="contained"
+                      onClick={() => this.onClickSave(1)}
+                    >
+                      Skip
+                    </LoadingButton>
+                  )}
                 </Box>
               </Grid>
               <Grid item xs={4}></Grid>
