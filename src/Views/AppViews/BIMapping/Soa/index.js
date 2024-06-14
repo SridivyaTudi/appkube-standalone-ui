@@ -48,6 +48,7 @@ import { setProductIntoDepartment } from "Redux/BIMapping/BIMappingSlice";
 import InstanceListCards from "Views/AppViews/BIMapping/Components/InstanceListCards";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { LOGOS, SERVICE_TYPE, STATUS } from "CommonData";
+import { ToastMessage } from "Toast/ToastMessage";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <CommonTooltip {...props} arrow classes={{ popper: className }} />
@@ -315,8 +316,11 @@ class Soa extends Component {
 
   // Toggle app service dropdown.
   toggleAppService = () => {
-    let { savedService } = this.state;
-    if (savedService.APIGATEWAY && !savedService.app) {
+    let { savedService, editStatus, serviceName } = this.state;
+    if (
+      (savedService.APIGATEWAY && !savedService.app && !editStatus) ||
+      (editStatus && serviceName === "app")
+    ) {
       this.setState({
         isSelectSpringBootOpen: !this.state.isSelectSpringBootOpen,
       });
@@ -325,8 +329,11 @@ class Soa extends Component {
 
   // Toggle data service dropdown.
   toggleDataLayer = () => {
-    let { savedService } = this.state;
-    if (savedService.app && !savedService.data) {
+    let { savedService, editStatus, serviceName } = this.state;
+    if (
+      (savedService.app && !savedService.data && !editStatus) ||
+      (editStatus && serviceName === "data")
+    ) {
       this.setState({
         isSelectMySQLOpen: !this.state.isSelectMySQLOpen,
       });
@@ -335,8 +342,11 @@ class Soa extends Component {
 
   // Toggle other service dropdown.
   toggleOtherServices = () => {
-    let { savedService } = this.state;
-    if (savedService.data && !savedService.other) {
+    let { savedService, editStatus, serviceName } = this.state;
+    if (
+      (savedService.data && !savedService.other && !editStatus) ||
+      (editStatus && serviceName === "other")
+    ) {
       this.setState({
         isSelectRedisOpen: !this.state.isSelectRedisOpen,
       });
@@ -478,7 +488,8 @@ class Soa extends Component {
 
   // Click on service dropdown.
   onClickServiceDropDown = (key, value) => {
-    let { selectedServiceData, activeServiceCategory } = this.state;
+    let { selectedServiceData, activeServiceCategory, serviceName } =
+      this.state;
     selectedServiceData[key] = value;
 
     if (activeServiceCategory !== key) {
@@ -631,55 +642,155 @@ class Soa extends Component {
       commonServiceModules,
       skipSteps,
     } = this.state;
+
     let { createProductFormData } = this.props;
     let serviceName = "";
-    if (!savedService.SSL) {
-      savedService.SSL = true;
-      serviceName = "SSL";
-    } else if (!savedService.APIGATEWAY) {
-      savedService.APIGATEWAY = true;
-      serviceName = "APIGATEWAY";
-    } else if (!savedService.app) {
-      savedService.app = true;
-      serviceName = "app";
-    } else if (!savedService.data) {
-      savedService.data = true;
-      serviceName = "data";
-    } else if (!savedService.other) {
-      savedService.other = true;
-      serviceName = "other";
-    }
-    let currentData = {
-      serviceName,
-      selectedInstance,
-      selectedDeployedInstance,
-      selectedService,
-      cloudElementType,
-      cloudName,
-      configInfo,
-      managementInfo,
-    };
 
-    if (editStatus) {
-      savedData = savedData.map((previousData) => {
-        if (previousData.serviceName === serviceName) {
-          return currentData;
+    let skipArr = Object.keys(skipSteps) || [];
+    let isAllSkipStep = true;
+
+    skipArr.forEach((skip) => {
+      if (!skipSteps[skip]) {
+        isAllSkipStep = false;
+      }
+    });
+    let saveBtnCheck =
+      savedService.SSL &&
+      savedService.APIGATEWAY &&
+      savedService.app &&
+      savedService.data &&
+      savedService.other &&
+      !isSkipStep;
+
+    if (saveBtnCheck) {
+      if (isAllSkipStep) {
+        ToastMessage.error("Please save the at least one service.");
+        return 0;
+      } else {
+        const refChange = JSON.parse(JSON.stringify(createProductFormData));
+        let editStausFromRedux = refChange?.editStatus;
+
+        let appendSoaData = {
+          savedService,
+          savedData,
+          selectedService,
+          selectedServiceData,
+          skipSteps,
+        };
+        let soaData = JSON.parse(
+          JSON.stringify(createProductFormData.soaData || [])
+        );
+        let editId = createProductFormData["editServiceId"];
+
+        if (commonServiceModules.includes(editId)) {
+          soaData.forEach((soa, index) => {
+            if (soa.currentCommonService === editId) {
+              editId = index;
+            }
+          });
         }
-        return previousData;
-      });
+
+        let currentCommonService =
+          createProductFormData.serviceType === "common"
+            ? createProductFormData.currentCommonService
+            : "";
+        if ((editStatus || editStausFromRedux) && editId >= 0) {
+          soaData[editId].values = appendSoaData;
+        } else {
+          if (soaData.length) {
+            soaData.push({
+              module: createProductFormData.moduleName,
+              values: appendSoaData,
+              service: createProductFormData.serviceType,
+              currentCommonService,
+            });
+          } else {
+            soaData = [
+              {
+                module: createProductFormData.moduleName,
+                values: appendSoaData,
+                service: createProductFormData.serviceType,
+                currentCommonService,
+              },
+            ];
+          }
+        }
+
+        let passData = JSON.parse(
+          JSON.stringify({
+            ...createProductFormData,
+            soaData,
+            "3_tierData": null,
+            currentCommonService: "",
+            moduleName: "",
+          })
+        );
+
+        this.props.setProductIntoDepartment(passData);
+        let { name, id, landingZoneId, cloud } = this.getUrlDetails();
+        this.props.navigate(
+          `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/${cloud}/product-category`
+        );
+      }
     } else {
-      savedData.push(currentData);
-    }
-    if (isSkipStep) {
-      skipSteps[serviceName] = true;
+      if (!savedService.SSL) {
+        savedService.SSL = true;
+        serviceName = "SSL";
+      } else if (!savedService.APIGATEWAY) {
+        savedService.APIGATEWAY = true;
+        serviceName = "APIGATEWAY";
+      } else if (!savedService.app) {
+        savedService.app = true;
+        serviceName = "app";
+      } else if (!savedService.data) {
+        savedService.data = true;
+        serviceName = "data";
+      } else if (!savedService.other) {
+        savedService.other = true;
+        serviceName = "other";
+      }
+
+      let currentData = {
+        serviceName,
+        selectedInstance,
+        selectedDeployedInstance,
+        selectedService,
+        cloudElementType,
+        cloudName,
+        configInfo,
+        managementInfo,
+      };
+
+      if (isSkipStep) {
+        currentData["selectedInstance"] = -1;
+        currentData["selectedDeployedInstance"] = "";
+        currentData["selectedService"] = [];
+        currentData["configInfo"] = [];
+        currentData["managementInfo"] = [];
+        selectedServiceData[serviceName] = "";
+      }
+
+      if (editStatus) {
+        savedData = savedData.map((previousData) => {
+          if (previousData.serviceName === serviceName) {
+            return currentData;
+          }
+          return previousData;
+        });
+      } else {
+        savedData.push(currentData);
+      }
+
+      selectedInstance = -1;
+      selectedDeployedInstance = "";
+      selectedService = [];
+      isShowDepolyedSection = false;
+      configInfo = [];
+      managementInfo = [];
     }
 
-    selectedInstance = -1;
-    selectedDeployedInstance = "";
-    selectedService = [];
-    isShowDepolyedSection = false;
-    configInfo = [];
-    managementInfo = [];
+    skipSteps[serviceName] = isSkipStep > 0 ? true : false;
+
     this.setState({
       savedService,
       savedData,
@@ -691,69 +802,6 @@ class Soa extends Component {
       managementInfo,
       skipSteps,
     });
-
-    if (savedService.other) {
-      let appendSoaData = {
-        savedService,
-        savedData,
-        selectedService,
-        selectedServiceData,
-        skipSteps,
-      };
-      let soaData = JSON.parse(
-        JSON.stringify(createProductFormData.soaData || [])
-      );
-      let editId = createProductFormData["editServiceId"];
-      if (commonServiceModules.includes(editId)) {
-        soaData.forEach((soa, index) => {
-          if (soa.currentCommonService === editId) {
-            editId = index;
-          }
-        });
-      }
-
-      let currentCommonService =
-        createProductFormData.serviceType === "common"
-          ? createProductFormData.currentCommonService
-          : "";
-      if (editStatus && editId >= 0) {
-        soaData[editId].values = appendSoaData;
-      } else {
-        if (soaData.length) {
-          soaData.push({
-            module: createProductFormData.moduleName,
-            values: appendSoaData,
-            service: createProductFormData.serviceType,
-            currentCommonService,
-          });
-        } else {
-          soaData = [
-            {
-              module: createProductFormData.moduleName,
-              values: appendSoaData,
-              service: createProductFormData.serviceType,
-              currentCommonService,
-            },
-          ];
-        }
-      }
-
-      let passData = JSON.parse(
-        JSON.stringify({
-          ...createProductFormData,
-          soaData,
-          "3_tierData": null,
-          currentCommonService: "",
-          moduleName: "",
-        })
-      );
-
-      this.props.setProductIntoDepartment(passData);
-      let { name, id, landingZoneId, cloud } = this.getUrlDetails();
-      this.props.navigate(
-        `${APP_PREFIX_PATH}/bim/add-product/${name}/${id}/${landingZoneId}/${cloud}/product-category`
-      );
-    }
   };
 
   // On click instance
@@ -794,12 +842,23 @@ class Soa extends Component {
     let {
       savedData,
       savedService,
-      activeServiceCategory,
       isShowDepolyedSection,
+      skipSteps,
+      selectedServiceData,
+      selectedDeployedInstance,
+      editStatus,
     } = this.state;
+
     let findSaveData = savedData.find(
       (data) => data.serviceName === serviceName
     );
+
+    Object.keys(skipSteps).forEach((step) => {
+      if (skipSteps[step]) {
+        selectedServiceData[step] = "";
+        selectedDeployedInstance = "";
+      }
+    });
 
     if (findSaveData) {
       let {
@@ -812,26 +871,30 @@ class Soa extends Component {
         configInfo,
       } = findSaveData;
       let { landingZoneId } = this.getUrlDetails();
+      let isSslApigateway = [
+        ADD_PRODUCT_ENUMS.SSL,
+        ADD_PRODUCT_ENUMS.APIGATEWAY,
+      ].includes(serviceName);
 
-      if (
-        [ADD_PRODUCT_ENUMS.SSL, ADD_PRODUCT_ENUMS.APIGATEWAY].includes(
-          selectedDeployedInstance
-        )
-      ) {
+      if (isSslApigateway) {
         isShowDepolyedSection = false;
+        selectedServiceData[serviceName] = serviceName;
+        selectedDeployedInstance = serviceName;
       } else {
-        isShowDepolyedSection = true;
-        this.props.getCloudServices({
-          serviceCategory: serviceName,
-          productCategory: PRODUCT_CATEGORY_ENUM.SOA,
-        });
+        if (!skipSteps[serviceName]) {
+          isShowDepolyedSection = true;
+          this.props.getCloudServices({
+            serviceCategory: serviceName,
+            productCategory: PRODUCT_CATEGORY_ENUM.SOA,
+          });
+        } else {
+          isShowDepolyedSection = false;
+        }
       }
-
-      activeServiceCategory = serviceName;
 
       this.props.getInstancesServices({
         cloudName,
-        elementType,
+        elementType: isSslApigateway ? serviceName : elementType,
         landingZoneId,
       });
 
@@ -857,8 +920,11 @@ class Soa extends Component {
         isShowDepolyedSection,
         managementInfo,
         configInfo,
-        activeServiceCategory,
+        serviceName,
+        selectedServiceData,
       });
+    } else {
+      this.setState({ selectedServiceData, selectedDeployedInstance });
     }
   };
 
@@ -1270,11 +1336,15 @@ class Soa extends Component {
                     }`}
                   >
                     {(selectedServiceData[key] !== "" && savedService[key]) ||
-                    skipSteps[key] ? (
+                    (skipSteps[key] && savedService[key]) ? (
                       <>
-                        <IconButton className="check-icon">
-                          <i class="fas fa-check"></i>
-                        </IconButton>
+                        {skipSteps[key] ? (
+                          <></>
+                        ) : (
+                          <IconButton className="check-icon">
+                            <i class="fas fa-check"></i>
+                          </IconButton>
+                        )}
                         <IconButton
                           className="edit-icon"
                           onClick={() => {
@@ -1330,6 +1400,12 @@ class Soa extends Component {
       createProductFormData,
       creationBiMapping,
     } = this.props;
+    let isSaveBtnShow =
+      savedService.SSL &&
+      savedService.APIGATEWAY &&
+      savedService.app &&
+      savedService.data &&
+      savedService.other;
 
     return (
       <Box className="bimapping-container">
@@ -1374,45 +1450,43 @@ class Soa extends Component {
           </Grid>
 
           {selectedInstance >= 0 ? (
-            <>
-              <Box className="nginx-section">
-                <Box className="tabs">
-                  <List className="tabs-menu">
-                    {this.tabMappingECS.map((tabData, index) => {
-                      return (
-                        <ListItem
-                          key={`ops-tab-${index}`}
-                          className={index === activeTabEcs ? "active" : ""}
-                          onClick={() => this.setActiveTab(index, 1)}
-                        >
-                          <Box className="m-r-2">
-                            <img src={tabData.image} alt="" />
-                          </Box>
-                          {tabData.name}
-                        </ListItem>
-                      );
-                    })}
-                  </List>
-                  <Box className="tabs-content">
-                    <ManagementInfo
-                      style={{ display: activeTabEcs === 0 ? "" : "none" }}
-                      setManagentInfo={(managementInfo) => {
-                        this.setState({ managementInfo });
-                      }}
-                      currentActiveData={editStatus ? managementInfo : null}
-                    />
+            <Box className="nginx-section">
+              <Box className="tabs">
+                <List className="tabs-menu">
+                  {this.tabMappingECS.map((tabData, index) => {
+                    return (
+                      <ListItem
+                        key={`ops-tab-${index}`}
+                        className={index === activeTabEcs ? "active" : ""}
+                        onClick={() => this.setActiveTab(index, 1)}
+                      >
+                        <Box className="m-r-2">
+                          <img src={tabData.image} alt="" />
+                        </Box>
+                        {tabData.name}
+                      </ListItem>
+                    );
+                  })}
+                </List>
+                <Box className="tabs-content">
+                  <ManagementInfo
+                    style={{ display: activeTabEcs === 0 ? "" : "none" }}
+                    setManagentInfo={(managementInfo) => {
+                      this.setState({ managementInfo });
+                    }}
+                    currentActiveData={editStatus ? managementInfo : null}
+                  />
 
-                    <ConfigInfo
-                      style={{ display: activeTabEcs === 1 ? "" : "none" }}
-                      setConfigInfo={(configInfo) => {
-                        this.setState({ configInfo });
-                      }}
-                      currentActiveData={editStatus ? configInfo : null}
-                    />
-                  </Box>
+                  <ConfigInfo
+                    style={{ display: activeTabEcs === 1 ? "" : "none" }}
+                    setConfigInfo={(configInfo) => {
+                      this.setState({ configInfo });
+                    }}
+                    currentActiveData={editStatus ? configInfo : null}
+                  />
                 </Box>
               </Box>
-            </>
+            </Box>
           ) : (
             <></>
           )}
@@ -1425,7 +1499,7 @@ class Soa extends Component {
             >
               <Grid item xs={12}>
                 <Box className="d-block text-center">
-                  {savedService.data || selectedInstance >= 0 ? (
+                  {isSaveBtnShow || selectedInstance >= 0 ? (
                     <LoadingButton
                       className={` primary-btn min-width-inherit m-r-3`}
                       variant="contained"
@@ -1442,18 +1516,17 @@ class Soa extends Component {
                     <></>
                   )}
 
-                  <LoadingButton
-                    className="primary-btn min-width"
-                    variant="contained"
-                    onClick={() => this.onClickSave(1)}
-                    disabled={creationBiMapping.status === status.IN_PROGRESS}
-                    loading={
-                      skipSteps.other &&
-                      creationBiMapping.status === status.IN_PROGRESS
-                    }
-                  >
-                    Skip
-                  </LoadingButton>
+                  {isSaveBtnShow ? (
+                    <></>
+                  ) : (
+                    <LoadingButton
+                      className="primary-btn min-width"
+                      variant="contained"
+                      onClick={() => this.onClickSave(1)}
+                    >
+                      Skip
+                    </LoadingButton>
+                  )}
                 </Box>
               </Grid>
               <Grid item xs={4}></Grid>

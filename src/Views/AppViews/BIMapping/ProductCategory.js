@@ -146,6 +146,7 @@ class ProductCategory extends Component {
       editServiceId: -1,
       activeCommonService,
       moduleName: createProductFormData.currentCommonService,
+      editStatus: false,
     });
   };
 
@@ -200,6 +201,7 @@ class ProductCategory extends Component {
         ...createProductFormData,
         editServiceId,
         moduleName,
+        editStatus: true,
       })
     );
     this.props.setProductIntoDepartment(passData);
@@ -218,6 +220,7 @@ class ProductCategory extends Component {
         ...createProductFormData,
         editServiceId,
         moduleName,
+        editStatus: true,
       })
     );
 
@@ -440,6 +443,7 @@ class ProductCategory extends Component {
       editServiceId: -1,
       activeCommonService,
       moduleName,
+      editStatus: false,
     });
     this.setState({ showCreateModuleModal: false });
   };
