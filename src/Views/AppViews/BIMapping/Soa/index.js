@@ -488,8 +488,7 @@ class Soa extends Component {
 
   // Click on service dropdown.
   onClickServiceDropDown = (key, value) => {
-    let { selectedServiceData, activeServiceCategory, serviceName } =
-      this.state;
+    let { selectedServiceData, activeServiceCategory } = this.state;
     selectedServiceData[key] = value;
 
     if (activeServiceCategory !== key) {
@@ -846,7 +845,6 @@ class Soa extends Component {
       skipSteps,
       selectedServiceData,
       selectedDeployedInstance,
-      editStatus,
     } = this.state;
 
     let findSaveData = savedData.find(

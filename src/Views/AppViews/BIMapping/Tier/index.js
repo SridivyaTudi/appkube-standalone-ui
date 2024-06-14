@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  Box,
-  Button,
-  Grid,
-  List,
-  ListItem,
-  IconButton,
-  skeletonClasses,
-} from "@mui/material";
+import { Box, Button, Grid, List, ListItem, IconButton } from "@mui/material";
 import ChartWebLayerIcon from "assets/img/assetmanager/chart-web-layer-icon.png";
 import ChartAppLayerIcon from "assets/img/assetmanager/chart-app-layer-icon.png";
 import DataServiceSvgrepo from "assets/img/assetmanager/data-service-svgrepo.png";
@@ -356,13 +348,7 @@ class Tier extends Component {
 
   // Render Deployed cards
   renderDeployedInstances = () => {
-    let {
-      cloudServices,
-      selectedDeployedInstance,
-      layerName,
-      selectedLayer,
-      editStatus,
-    } = this.state;
+    let { cloudServices, selectedDeployedInstance } = this.state;
 
     let cloudStatus = this.props.cloudServices?.status;
     let instanceStatus =
@@ -1288,8 +1274,6 @@ class Tier extends Component {
       configInfo,
       managementInfo,
       savedLayer,
-      selectedLayer,
-      skipSteps,
     } = this.state;
     let { biServicesFromProductCategory, creationBiMapping } = this.props;
     let isSaveBtnShow =
