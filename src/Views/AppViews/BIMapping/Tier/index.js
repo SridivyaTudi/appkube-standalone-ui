@@ -725,6 +725,12 @@ class Tier extends Component {
       selectedLayer,
       skipSteps,
     } = this.state;
+    let { createProductFormData } = this.props;
+
+    let layers = createProductFormData["3_tierData"]?.selectedLayer;
+    if (layers) {
+      selectedLayer = JSON.parse(JSON.stringify(layers));
+    }
 
     let findSaveData = savedData.find((data) => data.layerName === layerName);
 
@@ -768,6 +774,8 @@ class Tier extends Component {
         if (!skipSteps[layerName]) {
           isShowDepolyedSection = true;
           this.onClickLayerDropDown(layerName, selectedLayer[layerName]);
+        } else {
+          isShowDepolyedSection = false;
         }
       }
 
@@ -781,6 +789,7 @@ class Tier extends Component {
         managementInfo,
         configInfo,
         layerName,
+        selectedLayer,
       });
     }
   };
@@ -1183,11 +1192,17 @@ class Tier extends Component {
                     <ListItem
                       key={v4()}
                       onClick={() =>
-                        this.onClickLayerDropDown("aux", layer.name)
+                        layer?.status?.toUpperCase() === STATUS.ACTIVE ? (
+                          this.onClickLayerDropDown("aux", layer.name)
+                        ) : (
+                          <></>
+                        )
                       }
-                      className={` ${
-                        selectedLayer.aux === layer.name ? "active" : ""
-                      }`}
+                      className={`${
+                        layer?.status?.toUpperCase() === STATUS.ACTIVE
+                          ? ""
+                          : "disabled"
+                      } ${selectedLayer.aux === layer.name ? "active" : ""}`}
                     >
                       <i className="fa-solid fa-circle-dot"></i>
                       <HtmlTooltip
