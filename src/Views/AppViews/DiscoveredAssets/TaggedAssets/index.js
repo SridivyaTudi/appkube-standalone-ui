@@ -63,8 +63,7 @@ class TaggedAssets extends Component {
       orgId,
       pageSize: 10,
       pageNo: 0,
-      isTagged: true,
-      isTagOrUnTagOrLtePass: true,
+      filterFlag: "tagged",
     });
   };
 
@@ -81,7 +80,7 @@ class TaggedAssets extends Component {
   }
 
   setActiveTab = (activeTab) => {
-    this.setState({ activeTab, selectedFilters: filterData },() => {
+    this.setState({ activeTab, selectedFilters: filterData }, () => {
       const discoveredData = this.props.discoveredAssetsData?.data || [];
       this.manipulateDiscoveredData(discoveredData);
     });
@@ -167,8 +166,7 @@ class TaggedAssets extends Component {
                   orgId,
                   pageSize,
                   pageNo,
-                  isTagged: true,
-                  isTagOrUnTagOrLtePass: true,
+                  filterFlag: "tagged",
                 });
               }}
               activeTab={activeTab}

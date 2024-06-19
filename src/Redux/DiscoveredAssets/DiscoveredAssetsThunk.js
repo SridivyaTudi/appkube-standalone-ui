@@ -9,22 +9,13 @@ export const getDiscoveredAssets = createAsyncThunk(
       orgId,
       pageNo,
       pageSize,
-      isTagged,
-      lte = null,
-      isTagOrUnTagOrLtePass,
+      filterFlag,
     } = params;
 
     let url = config.GET_DISCOVERED_ASSETS.replace("#org-id#", orgId)
       .replace("#page-no#", pageNo)
-      .replace("#page-size#", pageSize);
-
-    if (isTagOrUnTagOrLtePass) {
-      if (lte === false) {
-        url = `${url}&lte=false`;
-      } else {
-        url = `${url}&isTagged=${isTagged}`;
-      }
-    }
+      .replace("#page-size#", pageSize)
+      .replace("#filter-flag#", filterFlag);
 
     try {
       const response = await postLoginService.get(url);

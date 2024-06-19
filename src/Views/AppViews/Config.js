@@ -87,7 +87,7 @@ const config = {
 
   /* Discovered Assets*/
   GET_DISCOVERED_ASSETS:
-    "/cloud-element/org/#org-id#/all-elements?pageNo=#page-no#&pageSize=#page-size#",
+    "/cloud-element/org/#org-id#/all-elements?pageNo=#page-no#&pageSize=#page-size#&filterFlag=#filter-flag#",
 };
 
 export default config;

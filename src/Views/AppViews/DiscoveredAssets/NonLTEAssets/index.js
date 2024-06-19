@@ -75,8 +75,7 @@ class NonLteAssets extends Component {
       orgId,
       pageSize: 10,
       pageNo: 0,
-      lte: false,
-      isTagOrUnTagOrLtePass: true,
+      filterFlag: "non-lte",
     });
   };
 
@@ -178,8 +177,7 @@ class NonLteAssets extends Component {
                   orgId,
                   pageSize,
                   pageNo,
-                  lte: false,
-                  isTagOrUnTagOrLtePass: true,
+                  filterFlag: "non-lte",
                 });
               }}
               activeTab={activeTab}

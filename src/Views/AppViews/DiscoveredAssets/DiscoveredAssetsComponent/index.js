@@ -75,7 +75,12 @@ class DiscoveredAssetsComponent extends Component {
 
   componentDidMount = () => {
     const orgId = getCurrentOrgId();
-    this.props.getDiscoveredAssets({ orgId, pageSize: 10, pageNo: 0 });
+    this.props.getDiscoveredAssets({
+      orgId,
+      pageSize: 10,
+      pageNo: 0,
+      filterFlag: "all",
+    });
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -176,6 +181,7 @@ class DiscoveredAssetsComponent extends Component {
                   orgId,
                   pageSize,
                   pageNo,
+                  filterFlag: "all",
                 });
               }}
               activeTab={activeTab}

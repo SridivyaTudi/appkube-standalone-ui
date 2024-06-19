@@ -74,8 +74,7 @@ class UntaggedAssets extends Component {
       orgId,
       pageSize: 10,
       pageNo: 0,
-      isTagged: false,
-      isTagOrUnTagOrLtePass: true,
+      filterFlag: "untagged",
     });
   };
 
@@ -176,8 +175,7 @@ class UntaggedAssets extends Component {
                   orgId,
                   pageSize,
                   pageNo,
-                  isTagged: false,
-                  isTagOrUnTagOrLtePass: true,
+                  filterFlag: "untagged",
                 });
               }}
               activeTab={activeTab}
