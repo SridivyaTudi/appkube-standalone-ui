@@ -7,11 +7,14 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  TablePagination,
+  Pagination,
   ListItem,
   List,
   Menu,
+  Select,
   MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import AssetsSetUpModal from "./AssetsSetUpModal";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -40,7 +43,7 @@ class AssetsTable extends Component {
     this.state = {
       showAssetsSetUpModal: false,
       isSelectDepartmentOpen: -1,
-      pg: 0,
+      pg: 1,
       rpg: 10,
       anchorEl: null,
     };
@@ -48,7 +51,7 @@ class AssetsTable extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps?.activeTab !== this.props?.activeTab) {
-      this.setState({ pg: 0, rpg: 10 });
+      this.setState({ pg: 1, rpg: 10 });
     }
   }
   toggleAssetsSetUp = () => {
@@ -68,7 +71,7 @@ class AssetsTable extends Component {
 
   //  Render table
   renderTable = () => {
-    let { data: assestData, totalRecords } = this.props;
+    let { data: assestData, totalRecords, totalPages } = this.props;
 
     let { rpg, pg } = this.state;
 
@@ -82,20 +85,36 @@ class AssetsTable extends Component {
             {this.renderTableBody()}
           </Table>
         </TableContainer>
-        {assestData?.length ? (
-          <TablePagination
-            rowsPerPageOptions={[10, 20, 30]}
-            component="div"
-            count={totalRecords || 0}
-            rowsPerPage={rpg}
-            page={pg}
-            className="access-control-pagination"
-            onPageChange={this.handleChangePage}
-            onRowsPerPageChange={this.handleChangeRowsPerPage}
-          />
-        ) : (
-          <></>
-        )}
+        <Box display="flex" justifyContent="end" alignItems="center" m={2}>
+          <span className="m-r-3">Rows per page: </span>
+          <FormControl variant="outlined" size="small">
+            <Select
+              id="rows-per-page"
+              className="m-r-3"
+              value={rpg}
+              onChange={this.handleChangeRowsPerPage}
+            >
+              {[10, 20, 50, 100].map((rowsPerPageOption) => (
+                <MenuItem key={rowsPerPageOption} value={rowsPerPageOption}>
+                  {rowsPerPageOption}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {assestData?.length ? (
+            <Pagination
+              selected={pg}
+              count={totalPages}
+              onChange={this.handleChangePage}
+              variant="outlined"
+              shape="rounded"
+              page={pg}
+              className="access-control-pagination"
+            />
+          ) : (
+            <></>
+          )}
+        </Box>
       </>
     );
   };
@@ -188,19 +207,14 @@ class AssetsTable extends Component {
                   </HtmlTooltip>
                 </TableCell>
                 <TableCell align="left">
-                  {" "}
                   <HtmlTooltip className="table-tooltip" title={productEnclave}>
                     <Box className="resource-name">{productEnclave}</Box>
                   </HtmlTooltip>{" "}
                 </TableCell>
                 <TableCell align="center">
-                  <Box
-                    className={`${
-                      isTagged ? "tag " : "setting-icon"
-                    } tag-status	`}
-                  >
+                  <span className={`${isTagged ? "tag " : "orange"} tag-status	`}>
                     <i
-                      className={isTagged ? "fas fa-tag " : "fas fa-cog "}
+                      className={isTagged ? "fas fa-tag " : "fas fa-times"}
                       onClick={() => this.toggleSelectDepartment(index, 1)}
                     ></i>
                     {isSelectStatusOpen === index && !isTagged && (
@@ -232,19 +246,17 @@ class AssetsTable extends Component {
                       }
                       onClick={() => this.toggleSelectDepartment(null, 1)}
                     />
-                  </Box>
+                  </span>
                 </TableCell>
                 <TableCell align="center">
-                  <Box
-                    className={isLogEnabled ? "log-eye-icon" : "setting-icon"}
+                  <span
+                    className={`${isLogEnabled ? "log-eye-icon" : "orange"} log-status`}
                     onClick={this.toggleAssetsSetUp}
                   >
                     <i
-                      className={
-                        isLogEnabled ? "fas fa-eye" : "fa-solid fa-eye-slash"
-                      }
+                      className={isLogEnabled ? "fas fa-eye" : "fas fa-times"}
                     ></i>
-                  </Box>
+                  </span>
                 </TableCell>
                 <TableCell align="center">
                   <span className={isTraceEnabled ? "green" : "orange"}>
@@ -329,9 +341,7 @@ class AssetsTable extends Component {
   };
 
   handleChangeRowsPerPage = (event) => {
-    let newRpg = parseInt(event.target.value, 10);
-
-    this.setState({ rpg: newRpg }, () => {
+    this.setState({ rpg: parseInt(event.target.value, 10), pg: 1 }, () => {
       let { pg, rpg } = this.state;
 
       try {

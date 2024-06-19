@@ -31,6 +31,12 @@
       height: 320px;
       overflow: hidden;
       overflow-y: auto;
+      .filter-loder{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 320px;
+      }
       .environment-fliter {
         margin-right: 15px;
         display: inline-block;

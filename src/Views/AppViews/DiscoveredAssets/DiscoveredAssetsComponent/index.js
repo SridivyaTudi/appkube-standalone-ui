@@ -180,7 +180,7 @@ class DiscoveredAssetsComponent extends Component {
                 this.props.getDiscoveredAssets({
                   orgId,
                   pageSize,
-                  pageNo,
+                  pageNo: pageNo - 1,
                   filterFlag: "all",
                 });
               }}

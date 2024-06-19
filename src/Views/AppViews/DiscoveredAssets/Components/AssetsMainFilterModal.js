@@ -14,50 +14,35 @@ import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
+import { getAwsRegions } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
+import status from "Redux/Constants/CommonDS";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { connect } from "react-redux";
+import Loader from "Components/Loader";
+import { Height } from "@mui/icons-material";
 
-let dropDownData = [
-  {
-    name: "China (Hong Kong)",
-    value: "2",
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+    },
   },
-  {
-    name: "East US",
-    value: "3",
-  },
-  {
-    name: "East US 2",
-    value: "4",
-  },
-  {
-    name: "France Central",
-    value: "5",
-  },
-  {
-    name: "Germany West Central",
-    value: "6",
-  },
-  {
-    name: "India (Mumbai)",
-    value: "7",
-  },
-  {
-    name: "Indonesia ( Jakarta)",
-    value: "8",
-  },
-];
+};
 
 let dropDowns = [
-  "Regions",
-  "AWS Account",
-  "Product Enclave",
-  "Element Type",
-  "App/Data",
-  "Resource Type",
-  "Node",
-  "Tags",
-  "Resource State",
-  "Data Source",
-  "Service",
+  { label: "Regions", dropDownItems: [], key: "regions" },
+  { label: "AWS Account", dropDownItems: [] },
+  { label: "Product Enclave", dropDownItems: [] },
+  { label: "Element Type", dropDownItems: [] },
+  { label: "App/Data", dropDownItems: [] },
+  { label: "Resource Type", dropDownItems: [] },
+  { label: "Node", dropDownItems: [] },
+  { label: "Tags", dropDownItems: [] },
+  { label: "Resource State", dropDownItems: [] },
+  { label: "Data Source", dropDownItems: [] },
+  { label: "Service", dropDownItems: [] },
 ];
 // let data = [
 //   {
@@ -170,7 +155,32 @@ class AssetsMainFilterModal extends Component {
       openDropDownId: -1,
       policyList: [],
       selectedLog: {},
+      filterData: dropDowns,
     };
+  }
+
+  componentDidMount() {
+    this.props.getAwsRegions();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.awsRegionsData.status !== this.props.awsRegionsData.status &&
+      this.props.awsRegionsData.status === status.SUCCESS &&
+      this.props.awsRegionsData?.data
+    ) {
+      let awsRegionsData = this.props.awsRegionsData?.data || [];
+      let { filterData } = this.state;
+      filterData = filterData.map((region) => {
+        if (region.key === "regions") {
+          region["dropDownItems"] = awsRegionsData.map((item) => {
+            return { label: item, value: item };
+          });
+        }
+        return region;
+      });
+      this.setState({ filterData });
+    }
   }
 
   andleSelectboxChange = (event, index) => {
@@ -193,129 +203,41 @@ class AssetsMainFilterModal extends Component {
     this.props.handleSelectFilterModal();
   };
 
-  getSelectedPolicies = (policies) => {
-    let selectedPolicy = [];
-    if (policies.length) {
-      let { policyList } = this.state;
-      policies.forEach((value) => {
-        let isExist = false;
-
-        for (let index = 0; index < policyList.length; index++) {
-          const element = policyList[index];
-          if (element.id === value.id) {
-            isExist = true;
-          }
-        }
-
-        if (isExist) {
-          selectedPolicy.push(value.id);
-        }
-      });
-    }
-    return selectedPolicy;
-  };
-
-  renderData = () => {
-    if (dropDownData.length) {
-      return dropDownData.map((policy) => (
+  renderData = (data) => {
+    if (data.length) {
+      return data.map((policy) => (
         <MenuItem value={policy.value} key={v4()} className="select-menu">
-          <Checkbox
+          {/* <Checkbox
             className="check-box"
             size="small"
             onClick={(e) => {
               e.stopPropagation();
             }}
-          />
-          {policy.name}
+          /> */}
+          {policy.label}
         </MenuItem>
       ));
     }
   };
 
-  // toggleAddNewEnvironmentMenu = (e, id) => {
-  //   let { isAddNewEnvironmentShown } = this.state;
-  //   this.setState({
-  //     isAddNewEnvironmentShown: !this.state.isAddNewEnvironmentShown,
-  //     openDropDownId: isAddNewEnvironmentShown ? -1 : id,
-  //   });
-  // };
-
-  // renderAddNewEnvironmentList = (environmentTypeData) => {
-  //   return environmentTypeData?.length ? (
-  //     environmentTypeData.map((value) => {
-  //       return (
-  //         <ListItem>
-  //           <Checkbox
-  //             className="check-box"
-  //             size="small"
-  //             onChange={(e) => {
-  //               // this.handleCheckBox(e);
-  //             }}
-  //           />
-  //           <p>{value}</p>
-  //         </ListItem>
-  //       );
-  //     })
-  //   ) : (
-  //     <></>
-  //   );
-  // };
-
-  // renderDropDowns = () => {
-  //   const { isAddNewEnvironmentShown, openDropDownId } = this.state;
-  //   return data.length ? (
-  //     data.map((fillterData, index) => {
-  //       return (
-  //         <Grid item xs={12} sm={6} md={6} lg={4} key={v4()}>
-  //           <Box className="environment-fliter">
-  //             <Box
-  //               className="fliter-toggel new-environment"
-  //               onClick={(e) => this.toggleAddNewEnvironmentMenu(e, index)}
-  //             >
-  //               {fillterData.label}
-  //               <i class="fas fa-angle-down arrow-icon"></i>
-  //             </Box>
-  //             {openDropDownId === index ? (
-  //               <Box
-  //                 className={
-  //                   isAddNewEnvironmentShown
-  //                     ? "fliter-collapse active"
-  //                     : "fliter-collapse"
-  //                 }
-  //               >
-  //                 <List>
-  //                   {this.renderAddNewEnvironmentList(fillterData.values)}
-  //                 </List>
-  //               </Box>
-  //             ) : (
-  //               <></>
-  //             )}
-
-  //             <div
-  //               className={
-  //                 isAddNewEnvironmentShown
-  //                   ? "fliters-collapse-bg active"
-  //                   : "fliters-collapse-bg"
-  //               }
-  //               onClick={(e) => this.toggleAddNewEnvironmentMenu(e, index)}
-  //             />
-  //           </Box>
-  //         </Grid>
-  //       );
-  //     })
-  //   ) : (
-  //     <></>
-  //   );
-  // };
-
-  handleSelectboxChange = (value, index) => {
+  handleSelectboxChange = (e, index) => {
     let { selectedLog } = this.state;
-    selectedLog[index] = value;
+    selectedLog[index] = e.target.value;
+    console.log(selectedLog);
     this.setState({ selectedLog });
   };
 
+  // Render Loder
+  renderLoder(widthClass) {
+    return (
+      <Box className="filter-loder">
+        <Loader />
+      </Box>
+    );
+  }
+
   render() {
-    let { selectedLog } = this.state;
+    let { selectedLog, filterData } = this.state;
     const errors = {};
     return (
       <Modal
@@ -338,63 +260,64 @@ class AssetsMainFilterModal extends Component {
           </h5>
         </ModalHeader>
         <ModalBody>
-          {/* <Box sx={{ width: "100%" }}>
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              {this.renderDropDowns()}
-            </Grid>
-          </Box> */}
-
           <Box sx={{ width: "100%" }} className="p-r-5">
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              {" "}
-              {dropDowns.map((filter, index) => {
-                return (
-                  <Grid item xs={12} sm={6} md={6} lg={4} className="p-t-10">
-                    <Box className="form-group" key={v4()}>
-                      <FormControl className="select-policy">
-                        <Select
-                          value={selectedLog[`${filter}_${index}`] || ""}
-                          displayEmpty
-                          onChange={(e) =>
-                            this.handleSelectboxChange(
-                              e.target.value,
-                              `${filter}_${index}`
-                            )
-                          }
-                        >
-                          <MenuItem
-                            value=""
-                            style={{ fontSize: 14, color: "383874" }}
+            {this.props.awsRegionsData.status === status.IN_PROGRESS ? (
+              this.renderLoder()
+            ) : (
+              <Grid
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                alignItems={"center"}
+                justifyContent={"flex-start"}
+              >
+                {filterData.map((filter, index) => {
+                  return (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={6}
+                      lg={4}
+                      className="p-t-10"
+                      key={v4()}
+                    >
+                      <Box className="form-group">
+                        <FormControl className="select-policy">
+                          <Select
+                            value={selectedLog[`${filter.key}_${index}`] || ""}
+                            displayEmpty
+                            onChange={(e) => {
+                              console.log(e);
+                              this.handleSelectboxChange(
+                                e,
+                                `${filter.key}_${index}`
+                              );
+                            }}
+                            MenuProps={MenuProps}
                           >
-                            {dropDowns[index]}
-                          </MenuItem>
-                          <Box className="dropdown-select-menu">
-                            {this.renderData()}
-                          </Box>
-                        </Select>
-                      </FormControl>
-                      {errors.policy ? (
-                        <span className="red">{errors.policy}</span>
-                      ) : (
-                        <></>
-                      )}
-                    </Box>
-                  </Grid>
-                );
-              })}
-            </Grid>
+                            <MenuItem
+                              value=""
+                              style={{ fontSize: 14, color: "383874" }}
+                            >
+                              Select {filter.label}
+                            </MenuItem>
+                            {/* <Box className="dropdown-select-menu"> */}
+                            {this.renderData(filter?.dropDownItems || [])}
+                            {/* </Box> */}
+                          </Select>
+                        </FormControl>
+                        {errors.policy ? (
+                          <span className="red">{errors.policy}</span>
+                        ) : (
+                          <></>
+                        )}
+                      </Box>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            )}
           </Box>
         </ModalBody>
         <ModalFooter className="footer-top-br m-t-3">
@@ -419,5 +342,14 @@ class AssetsMainFilterModal extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  const { awsRegionsData } = state.discoveredAssets;
 
-export default AssetsMainFilterModal;
+  return { awsRegionsData };
+}
+
+const mapDispatchToProps = { getAwsRegions };
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(AssetsMainFilterModal));

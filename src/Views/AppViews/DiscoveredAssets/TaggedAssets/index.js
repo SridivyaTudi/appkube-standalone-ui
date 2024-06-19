@@ -165,7 +165,7 @@ class TaggedAssets extends Component {
                 this.props.getDiscoveredAssets({
                   orgId,
                   pageSize,
-                  pageNo,
+                  pageNo: pageNo - 1,
                   filterFlag: "tagged",
                 });
               }}

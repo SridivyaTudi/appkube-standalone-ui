@@ -88,6 +88,7 @@ const config = {
   /* Discovered Assets*/
   GET_DISCOVERED_ASSETS:
     "/cloud-element/org/#org-id#/all-elements?pageNo=#page-no#&pageSize=#page-size#&filterFlag=#filter-flag#",
+  GET_AWS_REGIONS: `/aws-regions`,
 };
 
 export default config;
