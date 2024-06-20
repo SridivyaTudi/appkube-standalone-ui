@@ -33,3 +33,22 @@ export const getAwsRegions = createAsyncThunk(
     }
   }
 );
+
+export const getEventsHistory = createAsyncThunk(
+  "discoveredAssets/getEventsHistory",
+  async (params) => {
+    let { instanceId, landingZoneId } = params;
+
+    let url = config.GET_EVENTS_HISTORY.replace(
+      "#instance-id#",
+      instanceId
+    ).replace("#landing-zone-id#", landingZoneId);
+
+    try {
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);

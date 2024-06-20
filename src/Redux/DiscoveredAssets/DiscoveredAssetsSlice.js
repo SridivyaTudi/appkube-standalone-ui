@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getDiscoveredAssets,
-  getAwsRegions,
+  getAwsRegions,getEventsHistory
 } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -13,6 +13,10 @@ export const DiscoveredAssetsSlice = createSlice({
       data: [],
     },
     awsRegionsData: {
+      status: null,
+      data: [],
+    },
+    eventHistoryData: {
       status: null,
       data: [],
     },
@@ -74,6 +78,35 @@ export const DiscoveredAssetsSlice = createSlice({
         },
       };
     },
+
+    [getEventsHistory.pending]: (state, action) => {
+      return {
+        ...state,
+        eventHistoryData: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getEventsHistory.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        eventHistoryData: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getEventsHistory.rejected]: (state, { error }) => {
+      return {
+        ...state,
+        eventHistoryData: {
+          status: status.FAILURE,
+          data: error?.message,
+        },
+      };
+    },
+
   },
 });
 

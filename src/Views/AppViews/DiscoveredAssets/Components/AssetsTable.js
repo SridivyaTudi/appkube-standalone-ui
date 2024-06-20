@@ -86,31 +86,33 @@ class AssetsTable extends Component {
           </Table>
         </TableContainer>
         <Box display="flex" justifyContent="end" alignItems="center" m={2}>
-          <span className="m-r-3">Rows per page: </span>
-          <FormControl variant="outlined" size="small">
-            <Select
-              id="rows-per-page"
-              className="m-r-3"
-              value={rpg}
-              onChange={this.handleChangeRowsPerPage}
-            >
-              {[10, 20, 50, 100].map((rowsPerPageOption) => (
-                <MenuItem key={rowsPerPageOption} value={rowsPerPageOption}>
-                  {rowsPerPageOption}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
           {assestData?.length ? (
-            <Pagination
-              selected={pg}
-              count={totalPages}
-              onChange={this.handleChangePage}
-              variant="outlined"
-              shape="rounded"
-              page={pg}
-              className="access-control-pagination"
-            />
+            <>
+              <span className="m-r-3">Rows per page: </span>
+              <FormControl variant="outlined" size="small">
+                <Select
+                  id="rows-per-page"
+                  className="m-r-3"
+                  value={rpg}
+                  onChange={this.handleChangeRowsPerPage}
+                >
+                  {[10, 20, 50, 100].map((rowsPerPageOption) => (
+                    <MenuItem key={rowsPerPageOption} value={rowsPerPageOption}>
+                      {rowsPerPageOption}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Pagination
+                selected={pg}
+                count={totalPages}
+                onChange={this.handleChangePage}
+                variant="outlined"
+                shape="rounded"
+                page={pg}
+                className="access-control-pagination"
+              />
+            </>
           ) : (
             <></>
           )}
@@ -212,7 +214,9 @@ class AssetsTable extends Component {
                   </HtmlTooltip>{" "}
                 </TableCell>
                 <TableCell align="center">
-                  <span className={`${isTagged ? "tag " : "orange"} tag-status	`}>
+                  <span
+                    className={`${isTagged ? "tag " : "orange"} tag-status	`}
+                  >
                     <i
                       className={isTagged ? "fas fa-tag " : "fas fa-times"}
                       onClick={() => this.toggleSelectDepartment(index, 1)}
@@ -250,7 +254,9 @@ class AssetsTable extends Component {
                 </TableCell>
                 <TableCell align="center">
                   <span
-                    className={`${isLogEnabled ? "log-eye-icon" : "orange"} log-status`}
+                    className={`${
+                      isLogEnabled ? "log-eye-icon" : "orange"
+                    } log-status`}
                     onClick={this.toggleAssetsSetUp}
                   >
                     <i
@@ -268,7 +274,16 @@ class AssetsTable extends Component {
                   </span>
                 </TableCell>
                 <TableCell align="center">
-                  <span className={isEventEnabled ? "green" : "orange"}>
+                  <span
+                    className={`${
+                      isEventEnabled ? "green" : "orange"
+                    } log-status`}
+                    onClick={() =>
+                      this.props.navigate(
+                        `${APP_PREFIX_PATH}/assets/discovered-assets/events-history/${environment?.instanceId}/${environment?.landingzoneId}`
+                      )
+                    }
+                  >
                     <i
                       className={
                         isEventEnabled ? "fas fa-check" : "fas fa-times"

@@ -1,4 +1,5 @@
 const baseURL = `https://api.synectiks.net/cmdb`;
+const baseURLAwsXapi = `https://api.synectiks.net/awsx-api`;
 // export const baseURL = `http://34.199.12.114:6057/api`;
 
 const config = {
@@ -89,6 +90,10 @@ const config = {
   GET_DISCOVERED_ASSETS:
     "/cloud-element/org/#org-id#/all-elements?pageNo=#page-no#&pageSize=#page-size#&filterFlag=#filter-flag#",
   GET_AWS_REGIONS: `/aws-regions`,
+
+  /* AWS-X-API*/
+  /* Discovered Assets*/
+  GET_EVENTS_HISTORY: `${baseURLAwsXapi}/getEvents?instanceId=#instance-id#&landingZoneId=#landing-zone-id#`,
 };
 
 export default config;

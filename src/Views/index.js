@@ -387,7 +387,7 @@ export const Views = (props) => {
             element={<LoginEvents />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/discovered-assets/events-history`}
+            path={`${APP_PREFIX_PATH}/assets/discovered-assets/events-history/:instanceId/:landingZoneId`}
             element={<Eventhistory />}
           />
           <Route path={`${APP_PREFIX_PATH}/alerts`} element={<Alerts />} />
