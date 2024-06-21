@@ -22,11 +22,11 @@ import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { LoadingButton } from "@mui/lab";
 
-class Eventhistory extends Component {
+class EventHistory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eventHistory: [],
+      eventHistories: [],
       searchedKey: "",
     };
   }
@@ -43,8 +43,8 @@ class Eventhistory extends Component {
       this.props.eventHistoryData.status === status.SUCCESS &&
       this.props.eventHistoryData?.data
     ) {
-      const eventHistory = this.props.eventHistoryData?.data || [];
-      this.setState({ eventHistory });
+      const eventHistories = this.props.eventHistoryData?.data || [];
+      this.setState({ eventHistories });
     }
   }
 
@@ -73,7 +73,7 @@ class Eventhistory extends Component {
       <TableHead>
         <TableRow>
           <TableCell align="left">
-            {" "}
+            
             <Checkbox
               className="check-box"
               size="small"
@@ -95,11 +95,11 @@ class Eventhistory extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    let { eventHistory } = this.state;
+    let { eventHistories } = this.state;
     return (
       <TableBody>
-        {eventHistory?.length ? (
-          eventHistory.map((event) => {
+        {eventHistories?.length ? (
+          eventHistories.map((event) => {
             return (
               <TableRow key={v4()}>
                 <TableCell align="left">{event?.eventName}</TableCell>
@@ -137,12 +137,12 @@ class Eventhistory extends Component {
 
   handleSearchChange = (e) => {
     let value = e.target.value;
-    let { eventHistory } = this.state;
-    let data = this.props.eventHistoryData?.data || [];
+    let { eventHistories } = this.state;
+    let data = this.props.eventHistoriesData?.data || [];
 
     if (Array.isArray(data) && data?.length) {
       if (value) {
-        eventHistory = data.filter((tableData) => {
+        eventHistories = data.filter((tableData) => {
           if (
             tableData?.eventName.toLowerCase().includes(value.toLowerCase())
           ) {
@@ -152,14 +152,14 @@ class Eventhistory extends Component {
           }
         });
       } else {
-        eventHistory = data;
+        eventHistories = data;
       }
-      this.setState({ eventHistory, searchedKey: value });
+      this.setState({ eventHistories, searchedKey: value });
     }
   };
   render() {
     let loder = this.props.eventHistoryData.status === status.IN_PROGRESS;
-    let { searchedKey } = this.state;
+    let { searchedKey,eventHistories } = this.state;
     return (
       <Box className="discovered-assets-container">
         <Box className="assets-heading">
@@ -177,7 +177,7 @@ class Eventhistory extends Component {
         </Box>
         <Box className="global-services-fliter">
           <Box className="heading">
-            Event history <span>(50+)</span>
+            Event history <span>({eventHistories?.length})</span>
           </Box>
         </Box>
         <Box className="d-flex width-100 search-box">
@@ -237,4 +237,4 @@ const mapDispatchToProps = { getEventsHistory };
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(navigateRouter(Eventhistory));
+)(navigateRouter(EventHistory));

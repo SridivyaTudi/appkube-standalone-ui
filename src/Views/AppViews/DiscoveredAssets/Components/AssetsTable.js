@@ -132,7 +132,6 @@ class AssetsTable extends Component {
           <TableCell align="left">Product Enclave</TableCell>
           <TableCell align="center">Tag Status</TableCell>
           <TableCell align="center">Log</TableCell>
-          <TableCell align="center">Trace</TableCell>
           <TableCell align="center">Event</TableCell>
           <TableCell align="center">Actions</TableCell>
         </TableRow>
@@ -264,31 +263,19 @@ class AssetsTable extends Component {
                     ></i>
                   </span>
                 </TableCell>
-                <TableCell align="center">
-                  <span className={isTraceEnabled ? "green" : "orange"}>
-                    <i
-                      className={
-                        isTraceEnabled ? "fas fa-check" : "fas fa-times"
-                      }
-                    ></i>
-                  </span>
-                </TableCell>
+
                 <TableCell align="center">
                   <span
-                    className={`${
-                      isEventEnabled ? "green" : "orange"
-                    } log-status`}
+                    className={`green log-status`}
                     onClick={() =>
                       this.props.navigate(
-                        `${APP_PREFIX_PATH}/assets/discovered-assets/events-history/${environment?.instanceId}/${environment?.landingzoneId}`
+                        `${APP_PREFIX_PATH}/assets/discovered-assets/events-history/${
+                          environment?.instanceId
+                        }/${environment?.landingZoneId || 0}`
                       )
                     }
                   >
-                    <i
-                      className={
-                        isEventEnabled ? "fas fa-check" : "fas fa-times"
-                      }
-                    ></i>
+                    <i className={"fas fa-check"}></i>
                   </span>
                 </TableCell>
                 <TableCell align="center">

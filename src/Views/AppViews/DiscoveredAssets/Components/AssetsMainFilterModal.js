@@ -32,120 +32,10 @@ const MenuProps = {
 };
 
 let dropDowns = [
-  { label: "Regions", dropDownItems: [], key: "regions" },
   { label: "AWS Account", dropDownItems: [] },
   { label: "Product Enclave", dropDownItems: [] },
   { label: "Element Type", dropDownItems: [] },
-  { label: "App/Data", dropDownItems: [] },
-  { label: "Resource Type", dropDownItems: [] },
-  { label: "Node", dropDownItems: [] },
-  { label: "Tags", dropDownItems: [] },
-  { label: "Resource State", dropDownItems: [] },
-  { label: "Data Source", dropDownItems: [] },
-  { label: "Service", dropDownItems: [] },
 ];
-// let data = [
-//   {
-//     label: "Region",
-//     values: [
-//       "China (Hong Kong)",
-//       "East US",
-//       "East US 2",
-//       "France Central",
-//       "Germany West Central",
-//       "India (Mumbai)",
-//       "Indonesia ( Jakarta)",
-//     ],
-//   },
-//   {
-//     label: "AWS Account",
-//     values: [
-//       "AWS (657907747554)",
-//       "AWS (657907747551)",
-//       "AWS (657907747552)",
-//       "AWS (657907747553)",
-//       "AWS (65790774755)",
-//     ],
-//   },
-//   {
-//     label: "Product Enclave",
-//     values: ["8 VPC", "8 VPC", "5 VPC", "4 VPC", "3 VPC"],
-//   },
-//   {
-//     label: "Element Type",
-//     values: ["EC2", "Lambda", "EKS", "ECS", "DynameDB", "Redshift"],
-//   },
-//   {
-//     label: "App/Data",
-//     values: ["App", "Data", "Both"],
-//   },
-//   {
-//     label: "Resource Type",
-//     values: [
-//       "API Request",
-//       "Bucket",
-//       "Business Analytics",
-//       "CF Stack (Cluster)",
-//       "Compute",
-//       "Data Transfer",
-//       "Dev Stand (IT Environment)",
-//       "Encryption",
-//       "IP Address",
-//       "Instance",
-//       "KB Pod",
-//     ],
-//   },
-//   {
-//     label: "Node",
-//     values: ["Orchid-Staging"],
-//   },
-//   {
-//     label: "Tags",
-//     values: [
-//       "Seed",
-//       "app",
-//       "app_kubernetes_to_component",
-//       "app_kubernetes_to_managed_by",
-//       "app_kubernetes_to_name",
-//       "app_kubernetes_to_part_of",
-//       "app_kubernetes_to_version",
-//       "aqa",
-//       "aqa_tag",
-//       "aqa_uuid",
-//     ],
-//   },
-//   {
-//     label: "Resource State",
-//     values: ["Billing Only", "Active"],
-//   },
-//   {
-//     label: "Data Source",
-//     values: [
-//       "AWS HQ",
-//       "AWS Marketing",
-//       "All dev",
-//       "Azure QA",
-//       "Dev Environment",
-//       "GCP dev",
-//       "K8s dev",
-//     ],
-//   },
-//   {
-//     label: "Service",
-//     values: [
-//       "AWS",
-//       "AWSCloudTrail",
-//       "AWSCostExplorer",
-//       "AWSELB",
-//       "AWSCloudWatch",
-//       "AmazonEc2",
-//       "AmazonEKS",
-//       "AmazonKinesis",
-//       "AmazonQuickSight",
-//       "AmazonRDS",
-//     ],
-//   },
-// ];
 
 class AssetsMainFilterModal extends Component {
   constructor(props) {
@@ -183,16 +73,6 @@ class AssetsMainFilterModal extends Component {
     }
   }
 
-  andleSelectboxChange = (event, index) => {
-    const {
-      target: { value },
-    } = event;
-    let { selectedPolicy } = this.state;
-
-    selectedPolicy[index] = value;
-    this.setState({ selectedPolicy });
-  };
-
   handleCloseModal = () => {
     this.setState({
       name: "",
@@ -207,13 +87,6 @@ class AssetsMainFilterModal extends Component {
     if (data.length) {
       return data.map((policy) => (
         <MenuItem value={policy.value} key={v4()} className="select-menu">
-          {/* <Checkbox
-            className="check-box"
-            size="small"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          /> */}
           {policy.label}
         </MenuItem>
       ));
@@ -223,7 +96,6 @@ class AssetsMainFilterModal extends Component {
   handleSelectboxChange = (e, index) => {
     let { selectedLog } = this.state;
     selectedLog[index] = e.target.value;
-    console.log(selectedLog);
     this.setState({ selectedLog });
   };
 
@@ -302,9 +174,8 @@ class AssetsMainFilterModal extends Component {
                             >
                               Select {filter.label}
                             </MenuItem>
-                            {/* <Box className="dropdown-select-menu"> */}
+
                             {this.renderData(filter?.dropDownItems || [])}
-                            {/* </Box> */}
                           </Select>
                         </FormControl>
                         {errors.policy ? (
