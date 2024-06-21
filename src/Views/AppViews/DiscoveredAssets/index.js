@@ -7,6 +7,8 @@ import UntaggedAssets from "./UntaggedAssets";
 import TabsMenu from "Views/AppViews/Environments/EnvironmentList/TabsMenu";
 import { v4 } from "uuid";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import { connect } from "react-redux";
+import { clearDiscoveredAssetsFilters } from "Redux/DiscoveredAssets/DiscoveredAssetsSlice";
 
 class DiscoveredAssets extends Component {
   tabMapping = [
@@ -31,6 +33,7 @@ class DiscoveredAssets extends Component {
   }
 
   setActiveTab = (activeTab) => {
+    this.props.clearDiscoveredAssetsFilters();
     this.setState({ activeTab });
   };
 
@@ -77,4 +80,14 @@ class DiscoveredAssets extends Component {
   }
 }
 
-export default navigateRouter(DiscoveredAssets);
+function mapStateToProps(state) {
+  const { discoveredAssetsFilters } = state.discoveredAssets;
+
+  return { discoveredAssetsFilters };
+}
+
+const mapDispatchToProps = { clearDiscoveredAssetsFilters };
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(DiscoveredAssets));

@@ -2,9 +2,6 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Box,
   Grid,
-  List,
-  ListItem,
-  Checkbox,
   IconButton,
   FormControl,
   MenuItem,
@@ -14,12 +11,14 @@ import { Component } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
-import { getAwsRegions } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
 import status from "Redux/Constants/CommonDS";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { connect } from "react-redux";
 import Loader from "Components/Loader";
-import { Height } from "@mui/icons-material";
+import {
+  clearDiscoveredAssetsFilters,
+  setDiscoveredAssetsFilters,
+} from "Redux/DiscoveredAssets/DiscoveredAssetsSlice";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -32,9 +31,9 @@ const MenuProps = {
 };
 
 let dropDowns = [
-  { label: "AWS Account", dropDownItems: [] },
-  { label: "Product Enclave", dropDownItems: [] },
-  { label: "Element Type", dropDownItems: [] },
+  { label: "AWS Account", dropDownItems: [], key: "accounts" },
+  { label: "Product Enclave", dropDownItems: [], key: "encalve" },
+  { label: "Element Type", dropDownItems: [], key: "elementType" },
 ];
 
 class AssetsMainFilterModal extends Component {
@@ -42,35 +41,98 @@ class AssetsMainFilterModal extends Component {
     super(props);
     this.state = {
       isAddNewEnvironmentShown: false,
-      openDropDownId: -1,
-      policyList: [],
       selectedLog: {},
       filterData: dropDowns,
     };
   }
 
   componentDidMount() {
-    this.props.getAwsRegions();
-  }
+    let filterData = this.props.discoveredAssetsFilters.data || [];
+    let { selectedLog } = this.state;
 
+    if (filterData?.length) {
+      filterData.forEach((assest) => {
+        selectedLog[assest.name] = assest.value;
+      });
+    }
+
+    this.manipulateDiscoveredData(this.props.discoveredAssetsData?.data);
+  }
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.awsRegionsData.status !== this.props.awsRegionsData.status &&
-      this.props.awsRegionsData.status === status.SUCCESS &&
-      this.props.awsRegionsData?.data
+      prevProps.discoveredAssetsData.status !==
+        this.props.discoveredAssetsData.status &&
+      this.props.discoveredAssetsData.status === status.SUCCESS &&
+      this.props.discoveredAssetsData?.data
     ) {
-      let awsRegionsData = this.props.awsRegionsData?.data || [];
-      let { filterData } = this.state;
-      filterData = filterData.map((region) => {
-        if (region.key === "regions") {
-          region["dropDownItems"] = awsRegionsData.map((item) => {
-            return { label: item, value: item };
-          });
-        }
-        return region;
-      });
-      this.setState({ filterData });
+      this.manipulateDiscoveredData(this.props.discoveredAssetsData?.data);
     }
+
+    if (
+      prevProps.discoveredAssetsFilters.data !==
+      this.props.discoveredAssetsFilters?.data
+    ) {
+      const discoveredData = this.props.discoveredAssetsData?.data || [];
+      this.manipulateDiscoveredData(discoveredData);
+    }
+  }
+
+  manipulateDiscoveredData(data = []) {
+    let { filterData } = this.state;
+    let prevFilterData = this.props.discoveredAssetsFilters.data || [];
+
+    if (data.cloudElementList?.length) {
+      let acconts = [];
+      let elementTypes = [];
+      let enclaves = [];
+      data.cloudElementList.forEach((assest) => {
+        let { landingZone, elementType, productEnclaveInstanceId } = assest;
+
+        if (landingZone && !acconts.includes(landingZone)) {
+          acconts.push(landingZone);
+        }
+
+        if (elementType && !elementTypes.includes(elementType)) {
+          elementTypes.push(elementType);
+        }
+
+        if (
+          productEnclaveInstanceId &&
+          !enclaves.includes(productEnclaveInstanceId)
+        ) {
+          enclaves.push(productEnclaveInstanceId);
+        }
+      });
+
+      if (prevFilterData?.length) {
+        prevFilterData.forEach((account) => {
+          if (account.name === "accounts" && !acconts.includes(account.value)) {
+            acconts.push(account.value);
+          }
+          if (account.name === "encalve" && !enclaves.includes(account.value)) {
+            enclaves.push(account.value);
+          }
+          if (
+            account.name === "elementType" &&
+            !elementTypes.includes(account.value)
+          ) {
+            elementTypes.push(account.value);
+          }
+        });
+      }
+
+      filterData = [
+        { label: "AWS Account", dropDownItems: acconts, key: "accounts" },
+        { label: "Product Enclave", dropDownItems: enclaves, key: "encalve" },
+        {
+          label: "Element Type",
+          dropDownItems: elementTypes,
+          key: "elementType",
+        },
+      ];
+    }
+
+    this.setState({ filterData });
   }
 
   handleCloseModal = () => {
@@ -85,9 +147,9 @@ class AssetsMainFilterModal extends Component {
 
   renderData = (data) => {
     if (data.length) {
-      return data.map((policy) => (
-        <MenuItem value={policy.value} key={v4()} className="select-menu">
-          {policy.label}
+      return data.map((item) => (
+        <MenuItem value={item} key={v4()} className="select-menu">
+          {item}
         </MenuItem>
       ));
     }
@@ -108,9 +170,29 @@ class AssetsMainFilterModal extends Component {
     );
   }
 
+  onClickSubmitBtn = () => {
+    let { selectedLog } = this.state;
+    let keys = Object.keys(selectedLog);
+
+    let filters = [];
+    if (keys.length) {
+      keys.forEach((key) => {
+        if (selectedLog[key] !== "") {
+          filters.push({
+            name: key,
+            value: selectedLog[key],
+          });
+        }
+      });
+    }
+
+    this.props.setDiscoveredAssetsFilters(filters);
+    this.props.togglePopup();
+  };
+
   render() {
     let { selectedLog, filterData } = this.state;
-    const errors = {};
+
     return (
       <Modal
         isOpen={this.props.showModal}
@@ -133,7 +215,7 @@ class AssetsMainFilterModal extends Component {
         </ModalHeader>
         <ModalBody>
           <Box sx={{ width: "100%" }} className="p-r-5">
-            {this.props.awsRegionsData.status === status.IN_PROGRESS ? (
+            {this.props.discoveredAssetsData.status === status.IN_PROGRESS ? (
               this.renderLoder()
             ) : (
               <Grid
@@ -157,14 +239,10 @@ class AssetsMainFilterModal extends Component {
                       <Box className="form-group">
                         <FormControl className="select-policy">
                           <Select
-                            value={selectedLog[`${filter.key}_${index}`] || ""}
+                            value={selectedLog[filter.key] || ""}
                             displayEmpty
                             onChange={(e) => {
-                              console.log(e);
-                              this.handleSelectboxChange(
-                                e,
-                                `${filter.key}_${index}`
-                              );
+                              this.handleSelectboxChange(e, filter.key);
                             }}
                             MenuProps={MenuProps}
                           >
@@ -178,11 +256,6 @@ class AssetsMainFilterModal extends Component {
                             {this.renderData(filter?.dropDownItems || [])}
                           </Select>
                         </FormControl>
-                        {errors.policy ? (
-                          <span className="red">{errors.policy}</span>
-                        ) : (
-                          <></>
-                        )}
                       </Box>
                     </Grid>
                   );
@@ -196,14 +269,17 @@ class AssetsMainFilterModal extends Component {
             <LoadingButton
               className="danger-btn min-width-inherit m-r-2"
               variant="contained"
-              onClick={this.props.handleAssetsMainFilterModal}
+              onClick={() => {
+                this.props.togglePopup();
+                this.props.clearDiscoveredAssetsFilters();
+              }}
             >
               Clear
             </LoadingButton>
             <LoadingButton
               className="primary-btn min-width-inherit "
               variant="contained"
-              onClick={this.props.togglePopup}
+              onClick={this.onClickSubmitBtn}
             >
               Submit
             </LoadingButton>
@@ -214,12 +290,16 @@ class AssetsMainFilterModal extends Component {
   }
 }
 function mapStateToProps(state) {
-  const { awsRegionsData } = state.discoveredAssets;
+  const { discoveredAssetsData, discoveredAssetsFilters } =
+    state.discoveredAssets;
 
-  return { awsRegionsData };
+  return { discoveredAssetsData, discoveredAssetsFilters };
 }
 
-const mapDispatchToProps = { getAwsRegions };
+const mapDispatchToProps = {
+  setDiscoveredAssetsFilters,
+  clearDiscoveredAssetsFilters,
+};
 export default connect(
   mapStateToProps,
   mapDispatchToProps

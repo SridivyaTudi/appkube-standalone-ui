@@ -5,6 +5,18 @@ import CloseIcon from "@mui/icons-material/Close";
 import { v4 } from "uuid";
 import AssetsMainFilterModal from "../Components/AssetsMainFilterModal";
 import FilterPopup from "Views/AppViews/DiscoveredAssets/Components/FilterPopup";
+import { connect } from "react-redux";
+import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import {
+  clearDiscoveredAssetsFilters,
+  setDiscoveredAssetsFilters,
+} from "Redux/DiscoveredAssets/DiscoveredAssetsSlice";
+const LABELS = {
+  accounts: "Account",
+  encalve: "Product Enclave",
+  elementType: "Element Type",
+};
+
 class AssetsFilterSection extends Component {
   constructor(props) {
     super(props);
@@ -46,6 +58,7 @@ class AssetsFilterSection extends Component {
     }
     this.setState({ noOfRow });
   };
+
   togglePopup = () => {
     this.setState({
       showAssetsMainFilterModal: !this.state.showAssetsMainFilterModal,
@@ -60,7 +73,7 @@ class AssetsFilterSection extends Component {
 
   //  Render applied filters
   renderAppliedFilters = () => {
-    let filterData = this.props.data;
+    let filterData = this.props.discoveredAssetsFilters.data || [];
     let { noOfRow } = this.state;
 
     return (
@@ -71,13 +84,14 @@ class AssetsFilterSection extends Component {
               return (
                 <Box className="filter-box" key={v4()}>
                   <Box className="d-flex  align-items-center m-r-3">
-                    <label>{filter.name} &#58; </label>
+                    <label>{LABELS[filter.name]} &#58; </label>
                     <span className="p-l-5"> {filter.value} </span>
                   </Box>
                   <CloseIcon
                     fontSize="inherit"
                     className="close-btn"
-                    onClick={() => this.onClickCloseIcon(index)}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => this.onClickCloseIcon(filter.name)}
                   />
                 </Box>
               );
@@ -97,9 +111,15 @@ class AssetsFilterSection extends Component {
     );
   };
 
-  onClickCloseIcon = (id) => {
+  onClickCloseIcon = (name) => {
     try {
-      this.props.onClickCloseIcon(id);
+      let filterData = JSON.parse(
+        JSON.stringify(this.props.discoveredAssetsFilters.data || [])
+      );
+
+      this.props.setDiscoveredAssetsFilters(
+        filterData.filter((assest) => assest.name !== name)
+      );
     } catch (e) {
       console.error(e);
     }
@@ -148,7 +168,7 @@ class AssetsFilterSection extends Component {
 
         <Box
           className="clear-filter-box"
-          onClick={() => this.onClickClearFilter()}
+          onClick={() => this.props.clearDiscoveredAssetsFilters()}
         >
           <label>Clear Filter</label>
           <DeleteForeverIcon fontSize="inherit" className="delete-btn" />
@@ -176,5 +196,17 @@ class AssetsFilterSection extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  const { discoveredAssetsFilters } = state.discoveredAssets;
 
-export default AssetsFilterSection;
+  return { discoveredAssetsFilters };
+}
+
+const mapDispatchToProps = {
+  clearDiscoveredAssetsFilters,
+  setDiscoveredAssetsFilters,
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(navigateRouter(AssetsFilterSection));

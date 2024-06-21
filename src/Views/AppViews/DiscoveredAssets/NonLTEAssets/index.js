@@ -13,29 +13,6 @@ import status from "Redux/Constants/CommonDS";
 import { getDiscoveredAssets } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
 import { API_ERROR_MESSAGE } from "CommonData";
 
-let filterData = [
-  {
-    name: "Region",
-    value: "US East 2",
-  },
-  {
-    name: "AWS Account",
-    value: "AWS (657",
-  },
-  {
-    name: "Product Enclave ",
-    value: "8 VPC",
-  },
-  {
-    name: "Element Type",
-    value: "EC2",
-  },
-  {
-    name: "App",
-    value: "Data",
-  },
-];
-
 class NonLteAssets extends Component {
   controlMapping = [
     {
@@ -65,7 +42,6 @@ class NonLteAssets extends Component {
       assestsData: [],
       assestsDataLength: 0,
       assestsDataPage: 0,
-      selectedFilters: filterData,
     };
   }
 
@@ -89,24 +65,27 @@ class NonLteAssets extends Component {
       const discoveredData = this.props.discoveredAssetsData?.data || [];
       this.manipulateDiscoveredData(discoveredData);
     }
+
+    if (
+      prevProps.discoveredAssetsFilters.data !==
+      this.props.discoveredAssetsFilters?.data
+    ) {
+      const discoveredData = this.props.discoveredAssetsData?.data || [];
+      this.manipulateDiscoveredData(discoveredData);
+    }
   }
 
   setActiveTab = (activeTab) => {
-    this.setState({ activeTab, selectedFilters: filterData }, () => {
+    this.setState({ activeTab }, () => {
       const discoveredData = this.props.discoveredAssetsData?.data || [];
       this.manipulateDiscoveredData(discoveredData);
     });
   };
 
-  onClickCloseIcon = (id) => {
-    let { selectedFilters } = this.state;
-    selectedFilters = selectedFilters.filter((filter, index) => index !== id);
-    this.setState({ selectedFilters });
-  };
-
   manipulateDiscoveredData = (data) => {
     let { totalRecords = 0, totalPages = 0, cloudElementList = [] } = data;
     let { activeTab } = this.state;
+    let filterData = this.props.discoveredAssetsFilters.data || [];
 
     let assestsData = [];
 
@@ -119,20 +98,33 @@ class NonLteAssets extends Component {
         let isCloudMatch = assest.cloud?.toUpperCase() === cloud?.key;
 
         if (isCloudMatch) {
-          assestsData.push({
-            name: assest.instanceName,
-            elementType: assest.elementType,
-            landingZone: assest.landingZone,
-            productEnclave: assest.productEnclaveInstanceId,
-            id: assest.id,
-            isEventEnabled: assest.isEventEnabled ? true : false,
-            isLogEnabled: assest.isLogEnabled ? true : false,
-            isTagged: assest.isTagged ? true : false,
-            isTraceEnabled: assest.isTraceEnabled ? true : false,
-            instanceId: assest.instanceId,
-            landingZoneId: assest.landingZoneId,
-            cloud: assest.cloud,
-          });
+          let isFiltered = filterData.filter((assestItem) =>
+            [
+              assest.elementType,
+              assest.landingZone,
+              assest.productEnclaveInstanceId,
+            ].includes(assestItem.value)
+          );
+
+          if (
+            !filterData.length ||
+            (filterData.length > 0 && isFiltered.length > 0)
+          ) {
+            assestsData.push({
+              name: assest.instanceName,
+              elementType: assest.elementType,
+              landingZone: assest.landingZone,
+              productEnclave: assest.productEnclaveInstanceId,
+              id: assest.id,
+              isEventEnabled: assest.isEventEnabled ? true : false,
+              isLogEnabled: assest.isLogEnabled ? true : false,
+              isTagged: assest.isTagged ? true : false,
+              isTraceEnabled: assest.isTraceEnabled ? true : false,
+              instanceId: assest.instanceId,
+              landingZoneId: assest.landingZoneId,
+              cloud: assest.cloud,
+            });
+          }
         }
       });
     }
@@ -144,13 +136,8 @@ class NonLteAssets extends Component {
     });
   };
   render() {
-    const {
-      activeTab,
-      selectedFilters,
-      assestsData,
-      assestsDataLength,
-      assestsDataPage,
-    } = this.state;
+    const { activeTab, assestsData, assestsDataLength, assestsDataPage } =
+      this.state;
     let { discoveredAssetsData } = this.props;
     return (
       <Box className="discovered-assets-inner-tabs">
@@ -161,11 +148,7 @@ class NonLteAssets extends Component {
             setActiveTab={(id) => this.setActiveTab(id)}
           />
           <Box className="tabs-content">
-            <AssetsFilterSection
-              data={selectedFilters}
-              onClickCloseIcon={(id) => this.onClickCloseIcon(id)}
-              onClickClearFilter={() => this.setState({ selectedFilters: [] })}
-            />
+            <AssetsFilterSection />
             <AssetsTable
               data={assestsData}
               loderStatus={discoveredAssetsData?.status === status.IN_PROGRESS}
@@ -194,9 +177,10 @@ class NonLteAssets extends Component {
   }
 }
 function mapStateToProps(state) {
-  const { discoveredAssetsData } = state.discoveredAssets;
+  const { discoveredAssetsData, discoveredAssetsFilters } =
+    state.discoveredAssets;
 
-  return { discoveredAssetsData };
+  return { discoveredAssetsData, discoveredAssetsFilters };
 }
 
 const mapDispatchToProps = { getDiscoveredAssets };

@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getDiscoveredAssets,
-  getAwsRegions,getEventsHistory
+  getAwsRegions,
+  getEventsHistory,
 } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -20,8 +21,33 @@ export const DiscoveredAssetsSlice = createSlice({
       status: null,
       data: [],
     },
+    discoveredAssetsFilters: {
+      status: null,
+      data: [],
+    },
   },
-
+  reducers: {
+    setDiscoveredAssetsFilters: (state, action) => {
+      let discoveredAssetsFilters = {
+        status: null,
+        data: action.payload,
+      };
+      return {
+        ...state,
+        discoveredAssetsFilters,
+      };
+    },
+    clearDiscoveredAssetsFilters: (state, action) => {
+      let discoveredAssetsFilters = {
+        status: null,
+        data: [],
+      };
+      return {
+        ...state,
+        discoveredAssetsFilters,
+      };
+    },
+  },
   extraReducers: {
     [getDiscoveredAssets.pending]: (state, action) => {
       return {
@@ -106,8 +132,9 @@ export const DiscoveredAssetsSlice = createSlice({
         },
       };
     },
-
   },
 });
 
+export const { setDiscoveredAssetsFilters, clearDiscoveredAssetsFilters } =
+  DiscoveredAssetsSlice.actions;
 export default DiscoveredAssetsSlice.reducer;
