@@ -67,6 +67,7 @@
           position: relative;
           border-bottom: 1px solid #eaecf0;
           font-family: "Poppins", sans-serif;
+          
           .resource-name{
             width: 100%;
             white-space: nowrap;
@@ -141,7 +142,7 @@
               }
             }
           }
-          span {
+          .tag-icon {
             display: inline-block;
             text-align: center;
             line-height: 22px;

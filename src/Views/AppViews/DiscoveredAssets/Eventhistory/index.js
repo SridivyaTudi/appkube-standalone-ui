@@ -112,14 +112,14 @@ class EventHistory extends Component {
                 <TableCell align="left">
                   <Box className="d-flex align-items-center">
                     <Checkbox
-                      className="check-box m-r-2"
+                      className="check-box"
                       size="small"
                       //id={index}
                       onChange={this.handleCheckBox}
                       //checked={selectedService.includes(index)}
                     />
                    
-                   {event?.EventName}
+                   <Link>{event?.EventName}</Link>
                     
                   </Box>
                 </TableCell>

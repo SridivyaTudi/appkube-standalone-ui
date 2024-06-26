@@ -213,8 +213,8 @@ class AssetsTable extends Component {
                   </HtmlTooltip>{" "}
                 </TableCell>
                 <TableCell align="center">
-                  <span
-                    className={`${isTagged ? "tag " : "orange"} tag-status	`}
+                  <Box
+                    className={`tag-icon ${isTagged ? "tag " : "orange"} tag-status	`}
                   >
                     <i
                       className={isTagged ? "fas fa-tag " : "fas fa-times"}
@@ -249,11 +249,11 @@ class AssetsTable extends Component {
                       }
                       onClick={() => this.toggleSelectDepartment(null, 1)}
                     />
-                  </span>
+                  </Box>
                 </TableCell>
                 <TableCell align="center">
-                  <span
-                    className={`${
+                  <Box
+                    className={`tag-icon ${
                       isLogEnabled ? "log-eye-icon" : "orange"
                     } log-status`}
                     onClick={this.toggleAssetsSetUp}
@@ -261,12 +261,12 @@ class AssetsTable extends Component {
                     <i
                       className={isLogEnabled ? "fas fa-eye" : "fas fa-times"}
                     ></i>
-                  </span>
+                  </Box>
                 </TableCell>
 
                 <TableCell align="center">
-                  <span
-                    className={`green log-status`}
+                  <Box
+                    className={`tag-icon green log-status`}
                     onClick={() =>
                       this.props.navigate(
                         `${APP_PREFIX_PATH}/assets/discovered-assets/events-history/${
@@ -276,7 +276,7 @@ class AssetsTable extends Component {
                     }
                   >
                     <i className={"fas fa-check"}></i>
-                  </span>
+                  </Box>
                 </TableCell>
                 <TableCell align="center">
                   <Box className="tag-status">
