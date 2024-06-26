@@ -21,6 +21,7 @@ import Loader from "Components/Loader";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { LoadingButton } from "@mui/lab";
+import {Link} from "react-router-dom";
 
 class EventHistory extends Component {
   constructor(props) {
@@ -43,7 +44,7 @@ class EventHistory extends Component {
       this.props.eventHistoryData.status === status.SUCCESS &&
       this.props.eventHistoryData?.data
     ) {
-      const eventHistories = this.props.eventHistoryData?.data || [];
+      const eventHistories = this.props.eventHistoryData?.data?.Events || [];
       this.setState({ eventHistories });
     }
   }
@@ -73,7 +74,6 @@ class EventHistory extends Component {
       <TableHead>
         <TableRow>
           <TableCell align="left">
-            
             <Checkbox
               className="check-box"
               size="small"
@@ -86,7 +86,7 @@ class EventHistory extends Component {
           <TableCell align="left">Event time</TableCell>
           <TableCell align="left">User name</TableCell>
           <TableCell align="left">Event source</TableCell>
-          <TableCell align="left">Resources</TableCell>
+          {/* <TableCell align="left">Resources</TableCell> */}
           <TableCell align="left">Resource name</TableCell>
         </TableRow>
       </TableHead>
@@ -100,14 +100,34 @@ class EventHistory extends Component {
       <TableBody>
         {eventHistories?.length ? (
           eventHistories.map((event) => {
+            let resourceNames = "";
+            if (event?.Resources?.length) {
+              resourceNames = event.Resources.map(
+                (resource) => resource?.ResourceName
+              ).join(",");
+            }
+
             return (
               <TableRow key={v4()}>
-                <TableCell align="left">{event?.eventName}</TableCell>
-                <TableCell align="left">{event?.eventTime}</TableCell>
-                <TableCell align="left">{event?.userName}</TableCell>
-                <TableCell align="left">{event?.eventSource}</TableCell>
-                <TableCell align="left">{event?.resources}</TableCell>
-                <TableCell align="left">{event?.resourceName}</TableCell>
+                <TableCell align="left">
+                  <Box className="d-flex align-items-center">
+                    <Checkbox
+                      className="check-box m-r-2"
+                      size="small"
+                      //id={index}
+                      onChange={this.handleCheckBox}
+                      //checked={selectedService.includes(index)}
+                    />
+                   
+                   {event?.EventName}
+                    
+                  </Box>
+                </TableCell>
+                <TableCell align="left">{event?.EventTime}</TableCell>
+                <TableCell align="left">{event?.Username}</TableCell>
+                <TableCell align="left">{event?.EventSource}</TableCell>
+                {/* <TableCell align="left">{event?.resources}</TableCell> */}
+                <TableCell align="left">{resourceNames}</TableCell>
               </TableRow>
             );
           })
@@ -159,7 +179,7 @@ class EventHistory extends Component {
   };
   render() {
     let loder = this.props.eventHistoryData.status === status.IN_PROGRESS;
-    let { searchedKey,eventHistories } = this.state;
+    let { searchedKey, eventHistories } = this.state;
     return (
       <Box className="discovered-assets-container">
         <Box className="assets-heading">

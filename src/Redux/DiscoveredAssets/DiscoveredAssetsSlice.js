@@ -123,12 +123,13 @@ export const DiscoveredAssetsSlice = createSlice({
         },
       };
     },
-    [getEventsHistory.rejected]: (state, { error }) => {
+    [getEventsHistory.rejected]: (state, action) => {
+      console.log(action);
       return {
         ...state,
         eventHistoryData: {
           status: status.FAILURE,
-          data: error?.message,
+          data: action,
         },
       };
     },

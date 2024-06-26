@@ -21,9 +21,9 @@ class DiscoveredAssets extends Component {
     {
       name: "Untagged Assets",
     },
-    {
-      name: "Non LTE Assets",
-    },
+    // {
+    //   name: "Non LTE Assets",
+    // },
   ];
   constructor(props) {
     super(props);
@@ -46,8 +46,6 @@ class DiscoveredAssets extends Component {
       <TaggedAssets />
     ) : activeTab === 2 ? (
       <UntaggedAssets />
-    ) : activeTab === 3 ? (
-      <NonLTEAssets />
     ) : (
       <></>
     );
