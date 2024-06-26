@@ -3,6 +3,7 @@ import {
   getDiscoveredAssets,
   getAwsRegions,
   getEventsHistory,
+  getLandingZoneSearch,
 } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -25,6 +26,10 @@ export const DiscoveredAssetsSlice = createSlice({
       status: null,
       data: [],
     },
+    landingZoneSearchData: {
+      status: null,
+      data: [],
+    },
   },
   reducers: {
     setDiscoveredAssetsFilters: (state, action) => {
@@ -40,7 +45,9 @@ export const DiscoveredAssetsSlice = createSlice({
     clearDiscoveredAssetsFilters: (state, action) => {
       let discoveredAssetsFilters = {
         status: null,
-        data: [],
+        data: state?.discoveredAssetsFilters?.data.filter(
+          (assest) => assest.name === "accounts"
+        ),
       };
       return {
         ...state,
@@ -127,6 +134,34 @@ export const DiscoveredAssetsSlice = createSlice({
       return {
         ...state,
         eventHistoryData: {
+          status: status.FAILURE,
+          data: error?.message,
+        },
+      };
+    },
+
+    [getLandingZoneSearch.pending]: (state, action) => {
+      return {
+        ...state,
+        landingZoneSearchData: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getLandingZoneSearch.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        landingZoneSearchData: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getLandingZoneSearch.rejected]: (state, { error }) => {
+      return {
+        ...state,
+        landingZoneSearchData: {
           status: status.FAILURE,
           data: error?.message,
         },

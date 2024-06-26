@@ -71,7 +71,7 @@ class AssetsTable extends Component {
 
   //  Render table
   renderTable = () => {
-    let { data: assestData, totalRecords, totalPages } = this.props;
+    let { data: assestData, totalRecords } = this.props;
 
     let { rpg, pg } = this.state;
 
@@ -105,7 +105,7 @@ class AssetsTable extends Component {
               </FormControl>
               <Pagination
                 selected={pg}
-                count={totalPages}
+                count={Math.ceil(totalRecords / rpg)}
                 onChange={this.handleChangePage}
                 variant="outlined"
                 shape="rounded"
@@ -133,7 +133,6 @@ class AssetsTable extends Component {
           <TableCell align="center">Tag Status</TableCell>
           <TableCell align="center">Log</TableCell>
           <TableCell align="center">Event</TableCell>
-          <TableCell align="center">Actions</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -173,147 +172,120 @@ class AssetsTable extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    const { isSelectDepartmentOpen, isSelectStatusOpen, rpg } = this.state;
+    const { isSelectDepartmentOpen, isSelectStatusOpen, rpg, pg } = this.state;
 
     let { data = [], errorMessage } = this.props;
 
     return (
       <TableBody>
-        {data.length ? (
-          data.slice(0, rpg).map((environment, index) => {
-            let {
-              name,
-              elementType,
-              landingZone,
-              productEnclave,
-              isEventEnabled,
-              isLogEnabled,
-              isTagged,
-              isTraceEnabled,
-              instanceId,
-              landingZoneId,
-              cloud,
-            } = environment;
-            return (
-              <TableRow key={index}>
-                <TableCell align="left">
-                  <HtmlTooltip className="table-tooltip" title={name}>
-                    <Box className="resource-name">{name}</Box>
-                  </HtmlTooltip>
-                </TableCell>
-                <TableCell align="left">{elementType}</TableCell>
-                <TableCell align="left">
-                  <HtmlTooltip className="table-tooltip" title={landingZone}>
-                    <Box className="resource-name">{landingZone}</Box>
-                  </HtmlTooltip>
-                </TableCell>
-                <TableCell align="left">
-                  <HtmlTooltip className="table-tooltip" title={productEnclave}>
-                    <Box className="resource-name">{productEnclave}</Box>
-                  </HtmlTooltip>{" "}
-                </TableCell>
-                <TableCell align="center">
-                  <Box
-                    className={`tag-icon ${isTagged ? "tag " : "orange"} tag-status	`}
-                  >
-                    <i
-                      className={isTagged ? "fas fa-tag " : "fas fa-times"}
-                      onClick={() => this.toggleSelectDepartment(index, 1)}
-                    ></i>
-                    {isSelectStatusOpen === index && !isTagged && (
+        {data?.length ? (
+          data
+            .slice((pg - 1) * rpg, (pg - 1) * rpg + rpg)
+            .map((environment, index) => {
+              let {
+                name,
+                elementType,
+                landingZone,
+                productEnclave,
+                isEventEnabled,
+                isLogEnabled,
+                isTagged,
+                instanceId,
+                landingZoneId,
+                cloud,
+              } = environment;
+              return (
+                <TableRow key={index}>
+                  <TableCell align="left">
+                    <HtmlTooltip className="table-tooltip" title={name}>
+                      <Box className="resource-name">{name}</Box>
+                    </HtmlTooltip>
+                  </TableCell>
+                  <TableCell align="left">{elementType}</TableCell>
+                  <TableCell align="left">
+                    <HtmlTooltip className="table-tooltip" title={landingZone}>
+                      <Box className="resource-name">{landingZone}</Box>
+                    </HtmlTooltip>
+                  </TableCell>
+                  <TableCell align="left">
+                    <HtmlTooltip
+                      className="table-tooltip"
+                      title={productEnclave}
+                    >
+                      <Box className="resource-name">{productEnclave}</Box>
+                    </HtmlTooltip>{" "}
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box
+                      className={`tag-icon ${
+                        isTagged ? "tag " : "orange"
+                      } tag-status	`}
+                    >
+                      <i
+                        className={isTagged ? "fas fa-tag " : "fas fa-times"}
+                        onClick={() => this.toggleSelectDepartment(index, 1)}
+                      ></i>
+                      {isSelectStatusOpen === index && !isTagged && (
+                        <div
+                          className={
+                            isSelectStatusOpen === index
+                              ? "fliter-collapse active"
+                              : "fliter-collapse"
+                          }
+                        >
+                          <List menu-list>
+                            <ListItem
+                              onClick={() =>
+                                this.props.navigate(
+                                  `${APP_PREFIX_PATH}/assets/environments/associatechartapp?landingZone=${landingZone}&cloudName=${cloud}&landingZoneId=${landingZoneId}&elementType=${elementType}&instanceId=${instanceId}`
+                                )
+                              }
+                            >
+                              <i className="fa-solid fa-circle-dot"></i> Tag
+                            </ListItem>
+                          </List>
+                        </div>
+                      )}
                       <div
                         className={
                           isSelectStatusOpen === index
-                            ? "fliter-collapse active"
-                            : "fliter-collapse"
+                            ? "fliters-collapse-bg active"
+                            : "fliters-collapse-bg"
                         }
-                      >
-                        <List menu-list>
-                          <ListItem
-                            onClick={() =>
-                              this.props.navigate(
-                                `${APP_PREFIX_PATH}/assets/environments/associatechartapp?landingZone=${landingZone}&cloudName=${cloud}&landingZoneId=${landingZoneId}&elementType=${elementType}&instanceId=${instanceId}`
-                              )
-                            }
-                          >
-                            <i className="fa-solid fa-circle-dot"></i> Tag
-                          </ListItem>
-                        </List>
-                      </div>
-                    )}
-                    <div
-                      className={
-                        isSelectStatusOpen === index
-                          ? "fliters-collapse-bg active"
-                          : "fliters-collapse-bg"
-                      }
-                      onClick={() => this.toggleSelectDepartment(null, 1)}
-                    />
-                  </Box>
-                </TableCell>
-                <TableCell align="center">
-                  <Box
-                    className={`tag-icon ${
-                      isLogEnabled ? "log-eye-icon" : "orange"
-                    } log-status`}
-                    onClick={this.toggleAssetsSetUp}
-                  >
-                    <i
-                      className={isLogEnabled ? "fas fa-eye" : "fas fa-times"}
-                    ></i>
-                  </Box>
-                </TableCell>
+                        onClick={() => this.toggleSelectDepartment(null, 1)}
+                      />
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box
+                      className={`tag-icon ${
+                        isLogEnabled ? "log-eye-icon" : "orange"
+                      } log-status`}
+                      onClick={this.toggleAssetsSetUp}
+                    >
+                      <i
+                        className={isLogEnabled ? "fas fa-eye" : "fas fa-times"}
+                      ></i>
+                    </Box>
+                  </TableCell>
 
-                <TableCell align="center">
-                  <Box
-                    className={`tag-icon green log-status`}
-                    onClick={() =>
-                      this.props.navigate(
-                        `${APP_PREFIX_PATH}/assets/discovered-assets/events-history/${
-                          environment?.instanceId
-                        }/${environment?.landingZoneId || 0}`
-                      )
-                    }
-                  >
-                    <i className={"fas fa-check"}></i>
-                  </Box>
-                </TableCell>
-                <TableCell align="center">
-                  <Box className="tag-status">
-                    <button
-                      type="button"
-                      className="list-icon"
-                      onClick={(e) =>
-                        this.toggleSelectDepartment(index, 0, e.currentTarget)
+                  <TableCell align="center">
+                    <Box
+                      className={`tag-icon green log-status`}
+                      onClick={() =>
+                        this.props.navigate(
+                          `${APP_PREFIX_PATH}/assets/discovered-assets/events-history/${
+                            environment?.instanceId
+                          }/${environment?.landingZoneId || 0}`
+                        )
                       }
                     >
-                      <i className="fas fa-ellipsis-v"></i>
-                    </button>
-                    <Menu
-                      className="common-list-menu"
-                      id={`basic-menu-${index}`}
-                      anchorEl={this.state.anchorEl}
-                      open={isSelectDepartmentOpen === index}
-                      onClose={() => this.toggleSelectDepartment(null, 0, null)}
-                      MenuListProps={{
-                        "aria-labelledby": "basic-button",
-                      }}
-                      anchorOrigin={{
-                        vertical: "top",
-                        horizontal: "center",
-                      }}
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "center",
-                      }}
-                    >
-                      {this.renderDropDownData()}
-                    </Menu>
-                  </Box>
-                </TableCell>
-              </TableRow>
-            );
-          })
+                      <i className={"fas fa-check"}></i>
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              );
+            })
         ) : (
           <TableRow>
             <TableCell colSpan={12}>
@@ -358,7 +330,6 @@ class AssetsTable extends Component {
     return ["Set Up"].map((data, index) => {
       return (
         <MenuItem key={index}>
-          {" "}
           <i className="fa-solid fa-circle-dot"></i>
           {data}
         </MenuItem>

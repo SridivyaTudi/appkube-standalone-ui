@@ -45,16 +45,6 @@ class DiscoveredAssetsComponent extends Component {
     };
   }
 
-  componentDidMount = () => {
-    const orgId = getCurrentOrgId();
-    this.props.getDiscoveredAssets({
-      orgId,
-      pageSize: 10,
-      pageNo: 0,
-      filterFlag: "all",
-    });
-  };
-
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.discoveredAssetsData.status !==
@@ -98,17 +88,22 @@ class DiscoveredAssetsComponent extends Component {
         let isCloudMatch = assest.cloud?.toUpperCase() === cloud?.key;
 
         if (isCloudMatch) {
-          let isFiltered = filterData.filter((assestItem) =>
-            [
-              assest.elementType,
-              assest.landingZone,
-              assest.productEnclaveInstanceId,
-            ].includes(assestItem.value)
+          let isFilteredFromLandingZone = filterData.filter(
+            (assestItem) =>
+              assestItem.name === "accounts" &&
+              assestItem.label === assest.landingZone
           );
-          
+
+          let isOtherFiltered = filterData.filter(
+            (assestItem) =>
+              assestItem.name !== "accounts" &&
+              [assest.elementType, assest.productEnclaveInstanceId].includes(
+                assestItem.value
+              )
+          );
           if (
-            !filterData.length ||
-            (filterData.length > 0 && isFiltered.length > 0)
+            filterData.length === 1 ||
+            (isFilteredFromLandingZone.length > 0 && isOtherFiltered.length > 0)
           ) {
             assestsData.push({
               name: assest.instanceName,
@@ -131,7 +126,7 @@ class DiscoveredAssetsComponent extends Component {
 
     this.setState({
       assestsData,
-      assestsDataLength: totalRecords,
+      assestsDataLength: assestsData.length,
       assestsDataPage: totalPages,
     });
   };
@@ -148,21 +143,11 @@ class DiscoveredAssetsComponent extends Component {
             setActiveTab={(id) => this.setActiveTab(id)}
           />
           <Box className="tabs-content">
-            <AssetsFilterSection />
+            <AssetsFilterSection flag="all" />
             <AssetsTable
               data={assestsData}
               loderStatus={discoveredAssetsData?.status === status.IN_PROGRESS}
               totalRecords={assestsDataLength}
-              totalPages={assestsDataPage}
-              handleChangePage={({ pageNo, pageSize }) => {
-                const orgId = getCurrentOrgId();
-                this.props.getDiscoveredAssets({
-                  orgId,
-                  pageSize,
-                  pageNo: pageNo - 1,
-                  filterFlag: "all",
-                });
-              }}
               activeTab={activeTab}
               errorMessage={
                 discoveredAssetsData.status === status.FAILURE

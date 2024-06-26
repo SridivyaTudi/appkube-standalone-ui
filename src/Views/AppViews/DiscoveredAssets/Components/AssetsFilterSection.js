@@ -29,6 +29,12 @@ class AssetsFilterSection extends Component {
   }
 
   componentDidMount() {
+    if (
+      this.props.flag === "all" &&
+      this.props.discoveredAssetsFilters?.data?.length === 0
+    ) {
+      this.setState({ showAssetsMainFilterModal: true });
+    }
     this.handleResizeFun();
     window.addEventListener("resize", this.handleResizeFun, true);
   }
@@ -85,14 +91,20 @@ class AssetsFilterSection extends Component {
                 <Box className="filter-box" key={v4()}>
                   <Box className="d-flex  align-items-center m-r-3">
                     <label>{LABELS[filter.name]} &#58; </label>
-                    <span className="p-l-5"> {filter.value} </span>
+                    <span className="p-l-5">
+                      {filter.label || filter.value}
+                    </span>
                   </Box>
-                  <CloseIcon
-                    fontSize="inherit"
-                    className="close-btn"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => this.onClickCloseIcon(filter.name)}
-                  />
+                  {filter.name !== "accounts" ? (
+                    <CloseIcon
+                      fontSize="inherit"
+                      className="close-btn"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => this.onClickCloseIcon(filter.name)}
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </Box>
               );
             })}
@@ -152,7 +164,7 @@ class AssetsFilterSection extends Component {
 
   render() {
     const { showAssetsMainFilterModal, showFilterPopup, noOfRow } = this.state;
-    let filterData = this.props.data;
+    let filterData = this.props.discoveredAssetsFilters.data || [];
     return (
       <Box className="head-top-section">
         <Box className="d-flex align-items-center">
@@ -165,18 +177,23 @@ class AssetsFilterSection extends Component {
           </Button>
           {this.renderAppliedFilters()}
         </Box>
+        {filterData.length !== 1 ? (
+          <Box
+            className="clear-filter-box"
+            onClick={() => this.props.clearDiscoveredAssetsFilters()}
+          >
+            <label>Clear Filter</label>
+            <DeleteForeverIcon fontSize="inherit" className="delete-btn" />
+          </Box>
+        ) : (
+          <></>
+        )}
 
-        <Box
-          className="clear-filter-box"
-          onClick={() => this.props.clearDiscoveredAssetsFilters()}
-        >
-          <label>Clear Filter</label>
-          <DeleteForeverIcon fontSize="inherit" className="delete-btn" />
-        </Box>
         {showAssetsMainFilterModal ? (
           <AssetsMainFilterModal
             showModal={showAssetsMainFilterModal}
             togglePopup={this.togglePopup}
+            flag={this.props.flag}
           />
         ) : (
           <></>
@@ -186,7 +203,7 @@ class AssetsFilterSection extends Component {
           <FilterPopup
             showModal={showFilterPopup}
             togglePopup={this.toggleFilterPopup}
-            data={filterData.slice(noOfRow)}
+            data={filterData?.slice(noOfRow) || []}
             onClickCloseIcon={(id) => this.props.onClickCloseIcon(id)}
           />
         ) : (

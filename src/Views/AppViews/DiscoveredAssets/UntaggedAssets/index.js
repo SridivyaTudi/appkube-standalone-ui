@@ -44,15 +44,6 @@ class UntaggedAssets extends Component {
       assestsDataPage: 0,
     };
   }
-  componentDidMount = () => {
-    const orgId = getCurrentOrgId();
-    this.props.getDiscoveredAssets({
-      orgId,
-      pageSize: 10,
-      pageNo: 0,
-      filterFlag: "untagged",
-    });
-  };
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -97,32 +88,41 @@ class UntaggedAssets extends Component {
         let isCloudMatch = assest.cloud?.toUpperCase() === cloud?.key;
 
         if (isCloudMatch) {
-          let isFiltered = filterData.filter((assestItem) =>
-            [
-              assest.elementType,
-              assest.landingZone,
-              assest.productEnclaveInstanceId,
-            ].includes(assestItem.value)
+          let isFilteredFromLandingZone = filterData.filter(
+            (assestItem) =>
+              assestItem.name === "accounts" &&
+              assestItem.label === assest.landingZone
+          );
+
+          let isOtherFiltered = filterData.filter(
+            (assestItem) =>
+              assestItem.name !== "accounts" &&
+              [assest.elementType, assest.productEnclaveInstanceId].includes(
+                assestItem.value
+              )
           );
 
           if (
-            !filterData.length ||
-            (filterData.length > 0 && isFiltered.length > 0)
+            filterData.length === 1 ||
+            (isFilteredFromLandingZone.length > 0 && isOtherFiltered.length > 0)
           ) {
-            assestsData.push({
-              name: assest.instanceName,
-              elementType: assest.elementType,
-              landingZone: assest.landingZone,
-              productEnclave: assest.productEnclaveInstanceId,
-              id: assest.id,
-              isEventEnabled: assest.isEventEnabled ? true : false,
-              isLogEnabled: assest.isLogEnabled ? true : false,
-              isTagged: assest.isTagged ? true : false,
-              isTraceEnabled: assest.isTraceEnabled ? true : false,
-              instanceId: assest.instanceId,
-              landingZoneId: assest.landingzoneId,
-              cloud: assest.cloud,
-            });
+
+            if (!assest.isTagged) {
+              assestsData.push({
+                name: assest.instanceName,
+                elementType: assest.elementType,
+                landingZone: assest.landingZone,
+                productEnclave: assest.productEnclaveInstanceId,
+                id: assest.id,
+                isEventEnabled: assest.isEventEnabled ? true : false,
+                isLogEnabled: assest.isLogEnabled ? true : false,
+                isTagged: assest.isTagged ? true : false,
+                isTraceEnabled: assest.isTraceEnabled ? true : false,
+                instanceId: assest.instanceId,
+                landingZoneId: assest.landingzoneId,
+                cloud: assest.cloud,
+              });
+            }
           }
         }
       });
@@ -130,7 +130,7 @@ class UntaggedAssets extends Component {
 
     this.setState({
       assestsData,
-      assestsDataLength: totalRecords,
+      assestsDataLength: assestsData.length,
       assestsDataPage: totalPages,
     });
   };

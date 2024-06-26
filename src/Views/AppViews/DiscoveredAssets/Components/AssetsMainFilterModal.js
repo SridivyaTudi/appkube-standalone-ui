@@ -19,6 +19,8 @@ import {
   clearDiscoveredAssetsFilters,
   setDiscoveredAssetsFilters,
 } from "Redux/DiscoveredAssets/DiscoveredAssetsSlice";
+import { getDiscoveredAssets } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
+import { getCurrentOrgId } from "Utils";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -75,54 +77,76 @@ class AssetsMainFilterModal extends Component {
       const discoveredData = this.props.discoveredAssetsData?.data || [];
       this.manipulateDiscoveredData(discoveredData);
     }
+
+    if (
+      prevProps.landingZoneSearchData.status !==
+        this.props.landingZoneSearchData.status &&
+      this.props.landingZoneSearchData.status === status.SUCCESS &&
+      this.props.landingZoneSearchData?.data
+    ) {
+      let landingZoneSearchData = this.props.landingZoneSearchData?.data || [];
+
+      if (landingZoneSearchData?.length) {
+        let { filterData } = this.state;
+        filterData = filterData.map((filter) => {
+          if (filter.key === "accounts") {
+            filter["dropDownItems"] = landingZoneSearchData
+              .map((landingZoneData) => {
+                let { id, landingZone } = landingZoneData;
+                return { value: id, label: landingZone };
+              })
+              .concat([{ value: 2, label: "798008086" }]);
+          }
+          return filter;
+        });
+
+        this.setState({ filterData });
+      }
+    }
   }
 
   manipulateDiscoveredData(data = []) {
     let { filterData } = this.state;
-    let prevFilterData = this.props.discoveredAssetsFilters.data || [];
 
     if (data.cloudElementList?.length) {
-      let acconts = [];
       let elementTypes = [];
+      let uniqueElementTypes = [];
+
+      let uniqueEnclaves = [];
       let enclaves = [];
+
       data.cloudElementList.forEach((assest) => {
         let { landingZone, elementType, productEnclaveInstanceId } = assest;
 
-        if (landingZone && !acconts.includes(landingZone)) {
-          acconts.push(landingZone);
-        }
-
-        if (elementType && !elementTypes.includes(elementType)) {
-          elementTypes.push(elementType);
+        if (elementType && !uniqueElementTypes.includes(elementType)) {
+          elementTypes.push({ label: elementType, value: elementType });
+          uniqueElementTypes.push(elementType);
         }
 
         if (
           productEnclaveInstanceId &&
-          !enclaves.includes(productEnclaveInstanceId)
+          !uniqueEnclaves.includes(productEnclaveInstanceId)
         ) {
-          enclaves.push(productEnclaveInstanceId);
+          enclaves.push({
+            label: productEnclaveInstanceId,
+            value: productEnclaveInstanceId,
+          });
+          uniqueEnclaves.push(productEnclaveInstanceId);
         }
       });
 
-      if (prevFilterData?.length) {
-        prevFilterData.forEach((account) => {
-          if (account.name === "accounts" && !acconts.includes(account.value)) {
-            acconts.push(account.value);
-          }
-          if (account.name === "encalve" && !enclaves.includes(account.value)) {
-            enclaves.push(account.value);
-          }
-          if (
-            account.name === "elementType" &&
-            !elementTypes.includes(account.value)
-          ) {
-            elementTypes.push(account.value);
-          }
-        });
-      }
-
+      let landingZoneSearchData = this.props.landingZoneSearchData?.data || [];
       filterData = [
-        { label: "AWS Account", dropDownItems: acconts, key: "accounts" },
+        {
+          label: "AWS Account",
+          dropDownItems: landingZoneSearchData
+            .map((landingZoneData) => {
+              let { id, landingZone } = landingZoneData;
+              return { value: id, label: landingZone };
+            })
+            .concat([{ value: 2, label: "798008086" }]),
+          key: "accounts",
+        },
         { label: "Product Enclave", dropDownItems: enclaves, key: "encalve" },
         {
           label: "Element Type",
@@ -148,8 +172,8 @@ class AssetsMainFilterModal extends Component {
   renderData = (data) => {
     if (data.length) {
       return data.map((item) => (
-        <MenuItem value={item} key={v4()} className="select-menu">
-          {item}
+        <MenuItem value={item.value} key={v4()} className="select-menu">
+          {item.label}
         </MenuItem>
       ));
     }
@@ -157,6 +181,12 @@ class AssetsMainFilterModal extends Component {
 
   handleSelectboxChange = (e, index) => {
     let { selectedLog } = this.state;
+    let filterData = this.props.discoveredAssetsFilters.data || [];
+    filterData = filterData.filter((data) => data.name === "accounts");
+
+    if (index === "accounts" && filterData?.[0]?.["value"] !== e.target.value) {
+      this.props.setDiscoveredAssetsFilters(filterData);
+    }
     selectedLog[index] = e.target.value;
     this.setState({ selectedLog });
   };
@@ -171,19 +201,39 @@ class AssetsMainFilterModal extends Component {
   }
 
   onClickSubmitBtn = () => {
-    let { selectedLog } = this.state;
+    let { selectedLog, isFirstTimeAPICall } = this.state;
     let keys = Object.keys(selectedLog);
 
     let filters = [];
     if (keys.length) {
       keys.forEach((key) => {
         if (selectedLog[key] !== "") {
-          filters.push({
-            name: key,
-            value: selectedLog[key],
-          });
+          if (selectedLog?.accounts) {
+            let landingZoneSearchData =
+              this.props.landingZoneSearchData?.data || [];
+            filters.push({
+              name: key,
+              value: selectedLog[key],
+              label: landingZoneSearchData.find(
+                (landingZoneSearch) => landingZoneSearch.id === selectedLog[key]
+              )?.landingZone,
+            });
+          } else {
+            filters.push({
+              name: key,
+              value: selectedLog[key],
+            });
+          }
         }
       });
+      if (!this.props.discoveredAssetsData?.status) {
+        const orgId = getCurrentOrgId();
+        this.props.getDiscoveredAssets({
+          orgId,
+          filterFlag: this.props.flag,
+          landingZoneId: selectedLog?.accounts,
+        });
+      }
     }
 
     this.props.setDiscoveredAssetsFilters(filters);
@@ -244,11 +294,19 @@ class AssetsMainFilterModal extends Component {
                             onChange={(e) => {
                               this.handleSelectboxChange(e, filter.key);
                             }}
+                            disabled={
+                              filter.key !== "accounts" &&
+                              !selectedLog["accounts"]
+                            }
                             MenuProps={MenuProps}
                           >
                             <MenuItem
                               value=""
                               style={{ fontSize: 14, color: "383874" }}
+                              disabled={
+                                filter.key === "accounts" ||
+                                selectedLog["accounts"] === ""
+                              }
                             >
                               Select {filter.label}
                             </MenuItem>
@@ -290,15 +348,23 @@ class AssetsMainFilterModal extends Component {
   }
 }
 function mapStateToProps(state) {
-  const { discoveredAssetsData, discoveredAssetsFilters } =
-    state.discoveredAssets;
+  const {
+    discoveredAssetsData,
+    discoveredAssetsFilters,
+    landingZoneSearchData,
+  } = state.discoveredAssets;
 
-  return { discoveredAssetsData, discoveredAssetsFilters };
+  return {
+    discoveredAssetsData,
+    discoveredAssetsFilters,
+    landingZoneSearchData,
+  };
 }
 
 const mapDispatchToProps = {
   setDiscoveredAssetsFilters,
   clearDiscoveredAssetsFilters,
+  getDiscoveredAssets,
 };
 export default connect(
   mapStateToProps,

@@ -88,8 +88,9 @@ const config = {
 
   /* Discovered Assets*/
   GET_DISCOVERED_ASSETS:
-    "/cloud-element/org/#org-id#/all-elements?pageNo=#page-no#&pageSize=#page-size#&filterFlag=#filter-flag#",
+    "/cloud-element/org/#org-id#/all-elements?filterFlag=#filter-flag#&landingZoneId=#landing-zone-id#",
   GET_AWS_REGIONS: `/aws-regions`,
+  GET_LANDINGZONE_SEARCH: `/landingzone/search?organization_id=#org-id#`,
 
   /* AWS-X-API*/
   /* Discovered Assets*/

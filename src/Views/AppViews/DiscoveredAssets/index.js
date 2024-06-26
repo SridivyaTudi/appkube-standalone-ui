@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import DiscoveredAssetsComponent from "./DiscoveredAssetsComponent";
-import NonLTEAssets from "./NonLTEAssets";
 import TaggedAssets from "./TaggedAssets";
 import UntaggedAssets from "./UntaggedAssets";
 import TabsMenu from "Views/AppViews/Environments/EnvironmentList/TabsMenu";
@@ -9,6 +8,8 @@ import { v4 } from "uuid";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { connect } from "react-redux";
 import { clearDiscoveredAssetsFilters } from "Redux/DiscoveredAssets/DiscoveredAssetsSlice";
+import { getLandingZoneSearch } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
+import { getCurrentOrgId } from "Utils";
 
 class DiscoveredAssets extends Component {
   tabMapping = [
@@ -32,8 +33,11 @@ class DiscoveredAssets extends Component {
     };
   }
 
+  componentDidMount() {
+    let orgId = getCurrentOrgId();
+    this.props.getLandingZoneSearch({ orgId });
+  }
   setActiveTab = (activeTab) => {
-    this.props.clearDiscoveredAssetsFilters();
     this.setState({ activeTab });
   };
 
@@ -84,7 +88,10 @@ function mapStateToProps(state) {
   return { discoveredAssetsFilters };
 }
 
-const mapDispatchToProps = { clearDiscoveredAssetsFilters };
+const mapDispatchToProps = {
+  clearDiscoveredAssetsFilters,
+  getLandingZoneSearch,
+};
 export default connect(
   mapStateToProps,
   mapDispatchToProps
