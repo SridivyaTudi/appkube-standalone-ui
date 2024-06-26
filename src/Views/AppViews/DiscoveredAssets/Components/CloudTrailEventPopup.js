@@ -18,7 +18,10 @@ class CloudTrailEventPopup extends Component {
   };
 
   render() {
-    let trialEvents = JSON.parse(JSON.stringify(this.props.data));
+    let trialEvents = "";
+    if (this.props.data) {
+      trialEvents = JSON.parse(JSON.stringify(this.props.data));
+    }
     return (
       <Modal
         isOpen={this.props.showModal}
