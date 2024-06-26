@@ -21,7 +21,8 @@ import Loader from "Components/Loader";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { LoadingButton } from "@mui/lab";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import CloudTrailEventPopup from "../Components/CloudTrailEventPopup";
 
 class EventHistory extends Component {
   constructor(props) {
@@ -29,6 +30,8 @@ class EventHistory extends Component {
     this.state = {
       eventHistories: [],
       searchedKey: "",
+      ShowCloudTrailEventPopup: false,
+      selectedCloudTrailEvents: null,
     };
   }
 
@@ -118,9 +121,19 @@ class EventHistory extends Component {
                       onChange={this.handleCheckBox}
                       //checked={selectedService.includes(index)}
                     />
-                   
-                   <Link>{event?.EventName}</Link>
-                    
+
+                    <Link
+                      onClick={() => {
+                        this.setState(
+                          { selectedCloudTrailEvents: event.CloudTrailEvent },
+                          () => {
+                            this.togglePopup();
+                          }
+                        );
+                      }}
+                    >
+                      {event?.EventName}
+                    </Link>
                   </Box>
                 </TableCell>
                 <TableCell align="left">{event?.EventTime}</TableCell>
@@ -158,13 +171,16 @@ class EventHistory extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { eventHistories } = this.state;
-    let data = this.props.eventHistoriesData?.data || [];
+    let data = this.props.eventHistoryData?.data?.Events || [];
 
     if (Array.isArray(data) && data?.length) {
       if (value) {
         eventHistories = data.filter((tableData) => {
           if (
-            tableData?.eventName.toLowerCase().includes(value.toLowerCase())
+            tableData?.EventName?.toLowerCase().includes(value.toLowerCase()) ||
+            tableData?.EventTime?.toLowerCase().includes(value.toLowerCase()) ||
+            tableData?.Username?.toLowerCase().includes(value.toLowerCase()) ||
+            tableData?.EventSource?.toLowerCase().includes(value.toLowerCase())
           ) {
             return tableData;
           } else {
@@ -177,9 +193,24 @@ class EventHistory extends Component {
       this.setState({ eventHistories, searchedKey: value });
     }
   };
+
+  togglePopup = () => {
+    let { ShowCloudTrailEventPopup, selectedCloudTrailEvents } = this.state;
+    this.setState({
+      ShowCloudTrailEventPopup: !ShowCloudTrailEventPopup,
+      selectedCloudTrailEvents: ShowCloudTrailEventPopup
+        ? null
+        : selectedCloudTrailEvents,
+    });
+  };
   render() {
     let loder = this.props.eventHistoryData.status === status.IN_PROGRESS;
-    let { searchedKey, eventHistories } = this.state;
+    let {
+      searchedKey,
+      eventHistories,
+      ShowCloudTrailEventPopup,
+      selectedCloudTrailEvents,
+    } = this.state;
     return (
       <Box className="discovered-assets-container">
         <Box className="assets-heading">
@@ -208,7 +239,6 @@ class EventHistory extends Component {
               placeholder="AWS:EC2:Instance"
               value={searchedKey}
               onChange={this.handleSearchChange}
-              autoFocus="autoFocus"
             />
             <button className="button">
               <SearchOutlinedIcon />
@@ -230,9 +260,6 @@ class EventHistory extends Component {
                 <LoadingButton
                   className={`primary-btn min-width-inherit  m-r-3`}
                   variant="contained"
-                  // disabled={creationBiMapping.status === status.IN_PROGRESS}
-                  // loading={creationBiMapping.status === status.IN_PROGRESS}
-                  // onClick={() => this.onClickSave()}
                 >
                   Set Up
                 </LoadingButton>
@@ -241,6 +268,16 @@ class EventHistory extends Component {
             <Grid item xs={4}></Grid>
           </Grid>
         </Box>
+
+        {ShowCloudTrailEventPopup ? (
+          <CloudTrailEventPopup
+            showModal={ShowCloudTrailEventPopup}
+            togglePopup={this.togglePopup}
+            data={selectedCloudTrailEvents}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }
