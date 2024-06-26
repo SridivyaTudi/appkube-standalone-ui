@@ -63,7 +63,7 @@ class EventHistory extends Component {
   renderTable = () => {
     return (
       <TableContainer className="table">
-        <Table>
+        <Table style={{ minWidth: 1000 }}>
           {this.renderTableHead()}
           {this.renderTableBody()}
         </Table>

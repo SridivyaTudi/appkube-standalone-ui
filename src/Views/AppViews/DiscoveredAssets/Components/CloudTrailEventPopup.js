@@ -42,17 +42,7 @@ class CloudTrailEventPopup extends Component {
         <ModalBody
           style={{ overflowY: "auto", overflowX: "auto", maxHeight: "300px" }}
         >
-          <Box sx={{ width: "100%" }} className="p-10">
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-              alignItems={"center"}
-              justifyContent={"flex-start"}
-            >
-              <p> {trialEvents}</p>
-            </Grid>
-          </Box>
+          <Box className="cloud-trail-event"> {trialEvents}</Box>
         </ModalBody>
       </Modal>
     );
