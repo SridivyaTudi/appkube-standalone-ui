@@ -45,9 +45,11 @@ export const DiscoveredAssetsSlice = createSlice({
     clearDiscoveredAssetsFilters: (state, action) => {
       let discoveredAssetsFilters = {
         status: null,
-        data: state?.discoveredAssetsFilters?.data.filter(
-          (assest) => assest.name === "accounts"
-        ),
+        data: action.payload?.isAllClearFilter
+          ? []
+          : state?.discoveredAssetsFilters?.data.filter(
+              (assest) => assest.name === "accounts"
+            ),
       };
       return {
         ...state,

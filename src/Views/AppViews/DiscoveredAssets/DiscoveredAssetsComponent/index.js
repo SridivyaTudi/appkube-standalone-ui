@@ -45,6 +45,11 @@ class DiscoveredAssetsComponent extends Component {
     };
   }
 
+  componentDidMount() {
+    const discoveredData = this.props.discoveredAssetsData?.data || [];
+    this.manipulateDiscoveredData(discoveredData);
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.discoveredAssetsData.status !==

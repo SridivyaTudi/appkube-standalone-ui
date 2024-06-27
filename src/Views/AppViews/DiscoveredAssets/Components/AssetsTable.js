@@ -50,7 +50,10 @@ class AssetsTable extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps?.activeTab !== this.props?.activeTab) {
+    if (
+      prevProps?.activeTab !== this.props?.activeTab ||
+      prevProps?.data !== this.props?.data
+    ) {
       this.setState({ pg: 1, rpg: 10 });
     }
   }
@@ -304,26 +307,11 @@ class AssetsTable extends Component {
   };
 
   handleChangePage = (event, newpage) => {
-    let { rpg } = this.state;
     this.setState({ pg: newpage });
-
-    try {
-      this.props.handleChangePage({ pageNo: newpage, pageSize: rpg });
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   handleChangeRowsPerPage = (event) => {
-    this.setState({ rpg: parseInt(event.target.value, 10), pg: 1 }, () => {
-      let { pg, rpg } = this.state;
-
-      try {
-        this.props.handleChangePage({ pageNo: pg, pageSize: rpg });
-      } catch (error) {
-        console.error(error);
-      }
-    });
+    this.setState({ rpg: parseInt(event.target.value, 10), pg: 1 });
   };
 
   renderDropDownData = () => {

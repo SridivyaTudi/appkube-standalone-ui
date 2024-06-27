@@ -45,6 +45,11 @@ class UntaggedAssets extends Component {
     };
   }
 
+  componentDidMount() {
+    const discoveredData = this.props.discoveredAssetsData?.data || [];
+    this.manipulateDiscoveredData(discoveredData);
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.discoveredAssetsData.status !==
@@ -106,8 +111,7 @@ class UntaggedAssets extends Component {
             filterData.length === 1 ||
             (isFilteredFromLandingZone.length > 0 && isOtherFiltered.length > 0)
           ) {
-
-            if (!assest.isTagged) {
+            if (assest.isTagged !== true) {
               assestsData.push({
                 name: assest.instanceName,
                 elementType: assest.elementType,
@@ -152,21 +156,12 @@ class UntaggedAssets extends Component {
             setActiveTab={(id) => this.setActiveTab(id)}
           />
           <Box className="tabs-content">
-            <AssetsFilterSection />
+            <AssetsFilterSection flag="untagged" />
             <AssetsTable
               data={assestsData}
               loderStatus={discoveredAssetsData?.status === status.IN_PROGRESS}
               totalRecords={assestsDataLength}
               totalPages={assestsDataPage}
-              handleChangePage={({ pageNo, pageSize }) => {
-                const orgId = getCurrentOrgId();
-                this.props.getDiscoveredAssets({
-                  orgId,
-                  pageSize,
-                  pageNo: pageNo - 1,
-                  filterFlag: "untagged",
-                });
-              }}
               activeTab={activeTab}
               errorMessage={
                 discoveredAssetsData.status === status.FAILURE

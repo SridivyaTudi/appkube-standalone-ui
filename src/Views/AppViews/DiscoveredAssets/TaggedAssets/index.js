@@ -158,21 +158,11 @@ class TaggedAssets extends Component {
             setActiveTab={(id) => this.setActiveTab(id)}
           />
           <Box className="tabs-content">
-            <AssetsFilterSection />
+            <AssetsFilterSection flag="tagged" />
             <AssetsTable
               data={assestsData}
               loderStatus={discoveredAssetsData?.status === status.IN_PROGRESS}
               totalRecords={assestsDataLength}
-              totalPages={assestsDataPage}
-              handleChangePage={({ pageNo, pageSize }) => {
-                const orgId = getCurrentOrgId();
-                this.props.getDiscoveredAssets({
-                  orgId,
-                  pageSize,
-                  pageNo: pageNo - 1,
-                  filterFlag: "tagged",
-                });
-              }}
               activeTab={activeTab}
               errorMessage={
                 discoveredAssetsData.status === status.FAILURE

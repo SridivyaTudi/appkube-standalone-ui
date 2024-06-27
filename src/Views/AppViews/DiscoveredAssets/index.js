@@ -36,6 +36,12 @@ class DiscoveredAssets extends Component {
   componentDidMount() {
     let orgId = getCurrentOrgId();
     this.props.getLandingZoneSearch({ orgId });
+    
+  }
+
+  
+  componentWillUnmount() {
+    this.props.clearDiscoveredAssetsFilters({ isAllClearFilter: 1 });
   }
   setActiveTab = (activeTab) => {
     this.setState({ activeTab });

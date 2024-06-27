@@ -45,6 +45,7 @@ class AssetsMainFilterModal extends Component {
       isAddNewEnvironmentShown: false,
       selectedLog: {},
       filterData: dropDowns,
+      isAssestsAPICall: false,
     };
   }
 
@@ -90,12 +91,12 @@ class AssetsMainFilterModal extends Component {
         let { filterData } = this.state;
         filterData = filterData.map((filter) => {
           if (filter.key === "accounts") {
-            filter["dropDownItems"] = landingZoneSearchData
-              .map((landingZoneData) => {
+            filter["dropDownItems"] = landingZoneSearchData.map(
+              (landingZoneData) => {
                 let { id, landingZone } = landingZoneData;
                 return { value: id, label: landingZone };
-              })
-              .concat([{ value: 2, label: "798008086" }]);
+              }
+            );
           }
           return filter;
         });
@@ -139,12 +140,10 @@ class AssetsMainFilterModal extends Component {
       filterData = [
         {
           label: "AWS Account",
-          dropDownItems: landingZoneSearchData
-            .map((landingZoneData) => {
-              let { id, landingZone } = landingZoneData;
-              return { value: id, label: landingZone };
-            })
-            .concat([{ value: 2, label: "798008086" }]),
+          dropDownItems: landingZoneSearchData.map((landingZoneData) => {
+            let { id, landingZone } = landingZoneData;
+            return { value: id, label: landingZone };
+          }),
           key: "accounts",
         },
         { label: "Product Enclave", dropDownItems: enclaves, key: "encalve" },
@@ -180,15 +179,20 @@ class AssetsMainFilterModal extends Component {
   };
 
   handleSelectboxChange = (e, index) => {
-    let { selectedLog } = this.state;
+    let { selectedLog, isAssestsAPICall } = this.state;
     let filterData = this.props.discoveredAssetsFilters.data || [];
     filterData = filterData.filter((data) => data.name === "accounts");
 
     if (index === "accounts" && filterData?.[0]?.["value"] !== e.target.value) {
       this.props.setDiscoveredAssetsFilters(filterData);
+      selectedLog = { accounts: e.target.value };
+      isAssestsAPICall = true;
+    } else {
+      selectedLog[index] = e.target.value;
+      isAssestsAPICall = false;
     }
-    selectedLog[index] = e.target.value;
-    this.setState({ selectedLog });
+
+    this.setState({ selectedLog, isAssestsAPICall });
   };
 
   // Render Loder
@@ -201,7 +205,7 @@ class AssetsMainFilterModal extends Component {
   }
 
   onClickSubmitBtn = () => {
-    let { selectedLog, isFirstTimeAPICall } = this.state;
+    let { selectedLog, isAssestsAPICall } = this.state;
     let keys = Object.keys(selectedLog);
 
     let filters = [];
@@ -226,7 +230,7 @@ class AssetsMainFilterModal extends Component {
           }
         }
       });
-      if (!this.props.discoveredAssetsData?.status) {
+      if (isAssestsAPICall) {
         const orgId = getCurrentOrgId();
         this.props.getDiscoveredAssets({
           orgId,
@@ -241,7 +245,7 @@ class AssetsMainFilterModal extends Component {
   };
 
   render() {
-    let { selectedLog, filterData } = this.state;
+    let { selectedLog, filterData, isAssestsAPICall } = this.state;
 
     return (
       <Modal
@@ -295,8 +299,7 @@ class AssetsMainFilterModal extends Component {
                               this.handleSelectboxChange(e, filter.key);
                             }}
                             disabled={
-                              filter.key !== "accounts" &&
-                              !selectedLog["accounts"]
+                              filter.key !== "accounts" && isAssestsAPICall
                             }
                             MenuProps={MenuProps}
                           >
@@ -304,8 +307,7 @@ class AssetsMainFilterModal extends Component {
                               value=""
                               style={{ fontSize: 14, color: "383874" }}
                               disabled={
-                                filter.key === "accounts" ||
-                                selectedLog["accounts"] === ""
+                                filter.key === "accounts" || isAssestsAPICall
                               }
                             >
                               Select {filter.label}
