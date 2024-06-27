@@ -8,7 +8,7 @@ import AssetsTable from "Views/AppViews/DiscoveredAssets/Components/AssetsTable"
 import AssetsFilterSection from "Views/AppViews/DiscoveredAssets/Components/AssetsFilterSection";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { connect } from "react-redux";
-import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
+import { ENVIRONMENTS } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { getDiscoveredAssets } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
 import { API_ERROR_MESSAGE } from "CommonData";
@@ -78,7 +78,7 @@ class UntaggedAssets extends Component {
   };
 
   manipulateDiscoveredData = (data) => {
-    let { totalRecords = 0, totalPages = 0, cloudElementList = [] } = data;
+    let { totalPages = 0, cloudElementList = [] } = data;
     let { activeTab } = this.state;
     let filterData = this.props.discoveredAssetsFilters.data || [];
 
@@ -139,13 +139,7 @@ class UntaggedAssets extends Component {
     });
   };
   render() {
-    const {
-      activeTab,
-      assestsData,
-      assestsDataLength,
-      assestsDataPage,
-      selectedFilters,
-    } = this.state;
+    const { activeTab, assestsData, assestsDataLength } = this.state;
     let { discoveredAssetsData } = this.props;
     return (
       <Box className="discovered-assets-inner-tabs">
@@ -161,7 +155,6 @@ class UntaggedAssets extends Component {
               data={assestsData}
               loderStatus={discoveredAssetsData?.status === status.IN_PROGRESS}
               totalRecords={assestsDataLength}
-              totalPages={assestsDataPage}
               activeTab={activeTab}
               errorMessage={
                 discoveredAssetsData.status === status.FAILURE

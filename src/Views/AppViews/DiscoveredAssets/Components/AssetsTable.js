@@ -10,11 +10,9 @@ import {
   Pagination,
   ListItem,
   List,
-  Menu,
   Select,
   MenuItem,
   FormControl,
-  InputLabel,
 } from "@mui/material";
 import AssetsSetUpModal from "./AssetsSetUpModal";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -175,7 +173,7 @@ class AssetsTable extends Component {
 
   //  Render table body
   renderTableBody = () => {
-    const { isSelectDepartmentOpen, isSelectStatusOpen, rpg, pg } = this.state;
+    const { isSelectStatusOpen, rpg, pg } = this.state;
 
     let { data = [], errorMessage } = this.props;
 
@@ -190,7 +188,6 @@ class AssetsTable extends Component {
                 elementType,
                 landingZone,
                 productEnclave,
-                isEventEnabled,
                 isLogEnabled,
                 isTagged,
                 instanceId,

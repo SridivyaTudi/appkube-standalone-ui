@@ -8,7 +8,7 @@ import AssetsTable from "Views/AppViews/DiscoveredAssets/Components/AssetsTable"
 import AssetsFilterSection from "Views/AppViews/DiscoveredAssets/Components/AssetsFilterSection";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { connect } from "react-redux";
-import { ENVIRONMENTS, getCurrentOrgId } from "Utils";
+import { ENVIRONMENTS } from "Utils";
 import status from "Redux/Constants/CommonDS";
 import { getDiscoveredAssets } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
 import { API_ERROR_MESSAGE } from "CommonData";
@@ -84,7 +84,7 @@ class TaggedAssets extends Component {
   };
 
   manipulateDiscoveredData = (data) => {
-    let { totalRecords = 0, totalPages = 0, cloudElementList = [] } = data;
+    let { totalPages = 0, cloudElementList = [] } = data;
     let { activeTab } = this.state;
     let filterData = this.props.discoveredAssetsFilters.data || [];
 
@@ -146,8 +146,7 @@ class TaggedAssets extends Component {
   };
 
   render() {
-    const { activeTab, assestsData, assestsDataLength, assestsDataPage } =
-      this.state;
+    const { activeTab, assestsData, assestsDataLength } = this.state;
     let { discoveredAssetsData } = this.props;
     return (
       <Box className="discovered-assets-inner-tabs">

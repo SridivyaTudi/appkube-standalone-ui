@@ -61,6 +61,7 @@ class AssetsMainFilterModal extends Component {
 
     this.manipulateDiscoveredData(this.props.discoveredAssetsData?.data);
   }
+  
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.discoveredAssetsData.status !==
@@ -117,7 +118,7 @@ class AssetsMainFilterModal extends Component {
       let enclaves = [];
 
       data.cloudElementList.forEach((assest) => {
-        let { landingZone, elementType, productEnclaveInstanceId } = assest;
+        let { elementType, productEnclaveInstanceId } = assest;
 
         if (elementType && !uniqueElementTypes.includes(elementType)) {
           elementTypes.push({ label: elementType, value: elementType });
