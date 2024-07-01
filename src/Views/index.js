@@ -82,6 +82,7 @@ import MonitorAlerts from "./AppViews/Alerts/MonitorAlerts";
 import AlertPercentage from "./AppViews/Alerts/AlertPercentage";
 import AlertRules from "./AppViews/Alerts/AlertRules";
 import NewAlertRules from "./AppViews/Alerts/NewAlertRules";
+import AlarmList from "./AppViews/DiscoveredAssets/AlarmList";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -406,6 +407,10 @@ export const Views = (props) => {
           <Route
             path={`${APP_PREFIX_PATH}/alerts/new-alert-rules`}
             element={<NewAlertRules />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/assets/discovered-assets/alarms/:elementType/:instanceId/:landingZoneId`}
+            element={<AlarmList />}
           />
           <Route path={`/error`} element={<Error />} />
         </Routes>

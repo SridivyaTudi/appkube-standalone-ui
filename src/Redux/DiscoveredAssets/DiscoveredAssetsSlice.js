@@ -4,6 +4,7 @@ import {
   getAwsRegions,
   getEventsHistory,
   getLandingZoneSearch,
+  getAlarmList,
 } from "Redux/DiscoveredAssets/DiscoveredAssetsThunk";
 import status from "Redux/Constants/CommonDS";
 
@@ -27,6 +28,10 @@ export const DiscoveredAssetsSlice = createSlice({
       data: [],
     },
     landingZoneSearchData: {
+      status: null,
+      data: [],
+    },
+    alarmListData: {
       status: null,
       data: [],
     },
@@ -164,6 +169,34 @@ export const DiscoveredAssetsSlice = createSlice({
       return {
         ...state,
         landingZoneSearchData: {
+          status: status.FAILURE,
+          data: error?.message,
+        },
+      };
+    },
+
+    [getAlarmList.pending]: (state, action) => {
+      return {
+        ...state,
+        alarmListData: {
+          status: status.IN_PROGRESS,
+          data: [],
+        },
+      };
+    },
+    [getAlarmList.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        alarmListData: {
+          status: status.SUCCESS,
+          data: payload,
+        },
+      };
+    },
+    [getAlarmList.rejected]: (state, { error }) => {
+      return {
+        ...state,
+        alarmListData: {
           status: status.FAILURE,
           data: error?.message,
         },

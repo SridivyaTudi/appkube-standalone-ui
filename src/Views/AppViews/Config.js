@@ -95,6 +95,7 @@ const config = {
   /* AWS-X-API*/
   /* Discovered Assets*/
   GET_EVENTS_HISTORY: `${baseURLAwsXapi}/getEvents?instanceId=#instance-id#&landingZoneId=#landing-zone-id#`,
+  GET_ALARM_LIST: `${baseURLAwsXapi}/getQueryOutput?elementType=#element-type#&landingZoneId=#landing-zone-id#&query=getCwAlarmList&instanceId=#instance-id#`,
 };
 
 export default config;

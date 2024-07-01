@@ -66,3 +66,21 @@ export const getLandingZoneSearch = createAsyncThunk(
     }
   }
 );
+
+export const getAlarmList = createAsyncThunk(
+  "discoveredAssets/getAlarmList",
+  async (params) => {
+    let { elementType, instanceId, landingZoneId } = params;
+
+    let url = config.GET_ALARM_LIST.replace("#element-type#", elementType)
+      .replace("#instance-id#", instanceId)
+      .replace("#landing-zone-id#", landingZoneId);
+
+    try {
+      const response = await postLoginService.get(url);
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+);

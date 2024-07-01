@@ -131,9 +131,9 @@ class AssetsTable extends Component {
           <TableCell align="left">Element Type</TableCell>
           <TableCell align="left">Landing Zone</TableCell>
           <TableCell align="left">Product Enclave</TableCell>
-          <TableCell align="center">Tag Status</TableCell>
+          <TableCell align="center">AWS Alarms</TableCell>
           <TableCell align="center">Log</TableCell>
-          <TableCell align="center">Event</TableCell>
+          <TableCell align="center">AWS Events</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -155,20 +155,6 @@ class AssetsTable extends Component {
     } else {
       this.setState({ tagShowMenuList: envKey });
     }
-  };
-
-  toggleSelectDepartment = (index, isStatus = 0, anchorEl) => {
-    let { isSelectDepartmentOpen, isSelectStatusOpen } = this.state;
-    if (isStatus) {
-      isSelectStatusOpen = index;
-    } else {
-      isSelectDepartmentOpen = index;
-    }
-    this.setState({
-      isSelectDepartmentOpen,
-      isSelectStatusOpen,
-      anchorEl,
-    });
   };
 
   //  Render table body
@@ -223,37 +209,14 @@ class AssetsTable extends Component {
                     >
                       <i
                         className={isTagged ? "fas fa-tag " : "fas fa-times"}
-                        onClick={() => this.toggleSelectDepartment(index, 1)}
-                      ></i>
-                      {isSelectStatusOpen === index && !isTagged && (
-                        <div
-                          className={
-                            isSelectStatusOpen === index
-                              ? "fliter-collapse active"
-                              : "fliter-collapse"
-                          }
-                        >
-                          <List menu-list>
-                            <ListItem
-                              onClick={() =>
-                                this.props.navigate(
-                                  `${APP_PREFIX_PATH}/assets/environments/associatechartapp?landingZone=${landingZone}&cloudName=${cloud}&landingZoneId=${landingZoneId}&elementType=${elementType}&instanceId=${instanceId}`
-                                )
-                              }
-                            >
-                              <i className="fa-solid fa-circle-dot"></i> Tag
-                            </ListItem>
-                          </List>
-                        </div>
-                      )}
-                      <div
-                        className={
-                          isSelectStatusOpen === index
-                            ? "fliters-collapse-bg active"
-                            : "fliters-collapse-bg"
+                        onClick={() =>
+                          this.props.navigate(
+                            `${APP_PREFIX_PATH}/assets/discovered-assets/alarms/${elementType}/${
+                              environment?.instanceId
+                            }/${environment?.landingZoneId || 0}`
+                          )
                         }
-                        onClick={() => this.toggleSelectDepartment(null, 1)}
-                      />
+                      ></i>
                     </Box>
                   </TableCell>
                   <TableCell align="center">
