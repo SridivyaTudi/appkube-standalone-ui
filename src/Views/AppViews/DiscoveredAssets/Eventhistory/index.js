@@ -125,7 +125,11 @@ class EventHistory extends Component {
                     <Link
                       onClick={() => {
                         this.setState(
-                          { selectedCloudTrailEvents: event.CloudTrailEvent },
+                          {
+                            selectedCloudTrailEvents: JSON.parse(
+                              event.CloudTrailEvent
+                            ),
+                          },
                           () => {
                             this.togglePopup();
                           }

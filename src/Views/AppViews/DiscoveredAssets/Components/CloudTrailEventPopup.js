@@ -20,7 +20,11 @@ class CloudTrailEventPopup extends Component {
   render() {
     let trialEvents = "";
     if (this.props.data) {
-      trialEvents = JSON.parse(JSON.stringify(this.props.data));
+      try {
+        trialEvents =   JSON.stringify(this.props.data ,null,2)        
+      } catch (error) {
+        console.error(error)
+      }
     }
     return (
       <Modal
@@ -29,7 +33,7 @@ class CloudTrailEventPopup extends Component {
         className="select-account-modal-container"
       >
         <ModalHeader className="m-b-1 border-bottom">
-          Cloud Trail Event
+          {this.props.title || "Cloud Trail Event"}
           <IconButton
             variant="outlined"
             aria-label="delete"
@@ -45,7 +49,7 @@ class CloudTrailEventPopup extends Component {
         <ModalBody
           style={{ overflowY: "auto", overflowX: "auto", maxHeight: "300px" }}
         >
-          <Box className="cloud-trail-event"> {trialEvents}</Box>
+          <Box className="cloud-trail-event"><pre> {trialEvents}</pre></Box>
         </ModalBody>
       </Modal>
     );

@@ -211,7 +211,7 @@ class AssetsTable extends Component {
                         className={isTagged ? "fas fa-tag " : "fas fa-times"}
                         onClick={() =>
                           this.props.navigate(
-                            `${APP_PREFIX_PATH}/assets/discovered-assets/alarms/${elementType}/${
+                            `${APP_PREFIX_PATH}/assets/discovered-assets/alarms/${
                               environment?.instanceId
                             }/${environment?.landingZoneId || 0}`
                           )

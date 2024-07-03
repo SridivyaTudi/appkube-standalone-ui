@@ -21,19 +21,41 @@ import Loader from "Components/Loader";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { Link } from "react-router-dom";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+import CloudTrailEventPopup from "../Components/CloudTrailEventPopup";
 
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#ffffffff",
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#ffffffff",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: 250,
+    fontSize: theme.typography.pxToRem(12),
+    border: "1px solid #dadde9",
+  },
+}));
 class AlarmList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       alarmList: [],
       searchedKey: "",
+      selectedJson: "",
     };
   }
 
   componentDidMount = () => {
-    let { instanceId, landingZoneId, elementType } = this.getUrlDetails();
-    this.props.getAlarmList({ instanceId, landingZoneId, elementType });
+    let { instanceId, landingZoneId } = this.getUrlDetails();
+    this.props.getAlarmList({
+      instanceId,
+      landingZoneId,
+      elementType: "landingZone",
+    });
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -47,12 +69,19 @@ class AlarmList extends Component {
     }
   }
 
+  togglePopup = () => {
+    let { ShowCloudTrailEventPopup, selectedJson } = this.state;
+    this.setState({
+      ShowCloudTrailEventPopup: !ShowCloudTrailEventPopup,
+      selectedJson: ShowCloudTrailEventPopup ? null : selectedJson,
+    });
+  };
+
   getUrlDetails() {
     let instanceId = this.props.params?.instanceId;
     let landingZoneId = this.props.params?.landingZoneId;
-    let elementType = this.props.params?.elementType;
 
-    return { instanceId, landingZoneId, elementType };
+    return { instanceId, landingZoneId };
   }
 
   //  Render table
@@ -72,21 +101,10 @@ class AlarmList extends Component {
     return (
       <TableHead>
         <TableRow>
-          <TableCell align="left">
-            <Checkbox
-              className="check-box"
-              size="small"
-              //id={index}
-              onChange={this.handleCheckBox}
-              //checked={selectedService.includes(index)}
-            />
-            Event name
-          </TableCell>
-          <TableCell align="left">Event time</TableCell>
-          <TableCell align="left">User name</TableCell>
-          <TableCell align="left">Event source</TableCell>
-          {/* <TableCell align="left">Resources</TableCell> */}
-          <TableCell align="left">Resource name</TableCell>
+          <TableCell align="left">Name</TableCell>
+          <TableCell align="center">Enabled </TableCell>
+          <TableCell align="left">Arn </TableCell>
+          <TableCell align="left">State </TableCell>
         </TableRow>
       </TableHead>
     );
@@ -98,27 +116,47 @@ class AlarmList extends Component {
     return (
       <TableBody>
         {alarmList?.length ? (
-          alarmList.map((event) => {
+          alarmList.map((alarm) => {
             return (
               <TableRow key={v4()}>
                 <TableCell align="left">
                   <Box className="d-flex align-items-center">
-                    <Checkbox
-                      className="check-box"
-                      size="small"
-                      //id={index}
-                      onChange={this.handleCheckBox}
-                      //checked={selectedService.includes(index)}
-                    />
-
-                    <Link>{event?.EventName}</Link>
+                    <HtmlTooltip
+                      className="table-tooltip"
+                      title={alarm.AlarmName}
+                      onClick={() => {
+                        this.setState({ selectedJson: alarm }, () => {
+                          this.togglePopup();
+                        });
+                      }}
+                    >
+                      <Box className="resource-name">{alarm.AlarmName}</Box>
+                    </HtmlTooltip>
                   </Box>
                 </TableCell>
-                <TableCell align="left">{event?.EventTime}</TableCell>
-                <TableCell align="left">{event?.Username}</TableCell>
-                <TableCell align="left">{event?.EventSource}</TableCell>
-
-                <TableCell align="left">{}</TableCell>
+                <TableCell align="center">
+                  <Box
+                    className={`tag-icon ${
+                      alarm?.ActionsEnabled ? "green " : "orange"
+                    } tag-status	`}
+                  >
+                    <i
+                      className={
+                        alarm?.ActionsEnabled ? "fas fa-check " : "fas fa-times"
+                      }
+                    ></i>
+                  </Box>
+                </TableCell>
+                <TableCell align="left">
+                  {" "}
+                  <HtmlTooltip
+                    className="table-tooltip"
+                    title={alarm.AlarmName}
+                  >
+                    {alarm?.AlarmName}{" "}
+                  </HtmlTooltip>
+                </TableCell>
+                <TableCell align="left">{alarm?.StateValue}</TableCell>
               </TableRow>
             );
           })
@@ -149,16 +187,15 @@ class AlarmList extends Component {
   handleSearchChange = (e) => {
     let value = e.target.value;
     let { alarmList } = this.state;
-    let data = this.props.alarmListData?.data?.Events || [];
+    let data = this.props.alarmListData?.data || [];
 
     if (Array.isArray(data) && data?.length) {
       if (value) {
         alarmList = data.filter((tableData) => {
           if (
-            tableData?.EventName?.toLowerCase().includes(value.toLowerCase()) ||
-            tableData?.EventTime?.toLowerCase().includes(value.toLowerCase()) ||
-            tableData?.Username?.toLowerCase().includes(value.toLowerCase()) ||
-            tableData?.EventSource?.toLowerCase().includes(value.toLowerCase())
+            tableData?.AlarmName?.toLowerCase().includes(value.toLowerCase()) ||
+            tableData?.AlarmArn?.toLowerCase().includes(value.toLowerCase()) ||
+            tableData?.StateValue?.toLowerCase().includes(value.toLowerCase())
           ) {
             return tableData;
           } else {
@@ -174,7 +211,8 @@ class AlarmList extends Component {
 
   render() {
     let loder = this.props.alarmListData.status === status.IN_PROGRESS;
-    let { searchedKey, alarmList } = this.state;
+    let { searchedKey, alarmList, selectedJson, ShowCloudTrailEventPopup } =
+      this.state;
     return (
       <Box className="discovered-assets-container">
         <Box className="assets-heading">
@@ -212,6 +250,16 @@ class AlarmList extends Component {
         <Box className="assets-table">
           {loder ? this.renderLoder() : this.renderTable()}
         </Box>
+        {ShowCloudTrailEventPopup ? (
+          <CloudTrailEventPopup
+            showModal={ShowCloudTrailEventPopup}
+            togglePopup={this.togglePopup}
+            data={selectedJson}
+            title="Alarm"
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     );
   }

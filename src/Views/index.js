@@ -409,7 +409,7 @@ export const Views = (props) => {
             element={<NewAlertRules />}
           />
           <Route
-            path={`${APP_PREFIX_PATH}/assets/discovered-assets/alarms/:elementType/:instanceId/:landingZoneId`}
+            path={`${APP_PREFIX_PATH}/assets/discovered-assets/alarms/:instanceId/:landingZoneId`}
             element={<AlarmList />}
           />
           <Route path={`/error`} element={<Error />} />
