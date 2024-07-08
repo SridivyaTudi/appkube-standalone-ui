@@ -139,23 +139,25 @@ class BIMappingSettingPopUp extends Component {
       <Modal
         isOpen={this.props.showModal}
         toggle={this.props.togglePopup}
-        className="setting-modal-container permissions-modal"
+        className="bimapping-setting-modal-container"
       >
         <ModalHeader tag="div">
-          <h5>BI-Mapping Setting</h5>
-          <IconButton
-            onClick={this.props.togglePopup}
-            variant="outlined"
-            aria-label="delete"
-            size="small"
-            className="close-btn"
-          >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
+          <h5>
+            BI-Mapping Setting{" "}
+            <IconButton
+              onClick={this.props.togglePopup}
+              variant="outlined"
+              aria-label="delete"
+              size="small"
+              className="close-btn"
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          </h5>
         </ModalHeader>
         <ModalBody>
-          <form onSubmit={this.handleRoleSubmit}>
-            <ModalBody>
+          <Box className="form-inner-content">
+            <form onSubmit={this.handleRoleSubmit} >
               <Box className="form-group">
                 <label htmlFor="template" className="form-label">
                   Template
@@ -370,29 +372,29 @@ class BIMappingSettingPopUp extends Component {
               ) : (
                 <></>
               )}
-            </ModalBody>
+            </form>
+          </Box>
 
-            <ModalFooter className="footer-top-br">
-              <Box className="d-block text-right">
-                <LoadingButton
-                  className="danger-btn min-width-inherit m-r-2"
-                  variant="outlined"
-                  onClick={this.props.togglePopup}
-                >
-                  Cancel
-                </LoadingButton>
-                <LoadingButton
-                  className="primary-btn min-width"
-                  variant="contained"
-                  //   disabled={createOrUpdateStatus}
-                  //   loading={createOrUpdateStatus}
-                  onClick={this.props.togglePopup}
-                >
-                  Submit
-                </LoadingButton>
-              </Box>
-            </ModalFooter>
-          </form>
+          <ModalFooter className="footer-top-br">
+            <Box className="d-block text-right">
+              <LoadingButton
+                className="danger-btn min-width-inherit m-r-2"
+                variant="outlined"
+                onClick={this.props.togglePopup}
+              >
+                Cancel
+              </LoadingButton>
+              <LoadingButton
+                className="primary-btn min-width"
+                variant="contained"
+                //   disabled={createOrUpdateStatus}
+                //   loading={createOrUpdateStatus}
+                onClick={this.props.togglePopup}
+              >
+                Submit
+              </LoadingButton>
+            </Box>
+          </ModalFooter>
         </ModalBody>
       </Modal>
     );
