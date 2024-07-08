@@ -8,8 +8,6 @@ import {
   TableCell,
   TableBody,
   Pagination,
-  ListItem,
-  List,
   Select,
   MenuItem,
   FormControl,
@@ -20,6 +18,7 @@ import { styled } from "@mui/material/styles";
 import Loader from "Components/Loader";
 import { APP_PREFIX_PATH } from "Configs/AppConfig";
 import { navigateRouter } from "Utils/Navigate/navigateRouter";
+import BIMappingSettingPopUp from "./BIMappingSettingPopUp";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -44,6 +43,7 @@ class AssetsTable extends Component {
       pg: 1,
       rpg: 10,
       anchorEl: null,
+      showSettingModal: false,
     };
   }
 
@@ -55,9 +55,16 @@ class AssetsTable extends Component {
       this.setState({ pg: 1, rpg: 10 });
     }
   }
+
   toggleAssetsSetUp = () => {
     this.setState({
       showAssetsSetUpModal: !this.state.showAssetsSetUpModal,
+    });
+  };
+
+  toggleSettingPopup = () => {
+    this.setState({
+      showSettingModal: !this.state.showSettingModal,
     });
   };
 
@@ -134,6 +141,7 @@ class AssetsTable extends Component {
           <TableCell align="center">AWS Alarms</TableCell>
           <TableCell align="center">Log</TableCell>
           <TableCell align="center">AWS Events</TableCell>
+          <TableCell align="center">BI-Mapping Setting</TableCell>
         </TableRow>
       </TableHead>
     );
@@ -246,6 +254,18 @@ class AssetsTable extends Component {
                       <i className={"fas fa-check"}></i>
                     </Box>
                   </TableCell>
+                  <TableCell align="center">
+                    <Box
+                      className={`tag-icon ${
+                        isTagged ? "tag " : "orange"
+                      } tag-status	`}
+                      onClick={this.toggleSettingPopup}
+                    >
+                      <i
+                        className={isTagged ? "fas fa-tag" : "fas fa-times"}
+                      ></i>
+                    </Box>
+                  </TableCell>
                 </TableRow>
               );
             })
@@ -286,7 +306,7 @@ class AssetsTable extends Component {
   };
 
   render() {
-    const { showAssetsSetUpModal } = this.state;
+    const { showAssetsSetUpModal, showSettingModal } = this.state;
     return (
       <>
         <Box className="assets-table">{this.renderTable()}</Box>
@@ -294,6 +314,14 @@ class AssetsTable extends Component {
           <AssetsSetUpModal
             showModal={showAssetsSetUpModal}
             toggleAssetsSetUp={this.toggleAssetsSetUp}
+          />
+        ) : (
+          <></>
+        )}
+        {showSettingModal ? (
+          <BIMappingSettingPopUp
+            showModal={showSettingModal}
+            togglePopup={this.toggleSettingPopup}
           />
         ) : (
           <></>

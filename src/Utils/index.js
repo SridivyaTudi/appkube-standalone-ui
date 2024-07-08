@@ -430,3 +430,10 @@ export const setCurrentRole = (data) => {
     JSON.stringify(data)
   );
 };
+
+export const DEPLOYMENT_ENVS = {
+  DEVELOPMENT: "Development",
+  TEST: "Test",
+  STAGE: "Stage",
+  PRODUCTION: "Production",
+};
