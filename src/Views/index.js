@@ -83,6 +83,7 @@ import AlertPercentage from "./AppViews/Alerts/AlertPercentage";
 import AlertRules from "./AppViews/Alerts/AlertRules";
 import NewAlertRules from "./AppViews/Alerts/NewAlertRules";
 import AlarmList from "./AppViews/DiscoveredAssets/AlarmList";
+import LLM from "./AppViews/LLM";
 
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -132,6 +133,10 @@ export const Views = (props) => {
           <Route
             path={`${APP_PREFIX_PATH}`}
             element={<Navigate to={`${APP_PREFIX_PATH}/dashboard`} />}
+          />
+          <Route
+            path={`${APP_PREFIX_PATH}/llm`}
+            element={<LLM />}
           />
           <Route
             path={`${APP_PREFIX_PATH}/assets/environments`}

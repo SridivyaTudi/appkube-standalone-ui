@@ -70,7 +70,13 @@
       "link": "/new-reports/over-view-dashboard",
       "icon": "report",
       "name": "Reports"
+    },
+    {
+      "link": "/llm",
+      "icon": "llm",
+      "name": "Chatbot"
     }
+
     
   ]
 }
