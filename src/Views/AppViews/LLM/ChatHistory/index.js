@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Typography, List, ListItem, ListItemText, Button, useMediaQuery, useTheme, Divider } from '@mui/material';
 import NewChat from 'assets/img/LLM/Newchat.png';
 import Vector from 'assets/img/LLM/Vector.png';
@@ -19,8 +19,10 @@ const groupChatsByDateRange = (chats) => {
   const previousChats = [];
 
   const today = new Date();
-  const yesterday = new Date(today.setDate(today.getDate() - 1));
-  const thisWeekStart = new Date(today.setDate(today.getDate() - today.getDay()));
+  const yesterday = new Date();
+  yesterday.setDate(today.getDate() - 1);
+  const thisWeekStart = new Date();
+  thisWeekStart.setDate(today.getDate() - today.getDay());
 
   chats.forEach(chat => {
     const chatDate = new Date(chat.date);
@@ -51,8 +53,10 @@ const isSameDay = (date1, date2) => {
 };
 
 const isWithinThisWeek = (date, today) => {
-  const thisWeekStart = new Date(today.setDate(today.getDate() - today.getDay()));
-  const thisWeekEnd = new Date(today.setDate(today.getDate() + (7 - today.getDay() - 2))); // Exclude today and yesterday
+  const thisWeekStart = new Date(today);
+  thisWeekStart.setDate(today.getDate() - today.getDay());
+  const thisWeekEnd = new Date(today);
+  thisWeekEnd.setDate(today.getDate() + (7 - today.getDay() - 2)); // Exclude today and yesterday
   return date >= thisWeekStart && date <= thisWeekEnd;
 };
 
@@ -74,8 +78,13 @@ const ChatHistory = ({ allChats, onSelectChat, selectedChat, onNewChat }) => {
     const grouped = groupChatsByDateRange(allChats);
     setGroupedChats(grouped);
   }, [allChats]);
+
   useEffect(() => {
-    localStorage.setItem('groupedChats', JSON.stringify(groupedChats));
+    const storedChats = JSON.parse(localStorage.getItem('groupedChats') || '{}');
+    Object.keys(groupedChats).forEach(category => {
+      storedChats[category] = groupedChats[category]; 
+    });
+    localStorage.setItem('groupedChats', JSON.stringify(storedChats));
   }, [groupedChats]);
 
   const handleChatSelect = (chat) => {
@@ -112,7 +121,6 @@ const ChatHistory = ({ allChats, onSelectChat, selectedChat, onNewChat }) => {
         <img src={Vector} alt="Vector Image" style={{ width: 20, height: 20, marginRight: 8 }} />
         <Typography variant="subtitle1" fontWeight="bold">Previous Chats</Typography>
       </Box>
-
       <List sx={{ height: 'calc(100% - 100px)', overflowY: 'auto' }}>
         {Object.keys(groupedChats).map(category => (
           <React.Fragment key={category}>
@@ -122,7 +130,6 @@ const ChatHistory = ({ allChats, onSelectChat, selectedChat, onNewChat }) => {
                 primaryTypographyProps={{ fontWeight: 'bold' }}
               />
             </ListItem>
-
             {groupedChats[category].map((chat) => (
               <ListItem
                 key={chat.uuid}
@@ -143,8 +150,6 @@ const ChatHistory = ({ allChats, onSelectChat, selectedChat, onNewChat }) => {
           </React.Fragment>
         ))}
       </List>
-
-      {/* New Chat Button */}
       <Box p={2} display="flex" justifyContent="left" sx={{ mt: -3 }}>
         <Button
           startIcon={<img src={NewChat} alt="New Chat" width={20} height={20} />}
