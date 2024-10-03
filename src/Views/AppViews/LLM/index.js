@@ -1,101 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import ChatScreen from './ChatScreen';
 import ChatHistory from './ChatHistory';
-import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from 'react-redux';
+import { setChatHistory } from 'Redux/LLM/chatSlice'; // Import the setChatHistory action
 
-const LOCAL_STORAGE_KEY = 'chatHistory';
-
-const loadChatsFromLocalStorage = () => {
-  try {
-    const storedChats = localStorage.getItem(LOCAL_STORAGE_KEY);
-    // Ensure it returns an array
-    const chats = JSON.parse(storedChats) || [];
-    return Array.isArray(chats) ? chats : [];
-  } catch (error) {
-    console.error('Failed to load chat history from localStorage:', error);
-    return [];
-  }
-};
-
-const saveChatsToLocalStorage = (chats) => {
-  try {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(chats));
-  } catch (error) {
-    console.error('Failed to save chat history to localStorage:', error);
-  }
-};
-
-export default function ChatLayout() {
-  const [allChats, setAllChats] = useState(loadChatsFromLocalStorage());
-  const [selectedChat, setSelectedChat] = useState(null);
+const ChatLayout = () => {
+  const dispatch = useDispatch();
   const [showHistory, setShowHistory] = useState(true);
 
+  // Fetch the chat history from the API
   useEffect(() => {
-    const storedChats = loadChatsFromLocalStorage();
-    setAllChats(storedChats);
-    if (storedChats.length > 0) {
-      setSelectedChat(storedChats[0].uuid);
-    }
-  }, []);
-
-  useEffect(() => {
-    saveChatsToLocalStorage(allChats);
-  }, [allChats]);
-
-  const handleChatSelect = (chatId) => {
-    setSelectedChat(chatId);
-  };
-
-  const handleNewChat = () => {
-    const newChat = {
-      uuid: uuidv4(),
-      title: 'New Chat', // Temporary title, will be updated after the first message
-      messages: [],
-      date: new Date().toISOString(),
+    const fetchChatHistory = async () => {
+      try {
+        const response = await fetch('https://awschatbotapi.onrender.com/chat-history/3e69745a-295b-4a52-ae28-1922841ca09b');
+        const data = await response.json();
+        
+        dispatch(setChatHistory(data));
+      } catch (error) {
+        console.error('Error fetching chat history:', error);
+      }
     };
 
-    setAllChats(prevChats => [newChat, ...prevChats]);
-    setSelectedChat(newChat.uuid);
-  };
+    fetchChatHistory();
+  }, [dispatch]);
 
-  const updateChat = (chatId, newMessage, isFirstMessage = false) => {
-    setAllChats(prevChats =>
-      prevChats.map(chat =>
-        chat.uuid === chatId
-          ? {
-              ...chat,
-              messages: [...chat.messages, newMessage],
-              title: isFirstMessage ? newMessage.text.slice(0, 30) + (newMessage.text.length > 30 ? '...' : '') : chat.title,
-            }
-          : chat
-      )
-    );
+  // Access the chat history from Redux store
+  const allChats = useSelector((state) => state.chat.chatHistory);
+  const [selectedChat, setSelectedChat] = useState(null);
+
+  // Handle chat selection from ChatHistory
+  const handleChatSelect = (chat) => {
+    console.log(chat)
+    setSelectedChat(chat);
+    
   };
 
   return (
     <Box display="flex" height="100%" overflow="hidden">
-      
       <Box width={showHistory ? '70%' : '100%'}>
-        <ChatScreen
-          selectedChat={selectedChat}
-          onNewChat={handleNewChat}
-          onSelectChat={handleChatSelect}
-          onUpdateChat={updateChat}
-          onToggleHistory={() => setShowHistory(!showHistory)}
-          allChats={allChats}
-        />
+        <ChatScreen selectedChatId={selectedChat} /> 
       </Box>
       {showHistory && (
         <Box width="30%" borderRight={1} borderColor="divider">
-          <ChatHistory
-            allChats={allChats}
-            onSelectChat={handleChatSelect}
-            selectedChat={selectedChat}
-            onNewChat={handleNewChat} // Pass the new chat handler
-          />
+          <ChatHistory allChats={allChats} onSelectChat={handleChatSelect} />
         </Box>
       )}
     </Box>
   );
-}
+};
+export default ChatLayout;

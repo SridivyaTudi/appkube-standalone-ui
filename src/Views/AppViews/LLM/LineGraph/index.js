@@ -2,11 +2,12 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { Box } from '@mui/material';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { LabelSharp } from '@mui/icons-material';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const LineGraph = ({ datapoints }) => {
+  console.log("hello")
+  console.log(datapoints)
   const data = {
     labels: datapoints.map(point => new Date(point.Timestamp).toLocaleString()),
     datasets: [

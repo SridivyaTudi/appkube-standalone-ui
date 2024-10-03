@@ -11,6 +11,7 @@ import ServiceViewTopologyReducer from "Redux/ServiceViewTopology/ServiceViewTop
 import BIMapping from "Redux/BIMapping/BIMappingSlice";
 import Reports from "Redux/Reports/ReportsSlice";
 import DiscoveredAssetsReducer from "Redux/DiscoveredAssets/DiscoveredAssetsSlice";
+import chatReducer from "Redux/LLM/chatSlice";
 
 const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ const store = configureStore({
     biMapping: BIMapping,
     reports: Reports,
     discoveredAssets: DiscoveredAssetsReducer,
+    chat: chatReducer,
   },
 });
 

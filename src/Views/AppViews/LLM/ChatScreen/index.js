@@ -1,208 +1,282 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Box, Button, TextField, IconButton, Typography, InputAdornment, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Button,
+  TextField,
+  IconButton,
+  Typography,
+  InputAdornment,
+  CircularProgress,
+  MenuItem, Select,
+  FormControl,
+  
+} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
-import axios from 'axios';
 import BotImage from 'assets/img/LLM/bot.png';
-import Group from 'assets/img/LLM/Group.png';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateChatMessages } from 'Redux/LLM/chatSlice';
+import TableComponent, { parseTableData } from '../Table';
 import LineGraph from '../LineGraph';
+import Group from 'assets/img/LLM/Group.png';
+import Setting from 'assets/img/LLM/Setting.png';
 
 
-// Function to parse table data from text
-const parseTableData = (text) => {
-  const lines = text.split('\n').filter(line => line.trim() !== '');
-  if (lines.length < 4) return null; // Not enough lines for a table
 
-  const headers = lines[1].split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
-  const rows = lines.slice(3).map(line => 
-    line.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim())
-  );
 
-  return { headers, rows };
-};
-
-// Component to render a table
-const TableComponent = ({ data }) => (
-  <Table>
-    <TableHead>
-      <TableRow>
-        {data.headers.map((header, index) => (
-          <TableCell key={index}>{header}</TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-    <TableBody>
-      {data.rows.map((row, rowIndex) => (
-        <TableRow key={rowIndex}>
-          {row.map((cell, cellIndex) => (
-            <TableCell key={cellIndex}>{cell}</TableCell>
-          ))}
-        </TableRow>
-      ))}
-    </TableBody>
-  </Table>
-);
-
-export default function ChatScreen({ selectedChat, onNewChat, onUpdateChat, onToggleHistory, allChats }) {
-  const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
-  const messagesEndRef = useRef(null);
-
-  const currentChat = allChats.find(chat => chat.uuid === selectedChat) || { messages: [] };
+export default function ChatScreen({ selectedChatId }) {
+  const [cloudService, setCloudService] = useState('Cloud Service');
+  const chatHistory = useSelector((state) => state.chat.chatHistory);
+  const [chatMessages, setChatMessages] = useState(null);
+  const dispatch = useDispatch();
+  const [newPrompt, setNewPrompt] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const user_id = '3e69745a-295b-4a52-ae28-1922841ca09b'; // Assuming user_id is constant
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [currentChat.messages]);
+    if (selectedChatId && chatHistory && chatHistory.chat_history) {
+      const selectedChat = chatHistory.chat_history.find(
+        (chat) => chat[0] === selectedChatId
+      );
+      if (selectedChat) {
+        // Process messages to handle tabular data
+        const processedMessages = selectedChat[2].map((message) => {
+          if (message.type === 'tabular') {
+            return {
+              ...message,
+              parsedData: parseTableData(message.response),
+            };
+          } else if (message.type === 'datapoints') {
+            return {
+              ...message,
+              datapoints: message.datapoints,
+              plotText: message.plotText,
+            };
+          }
+          
+          return message;
+          
+        });
+        setChatMessages(processedMessages);
+      }
+    }
+  }, [selectedChatId, chatHistory]);
 
-  const handleSubmit = async (e) => {
+
+  const handleCloudServiceChange = (event) => {
+    setCloudService(event.target.value);
+  };
+
+
+  const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!newPrompt.trim() || !selectedChatId) return;
 
-    const userMessage = { sender: 'user', text: input, timestamp: new Date().toISOString() };
-
-    if (!selectedChat) {
-      onNewChat();
-    }
-
-    onUpdateChat(selectedChat, userMessage, currentChat.messages.length === 0); // Check if it's the first message
-
-    setInput('');
-    setLoading(true);
+    setIsLoading(true);
     try {
-      const response = await axios.post('https://awschatbotapi.onrender.com/chatbot', { prompt: input ,id:"3e69745a-295b-4a52-ae28-1922841ca09b"});
-      console.log(response)
-      const botMessage = { sender: 'bot', text: response.data.response,  type: response.data.type, datapoints: response.data.datapoints, timestamp: new Date().toISOString() };
-      onUpdateChat(selectedChat, botMessage);
+      const response = await fetch(
+        'https://awschatbotapi.onrender.com/chatbot',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt: newPrompt,
+            id: selectedChatId,
+            user_id: user_id,
+          }),
+        }
+      );
+      const data = await response.json();
+      
+      
+
+      // Update local state
+      const newMessage = {
+        prompt: newPrompt,
+        response: data.response,
+        type: data.type,
+      };
+      setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+
+      let parsedData = null;
+      if (data.type === 'tabular') {
+        parsedData = parseTableData(data.response);
+      } else if (data.type === 'datapoints') {
+        
+        newMessage.datapoints = data.datapoints;
+        newMessage.plotText = `I have plotted the CPU utilization for instance ${newPrompt.split(' ')[-1]}. The plot has been generated and is ready for you to view.`;
+      }
+      console.log(data)
+      // Update Redux store
+      dispatch(
+        updateChatMessages({
+          chatId: selectedChatId,
+          newPrompt: newPrompt,
+          newResponse: data.response,
+          type: data.type,
+          parsedData: parsedData,
+          datapoints: newMessage.datapoints,
+          plotText: newMessage.plotText
+        })
+      );
     } catch (error) {
-      console.error('Error fetching response:', error);
-      const errorMessage = { sender: 'bot', text: 'Sorry, I encountered an error. Please try again.', timestamp: new Date().toISOString() };
-      onUpdateChat(selectedChat, errorMessage);
-    } finally {
-      setLoading(false);
+      console.error('Error sending message:', error);
     }
+    setIsLoading(false);
+    setNewPrompt(''); // Clear the input field
   };
 
-  const renderMessage = (message) => {
-    
-    
-    const isUser = message.sender === 'user';
-  
-    if (message.type === 'tabular' ) {
-      const tableData = parseTableData(message.text);
-      return (
-        <Box
-          sx={{
-            boxShadow: 3, // Add shadow to the Box
-            borderRadius: 2, // Optional: Add rounded corners
-            bgcolor: 'white', // White background
-            p: 2, // Add some padding inside the popup
-            mt: 1, // Add some margin at the top
-            maxWidth: '100%', // Limit the width of the popup (adjust as needed)
-            alignSelf: isUser ? 'flex-end' : 'flex-start', // Align to right for user
-            overflow:'auto',
-            fontFamily: 'Poppins'
-          }}
-        >
-          <TableComponent data={tableData} />
-        </Box>
-      );
-    } else if(message.type === 'datapoints') {
-     
-      return (
-      <Box
-      sx={{
-        boxShadow: 3, // Add shadow to the Box
-        borderRadius: 2, // Optional: Add rounded corners
-        bgcolor: 'white', // White background
-        p: 2, // Add some padding inside the popup
-        mt: 1, // Add some margin at the top
-        alignSelf: isUser ? 'flex-end' : 'flex-start', // Align to right for user
-        overflow:'auto',
-        fontFamily: 'Poppins'
-      }}
-      >
-      <Typography>{message.response}</Typography>
-      <LineGraph datapoints={message.datapoints} width="100%"  />
+  if (!chatHistory || !Array.isArray(chatHistory.chat_history)) {
+    return (
+      <Box display="flex" justifyContent="center" my={2}>
+        <CircularProgress />
       </Box>
-      );} else {
-      return (
-        <Box 
-          display="flex" 
-          alignItems="center" // Align icon and text
-          justifyContent={isUser ? 'flex-end' : 'flex-start'}
-        sx={{
-          fontFamily: 'Poppins', // Apply Poppins font family
-          fontSize: '16px', // Set font size (optional)
-          fontWeight: '400', // Set font weight (optional)
-          lineHeight: '1.5', // Set line height (optional)
-          textAlign: 'left', // Set text alignment (optional)
-        }}
-        >
-          {!isUser && ( // Show icon at the end for bot messages
-            <img src={Group} alt="Message" style={{ width: '20px', height: '20px', marginRight: '8px' }} />
-          )}
-          <Typography sx={{ color: 'black' }}>{message.text}</Typography>
-          {isUser && ( // Show icon at the start for user messages
-            <img src={Group} alt="Message" style={{ width: '20px', height: '20px', marginLeft: '8px' }} />
-          )}
-        </Box>
-      );
-    }
-  };
+    );
+  }
 
   return (
-    <Box display="flex" flexDirection="column" height="100%" style={{
-      background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(231, 228, 254, 0.4) 100%)'
-    }}>
-      {/* Chat header */}
-      <Box p={2} borderBottom={1} borderColor="divider" display="flex" alignItems="center" justifyContent="space-between">
-        <Box display="flex" alignItems="center" gap={2}>
-          <Box width={32} height={32} borderRadius="50%" display="flex" alignItems="center" justifyContent="center">
-            <img src={BotImage} alt="Bot" style={{ width: '100%', height: '100%' }} />
+    <Box
+      display="flex"
+      flexDirection="column"
+      height="100%"
+      sx={{
+        background:
+          'linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(231, 228, 254, 0.4) 100%)',
+      }}
+    >
+   
+        
+      <Box
+  p={2}
+  borderBottom={1}
+  borderColor="divider"
+  
+  display="flex"
+  alignItems="center"
+  justifyContent="space-between"
+>
+  <Box display="flex" alignItems="center" gap={2}>
+    <Box
+      width={32}
+      height={32}
+      borderRadius="50%"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <img src={BotImage} alt="Bot" style={{ width: '100%', height: '100%' }} />
+    </Box>
+    <Typography variant="h6" sx={{ color: '#333' }}>
+      Chatbot
+    </Typography>
+    
+    {/* Cloud Service Dropdown */}
+    <FormControl sx={{ minWidth: 120, color: '#333' }}>
+      <Select
+        value={cloudService}
+        onChange={handleCloudServiceChange}
+        displayEmpty
+        IconComponent={ExpandMoreIcon}
+        renderValue={(selected) => (
+          <Box display="flex" alignItems="center">
+            <img
+              src={Setting}
+              alt="Cloud Service"
+              style={{ width: '16px', height: '16px', marginRight: '8px' }} // Adjust size here
+            />
+            <Typography variant="body2" sx={{ color: '#333' }}>
+              {selected}
+            </Typography>
           </Box>
-          <Typography variant="h6">Chatbot</Typography>
-        </Box>
-        <Button variant="outlined" endIcon={<ExpandMoreIcon />}>
+        )}
+      >
+        <MenuItem value="Cloud Service" disabled>
           Cloud Service
-        </Button>
-      </Box>
+        </MenuItem>
+        <MenuItem value="AWS">AWS</MenuItem>
+      </Select>
+    </FormControl>
+  </Box>
+</Box>
 
-      {/* Chat messages */}
+
       <Box flex={1} p={2} overflow="auto">
-        {currentChat.messages.map((message, index) => (
+  {!selectedChatId ? (
+    <Typography variant="body1" sx={{ color: '#666' }}>Select a chat from the history to view messages.</Typography>
+  ) : chatMessages === null ? (
+    <Box display="flex" justifyContent="center" my={2}>
+      <CircularProgress />
+    </Box>
+  ) : (
+    chatMessages.map((message, index) => (
+      <Box key={index} my={2} display="flex" flexDirection="column" alignItems={message.prompt ? 'flex-end' : 'flex-start'}>
+        {message.prompt && (
           <Box 
-            key={index} 
-            mb={2} 
-            display="flex" 
-            justifyContent={message.sender === 'user' ? 'flex-end' : 'flex-start'}
+            sx={{ 
+              maxWidth: '90%', 
+            fontFamily: 'Poppins', // Apply Poppins font family
+            fontSize: '16px', // Set font size (optional)
+            fontWeight: '400', // Set font weight (optional)
+            lineHeight: '1.5', // Set line height (optional)
+            
+              
+              borderRadius: '20px 20px 0 20px', 
+              p: 2, 
+              mb: 1,
+              alignSelf: 'flex-end'
+            }}
           >
-            <Box
-              
-              color={message.sender === 'user' ? 'black' : 'black'}
-              p={2}
-              borderRadius={2}
-              maxWidth="90%"
-              textAlign="left" // Ensure text is always left-aligned
-              
-            >
-              {renderMessage(message)}
-            </Box>
+            <Typography variant="body1" sx={{ color: '#333' }}>
+            
+              {message.prompt}
+              <img src={Group} alt="Message" style={{ width: '20px', height: '20px', marginLeft: '8px' }} />
+            </Typography>
           </Box>
-        ))}
-        {loading && <CircularProgress />}
-        <div ref={messagesEndRef} />
+        )}
+        <Box 
+          sx={{ 
+            maxWidth: '90%', 
+            fontFamily: 'Poppins', // Apply Poppins font family
+            fontSize: '16px', // Set font size (optional)
+            fontWeight: '400', // Set font weight (optional)
+            lineHeight: '1.5', // Set line height (optional)
+            
+            borderRadius: message.prompt ? '20px 20px 20px 0' : '20px 20px 20px 0', 
+            p: 2,
+            alignSelf:'flex-start'
+          }}
+        >
+          {message.type === 'tabular' && message.parsedData ? (
+            
+            
+            <TableComponent data={message.parsedData} />
+          ) : message.type === 'datapoints' && message.datapoints && message.plotText ? (
+            <Box>
+              <Typography sx={{ fontWeight: 'bold' }}>{message.plotText}</Typography>
+              <LineGraph datapoints={message.datapoints.datapoints} width="100%" />
+            </Box>
+          ) : (
+            <Typography variant="body2" sx={{ color: '#666', display: 'flex', alignItems: 'flex-start' }}>
+              <img src={Group} alt="Message" style={{ width: '20px', height: '20px', marginRight: '8px' }} />
+              <Box>{message.response}</Box>
+            </Typography>
+          )}
+        </Box>
       </Box>
+    ))
+  )}
+</Box>
 
-      {/* Chat input */}
       <Box p={2} borderTop={1} borderColor="divider" display="flex" justifyContent="center">
-        <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+        <form onSubmit={handleSendMessage} style={{ width: '100%' }}>
           <TextField
             fullWidth
             placeholder="Ask a question"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            value={newPrompt}
+            onChange={(e) => setNewPrompt(e.target.value)}
             InputProps={{
-              
               startAdornment: (
                 <InputAdornment position="start">
                   <img src={BotImage} alt="Bot Icon" style={{ width: '24px', height: '24px' }} />
@@ -210,8 +284,8 @@ export default function ChatScreen({ selectedChat, onNewChat, onUpdateChat, onTo
               ),
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton type="submit" color="primary" sx={{ transform: 'rotate(325deg)' }}>
-                    <SendIcon />
+                  <IconButton type="submit" color="primary" sx={{ transform: 'rotate(325deg)' }} disabled={isLoading || !selectedChatId}>
+                    {isLoading ? <CircularProgress size={24} /> : <SendIcon />}
                   </IconButton>
                 </InputAdornment>
               ),
@@ -222,7 +296,7 @@ export default function ChatScreen({ selectedChat, onNewChat, onUpdateChat, onTo
                 borderRadius: '25px',
               },
               '& .MuiInputBase-input::placeholder': {
-                color: '#000000', // Darker placeholder color
+                color: '#666',
               },
             }}
           />
