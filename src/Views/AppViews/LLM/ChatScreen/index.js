@@ -25,7 +25,6 @@ import Setting from 'assets/img/LLM/Setting.png';
 
 
 export default function ChatScreen({ selectedChatId }) {
-  const [cloudService, setCloudService] = useState('Cloud Service');
   const chatHistory = useSelector((state) => state.chat.chatHistory);
   const [chatMessages, setChatMessages] = useState(null);
   const dispatch = useDispatch();
@@ -63,10 +62,7 @@ export default function ChatScreen({ selectedChatId }) {
   }, [selectedChatId, chatHistory]);
 
 
-  const handleCloudServiceChange = (event) => {
-    setCloudService(event.target.value);
-  };
-
+  
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -141,66 +137,12 @@ export default function ChatScreen({ selectedChatId }) {
       display="flex"
       flexDirection="column"
       height="100%"
-      sx={{
-        background:
-          'linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(231, 228, 254, 0.4) 100%)',
+      style={{ 
+        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(231, 228, 254, 0.8) 100%)'
       }}
-    >
-   
-        
-      <Box
-  p={2}
-  borderBottom={1}
-  borderColor="divider"
-  
-  display="flex"
-  alignItems="center"
-  justifyContent="space-between"
->
-  <Box display="flex" alignItems="center" gap={2}>
-    <Box
-      width={32}
-      height={32}
-      borderRadius="50%"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <img src={BotImage} alt="Bot" style={{ width: '100%', height: '100%' }} />
-    </Box>
-    <Typography variant="h6" sx={{ color: '#333' }}>
-      Chatbot
-    </Typography>
-    
-    {/* Cloud Service Dropdown */}
-    <FormControl sx={{ minWidth: 120, color: '#333' }}>
-      <Select
-        value={cloudService}
-        onChange={handleCloudServiceChange}
-        displayEmpty
-        IconComponent={ExpandMoreIcon}
-        renderValue={(selected) => (
-          <Box display="flex" alignItems="center">
-            <img
-              src={Setting}
-              alt="Cloud Service"
-              style={{ width: '16px', height: '16px', marginRight: '8px' }} // Adjust size here
-            />
-            <Typography variant="body2" sx={{ color: '#333' }}>
-              {selected}
-            </Typography>
-          </Box>
-        )}
-      >
-        <MenuItem value="Cloud Service" disabled>
-          Cloud Service
-        </MenuItem>
-        <MenuItem value="AWS">AWS</MenuItem>
-      </Select>
-    </FormControl>
-  </Box>
-</Box>
-
+      
+    >   
+      
 
       <Box flex={1} p={2} overflow="auto">
   {!selectedChatId ? (
@@ -220,7 +162,6 @@ export default function ChatScreen({ selectedChatId }) {
             fontSize: '16px', // Set font size (optional)
             fontWeight: '400', // Set font weight (optional)
             lineHeight: '1.5', // Set line height (optional)
-            
               
               borderRadius: '20px 20px 0 20px', 
               p: 2, 
@@ -269,7 +210,7 @@ export default function ChatScreen({ selectedChatId }) {
   )}
 </Box>
 
-      <Box p={2} borderTop={1} borderColor="divider" display="flex" justifyContent="center">
+      <Box p={2}  display="flex" justifyContent="center" >
         <form onSubmit={handleSendMessage} style={{ width: '100%' }}>
           <TextField
             fullWidth
@@ -292,8 +233,18 @@ export default function ChatScreen({ selectedChatId }) {
             }}
             sx={{
               borderRadius: '25px',
+              backgroundColor: 'white', // Set background color to white
               '& .MuiOutlinedInput-root': {
                 borderRadius: '25px',
+                '& fieldset': {
+                  borderColor: 'blue', // Change border color to light blue
+                },
+                '&:hover fieldset': {
+                  borderColor: 'blue', // Change border color on hover
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'blue', // Change border color when focused
+                },
               },
               '& .MuiInputBase-input::placeholder': {
                 color: '#666',

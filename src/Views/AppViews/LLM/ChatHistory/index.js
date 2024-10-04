@@ -115,7 +115,7 @@ const ChatHistory = ({ onSelectChat }) => {
       borderLeft={isMobile ? 0 : 1}
       borderColor="divider"
       style={{ 
-        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(231, 228, 254, 0.4) 100%)'
+        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(231, 228, 254, 0.8) 100%)'
       }}
     >
       <Box p={2} borderBottom={1} borderColor="divider" display="flex" alignItems="center" sx={{ mt: 1 }}>
@@ -176,7 +176,7 @@ const ChatHistory = ({ onSelectChat }) => {
       </List>
 
       {/* New Chat button */}
-      <Box p={2} display="flex" justifyContent="left" sx={{ mt: 2 }}>
+      <Box p={2} display="flex" justifyContent="left" >
         <Button
           startIcon={<img src={NewChat} alt="New Chat" width={20} height={20} />}
           //onClick={onNewChat}
