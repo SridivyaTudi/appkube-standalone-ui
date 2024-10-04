@@ -7,20 +7,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setChatHistory } from 'Redux/LLM/chatSlice';
 import BotImage from 'assets/img/LLM/bot.png';
 import Setting from 'assets/img/LLM/Setting.png';
+import { updateChatMessages } from 'Redux/LLM/chatSlice';
 
 const ChatLayout = () => {
   const dispatch = useDispatch();
   const [showHistory, setShowHistory] = useState(true);
   const [cloudService, setCloudService] = useState('Cloud Service');
-
-
+  
   // Fetch the chat history from the API
   useEffect(() => {
     const fetchChatHistory = async () => {
       try {
         const response = await fetch('https://awschatbotapi.onrender.com/chat-history/3e69745a-295b-4a52-ae28-1922841ca09b');
         const data = await response.json();
-        
+
         dispatch(setChatHistory(data));
       } catch (error) {
         console.error('Error fetching chat history:', error);
@@ -29,21 +29,46 @@ const ChatLayout = () => {
 
     fetchChatHistory();
   }, [dispatch]);
+
   const handleCloudServiceChange = (event) => {
     setCloudService(event.target.value);
   };
-
 
   // Access the chat history from Redux store
   const allChats = useSelector((state) => state.chat.chatHistory);
   const [selectedChat, setSelectedChat] = useState(null);
 
   // Handle chat selection from ChatHistory
-  const handleChatSelect = (chat) => {
-    console.log(chat)
-    setSelectedChat(chat);
-    
+  const handleChatSelect = (chatId) => {
+    setSelectedChat(chatId);
+    if (chatId.startsWith('temp-')) {
+      // Fetch new chat ID from API and update Redux store
+      fetchNewChatId(chatId);
+    }
   };
+
+  const fetchNewChatId = async (tempChatId) => {
+    try {
+      const response = await fetch('https://awschatbotapi.onrender.com/chat-history/3e69745a-295b-4a52-ae28-1922841ca09b');
+      const data = await response.json();
+
+      const newChatId = data.chat_history.find(chat => !allChats.chat_history.some(existingChat => existingChat[0] === chat[0]));
+      if (newChatId) {
+        dispatch(setSelectedChat({ chatId: newChatId[0] }));
+        dispatch(updateChatMessages({
+          chatId: newChatId[0],
+          newPrompt: 'New Chat',
+          newResponse: '',
+          type: 'text',
+        }));
+      }
+    } catch (error) {
+      console.error('Error fetching new chat ID:', error);
+    }
+  };
+
+ 
+ 
 
   return  (
       <Box display="flex" flexDirection="column" height="100%" bgcolor="transparent">

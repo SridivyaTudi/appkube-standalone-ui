@@ -1,37 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Button,
   TextField,
   IconButton,
   Typography,
   InputAdornment,
   CircularProgress,
-  MenuItem, Select,
-  FormControl,
-  
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import { ExpandMore as ExpandMoreIcon } from '@mui/icons-material';
 import BotImage from 'assets/img/LLM/bot.png';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateChatMessages } from 'Redux/LLM/chatSlice';
+import { updateChatMessages, setSelectedChat } from 'Redux/LLM/chatSlice';
 import TableComponent, { parseTableData } from '../Table';
 import LineGraph from '../LineGraph';
 import Group from 'assets/img/LLM/Group.png';
-import Setting from 'assets/img/LLM/Setting.png';
-
-
-
 
 export default function ChatScreen({ selectedChatId }) {
   const chatHistory = useSelector((state) => state.chat.chatHistory);
-  const [chatMessages, setChatMessages] = useState(null);
+  const [chatMessages, setChatMessages] = useState([]);
   const dispatch = useDispatch();
   const [newPrompt, setNewPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const user_id = '3e69745a-295b-4a52-ae28-1922841ca09b'; // Assuming user_id is constant
 
+  // Fetch chat messages from Redux store for the selected chat
   useEffect(() => {
     if (selectedChatId && chatHistory && chatHistory.chat_history) {
       const selectedChat = chatHistory.chat_history.find(
@@ -52,165 +44,207 @@ export default function ChatScreen({ selectedChatId }) {
               plotText: message.plotText,
             };
           }
-          
           return message;
-          
         });
         setChatMessages(processedMessages);
       }
     }
   }, [selectedChatId, chatHistory]);
-
-
   
 
+  const fetchChatHistory = async () => {
+    try {
+      const response = await fetch('https://awschatbotapi.onrender.com/chatbot/chat-history', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      return data; // Return the chat history
+    } catch (error) {
+      console.error('Error fetching chat history:', error);
+    }
+  };
+  // Handle sending a message
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!newPrompt.trim() || !selectedChatId) return;
 
     setIsLoading(true);
     try {
-      const response = await fetch(
-        'https://awschatbotapi.onrender.com/chatbot',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            prompt: newPrompt,
-            id: selectedChatId,
-            user_id: user_id,
-          }),
-        }
-      );
-      const data = await response.json();
-      
-      
+      const body = {
+        prompt: newPrompt,
+        user_id: user_id,
+      };
 
-      // Update local state
+      if (selectedChatId ) {
+        body.id = selectedChatId; // Include chatId for existing chats
+      }
+
+      const response = await fetch('https://awschatbotapi.onrender.com/chatbot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await response.json();
+
+      // Update local state with the new message
       const newMessage = {
         prompt: newPrompt,
         response: data.response,
         type: data.type,
       };
+
+      if (data.type === 'tabular') {
+        newMessage.parsedData = parseTableData(data.response);
+      } else if (data.type === 'datapoints') {
+        console.log(data.type)
+        newMessage.datapoints = data.datapoints;
+        newMessage.plotText = `I have plotted the CPU utilization for instance ${newPrompt.split(' ')[-1]}.`;
+      }
+
       setChatMessages((prevMessages) => [...prevMessages, newMessage]);
 
-      let parsedData = null;
-      if (data.type === 'tabular') {
-        parsedData = parseTableData(data.response);
-      } else if (data.type === 'datapoints') {
-        
-        newMessage.datapoints = data.datapoints;
-        newMessage.plotText = `I have plotted the CPU utilization for instance ${newPrompt.split(' ')[-1]}. The plot has been generated and is ready for you to view.`;
+      // Dispatch message update to Redux
+      dispatch(updateChatMessages({
+        chatId: selectedChatId,
+        newPrompt: newPrompt,
+        newResponse: data.response,
+        type: data.type,
+        parsedData: newMessage.parsedData,
+        datapoints: newMessage.datapoints,
+        plotText: newMessage.plotText,
+      }));
+
+      // If the chat ID is temporary, identify and update it with the real chat ID
+      if (selectedChatId.startsWith('temp-')) {
+        // Assuming the new chat ID will come from the GET request in your layout
+        fetchChatHistory(); // Fetch updated chat history and find the real chat ID
       }
-      console.log(data)
-      // Update Redux store
-      dispatch(
-        updateChatMessages({
-          chatId: selectedChatId,
-          newPrompt: newPrompt,
-          newResponse: data.response,
-          type: data.type,
-          parsedData: parsedData,
-          datapoints: newMessage.datapoints,
-          plotText: newMessage.plotText
-        })
-      );
+
     } catch (error) {
       console.error('Error sending message:', error);
     }
     setIsLoading(false);
-    setNewPrompt(''); // Clear the input field
+    setNewPrompt(''); // Clear input field
   };
 
-  if (!chatHistory || !Array.isArray(chatHistory.chat_history)) {
-    return (
-      <Box display="flex" justifyContent="center" my={2}>
-        <CircularProgress />
-      </Box>
-    );
-  }
-
+  // Render the chat screen
   return (
     <Box
       display="flex"
       flexDirection="column"
       height="100%"
-      style={{ 
+      style={{
         background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(231, 228, 254, 0.8) 100%)'
       }}
-      
-    >   
-      
-
+    >
       <Box flex={1} p={2} overflow="auto">
-  {!selectedChatId ? (
-    <Typography variant="body1" sx={{ color: '#666' }}>Select a chat from the history to view messages.</Typography>
-  ) : chatMessages === null ? (
-    <Box display="flex" justifyContent="center" my={2}>
-      <CircularProgress />
-    </Box>
-  ) : (
-    chatMessages.map((message, index) => (
-      <Box key={index} my={2} display="flex" flexDirection="column" alignItems={message.prompt ? 'flex-end' : 'flex-start'}>
-        {message.prompt && (
-          <Box 
-            sx={{ 
-              maxWidth: '90%', 
-            fontFamily: 'Poppins', // Apply Poppins font family
-            fontSize: '16px', // Set font size (optional)
-            fontWeight: '400', // Set font weight (optional)
-            lineHeight: '1.5', // Set line height (optional)
-              
-              borderRadius: '20px 20px 0 20px', 
-              p: 2, 
-              mb: 1,
-              alignSelf: 'flex-end'
-            }}
-          >
-            <Typography variant="body1" sx={{ color: '#333' }}>
-            
-              {message.prompt}
-              <img src={Group} alt="Message" style={{ width: '20px', height: '20px', marginLeft: '8px' }} />
-            </Typography>
+        {!selectedChatId ? (
+          <Typography variant="body1" sx={{ color: '#666' }}>
+            Select a chat from the history to view messages.
+          </Typography>
+        ) : chatMessages === null ? (
+          <Box display="flex" justifyContent="center" my={2}>
+            <CircularProgress />
           </Box>
-        )}
-        <Box 
-          sx={{ 
-            maxWidth: '90%', 
-            fontFamily: 'Poppins', // Apply Poppins font family
-            fontSize: '16px', // Set font size (optional)
-            fontWeight: '400', // Set font weight (optional)
-            lineHeight: '1.5', // Set line height (optional)
-            
-            borderRadius: message.prompt ? '20px 20px 20px 0' : '20px 20px 20px 0', 
-            p: 2,
-            alignSelf:'flex-start'
-          }}
-        >
-          {message.type === 'tabular' && message.parsedData ? (
-            
-            
-            <TableComponent data={message.parsedData} />
-          ) : message.type === 'datapoints' && message.datapoints && message.plotText ? (
-            <Box>
-              <Typography sx={{ fontWeight: 'bold' }}>{message.plotText}</Typography>
-              <LineGraph datapoints={message.datapoints.datapoints} width="100%" />
-            </Box>
-          ) : (
-            <Typography variant="body2" sx={{ color: '#666', display: 'flex', alignItems: 'flex-start' }}>
-              <img src={Group} alt="Message" style={{ width: '20px', height: '20px', marginRight: '8px' }} />
-              <Box>{message.response}</Box>
-            </Typography>
-          )}
-        </Box>
-      </Box>
-    ))
-  )}
-</Box>
+        ) : (
+          chatMessages.map((message, index) => (
+            <Box
+              key={index}
+              my={2}
+              display="flex"
+              flexDirection="column"
+              alignItems={message.prompt ? 'flex-end' : 'flex-start'}
+            >
+              {message.prompt && (
+                <Box
+                  sx={{
+                    maxWidth: '90%',
+                    fontFamily: 'Poppins',
+                    fontSize: '16px',
+                    fontWeight: '400',
+                    lineHeight: '1.5',
+                    borderRadius: '20px 20px 0 20px',
+                    p: 2,
+                    mb: 1,
+                    alignSelf: 'flex-end',
+                  }}
+                >
+                  <Typography variant="body1" sx={{ color: '#333' }}>
+                    {message.prompt}
+                    <img
+                      src={Group}
+                      alt="Message"
+                      style={{ width: '20px', height: '20px', marginLeft: '8px' }}
+                    />
+                  </Typography>
+                </Box>
+              )}
+              <Box
+                sx={{
+                  maxWidth: '95%',
+                  fontFamily: 'Poppins',
+                  fontSize: '16px',
+                  fontWeight: '400',
+                  lineHeight: '1.5',
+                  borderRadius: message.prompt ? '20px 20px 20px 0' : '20px 20px 20px 0',
+                  p: 2,
+                  alignSelf: 'flex-start',
+                }}
+              >
+              
+                {message.type === 'tabular' && message.parsedData ? (
+                  <TableComponent data={message.parsedData} />
+                ) : message.type === 'datapoints' && message.datapoints ? (
+                  <Box   sx={{
+                    boxShadow: 3,
+                    borderRadius: 2,
+                    bgcolor: 'white',
+                    p: 2,
+                    mt: 1,
+                    
+                    overflow: 'auto',
+                    fontFamily: 'Poppins',
+                  }}>
+                    <Typography sx={{ fontWeight: 'bold' }}>{message.plotText}</Typography>
+                    
+                    
 
-      <Box p={2}  display="flex" justifyContent="center" >
+                    <LineGraph datapoints={message.datapoints} width="100%" />
+                  </Box>
+                ) : (
+                  <Typography variant="body2" sx={{ color: '#666', display: 'flex', alignItems: 'flex-start' }}>
+                        <img src={Group} alt="Message" style={{ width: '20px', height: '20px', marginRight: '8px' }} />
+                        {message.response.startsWith('**') ? (
+                          <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                            {message.response.replace(/\*\*(.+?)\*\*/g, (match, p1) => (
+                              <span style={{ fontWeight: 'bold' }}>{p1}</span>
+                            ))}
+                          </Typography>
+                        ) : message.response.startsWith('*') ? (
+                          <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
+                            {message.response.replace(/\*(.+?)\*/g, (match, p1) => (
+                              <span style={{ fontStyle: 'italic' }}>{p1}</span>
+                            ))}
+                          </Typography>
+                        ) : (
+                          message.response
+                        )}
+                      </Typography>
+
+                )}
+              </Box>
+            </Box>
+          ))
+        )}
+      </Box>
+
+      <Box p={2} display="flex" justifyContent="center">
         <form onSubmit={handleSendMessage} style={{ width: '100%' }}>
           <TextField
             fullWidth
@@ -225,7 +259,12 @@ export default function ChatScreen({ selectedChatId }) {
               ),
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton type="submit" color="primary" sx={{ transform: 'rotate(325deg)' }} disabled={isLoading || !selectedChatId}>
+                  <IconButton
+                    type="submit"
+                    color="primary"
+                    sx={{ transform: 'rotate(325deg)' }}
+                    disabled={isLoading || !selectedChatId}
+                  >
                     {isLoading ? <CircularProgress size={24} /> : <SendIcon />}
                   </IconButton>
                 </InputAdornment>
@@ -233,17 +272,17 @@ export default function ChatScreen({ selectedChatId }) {
             }}
             sx={{
               borderRadius: '25px',
-              backgroundColor: 'white', // Set background color to white
+              backgroundColor: 'white',
               '& .MuiOutlinedInput-root': {
                 borderRadius: '25px',
                 '& fieldset': {
-                  borderColor: 'blue', // Change border color to light blue
+                  borderColor: 'blue',
                 },
                 '&:hover fieldset': {
-                  borderColor: 'blue', // Change border color on hover
+                  borderColor: 'blue',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: 'blue', // Change border color when focused
+                  borderColor: 'blue',
                 },
               },
               '& .MuiInputBase-input::placeholder': {

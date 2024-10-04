@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  chatHistory: { chat_history: [] },
+  chatHistory: [],
+  selectedChatId: null, // Store selected chat ID here
 };
 
 const chatSlice = createSlice({
@@ -14,29 +15,25 @@ const chatSlice = createSlice({
     updateChatMessages: (state, action) => {
       const { chatId, newPrompt, newResponse, type, parsedData, datapoints, plotText } = action.payload;
       const chatIndex = state.chatHistory.chat_history.findIndex(chat => chat[0] === chatId);
-      if (chatIndex !== -1) {
-        // Add new message to the chat
+      if (chatIndex > -1) {
         state.chatHistory.chat_history[chatIndex][2].push({
           prompt: newPrompt,
           response: newResponse,
-          type: type, // Assuming you want to store the type as well
-          parsedData: parsedData, 
-          datapoints: datapoints,
-          plotText: plotText
+          type: type,
+          parsedData: parsedData || null,
+          datapoints: datapoints || null,
+          plotText: plotText || null,
         });
-        // Update last modified date
-        state.chatHistory.chat_history[chatIndex][4] = new Date().toISOString();
       }
     },
-    addMessage(state, action) {
-      state.chatHistory.chat_history.push(action.payload);
+    setSelectedChat: (state, action) => {
+      state.selectedChatId = action.payload; // Update the selected chat ID
     },
-    clearChatHistory(state) {
-      state.chatHistory.chat_history = [];
+    clearChatHistory: (state) => {
+      state.chatHistory = null;
     },
   },
 });
 
-export const { setChatHistory, addMessage, clearChatHistory, updateChatMessages } = chatSlice.actions;
-
+export const { setChatHistory, updateChatMessages, setSelectedChat, clearChatHistory } = chatSlice.actions;
 export default chatSlice.reducer;

@@ -37,13 +37,13 @@ const LineGraph = ({ datapoints }) => {
           text: 'Utilization (%)',
         },
         min: 0,
-        max: 100, // Adjust the Y-axis limits as needed
+        max: 60, // Adjust the Y-axis limits as needed
       },
     },
   };
 
   return (
-    <Box sx={{ width: '1000px', height: '600px' }}> {/* Adjust width/height as needed */}
+    <Box sx={{ width: '1000px', height: '300px' }}> {/* Adjust width/height as needed */}
       <Line data={data} options={options} />
     </Box>
   );
