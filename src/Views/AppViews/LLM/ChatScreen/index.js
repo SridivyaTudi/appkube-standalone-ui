@@ -78,7 +78,7 @@ export default function ChatScreen({ selectedChatId }) {
         user_id: user_id,
       };
 
-      if (selectedChatId ) {
+      if (selectedChatId && !selectedChatId.startsWith('temp-')  ) {
         body.id = selectedChatId; // Include chatId for existing chats
       }
 

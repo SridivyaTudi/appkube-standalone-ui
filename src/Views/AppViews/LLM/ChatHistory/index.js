@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, Typography, List, Button, useMediaQuery, useTheme } from '@mui/material';
 import NewChat from 'assets/img/LLM/Newchat.png';
 import Vector from 'assets/img/LLM/Vector.png';
-import { setSelectedChat, updateChatMessages } from 'Redux/LLM/chatSlice'; // Import necessary Redux actions
+import { setSelectedChat, updateChatMessages , createEmptyChat} from 'Redux/LLM/chatSlice'; // Import necessary Redux actions
 
 // Helper functions
 const groupChatsByDateRange = (chatHistory) => {
@@ -103,35 +103,105 @@ const ChatHistory = ({ onSelectChat }) => {
       return newGroupedChats;
     });
   };
-
   const handleNewChat = () => {
-    const tempChatId = 'temp-' + Math.random().toString(36).substr(2, 9); // Generate a temporary chat ID
+    const tempChatId = 'temp-' + Math.random().toString(36).substr(2, 9);
+    
+    dispatch(createEmptyChat(tempChatId));
+    dispatch(setSelectedChat(tempChatId));
+    
     handleChatSelection(tempChatId);
-    // Dispatch an action to update the Redux store with the temporary chat ID
-    dispatch(setSelectedChat({ chatId: tempChatId }));
-    // Fetch new chat ID by comparing chat history
-    fetchChatHistoryAndCompare(tempChatId);
+    
+    setGroupedChats(prevGroupedChats => ({
+      ...prevGroupedChats,
+      today: [{ id: tempChatId, title: 'New Chat', messages: [] }, ...prevGroupedChats.today]
+    }));
   };
 
-  const fetchChatHistoryAndCompare = async (tempChatId) => {
-    try {
-      const response = await fetch('https://awschatbotapi.onrender.com/chat-history/3e69745a-295b-4a52-ae28-1922841ca09b');
-      const data = await response.json();
+  //   try {
+  //     // Create a temporary chat ID
+  //     const tempChatId = 'temp-' + Math.random().toString(36).substr(2, 9);
+  //     dispatch(createEmptyChat(tempChatId));
+  //     dispatch(setSelectedChat(tempChatId));
+    
+  //     // Update local state
+  //     handleChatSelection(tempChatId);
+  //     setGroupedChats(prevGroupedChats => ({
+  //       ...prevGroupedChats,
+  //       today: [{ id: tempChatId, title: 'New Chat', messages: [] }, ...prevGroupedChats.today]
+  //     }));
+      
+  //     // Dispatch the temporary chat to Redux
+  //     dispatch(updateChatMessages({
+  //       chatId: tempChatId,
+  //       newPrompt: '',
+  //       newResponse: '',
+  //       type: 'text',
+  //     }));
 
-      const newChatId = data.chat_history.find(chat => !chatHistory.chat_history.some(existingChat => existingChat[0] === chat[0]));
-      if (newChatId) {
-        dispatch(setSelectedChat({ chatId: newChatId[0] }));
-        dispatch(updateChatMessages({
-          chatId: newChatId[0],
-          newPrompt: 'New Chat',
-          newResponse: '',
-          type: 'text',
-        }));
-      }
-    } catch (error) {
-      console.error('Error fetching chat history:', error);
-    }
-  };
+      
+
+      
+  //     // Immediately set the temporary chat as selected
+      
+  //     handleChatSelection(tempChatId);
+  //     dispatch(setSelectedChat({ chatId: tempChatId }));
+  
+  //     // Fetch a new chat ID or create a new chat
+  //     const response = await fetch('https://awschatbotapi.onrender.com/chat-history/3e69745a-295b-4a52-ae28-1922841ca09b'); // Adjust as needed
+  //     const data = await response.json();
+  //     console.log(data)
+  //     // Find a new chat ID
+  //     if (data.chat_history) {
+  //       const newChatId = data.chat_history.find(chat => 
+  //         !chatHistory.chat_history.some(existingChat => existingChat[0] === chat[0])
+  //       );
+  
+  //       if (newChatId) {
+  //         // Update the temporary chat with actual data after user input
+  //         // You may need to handle this based on your existing chat message logic
+  //         dispatch(updateChatMessages({
+  //           chatId: tempChatId, // Use the temp chat ID here
+  //           newPrompt: data.prompt,
+  //           newResponse: data.response,
+  //           type: data.type,
+  //         }));
+  //       }
+  //     } else {
+  //       console.error('chat_history is not available in the response:', data);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error creating new chat:', error);
+  //   }
+  // };
+  
+  // const handleNewChat = () => {
+    // const tempChatId = 'temp-' + Math.random().toString(36).substr(2, 9); // Generate a temporary chat ID
+    // handleChatSelection(tempChatId);
+    // // Dispatch an action to update the Redux store with the temporary chat ID
+    // dispatch(setSelectedChat({ chatId: tempChatId }));
+    // // Fetch new chat ID by comparing chat history
+    // fetchChatHistoryAndCompare(tempChatId);
+  // };
+
+  // const fetchChatHistoryAndCompare = async (tempChatId) => {
+  //   try {
+  //     const response = await fetch('https://awschatbotapi.onrender.com/chat-history/3e69745a-295b-4a52-ae28-1922841ca09b');
+  //     const data = await response.json();
+
+  //     const newChatId = data.chat_history.find(chat => !chatHistory.chat_history.some(existingChat => existingChat[0] === chat[0]));
+  //     if (newChatId) {
+  //       dispatch(setSelectedChat({ chatId: newChatId[0] }));
+  //       dispatch(updateChatMessages({
+  //         chatId: newChatId[0],
+  //         newPrompt: 'New Chat',
+  //         newResponse: '',
+  //         type: 'text',
+  //       }));
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching chat history:', error);
+  //   }
+  // };
 
   if (!chatHistory || !Array.isArray(chatHistory.chat_history)) {
     return <div>Loading...</div>;
@@ -169,36 +239,36 @@ const ChatHistory = ({ onSelectChat }) => {
               {key === 'today' ? 'Today' : key === 'yesterday' ? 'Yesterday' : key === 'thisWeek' ? 'This week' : 'Previous'}
             </Typography>
             {groupedChats[key].map((chat) => (
-              <Box key={chat.id} >
-                {chat.messages.length > 0 && (
-                  <Box
-                  onClick={() => handleChatSelection(chat.id)}
-                  sx={{
-                    cursor: 'pointer',
-                    padding: '10px 20px',
-                    borderRadius: '6px',
-                    transition: 'background-color 0.3s',
-                    color: lastSelectedChatId === chat.id ? '#4A90E2' : '#383874', // Selected chat color
-                    '&:hover': {
-                      color: '#4A90E2', // Light blue color on hover
-                    },
-                  }}
-                >
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      fontWeight: 200,
-                      color: lastSelectedChatId === chat.id ? '#4A90E2' : '#383874', // Adjust text color here too
-                    }}
-                  >
-                    {chat.messages[0].prompt.length > 30
-                      ? `${chat.messages[0].prompt.substring(0, 30)}...`
-                      : chat.messages[0].prompt}
-                  </Typography>
-                </Box>
-                )}
-              </Box>
-            ))}
+  <Box key={chat.id}>
+    {(chat.messages.length > 0) ? (
+      <Box
+        onClick={() => handleChatSelection(chat.id)}
+        sx={{
+          cursor: 'pointer',
+          padding: '10px 20px',
+          borderRadius: '6px',
+          transition: 'background-color 0.3s',
+          color: lastSelectedChatId === chat.id ? '#4A90E2' : '#383874',
+          '&:hover': {
+            color: '#4A90E2',
+          },
+        }}
+      >
+        <Typography
+          variant="body1"
+          sx={{
+            fontWeight: 200,
+            color: lastSelectedChatId === chat.id ? '#4A90E2' : '#383874',
+          }}
+        >
+          {chat.messages?chat.messages[0].prompt.length > 30
+            ? `${chat.messages[0].prompt.substring(0, 30)}...`
+            : chat.messages[0].prompt:'New Chat'}
+        </Typography>
+      </Box>
+    ) : null}
+  </Box>
+))}
           </Box>
         ))}
       </List>

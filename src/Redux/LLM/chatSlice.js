@@ -12,6 +12,16 @@ const chatSlice = createSlice({
     setChatHistory: (state, action) => {
       state.chatHistory = action.payload;
     },
+    createEmptyChat: (state, action) => {
+      const newChatId = action.payload;
+      state.chatHistory.chat_history.unshift([
+        newChatId,
+        'New Chat', // Empty title
+        [], // Empty messages array
+        '', // Empty model
+        new Date().toISOString(), // Current date
+      ]);
+    },
     updateChatMessages: (state, action) => {
       const { chatId, newPrompt, newResponse, type, parsedData, datapoints, plotText } = action.payload;
       const chatIndex = state.chatHistory.chat_history.findIndex(chat => chat[0] === chatId);
@@ -24,6 +34,22 @@ const chatSlice = createSlice({
           datapoints: datapoints || null,
           plotText: plotText || null,
         });
+      }else {
+        // If the chat doesn't exist, create a new one
+        state.chatHistory.chat_history.unshift([
+          chatId,
+          '', // You might want to add a title here
+          [{
+            prompt: newPrompt,
+            response: newResponse,
+            type: type,
+            parsedData: parsedData || null,
+            datapoints: datapoints || null,
+            plotText: plotText || null,
+          }],
+          '', // You might want to add a model here
+          new Date().toISOString(), // Current date
+        ]);
       }
     },
     setSelectedChat: (state, action) => {
@@ -35,5 +61,5 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setChatHistory, updateChatMessages, setSelectedChat, clearChatHistory } = chatSlice.actions;
+export const { setChatHistory, createEmptyChat, updateChatMessages, setSelectedChat, clearChatHistory } = chatSlice.actions;
 export default chatSlice.reducer;
